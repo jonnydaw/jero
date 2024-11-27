@@ -29,7 +29,7 @@ const Login = () => {
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
-            console.error('Login failed:', error.response ? error.response.data : error.message);
+            console.log('Login failed:', error.response ? error.response.data : error.message);
         }
     }
 

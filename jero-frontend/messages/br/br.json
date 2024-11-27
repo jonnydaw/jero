@@ -1,0 +1,30 @@
+{
+    "HomePage" : {
+    "title": "Ola Mundo!",
+    "about": "Saber mais"
+  },
+  
+    "SearchBar": {
+      "select": {
+        "default":"Tipo de Booking",
+        "accommodation" : "Alojamento",
+        "flights" :  "Vuelos",
+        "both" : "Alojamento & Vuelos"
+      },
+      "where": "Onde você vai",
+      "when" : "Quando?",
+      "guests" : "Hóspedes"
+    },
+  
+    "Signup" : {
+        "firstName" : "Nome",
+        "lastName" : "Sobrenome",
+        "dob": "Data de Nascimento",
+        "email" : "E-mail",
+        "confirmEmail" : "Confirmar e-mail",
+        "password" : "Senha",
+        "confirmPassword" : "Confirmar senha"
+    }
+
+  }
+  

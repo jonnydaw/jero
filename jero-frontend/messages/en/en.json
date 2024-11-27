@@ -13,6 +13,16 @@
     "where": "Where to?",
     "when" : "When?",
     "guests" : "Guests"
+  },
+
+  "Signup" : {
+    "firstName" : "First Name",
+    "lastName" : "Last Name",
+    "dob": "Date of Birth",
+    "email" : "e-mail",
+    "confirmEmail" : "Confirm Email",
+    "password" : "Password",
+    "confirmPassword" : "confirmPassword"
   }
 }
 

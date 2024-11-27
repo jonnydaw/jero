@@ -1,7 +1,7 @@
 {
   "HomePage" : {
   "title": "Hola Mundo!",
-  "about": "entrate al about"
+  "about": "aprende mas"
 },
 
   "SearchBar": {
@@ -14,5 +14,15 @@
     "where": "a donde vas",
     "when" : "Cuando?",
     "guests" : "Huespedes"
+  },
+
+  "Signup" : {
+    "firstName" : "Nombre",
+    "lastName" : "Apellido",
+    "dob": "Fecha de Nacimiento",
+    "email" : "Correo electronico",
+    "confirmEmail" : "Confirmar correo electronico",
+    "password" : "contraseña",
+    "confirmPassword" : "Confirmar contraseña"
   }
 }
