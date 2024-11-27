@@ -1,0 +1,18 @@
+{
+  "HomePage" : {
+  "title": "Hola Mundo!",
+  "about": "entrate al about"
+},
+
+  "SearchBar": {
+    "select": {
+      "default":"Tipo de Booking",
+      "accommodation" : "Alojamiento",
+      "flights" :  "Vuelos",
+      "both" : "Alojamiento & Vuelos"
+    },
+    "where": "a donde vas",
+    "when" : "Cuando?",
+    "guests" : "Huespedes"
+  }
+}

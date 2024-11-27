@@ -1,0 +1,89 @@
+/* https://stackoverflow.com/questions/2460100/remove-the-complete-styling-of-an-html-button-submit */
+
+.button{
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em;
+}
+
+.button:focus {
+  outline: revert;
+}
+
+.container{
+  min-width: 100%;
+  
+}
+
+.navContainer{
+  background-color: #123524;
+  min-width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-areas:
+      "singleLink searchArea groupedLinks";
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+
+
+.searchBar{
+  grid-area: searchArea;
+}
+
+.groupedLinks{
+  grid-area: groupedLinks;
+}
+
+.singleLink, .groupedLinks{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0;
+}
+
+.singleLink{
+  grid-area: singleLink;
+  justify-content: flex-start;
+}
+
+.links{
+  border-radius: 1.5em;
+  margin: 1em;
+  max-width: 1em;
+  background-color: #d9f1d9;
+  border: solid 0.05em #d9f1d9 ;
+  box-shadow: 0.2em 0.2em 0.2em #d9f1d9 ;
+  cursor: pointer;
+  padding: 1.5em;
+  position: sticky;
+}
+
+/*
+https://www.w3schools.com/howto/howto_css_dropdown.asp
+*/
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+
+.dropdownContent p:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+
+
+
+
+
