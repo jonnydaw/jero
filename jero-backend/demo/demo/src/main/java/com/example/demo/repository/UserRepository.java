@@ -11,7 +11,6 @@ import com.example.demo.usermodel.User;
 @Repository
 public interface UserRepository extends MongoRepository<User,String> { 
 	User findByEmail(String email); 
-	User findByMobile(String mobile);
 } 
 
  

@@ -22,12 +22,14 @@ public class User {
 
 	@Id
 	private String id; 
-	private String fullName; 
+	private String firstName; 
+	private String lastName;
+	private String dateOfBirth;
 	private String email; 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) 
 	private String password; 
 	private String role = "ROLE_CUSTOMER"; 
-	private String mobile; 
+	// private String mobile; 
 	
 
 	

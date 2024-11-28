@@ -26,8 +26,14 @@ const Signup = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/auth/signup', {
-                    email : formData.email,
-                    password : formData.password
+                firstName : formData.firstName,
+                lastName : formData.lastName,
+                dob: formData.dob,
+                email : formData.email,
+                confirmEmail : formData.confirmEmail,
+    
+                password : formData.password,
+                confirmPassword : formData.confirmPassword
                 },
                 { withCredentials: true}
             );

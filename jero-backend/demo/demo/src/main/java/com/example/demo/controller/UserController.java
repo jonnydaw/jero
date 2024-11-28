@@ -10,7 +10,8 @@ import com.example.demo.service.UserServiceImplementation;
 import java.util.concurrent.TimeUnit;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
-import com.example.demo.SecurityConfig.JwtProvider; 
+import com.example.demo.SecurityConfig.JwtProvider;
+import com.example.demo.handler.User.UserSignupHandler;
 import com.example.demo.usermodel.User;
 
 import jakarta.servlet.http.Cookie;
@@ -55,46 +56,42 @@ public class UserController {
 	@GetMapping("/profile") 
 	public String getProfile(@CookieValue("JWT") String token)  { 
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
+		// 27/11/24
 		return JwtProvider.getEmailFromJwtToken(token);
 	} 	
 
 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<AuthResponse> signup(@RequestBody User user) throws Exception { 
-		String email = user.getEmail(); 
-		String password = user.getPassword(); 
-		System.out.println("Signup ctrler : " + user.getEmail());
-		// String fullName = user.getFullName(); 
-		// String mobile = user.getMobile(); 
-		// String role = user.getRole(); 
+	public ResponseEntity<AuthResponse> signup(	 UserSignupHandler user) throws Exception { 
+		System.out.println(user.getConfirmEmail());
+		User isEmailExist = userRepository.findByEmail(user.getEmail());
+		AuthResponse authResponse = new AuthResponse(); 
 
-		User isEmailExist = userRepository.findByEmail(email); 
-		// User isMobileExist = userRepository.findByMobile(mobile); 
-		if (isEmailExist != null) { 
-			throw new Exception("Email Is Already Used With Another Account");
+		if (!user.isValid() || isEmailExist != null) { 
+			authResponse.setJwt(""); 	
+			authResponse.setMessage("Register Fail"); 
+			authResponse.setStatus(false); 
+			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.NOT_ACCEPTABLE); 
 		} 
-		// else if(isMobileExist != null){
-		// 	throw new Exception("Mobile number is already in use");
-		// }
 
 		
 		User createdUser = new User(); 
-		createdUser.setEmail(email); 
-		// createdUser.setFullName(fullName); 
-		// createdUser.setMobile(mobile); 
-		// createdUser.setRole(role); 
-		//createdUser.setPassword(passwordEncoder.encode(password)); 
-		createdUser.setPassword(password);
+		createdUser.setEmail(user.getEmail()); 
+		createdUser.setFirstName(user.getFirstName()); 
+		createdUser.setLastName(user.getLastName()); 
+		createdUser.setDateOfBirth(user.getDob());
+		createdUser.setPassword(passwordEncoder.encode(user.getPassword())); 
+		createdUser.setRole("user"); 
 		
 		User savedUser = userRepository.save(createdUser); 
 		userRepository.save(savedUser); 
-		Authentication authentication = new UsernamePasswordAuthenticationToken(email,password); 
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
 		String token = JwtProvider.generateToken(authentication); 
 
 
-		AuthResponse authResponse = new AuthResponse(); 
+		
 		authResponse.setJwt(token); 
 		authResponse.setMessage("Register Success"); 
 		authResponse.setStatus(true); 
