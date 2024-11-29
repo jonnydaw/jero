@@ -30,8 +30,7 @@ const Signup = () => {
                 lastName : formData.lastName,
                 dob: formData.dob,
                 email : formData.email,
-                confirmEmail : formData.confirmEmail,
-    
+                confirmEmail : formData.confirmEmail,    
                 password : formData.password,
                 confirmPassword : formData.confirmPassword
                 },
@@ -95,7 +94,8 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleChange}
             />
-                        <input
+            
+            <input
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"

@@ -40,9 +40,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 		 } 
  
 		 
-		 System.out.println("Loaded user: " + user.getEmail() + ", Role: " + user.getRole()); 
+		 System.out.println("Loaded user: " + user.getEmail() + ", Role: " + user.getRoles()); 
 		 List<GrantedAuthority> authorities = new ArrayList<>(); 
-		 authorities.add(new SimpleGrantedAuthority(user.getRole()));
+		 authorities.add(new SimpleGrantedAuthority(user.getRoles().toString()));
 		 // https://stackoverflow.com/questions/32276482/java-lang-classcastexception-org-springframework-security-core-userdetails-user
 		 return new org.springframework.security.core.userdetails.User( 
 				 user.getEmail(), 

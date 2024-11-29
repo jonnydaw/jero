@@ -7,11 +7,14 @@ package com.example.demo.controller;
 import com.example.demo.repository.UserRepository; 
 import com.example.demo.response.AuthResponse; 
 import com.example.demo.service.UserServiceImplementation;
+import com.example.demo.enumeration.user.*;
+import com.example.demo.enumeration.validator.PasswordError;
+import com.example.demo.validator.signup.SignupValidator;
 import java.util.concurrent.TimeUnit;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import com.example.demo.SecurityConfig.JwtProvider;
-import com.example.demo.handler.User.UserSignupHandler;
+import com.example.demo.dto.User.UserSignupHandler;
 import com.example.demo.usermodel.User;
 
 import jakarta.servlet.http.Cookie;
@@ -63,17 +66,28 @@ public class UserController {
 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<AuthResponse> signup(	 UserSignupHandler user) throws Exception { 
-		System.out.println(user.getConfirmEmail());
+	public ResponseEntity<AuthResponse> signup(@RequestBody	 UserSignupHandler user) throws Exception { 
+		String userEmail = user.getEmail();
+		String userConfirmEmail = user.getConfirmEmail();
+		String userPassword = user.getPassword();
+		String userConfirmPassword = user.getConfirmPassword();
+
 		User isEmailExist = userRepository.findByEmail(user.getEmail());
 		AuthResponse authResponse = new AuthResponse(); 
+		SignupValidator sv = new SignupValidator();
 
-		if (!user.isValid() || isEmailExist != null) { 
+		if (isEmailExist != null) { 
 			authResponse.setJwt(""); 	
-			authResponse.setMessage("Register Fail"); 
+			authResponse.setMessage("Email already in use"); 
 			authResponse.setStatus(false); 
-			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.NOT_ACCEPTABLE); 
-		} 
+			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.BAD_REQUEST); 
+		}else if(!sv.checkFieldsMatch(userEmail, userConfirmEmail) || !sv.validPasswordMsg(userPassword).isEmpty() || !sv.checkFieldsMatch(userPassword, userConfirmPassword)){
+				String message = buildErrorMessage(sv, userEmail, userConfirmEmail, userPassword, userConfirmPassword);
+				authResponse.setJwt(""); 	
+				authResponse.setMessage(message); 
+				authResponse.setStatus(false); 
+				return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.BAD_REQUEST); 
+			}
 
 		
 		User createdUser = new User(); 
@@ -82,7 +96,7 @@ public class UserController {
 		createdUser.setLastName(user.getLastName()); 
 		createdUser.setDateOfBirth(user.getDob());
 		createdUser.setPassword(passwordEncoder.encode(user.getPassword())); 
-		createdUser.setRole("user"); 
+		//createdUser.setRoles("user"); 
 		
 		User savedUser = userRepository.save(createdUser); 
 		userRepository.save(savedUser); 
@@ -96,8 +110,7 @@ public class UserController {
 		authResponse.setMessage("Register Success"); 
 		authResponse.setStatus(true); 
 		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK); 
-
-	} 
+	}
 
 
 
@@ -162,6 +175,26 @@ public class UserController {
 		return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities()); 
 
 	} 
+
+	private String buildErrorMessage(SignupValidator sv,String userEmail, String userConfirmEmail, String userPassword, String userConfirmPassword){
+		StringBuilder errorMsg = new StringBuilder();
+		if(!sv.checkFieldsMatch(userEmail, userConfirmEmail)){
+			errorMsg.append("Emails do not match. ");
+		} 
+
+		if(!sv.checkFieldsMatch(userPassword, userConfirmPassword)){
+			errorMsg.append("Passwords do not match.");
+		}
+
+		if(!sv.validPasswordMsg(userPassword).isEmpty()){
+			for(PasswordError err : sv.validPasswordMsg(userPassword)){
+				errorMsg.append(err.toString() + " ");
+			}
+		}
+		
+		return errorMsg.toString().trim();
+
+	}
 
 
 } 

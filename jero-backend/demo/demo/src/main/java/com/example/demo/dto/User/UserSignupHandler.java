@@ -1,4 +1,4 @@
-package com.example.demo.handler.User;
+package com.example.demo.dto.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
@@ -19,13 +19,14 @@ public class UserSignupHandler {
     String lastName;
     
     @NotBlank
+    @NotBlank
     String dob;
     
     @Email
+    @NotBlank
     String email;
     
     @Email
-
     String confirmEmail;
     
     @NotBlank
@@ -33,15 +34,4 @@ public class UserSignupHandler {
     
     @NotBlank
     String confirmPassword;
-
-
-    public boolean isValid(){
-        if(!password.equals(confirmPassword) || !email.equals(confirmEmail)){
-            System.out.println(password + " - " + confirmPassword);
-            System.out.println(email + " - " + confirmEmail);
-            System.out.println("hit is valid");
-            return false;
-        }
-        return true;
-    }
 }
