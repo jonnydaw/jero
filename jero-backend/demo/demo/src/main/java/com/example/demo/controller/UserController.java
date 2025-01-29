@@ -10,6 +10,9 @@ import com.example.demo.service.UserServiceImplementation;
 import com.example.demo.enumeration.user.*;
 import com.example.demo.enumeration.validator.PasswordError;
 import com.example.demo.validator.signup.SignupValidator;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -71,6 +74,7 @@ public class UserController {
 		String userConfirmEmail = user.getConfirmEmail();
 		String userPassword = user.getPassword();
 		String userConfirmPassword = user.getConfirmPassword();
+		System.out.println("Roles " + user.getRoles());
 
 		User isEmailExist = userRepository.findByEmail(user.getEmail());
 		AuthResponse authResponse = new AuthResponse(); 
@@ -96,7 +100,8 @@ public class UserController {
 		createdUser.setLastName(user.getLastName()); 
 		createdUser.setDateOfBirth(user.getDob());
 		createdUser.setPassword(passwordEncoder.encode(user.getPassword())); 
-		//createdUser.setRoles("user"); 
+		createdUser.setRoles(user.getRoles()); 
+		System.out.println(user.getRoles());
 		
 		User savedUser = userRepository.save(createdUser); 
 		userRepository.save(savedUser); 

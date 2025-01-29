@@ -1,6 +1,7 @@
 package com.example.demo.enumeration.user;
 
-public enum Roles {
+public enum UserRoles {
     CUSTOMER,
-    HOST
+    HOST,
+    BOTH
 }

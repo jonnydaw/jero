@@ -1,4 +1,7 @@
 package com.example.demo.dto.User;
+import java.util.Set;
+
+import com.example.demo.enumeration.user.UserRoles;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
@@ -19,7 +22,6 @@ public class UserSignupHandler {
     String lastName;
     
     @NotBlank
-    @NotBlank
     String dob;
     
     @Email
@@ -34,4 +36,7 @@ public class UserSignupHandler {
     
     @NotBlank
     String confirmPassword;
+
+    @NotBlank
+    String roles;
 }

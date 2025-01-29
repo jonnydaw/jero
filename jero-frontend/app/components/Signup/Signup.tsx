@@ -5,18 +5,33 @@ import style from "./Signup.module.css"
 import React, { useState } from "react";
 import axios from "axios"
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+
+
+type FormData = {
+    firstName : string,
+    lastName : string,
+    email : string,
+    confirmEmail : string,
+    dob: string,
+    password : string,
+    confirmPassword : string,
+    roles : string
+}
+
+
 
 const Signup = () => {
     const t = useTranslations('Signup');
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         firstName : "",
         lastName : "",
         email : "",
         confirmEmail : "",
         dob: "",
         password : "",
-        confirmPassword : ""
-
+        confirmPassword : "",
+        roles : ""
     });
 
     const handleChange = (e : any) => {
@@ -34,7 +49,8 @@ const Signup = () => {
                 email : formData.email,
                 confirmEmail : formData.confirmEmail,    
                 password : formData.password,
-                confirmPassword : formData.confirmPassword
+                confirmPassword : formData.confirmPassword,
+                roles : formData.roles
                 },
                 { withCredentials: true}
             );
@@ -57,7 +73,7 @@ const Signup = () => {
                 value={formData.firstName}
                 onChange={handleChange}
             />
-                        <input
+            <input
                 type="text"
                 id="lastName"
                 name="lastName"
@@ -107,12 +123,24 @@ const Signup = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
             />
-            
+            <select name="roles"
+                id={style.roles}
+                value={formData.roles}
+                onChange={handleChange}
+                >
+                <option value="" disabled hidden>
+                    {t('userTypes.placeholder')}
+                </option>
+                <option value="customer">{t('userTypes.tourist')}</option>
+                <option value="host">{t('userTypes.host')}</option>
+                <option value="both">{t('userTypes.both')}</option>
+            </select>
+
             <button id={style.button} type="submit">
                 Signup
             </button>
         </form>
-            <h3 id={style.message}>Already have an account? Login</h3>
+            <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
         </div>
         </div>
     );

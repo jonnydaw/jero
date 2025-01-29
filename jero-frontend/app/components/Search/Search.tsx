@@ -48,12 +48,6 @@ const Search : React.FC<Props> =  () => {
   [count]
 );
 
-//   useEffect(() => {
-//     setFormData(({ ...formData, childCount: childCount }));
-//   },
-//   [childCount]
-// );
-
 
   return (
     <div className={style.searchContainer}>

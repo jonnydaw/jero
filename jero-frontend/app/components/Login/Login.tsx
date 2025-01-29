@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import axios from "axios"
 import style from "../Signup/Signup.module.css"
+import { Link } from "@/i18n/routing";
 const Login = () => {
 
     const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const Login = () => {
                 Login
             </button>
         </form>
-        <h3 id={style.message}>Don't have an account? Signup</h3>
+        <h3 id={style.message}>Don't have an account? <Link href="/signup">Signup</Link> </h3>
         </div>
         </div>
     );

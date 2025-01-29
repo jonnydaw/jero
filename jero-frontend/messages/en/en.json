@@ -22,7 +22,12 @@
     "email" : "e-mail",
     "confirmEmail" : "Confirm Email",
     "password" : "Password",
-    "confirmPassword" : "confirmPassword"
+    "confirmPassword" : "confirmPassword",
+    "userTypes" : {
+      "tourist" : "Tourist",
+      "host" : "Host",
+      "both" : "Tourist & Host"
+    }
   },
 
   "DropdownCount" : {
@@ -30,5 +35,7 @@
     "child" : "Children",
     "pet" : "Pets"
   }
+
+
 }
 

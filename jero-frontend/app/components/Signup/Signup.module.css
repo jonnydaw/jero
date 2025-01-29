@@ -27,13 +27,13 @@
 }
 
 
-#button{
+#button, #roles{
     display:flex;
     justify-self: center;
     align-self: center;
 }
 
-#button:hover{
+#button:hover, #roles:hover{
     cursor: pointer;
     transform: scale(1.02);
 }

@@ -23,7 +23,13 @@
     "email" : "Correo electronico",
     "confirmEmail" : "Confirmar correo electronico",
     "password" : "contraseña",
-    "confirmPassword" : "Confirmar contraseña"
+    "confirmPassword" : "Confirmar contraseña",
+    "userTypes" : {
+      "placeholder" : "Tipo de usuario",
+      "tourist" : "Turista",
+      "host" : "Anfitrión",
+      "both" : "Turista & Anfitrión"
+    }
   },
 
   "DropdownCount" : {
