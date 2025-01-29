@@ -1,5 +1,7 @@
 // components/Form.js
 'use client'
+import style from "./Signup.module.css"
+
 import React, { useState } from "react";
 import axios from "axios"
 import { useTranslations } from "next-intl";
@@ -44,7 +46,9 @@ const Signup = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div id={style.container}   >
+        <div>
+        <form onSubmit={handleSubmit} id={style.form}>
             <input
                 type="text"
                 id="firstName"
@@ -103,11 +107,14 @@ const Signup = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
             />
-
-            <button type="submit">
-                Submit
+            
+            <button id={style.button} type="submit">
+                Signup
             </button>
         </form>
+            <h3 id={style.message}>Already have an account? Login</h3>
+        </div>
+        </div>
     );
 }
 

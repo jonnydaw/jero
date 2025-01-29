@@ -2,7 +2,7 @@
 'use client'
 import React, { useState } from "react";
 import axios from "axios"
-
+import style from "../Signup/Signup.module.css"
 const Login = () => {
 
     const [formData, setFormData] = useState({
@@ -34,7 +34,9 @@ const Login = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div id={style.container}   >
+        <div>
+        <form onSubmit={handleSubmit} id={style.form}>
             <input
                 type="text"
                 id="email"
@@ -50,10 +52,13 @@ const Login = () => {
                 onChange={handleChange}
             />
 
-            <button type="submit">
-                Submit
+            <button id={style.button} type="submit">
+                Login
             </button>
         </form>
+        <h3 id={style.message}>Don't have an account? Signup</h3>
+        </div>
+        </div>
     );
 }
 

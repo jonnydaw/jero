@@ -18,7 +18,7 @@ const NavbarPC = (props: Props) => {
     return ( 
       <nav className={style.navContainer} >
         <div className={style.singleLink}>
-        <Link className={style.links} href="/"><IoHomeOutline size = '1.5em' /></Link>
+        <Link className={`${style.links} ${style.button}`} href="/"><IoHomeOutline size = '1.5em' /></Link>
         </div>
 
           <div className={style.searchBar}>

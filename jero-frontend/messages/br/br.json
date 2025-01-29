@@ -24,6 +24,12 @@
         "confirmEmail" : "Confirmar e-mail",
         "password" : "Senha",
         "confirmPassword" : "Confirmar senha"
+    },
+
+    "DropdownCount" : {
+      "adult" : "Adultos",
+      "child" : "Crianças",
+      "pet" : "Mascotas"
     }
 
   }

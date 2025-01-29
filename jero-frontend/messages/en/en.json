@@ -23,6 +23,12 @@
     "confirmEmail" : "Confirm Email",
     "password" : "Password",
     "confirmPassword" : "confirmPassword"
+  },
+
+  "DropdownCount" : {
+    "adult" : "Adults",
+    "child" : "Children",
+    "pet" : "Pets"
   }
 }
 

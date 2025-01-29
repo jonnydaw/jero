@@ -51,7 +51,7 @@ const LoginForm = () => {
                  />
 
             <button type="submit">
-                Submit
+                DElete
             </button>
         </form>
     );

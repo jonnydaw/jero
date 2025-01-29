@@ -7,7 +7,7 @@
 .dropdown{
     min-width: 20ch;
     max-width: 20ch;
-    padding: 1.5em;
+    padding: 1.3em;
     margin: 0.75em 0.25em ;
     border-radius: 1em;
     border: 0.1em solid black;
@@ -65,8 +65,9 @@ div .toggles:not(:last-child){
 .toggleButton{
   border: solid 0.1em black;
   border-radius: 0.5em;
-  background-color: #90C3C8;
+  background-color: black;
   margin: 0 0.35em;
+  color: white;
 }
 
 @media screen and (max-width: 1000px) {

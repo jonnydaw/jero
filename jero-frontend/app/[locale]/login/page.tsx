@@ -1,11 +1,14 @@
 import React from 'react'
-import Login from "@/app/[locale]/login/Login";
-
+import Login from "@/app/components/Login/Login";
+import style from "./page.module.css"
 type Props = {}
 
 const page = (props: Props) => {
     return (
-        <div><Login/></div>
+        <div>
+            <h1 id={style.title}>Welcome back</h1>
+            <Login/>
+        </div>
     )
 }
 
