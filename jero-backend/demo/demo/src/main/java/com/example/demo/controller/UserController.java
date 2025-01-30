@@ -108,7 +108,8 @@ public class UserController {
 		createdUser.setLastName(lName); 
 		createdUser.setDateOfBirth(dob);
 		createdUser.setPassword(passwordEncoder.encode(password)); 
-		createdUser.setRoles(roles); 
+		createdUser.setRoles(roles);
+		createdUser.setStatus(UserStatus.PENDING);
 		return createdUser;
 	}
 
@@ -119,6 +120,7 @@ public class UserController {
 
 	private void sendRegisterEmail(String email){
 		EmailTemplate emailTemplate = new EmailTemplate();
+		// this will become the OTP
 		emailTemplate.setMsgBody("12345");
 		emailTemplate.setSubject("Welcome");
 		emailTemplate.setRecipient(email);
@@ -175,7 +177,7 @@ public class UserController {
 
 		UserDetails userDetails = userServiceImplementation.loadUserByUsername(username); 
 
-		System.out.println("Sig in in user details"+ userDetails); 
+		System.out.println("Sign in in user details"+ userDetails); 
 
 		if(userDetails == null) { 
 			System.out.println("Sign in details - null" + userDetails); 

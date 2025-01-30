@@ -21,12 +21,13 @@ public class JwtProvider {
 	public static String generateToken(Authentication auth) { 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities(); 
 		String roles = populateAuthorities(authorities); 
+		//String status = populateAuthorities(authorities); 
 		//@SuppressWarnings("deprecation") 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
 				.setExpiration(new Date(new Date().getTime()+86400000)) 
 				.claim("email", auth.getName()) 
-				.claim( "authorities",roles) 
+				.claim( "role",roles)
 				.signWith(key) 
 				.compact(); 
 		System.out.println("Token for parsing in JwtProvider: " + jwt); 
@@ -46,7 +47,6 @@ public class JwtProvider {
 	public static String getEmailFromJwtToken(String jwt) { 
 		try { 
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 
-		
 			String email = String.valueOf(claims.get("email")); 
 			System.out.println("Email extracted from JWT: " + claims); 
 			return email; 
