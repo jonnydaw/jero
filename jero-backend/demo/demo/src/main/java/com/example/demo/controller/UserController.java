@@ -18,6 +18,8 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import com.example.demo.SecurityConfig.JwtProvider;
 import com.example.demo.dto.User.UserSignupHandler;
+import com.example.demo.email.EmailService;
+import com.example.demo.email.EmailTemplate;
 import com.example.demo.usermodel.User;
 
 import jakarta.servlet.http.Cookie;
@@ -57,6 +59,8 @@ public class UserController {
 	private PasswordEncoder passwordEncoder; 
 	@Autowired
 	private UserServiceImplementation userServiceImplementation; 
+	@Autowired 
+	private EmailService emailService;
 	
 	// @Autowired
 	// private UserService userService; 
@@ -103,7 +107,14 @@ public class UserController {
 		
 		User savedUser = userRepository.save(createdUser); 
 		userRepository.save(savedUser); 
+		
+		EmailTemplate emailTemplate = new EmailTemplate();
+		emailTemplate.setMsgBody("12345");
+		emailTemplate.setSubject("Welcome");
+		emailTemplate.setRecipient(user.getEmail());
 
+		emailService.sendSimpleMail(emailTemplate);
+		
 		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
 	}
 
