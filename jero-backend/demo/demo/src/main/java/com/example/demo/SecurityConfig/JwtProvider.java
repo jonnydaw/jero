@@ -31,7 +31,6 @@ public class JwtProvider {
 				.compact(); 
 		System.out.println("Token for parsing in JwtProvider: " + jwt); 
 		return jwt; 
-
 	} 
 
 	private static String populateAuthorities(Collection<? extends GrantedAuthority> authorities) { 
@@ -45,7 +44,6 @@ public class JwtProvider {
 
 	//@SuppressWarnings("deprecation") 
 	public static String getEmailFromJwtToken(String jwt) { 
-		//jwt = jwt.substring(7); // Assuming "Bearer " is removed from the token 
 		try { 
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 
 		

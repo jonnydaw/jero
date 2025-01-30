@@ -14,15 +14,15 @@ const Profile = () => {
                 const response = await axios.get("http://localhost:8080/auth/profile",{ withCredentials : true});
                 setUserData(response.data);
             } catch (error) {
-                console.error("Error fetching user data:", error);
-                // Optionally handle the error (e.g., set an error state)
+                console.log("Error fetching user data:", error);
             }
         };
     
         fetchData();
+
     }, []);
     return (
-        <div>{userData}</div>
+        <div>{userData || `Not logged in`}</div>
     );
 }
 

@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.authentication.BadCredentialsException; 
@@ -41,7 +42,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping; 
-import org.springframework.web.bind.annotation.RestController; 
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException; 
 
 @RestController
 @RequestMapping("/auth") 
@@ -69,7 +71,7 @@ public class UserController {
 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<AuthResponse> signup(@RequestBody	 UserSignupHandler user) throws Exception { 
+	public ResponseEntity<?> signup(@RequestBody UserSignupHandler user) throws Exception { 
 		String userEmail = user.getEmail();
 		String userConfirmEmail = user.getConfirmEmail();
 		String userPassword = user.getPassword();
@@ -77,20 +79,16 @@ public class UserController {
 		System.out.println("Roles " + user.getRoles());
 
 		User isEmailExist = userRepository.findByEmail(user.getEmail());
-		AuthResponse authResponse = new AuthResponse(); 
 		SignupValidator sv = new SignupValidator();
 
 		if (isEmailExist != null) { 
-			authResponse.setJwt(""); 	
-			authResponse.setMessage("Email already in use"); 
-			authResponse.setStatus(false); 
-			return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.BAD_REQUEST); 
+			String message = "Email already in use.";
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
+			//return new ResponseEntity<HttpStatusCode>(HttpStatus.BAD_REQUEST); 
 		}else if(!sv.checkFieldsMatch(userEmail, userConfirmEmail) || !sv.validPasswordMsg(userPassword).isEmpty() || !sv.checkFieldsMatch(userPassword, userConfirmPassword)){
 				String message = buildErrorMessage(sv, userEmail, userConfirmEmail, userPassword, userConfirmPassword);
-				authResponse.setJwt(""); 	
-				authResponse.setMessage(message); 
-				authResponse.setStatus(false); 
-				return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.BAD_REQUEST); 
+				// https://stackoverflow.com/questions/24292373/spring-boot-rest-controller-how-to-return-different-http-status-codes
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
 			}
 
 		
@@ -105,16 +103,8 @@ public class UserController {
 		
 		User savedUser = userRepository.save(createdUser); 
 		userRepository.save(savedUser); 
-		Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()); 
-		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = JwtProvider.generateToken(authentication); 
 
-
-		
-		authResponse.setJwt(token); 
-		authResponse.setMessage("Register Success"); 
-		authResponse.setStatus(true); 
-		return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK); 
+		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
 	}
 
 
