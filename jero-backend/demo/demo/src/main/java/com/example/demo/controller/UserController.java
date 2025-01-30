@@ -80,7 +80,6 @@ public class UserController {
 		String userConfirmEmail = user.getConfirmEmail();
 		String userPassword = user.getPassword();
 		String userConfirmPassword = user.getConfirmPassword();
-		System.out.println("Roles " + user.getRoles());
 
 		User isEmailExist = userRepository.findByEmail(user.getEmail());
 		SignupValidator sv = new SignupValidator();
@@ -88,7 +87,6 @@ public class UserController {
 		if (isEmailExist != null) { 
 			String message = "Email already in use.";
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
-			//return new ResponseEntity<HttpStatusCode>(HttpStatus.BAD_REQUEST); 
 		}else if(!sv.checkFieldsMatch(userEmail, userConfirmEmail) || !sv.validPasswordMsg(userPassword).isEmpty() || !sv.checkFieldsMatch(userPassword, userConfirmPassword)){
 				String message = buildErrorMessage(sv, userEmail, userConfirmEmail, userPassword, userConfirmPassword);
 				// https://stackoverflow.com/questions/24292373/spring-boot-rest-controller-how-to-return-different-http-status-codes
@@ -96,27 +94,40 @@ public class UserController {
 			}
 
 		
+		User createdUser = createUser(user.getEmail(), user.getFirstName(), user.getLastName(), user.getDob(), user.getPassword(), user.getRoles());
+		saveUser(createdUser); 
+		sendRegisterEmail(user.getEmail());
+
+		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
+	}
+
+	private User createUser(String email, String fName, String lName, String dob, String password, String roles){
 		User createdUser = new User(); 
-		createdUser.setEmail(user.getEmail()); 
-		createdUser.setFirstName(user.getFirstName()); 
-		createdUser.setLastName(user.getLastName()); 
-		createdUser.setDateOfBirth(user.getDob());
-		createdUser.setPassword(passwordEncoder.encode(user.getPassword())); 
-		createdUser.setRoles(user.getRoles()); 
-		System.out.println(user.getRoles());
-		
+		createdUser.setEmail(email); 
+		createdUser.setFirstName(fName); 
+		createdUser.setLastName(lName); 
+		createdUser.setDateOfBirth(dob);
+		createdUser.setPassword(passwordEncoder.encode(password)); 
+		createdUser.setRoles(roles); 
+		return createdUser;
+	}
+
+	private void saveUser(User createdUser) {
 		User savedUser = userRepository.save(createdUser); 
-		userRepository.save(savedUser); 
-		
+		userRepository.save(savedUser);
+	}
+
+	private void sendRegisterEmail(String email){
 		EmailTemplate emailTemplate = new EmailTemplate();
 		emailTemplate.setMsgBody("12345");
 		emailTemplate.setSubject("Welcome");
-		emailTemplate.setRecipient(user.getEmail());
-
+		emailTemplate.setRecipient(email);
 		emailService.sendSimpleMail(emailTemplate);
-		
-		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
 	}
+
+
+
+
 
 
 
