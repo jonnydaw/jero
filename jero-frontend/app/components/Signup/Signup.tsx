@@ -23,6 +23,7 @@ type FormData = {
 
 const Signup = () => {
     const t = useTranslations('Signup');
+    const [postSuccess, setPostSuccess] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormData>({
         firstName : "",
         lastName : "",
@@ -54,6 +55,7 @@ const Signup = () => {
                 },
                 { withCredentials: true}
             );
+            setPostSuccess(true);
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
@@ -62,7 +64,7 @@ const Signup = () => {
     }
 
     return (
-        <div id={style.container}   >
+        <div id={style.container}>
         <div>
         <form onSubmit={handleSubmit} id={style.form}>
             <input

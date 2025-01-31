@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.User;
 
 
 
@@ -51,7 +51,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/auth") 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 
-public class UserController { 
+public class UserAuthController { 
 
 	@Autowired
 	private UserRepository userRepository; 
@@ -70,9 +70,7 @@ public class UserController {
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
 		// 27/11/24
 		return JwtProvider.getEmailFromJwtToken(token);
-	} 	
-
-
+	} 
 
 	@PostMapping("/signup") 
 	public ResponseEntity<?> signup(@RequestBody UserSignupHandler user) throws Exception { 
@@ -127,11 +125,10 @@ public class UserController {
 		emailService.sendSimpleMail(emailTemplate);
 	}
 
-
-
-
-
-
+	@PostMapping("/otp")
+	public ResponseEntity<?> otp(@RequestBody String otp){
+		return new ResponseEntity<>(null);
+	}
 
 
 
