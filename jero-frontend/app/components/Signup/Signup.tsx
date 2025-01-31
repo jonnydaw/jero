@@ -136,7 +136,7 @@ const Signup = () => {
         <div id={style.container}>
         <div>
         <form onSubmit={handleSubmit} id={style.form}>
-            {firstNameError && `name cannot be empty`}
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="text"
                 id="firstName"
@@ -146,6 +146,7 @@ const Signup = () => {
                 onChange={handleChange}
                 onBlur={handleBlurFirstName}
             />
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="text"
                 id="lastName"
@@ -155,6 +156,7 @@ const Signup = () => {
                 onChange={handleChange}
 
             />
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="text"
                 id="dob"
@@ -163,6 +165,7 @@ const Signup = () => {
                 value={formData.dob}
                 onChange={handleChange}
             />
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="email"
                 id="email"
@@ -172,7 +175,7 @@ const Signup = () => {
                 onChange={handleChange}
 
             />
-
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="email"
                 id="confirmEmail"
@@ -181,7 +184,7 @@ const Signup = () => {
                 value={formData.confirmEmail}
                 onChange={handleChange}
             />
-
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="password"
                 id="password"
@@ -190,7 +193,7 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleChange}
             />
-            
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="password"
                 id="confirmPassword"
@@ -199,6 +202,7 @@ const Signup = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
             />
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <select name="roles"
                 id={style.roles}
                 value={formData.roles}
@@ -211,7 +215,7 @@ const Signup = () => {
                 <option value="host">{t('userTypes.host')}</option>
                 <option value="both">{t('userTypes.both')}</option>
             </select>
-
+            {!firstNameError ? <br /> : <span>Not allowed</span>}
             <button id={style.button} type="submit">
                 Signup
             </button>
