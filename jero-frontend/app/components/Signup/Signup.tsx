@@ -2,10 +2,13 @@
 'use client'
 import style from "./Signup.module.css"
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios"
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { createPortal } from 'react-dom';
+import Portal from "../Modal/Portal";
+import {catchEmailMismatch} from "./SignupErrors"
 
 
 type FormData = {
@@ -19,11 +22,35 @@ type FormData = {
     roles : string
 }
 
+type FormFocusDefocus = {
+    firstName : boolean,
+    lastName : boolean,
+    email : boolean,
+    confirmEmail : boolean,
+    dob: boolean,
+    password : boolean,
+    confirmPassword : boolean,
+    roles : boolean
+}
+
+type FormError = {
+    firstName : boolean,
+    lastName : boolean,
+    email : boolean,
+    dob: boolean,
+    password : boolean,
+    roles : boolean
+}
+
 
 
 const Signup = () => {
     const t = useTranslations('Signup');
+    
     const [postSuccess, setPostSuccess] = useState<boolean>(false);
+
+    const [firstNameError, setFirstNameError] = useState<boolean>(false)
+    
     const [formData, setFormData] = useState<FormData>({
         firstName : "",
         lastName : "",
@@ -35,13 +62,54 @@ const Signup = () => {
         roles : ""
     });
 
+
+    // true signifies the lack of an error.
+    // having to use useRef as useState was not fast enough on its own
+    const errors = useRef<FormFocusDefocus>({
+        firstName : true,
+        lastName : true,
+        email : true,
+        confirmEmail : true,
+        dob: true,
+        password : true,
+        confirmPassword : true,
+        roles : true
+    })
+
     const handleChange = (e : any) => {
         const { name, value} = e.target;
         setFormData({ ...formData, [name]: value });
+        if(name === `firstName`){
+            console.log(value)
+            if(value.length > 0){
+                setFirstNameError(false);
+            }
+        }
+    }
+
+    const handleFocus = (e : any) =>{
+
+    }
+
+    const handleBlurFirstName = () => {
+        if(formData.firstName.length === 0){
+            setFirstNameError(true)
+        }else{
+            setFirstNameError(false)
+        }
+    }
+
+    const allowSubmission = async () => {
+        errors.current.email = catchEmailMismatch(formData.email, formData.confirmEmail);
+        console.log(catchEmailMismatch(formData.email, formData.confirmEmail));
     }
 
     const handleSubmit = async (e : any) => {
         e.preventDefault();
+        await allowSubmission();
+        if(errors.current.email === false){
+            console.log("hit")
+        } else{
         try {
             const response = await axios.post('http://localhost:8080/auth/signup', {
                 firstName : formData.firstName,
@@ -62,11 +130,13 @@ const Signup = () => {
             console.log('Signup failed:', error.response ? error.response.data : error.message);
         }
     }
+    }
 
     return (
         <div id={style.container}>
         <div>
         <form onSubmit={handleSubmit} id={style.form}>
+            {firstNameError && `name cannot be empty`}
             <input
                 type="text"
                 id="firstName"
@@ -74,6 +144,7 @@ const Signup = () => {
                 placeholder= {t('firstName')}
                 value={formData.firstName}
                 onChange={handleChange}
+                onBlur={handleBlurFirstName}
             />
             <input
                 type="text"
@@ -82,6 +153,7 @@ const Signup = () => {
                 placeholder= {t('lastName')}
                 value={formData.lastName}
                 onChange={handleChange}
+
             />
             <input
                 type="text"
@@ -98,7 +170,9 @@ const Signup = () => {
                 placeholder= {t('email')}
                 value={formData.email}
                 onChange={handleChange}
+
             />
+
             <input
                 type="email"
                 id="confirmEmail"
@@ -143,6 +217,7 @@ const Signup = () => {
             </button>
         </form>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
+            <Portal origin="hi" data="poo"/>
         </div>
         </div>
     );

@@ -12,7 +12,7 @@
 }
 
 
-#form *{
+#form input, #form button, #form select{
     background-color: #000;
     display: block;
     padding: 0.75em;
@@ -40,4 +40,11 @@
 
 #message{
     text-align: center;
+}
+
+.error{
+    padding: none;
+    margin: none;
+    background-color: inherit;
+    color: red;
 }
