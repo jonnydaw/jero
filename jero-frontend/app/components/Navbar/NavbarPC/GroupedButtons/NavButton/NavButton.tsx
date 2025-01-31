@@ -17,9 +17,9 @@ const NavButton : React.FC<Props> =  ({Icon, prompt}) => {
         <button className={`${style.links} ${style.button}`} >
           <Icon size = '1.5em' className={style.icon}/>
         </button>
-      <div className={style.dropdownContent}>
+      {/* <div className={style.dropdownContent}>
         <button>{prompt}</button>
-    </div>
+    </div> */}
   </div>
 </>
   )

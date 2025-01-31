@@ -7,14 +7,13 @@
 .dropdown{
     min-width: 20ch;
     max-width: 20ch;
-    padding: 1.3em;
+    padding: 1.5em;
     margin: 0.75em 0.25em ;
     border-radius: 1em;
     border: 0.1em solid black;
     line-height: 0;
     background: white;
     position: relative;
-    text-align: center;
 }
 
 .dropdown:hover{
@@ -75,11 +74,9 @@ div .toggles:not(:last-child){
     min-width: 18ch;
     max-width: 18ch;
   }
-
     .dropdownContent {
         min-width: 13ch;
         max-width: 13ch;
-
     }
 }
   

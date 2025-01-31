@@ -1,8 +1,7 @@
 .searchContainer{
-    margin: 1eem; 
+    margin: 1em; 
     padding: 0;
     gap: 1em;
-    
 }
 
 
@@ -10,8 +9,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
-    font-size: 1.25em;
+    flex-grow: 1;
+    /*https://stackoverflow.com/questions/51426012/set-the-same-height-of-a-reactjs-component-to-a-div*/
 }
 
 
@@ -23,8 +22,8 @@
     border-radius: 1em;
     border: 0.1em solid black;
     line-height: 0;
-
 }
+
 
 .inputs:hover{
     transform: scale(1.05);
@@ -40,6 +39,13 @@
     cursor: pointer;
     position: sticky;
 }
+
+
+@media only screen and (max-width: 1080px) {
+    .inputs {
+        max-width: 9em;
+    }
+  }
 
 @media only screen and (max-width: 960px) {
     .inputs {

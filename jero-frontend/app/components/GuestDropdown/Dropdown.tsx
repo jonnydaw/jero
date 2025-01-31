@@ -16,7 +16,7 @@ const Dropdown : React.FC<Props> = ({count, setCount}) => {
   return (
     <div className={style.dropdown}>
       {/* https://stackoverflow.com/questions/16449295/how-to-sum-the-values-of-a-javascript-object*/}
-     <span>{t('guests')}: {Object.values(count).reduce((a,b) => a+b,0)}</span>
+     <span className={style.dropdownText}>{t('guests')}: {Object.values(count).reduce((a,b) => a+b,0)}</span>
     <div className={style.dropdownContent}>
 
     <GuestToggler
