@@ -19,7 +19,10 @@ const GuestToggler : React.FC<Props> = ({count, setCount}) => {
   }
   
   const decrement = (e: React.MouseEvent,key:string) => {
-    if (count[key] > 0) { 
+    if(key === `adultCount` && count[key] > 1){
+      setCount({...count,[key] : count[key] -1})
+    }
+    else if (key !== `adultCount` && count[key] > 0) { 
       setCount({...count,[key] : count[key] -1})
     }
   };

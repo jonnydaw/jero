@@ -22,13 +22,13 @@ type FormData =  {
 const Search : React.FC<Props> =  () => {
 
   const t = useTranslations('SearchBar');
-  const [count, setCount] = useState<GuestCounts>({adultCount : 0, childCount : 0, petCount : 0});
+  const [count, setCount] = useState<GuestCounts>({adultCount : 1, childCount : 0, petCount : 0});
   // const [childCount, setChildCount] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     options: "",
     where: "",
     dates: "",
-    count: {adultCount : 0, childCount : 0, petCount : 0}
+    count: {adultCount : 1, childCount : 0, petCount : 0}
   });
 
   const handleChange = (e: any) => {
