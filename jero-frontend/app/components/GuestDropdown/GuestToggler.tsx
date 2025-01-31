@@ -13,7 +13,9 @@ type Props = {
 const GuestToggler : React.FC<Props> = ({count, setCount}) => {
   
   const increment = (e: React.MouseEvent,key : string) => {
+    if(count[key] < 256){
     setCount({...count,[key] : count[key] + 1})
+    }
   }
   
   const decrement = (e: React.MouseEvent,key:string) => {
