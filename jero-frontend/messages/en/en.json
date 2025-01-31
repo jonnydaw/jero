@@ -24,6 +24,7 @@
     "password" : "Password",
     "confirmPassword" : "confirmPassword",
     "userTypes" : {
+      "placeholder" : "Type of user",
       "tourist" : "Tourist",
       "host" : "Host",
       "both" : "Tourist & Host"
