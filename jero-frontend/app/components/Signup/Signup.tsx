@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
-import {catchEmailMismatch} from "./SignupErrors"
+import {doEmailsMatch, isValidEmail} from "./SignupErrors"
 
 
 type FormData = {
@@ -33,13 +33,15 @@ type FormFocusDefocus = {
     roles : boolean
 }
 
-type FormError = {
-    firstName : boolean,
-    lastName : boolean,
-    email : boolean,
-    dob: boolean,
-    password : boolean,
-    roles : boolean
+type EmailError = {
+    empty : boolean,
+    invalid : boolean
+}
+
+type ConfirmEmailError = {
+    empty : boolean,
+    invalid : boolean,
+    mismatch : boolean
 }
 
 
@@ -49,7 +51,19 @@ const Signup = () => {
     
     const [postSuccess, setPostSuccess] = useState<boolean>(false);
 
-    const [firstNameError, setFirstNameError] = useState<boolean>(false)
+    const [firstNameError, setFirstNameError] = useState<boolean>(false);
+    const [lastNameError, setLastNameError] = useState<boolean>(false);
+    
+    const [emailError, setEmailError] = useState<EmailError>({
+        empty : false,
+        invalid : false
+    });
+
+    const [confirmEmailError, setConfirmEmailError] = useState<ConfirmEmailError>({
+        empty : false,
+        invalid : false,
+        mismatch: false
+    });
     
     const [formData, setFormData] = useState<FormData>({
         firstName : "",
@@ -79,10 +93,25 @@ const Signup = () => {
     const handleChange = (e : any) => {
         const { name, value} = e.target;
         setFormData({ ...formData, [name]: value });
-        if(name === `firstName`){
-            console.log(value)
-            if(value.length > 0){
-                setFirstNameError(false);
+        if(name === `firstName` && value.length > 0 ){
+            setFirstNameError(false);
+        } else if(name === `lastName` && value.length > 0){
+            setLastNameError(false);
+        } else if(name === `email` && value.length > 0){
+            setEmailError({...emailError, [`empty`] : false});
+            if(isValidEmail(value)){
+                console.log("hit second if")
+                setEmailError({...emailError, [`invalid`] : false});
+            }
+        } else if(name === `confirmEmail` && value.length > 0){
+            setConfirmEmailError({...confirmEmailError, [`empty`] : false});
+            if(isValidEmail(value)){
+                setConfirmEmailError({...confirmEmailError, [`invalid`] : false});
+            }
+            //console.log(doEmailsMatch(formData.email, value))
+            if(doEmailsMatch(formData.email, value)){
+                //console.log("hit mismatch")
+                setConfirmEmailError({...confirmEmailError, [`mismatch`] : false});
             }
         }
     }
@@ -99,9 +128,40 @@ const Signup = () => {
         }
     }
 
+    const handleBlurLastName = () => {
+        if(formData.lastName.length === 0){
+            setLastNameError(true)
+        }else{
+            setLastNameError(false)
+        }
+    }
+
+    const handleBlurEmail = () => {
+        if(formData.email.length === 0){
+            console.log("hitLength")
+            setEmailError({...emailError, [`empty`] : true})
+        }else if(!isValidEmail(formData.email)) {
+            console.log("hitInvalid")
+            setEmailError({...emailError, [`invalid`] : true})
+        }
+    }
+
+    const handleBlurConfirmEmail = () => {
+        if(formData.confirmEmail.length === 0){
+            console.log("hitLength")
+            setConfirmEmailError({...confirmEmailError, [`empty`] : true})
+        }else if(!isValidEmail(formData.confirmEmail)) {
+            console.log("hitInvalid")
+            setConfirmEmailError({...confirmEmailError, [`invalid`] : true})
+        } else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
+            setConfirmEmailError({...confirmEmailError, [`mismatch`] : true})
+        }
+    }
+
     const allowSubmission = async () => {
-        errors.current.email = catchEmailMismatch(formData.email, formData.confirmEmail);
-        console.log(catchEmailMismatch(formData.email, formData.confirmEmail));
+        // check if any errors exist
+        // errors.current.email = doEmailsMatch(formData.email, formData.confirmEmail);
+        // console.log(doEmailsMatch(formData.email, formData.confirmEmail));
     }
 
     const handleSubmit = async (e : any) => {
@@ -109,6 +169,7 @@ const Signup = () => {
         await allowSubmission();
         if(errors.current.email === false){
             console.log("hit")
+
         } else{
         try {
             const response = await axios.post('http://localhost:8080/auth/signup', {
@@ -136,7 +197,8 @@ const Signup = () => {
         <div id={style.container}>
         <div>
         <form onSubmit={handleSubmit} id={style.form}>
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+
+            {!firstNameError ? <br /> : <span>First name cannot be empty.</span>}
             <input
                 type="text"
                 id="firstName"
@@ -146,7 +208,8 @@ const Signup = () => {
                 onChange={handleChange}
                 onBlur={handleBlurFirstName}
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+
+            {!lastNameError ? <br /> : <span>Last name cannot be empty.</span>}
             <input
                 type="text"
                 id="lastName"
@@ -154,8 +217,9 @@ const Signup = () => {
                 placeholder= {t('lastName')}
                 value={formData.lastName}
                 onChange={handleChange}
-
+                onBlur={handleBlurLastName}
             />
+
             {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
                 type="text"
@@ -165,7 +229,7 @@ const Signup = () => {
                 value={formData.dob}
                 onChange={handleChange}
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {(!emailError.empty && !emailError.invalid) ? <br /> : <span>{emailError.empty ? `Email cannot be empty` : `Invalid Email`}</span> }
             <input
                 type="email"
                 id="email"
@@ -173,9 +237,15 @@ const Signup = () => {
                 placeholder= {t('email')}
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={handleBlurEmail}
 
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {(!confirmEmailError.empty && !confirmEmailError.invalid && !confirmEmailError.mismatch)  
+            ? <br /> 
+            : <span>
+                {confirmEmailError.empty ? `Email cannot be empty` : 
+                confirmEmailError.invalid ? `Email is invalid`: `Email mismatch`}
+            </span>}
             <input
                 type="email"
                 id="confirmEmail"
@@ -183,6 +253,7 @@ const Signup = () => {
                 placeholder= {t('confirmEmail')}
                 value={formData.confirmEmail}
                 onChange={handleChange}
+                onBlur={handleBlurConfirmEmail}
             />
             {!firstNameError ? <br /> : <span>Not allowed</span>}
             <input
