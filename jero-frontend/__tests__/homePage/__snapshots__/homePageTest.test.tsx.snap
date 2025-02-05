@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page should render correctly 1`] = `
+<div>
+  <div>
+    <h1>
+      HomePage.title
+    </h1>
+    <a
+      href="/en/about"
+    >
+      HomePage.about
+    </a>
+  </div>
+</div>
+`;
