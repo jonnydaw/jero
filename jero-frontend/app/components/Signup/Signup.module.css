@@ -12,7 +12,7 @@
 }
 
 
-#form input, #form button, #form select{
+#form input, #form button[type=submit], #form select{
     background-color: #000;
     display: block;
     padding: 0.75em;
@@ -32,7 +32,7 @@
     align-self: center;
 }
 
-#button:hover, #roles:hover{
+#button[type=submit]:hover, #roles:hover{
     cursor: pointer;
     transform: scale(1.02);
 }
