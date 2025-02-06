@@ -35,7 +35,8 @@ type FormFocusDefocus = {
 
 type EmailError = {
     empty : boolean,
-    invalid : boolean
+    invalid : boolean,
+    mismatch : boolean
 }
 
 type ConfirmEmailError = {
@@ -51,12 +52,19 @@ const Signup = () => {
     
     const [postSuccess, setPostSuccess] = useState<boolean>(false);
 
+    const calculateAge = () => {
+        const dob = new Date(formData.dob);
+        const now = new Date();
+        return now.valueOf() - dob.valueOf();
+    }
+
     const [firstNameError, setFirstNameError] = useState<boolean>(false);
     const [lastNameError, setLastNameError] = useState<boolean>(false);
     
     const [emailError, setEmailError] = useState<EmailError>({
         empty : false,
-        invalid : false
+        invalid : false,
+        mismatch: false
     });
 
     const [confirmEmailError, setConfirmEmailError] = useState<ConfirmEmailError>({
@@ -113,6 +121,8 @@ const Signup = () => {
                 //console.log("hit mismatch")
                 setConfirmEmailError({...confirmEmailError, [`mismatch`] : false});
             }
+        } else if(name === `dob`){
+            console.log(calculateAge());
         }
     }
 
@@ -143,6 +153,10 @@ const Signup = () => {
         }else if(!isValidEmail(formData.email)) {
             console.log("hitInvalid")
             setEmailError({...emailError, [`invalid`] : true})
+        } else if (doEmailsMatch(formData.email, formData.confirmEmail)){
+            setConfirmEmailError({...confirmEmailError, [`mismatch`] : false})
+        }  else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
+            setConfirmEmailError({...confirmEmailError, [`mismatch`] : true})
         }
     }
 
@@ -220,12 +234,11 @@ const Signup = () => {
                 onBlur={handleBlurLastName}
             />
 
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {!firstNameError ? <span>Date of Birth</span> : <span>Not allowed</span>}
             <input
-                type="text"
+                type="date"
                 id="dob"
                 name="dob"
-                placeholder= {t('dob')}
                 value={formData.dob}
                 onChange={handleChange}
             />
