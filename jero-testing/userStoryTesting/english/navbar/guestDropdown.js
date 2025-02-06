@@ -25,7 +25,7 @@ const generateRandomInt = (lowerLim, upperLim) => {
 fixture('Guest Dropdown')
     .page('http://localhost:3000/en');
 
-test('Verify One Guest By Default', async t => {
+test.only('Verify One Guest By Default', async t => {
     await t
         .expect(guestHoverAreaText.textContent).eql("Guests: 1");
 })
@@ -39,7 +39,6 @@ test('Test Guest Dropdown', async t => {
 
 test('Increment Adult Button by random amount', async t => {
     const random = generateRandomInt(1,255);
-    console.log(random);
     await t
         .hover(guestHoverArea)
         
