@@ -44,7 +44,7 @@ test('Increment Adult Button by random amount', async t => {
         .hover(guestHoverArea)
         
     
-    for(let i = 1; i < random; i++){
+    for(let i = 0; i < random; i++){
         // verifying it is the same the dropdown as the form input.
         await t
             .click(adultIncrementButton)
