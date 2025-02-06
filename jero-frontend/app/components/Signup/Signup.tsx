@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
-import {doEmailsMatch, isValidEmail} from "./SignupErrors"
+import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
 
 
 type FormData = {
@@ -22,7 +22,7 @@ type FormData = {
     roles : string
 }
 
-type FormFocusDefocus = {
+type FormErrors = {
     firstName : boolean,
     lastName : boolean,
     email : boolean,
@@ -72,6 +72,20 @@ const Signup = () => {
         invalid : false,
         mismatch: false
     });
+
+    const [passwordError, setPasswordError] = useState<ConfirmEmailError>({
+        empty : false,
+        invalid : false,
+        mismatch: false
+    });
+
+    const [confirmPasswordError, setConfirmPasswordError] = useState<ConfirmEmailError>({
+        empty : false,
+        invalid : false,
+        mismatch: false
+    });
+
+    const [submissionError, setSubmissionError] = useState<boolean>(false);
     
     const [formData, setFormData] = useState<FormData>({
         firstName : "",
@@ -87,17 +101,18 @@ const Signup = () => {
 
     // true signifies the lack of an error.
     // having to use useRef as useState was not fast enough on its own
-    const errors = useRef<FormFocusDefocus>({
-        firstName : true,
-        lastName : true,
-        email : true,
-        confirmEmail : true,
-        dob: true,
-        password : true,
-        confirmPassword : true,
-        roles : true
+    const [errors, setErrors] = useState<FormErrors>({
+        firstName : false,
+        lastName : false,
+        email : false,
+        confirmEmail : false,
+        dob: false,
+        password : false,
+        confirmPassword : false,
+        roles : false
     })
 
+    // TODO: REFACTOR
     const handleChange = (e : any) => {
         const { name, value} = e.target;
         setFormData({ ...formData, [name]: value });
@@ -108,11 +123,9 @@ const Signup = () => {
         } else if(name === `email` && value.length > 0){
             setEmailError({...emailError, [`empty`] : false});
             if(isValidEmail(value)){
-                console.log("hit second if")
                 setEmailError({...emailError, [`invalid`] : false});
             }
-            if(doEmailsMatch(formData.confirmEmail, value)){
-                //console.log("hit mismatch")
+            if(isFieldMatch(formData.confirmEmail, value)){
                 setConfirmEmailError({...confirmEmailError, [`mismatch`] : false});
             }
         } else if(name === `confirmEmail` && value.length > 0){
@@ -120,13 +133,29 @@ const Signup = () => {
             if(isValidEmail(value)){
                 setConfirmEmailError({...confirmEmailError, [`invalid`] : false});
             }
-            //console.log(doEmailsMatch(formData.email, value))
-            if(doEmailsMatch(formData.email, value)){
-                //console.log("hit mismatch")
+            if(isFieldMatch(formData.email, value)){
                 setConfirmEmailError({...confirmEmailError, [`mismatch`] : false});
             }
         } else if(name === `dob`){
             console.log(calculateAge());
+        } else if (name === `password` && value.length > 0){
+            setPasswordError({...passwordError, [`empty`] : false});
+            if(isValidPassword(value)){
+                setPasswordError({...passwordError, [`invalid`] : false});
+            }
+            if(isFieldMatch(formData.confirmPassword, value)){
+                setConfirmPasswordError({...confirmPasswordError, [`mismatch`] : false});
+            }
+        } else if(name === `confirmPassword` && value.length > 0){
+            console.log(isValidPassword(value));
+            setConfirmPasswordError({...confirmPasswordError, [`empty`] : false});
+            if(isValidPassword(value)){
+                console.log("valid")
+                setConfirmPasswordError({...confirmPasswordError, [`invalid`] : false});
+            }
+            if(isFieldMatch(formData.password, value)){
+                setConfirmPasswordError({...confirmPasswordError, [`mismatch`] : false});
+            }
         }
     }
 
@@ -152,41 +181,83 @@ const Signup = () => {
 
     const handleBlurEmail = () => {
         if(formData.email.length === 0){
-            console.log("hitLength")
             setEmailError({...emailError, [`empty`] : true})
         }else if(!isValidEmail(formData.email)) {
-            console.log("hitInvalid")
             setEmailError({...emailError, [`invalid`] : true})
-        } else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
+        } else if (formData.confirmEmail .length > 0 && !isFieldMatch(formData.email, formData.confirmEmail)){
             setConfirmEmailError({...confirmEmailError, [`mismatch`] : true})
         }
     }
 
     const handleBlurConfirmEmail = () => {
         if(formData.confirmEmail.length === 0){
-            console.log("hitLength")
             setConfirmEmailError({...confirmEmailError, [`empty`] : true})
         }else if(!isValidEmail(formData.confirmEmail)) {
-            console.log("hitInvalid")
             setConfirmEmailError({...confirmEmailError, [`invalid`] : true})
-        } else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
+        } else if (!isFieldMatch(formData.email, formData.confirmEmail)){
             setConfirmEmailError({...confirmEmailError, [`mismatch`] : true})
         }
     }
 
-    const allowSubmission = async () => {
-        // check if any errors exist
-        // errors.current.email = doEmailsMatch(formData.email, formData.confirmEmail);
-        // console.log(doEmailsMatch(formData.email, formData.confirmEmail));
+
+    const handleBlurPassword = () => {
+        if(formData.password.length === 0){
+            setPasswordError({...passwordError, [`empty`] : true})
+        }else if(!isValidPassword(formData.password)) {
+            setPasswordError({...passwordError, [`invalid`] : true})
+        } else if (formData.confirmPassword .length > 0 && !isFieldMatch(formData.password, formData.confirmPassword)){
+            setConfirmPasswordError({...confirmPasswordError, [`mismatch`] : true})
+        }
+    }
+
+    const handleBlurConfirmPassword = () => {
+        if(formData.confirmPassword.length === 0){
+            setConfirmPasswordError({...confirmPasswordError, [`empty`] : true})
+        }else if(!isValidPassword(formData.confirmPassword)) {
+            setConfirmPasswordError({...confirmPasswordError, [`invalid`] : true})
+        } else if (!isFieldMatch(formData.password, formData.confirmPassword)){
+            setConfirmPasswordError({...confirmPasswordError, [`mismatch`] : true})
+        }
+    }
+
+
+    const allowSubmission = () : boolean => {
+        if(firstNameError){
+            console.log("fname")
+            return false;
+        }
+        else if(lastNameError){
+            console.log("lname");
+            return false;
+        }
+        else if(emailError.empty || emailError.invalid || emailError.mismatch){
+            console.log("e")
+            return false;
+        }
+        else if(confirmEmailError.empty || confirmEmailError.invalid || confirmEmailError.mismatch){
+            console.log("ce")
+            return false;}
+        else if(passwordError.empty || passwordError.invalid || passwordError.mismatch){
+            console.log("p")
+            return false;
+        }
+        else if(confirmPasswordError.empty || confirmPasswordError.invalid || confirmPasswordError.mismatch){
+            console.log("confirmP")
+            return false;
+        }
+        else if(formData.roles === t('userTypes.tourist') || formData.roles === t('userTypes.host') || formData.roles === (t('userTypes.both'))){
+            console.log("user")
+            return false;
+        }
+        setSubmissionError(false);
+        console.log("no errors")
+        return true;
     }
 
     const handleSubmit = async (e : any) => {
         e.preventDefault();
-        await allowSubmission();
-        if(errors.current.email === false){
-            console.log("hit")
-
-        } else{
+        console.log(emailError)
+        if(allowSubmission()){
         try {
             const response = await axios.post('http://localhost:8080/auth/signup', {
                 firstName : formData.firstName,
@@ -205,7 +276,9 @@ const Signup = () => {
         } catch (error : any) {
             console.log(formData)
             console.log('Signup failed:', error.response ? error.response.data : error.message);
-        }
+    }}
+    else{
+        setSubmissionError(true);
     }
     }
 
@@ -270,7 +343,7 @@ const Signup = () => {
                 onChange={handleChange}
                 onBlur={handleBlurConfirmEmail}
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {(!passwordError.empty && !passwordError.invalid) ? <br /> : <span>{passwordError.empty ? `Password cannot be empty` : `Invalid Password`}</span> }
             <input
                 type="password"
                 id="password"
@@ -278,8 +351,14 @@ const Signup = () => {
                 placeholder= {t('password')}
                 value={formData.password}
                 onChange={handleChange}
+                onBlur={handleBlurPassword}
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {(!confirmPasswordError.empty && !confirmPasswordError.invalid && !confirmPasswordError.mismatch)  
+            ? <br /> 
+            : <span>
+                {confirmPasswordError.empty ? `Password cannot be empty` : 
+                confirmPasswordError.invalid ? `Password is invalid`: `Password mismatch`}
+            </span>}
             <input
                 type="password"
                 id="confirmPassword"
@@ -287,8 +366,9 @@ const Signup = () => {
                 placeholder= {t('confirmPassword')}
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                onBlur={handleBlurConfirmPassword}
             />
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {true ? <br /> : <span>An option must be selected</span>}
             <select name="roles"
                 id={style.roles}
                 value={formData.roles}
@@ -301,13 +381,12 @@ const Signup = () => {
                 <option value="host">{t('userTypes.host')}</option>
                 <option value="both">{t('userTypes.both')}</option>
             </select>
-            {!firstNameError ? <br /> : <span>Not allowed</span>}
+            {!submissionError ? <br /> : <span>Not allowed</span>}
             <button id={style.button} type="submit">
                 Signup
             </button>
         </form>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
-            <Portal origin="hi" data="poo"/>
         </div>
         </div>
     );
