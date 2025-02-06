@@ -111,6 +111,10 @@ const Signup = () => {
                 console.log("hit second if")
                 setEmailError({...emailError, [`invalid`] : false});
             }
+            if(doEmailsMatch(formData.confirmEmail, value)){
+                //console.log("hit mismatch")
+                setConfirmEmailError({...confirmEmailError, [`mismatch`] : false});
+            }
         } else if(name === `confirmEmail` && value.length > 0){
             setConfirmEmailError({...confirmEmailError, [`empty`] : false});
             if(isValidEmail(value)){
@@ -153,9 +157,7 @@ const Signup = () => {
         }else if(!isValidEmail(formData.email)) {
             console.log("hitInvalid")
             setEmailError({...emailError, [`invalid`] : true})
-        } else if (doEmailsMatch(formData.email, formData.confirmEmail)){
-            setConfirmEmailError({...confirmEmailError, [`mismatch`] : false})
-        }  else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
+        } else if (!doEmailsMatch(formData.email, formData.confirmEmail)){
             setConfirmEmailError({...confirmEmailError, [`mismatch`] : true})
         }
     }
