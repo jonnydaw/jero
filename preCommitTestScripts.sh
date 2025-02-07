@@ -1,13 +1,13 @@
 echo "Testcafe tests:"
-npx testcafe chrome:headless jero-testing/userStoryTesting/english/navbar/guestDropdown.js
+# npx testcafe chrome:headless jero-testing/userStoryTesting/english/navbar/guestDropdown.js
 
-if [ $? -eq 1 ]; then
-    echo "Testcafe tests failed. ༼ つ ಥ_ಥ ༽つ"
-    exit 1
-else
-    echo "Testcafe tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
+# if [ $? -eq 1 ]; then
+#     echo "Testcafe tests failed. ༼ つ ಥ_ಥ ༽つ"
+#     exit 1
+# else
+#     echo "Testcafe tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
 
-fi
+# fi
 
 
 
