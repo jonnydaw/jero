@@ -15,7 +15,7 @@ public interface IUserAuthService {
 
 	public void sendRegisterEmail(String email);
 
-	public void validate(UserSignupHandler user);
+	public void validate(UserSignupHandler user) throws Exception;
 		
 		
 } 

@@ -16,13 +16,13 @@ public abstract class AbstractSignupValidator {
         return first;
     }
 
-    public abstract boolean validateRequest(UserSignupHandler user);
+    public abstract boolean validateRequest(UserSignupHandler user) throws Exception ;
 
     /**
      * Runs check on the next object in chain or ends traversing if we're in
      * last object in chain.
      */
-    protected boolean validateNextRequest(UserSignupHandler user) {
+    protected boolean validateNextRequest(UserSignupHandler user) throws Exception  {
         if (next == null) {
             return true;
         }

@@ -63,7 +63,7 @@ public class UserAuthService implements IUserAuthService {
         }
     
         @Override
-        public void validate(UserSignupHandler user) {
+        public void validate(UserSignupHandler user) throws Exception {
             signupValidator.link(emailMatchValidator, passwordMatchValidator,validPasswordValidator);
             signupValidator.validateRequest(user);
     }

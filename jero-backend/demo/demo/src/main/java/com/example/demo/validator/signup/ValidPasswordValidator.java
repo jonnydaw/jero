@@ -4,15 +4,18 @@ package com.example.demo.validator.signup;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.user.DTO.UserSignupHandler;
+import com.example.demo.user.enumeration.user.SignupErrorMessages;
 
 @Component
 public class ValidPasswordValidator extends AbstractSignupValidator {
 
     @Override
-    public boolean validateRequest(UserSignupHandler user) {
+    public boolean validateRequest(UserSignupHandler user) throws Exception {
         String password = user.getPassword();
         Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");
@@ -22,22 +25,24 @@ public class ValidPasswordValidator extends AbstractSignupValidator {
         Matcher hasSpecial = special.matcher(password);
 
         if(password.length() < 8){
-            return false;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.PASSWORD_ERROR_TOO_SHORT.toString());
+            // return false;
             // errors.add(PasswordError.TOO_SHORT);
         }
 
         if(!hasDigit.find()){
-            return false;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.PASSWORD_ERROR_NO_DIGIT.toString());
             // errors.add(PasswordError.NO_DIGIT);
         }
 
         if(!hasSpecial.find()){
-            return false;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.PASSWORD_ERROR_NO_SPECIAL.toString());
             // errors.add(PasswordError.NO_SPECIAL);
         }
 
         if(!hasLetter.find()){
-            return false;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.PASSWORD_ERROR_NO_LETTER.toString());
+
             // errors.add(PasswordError.NO_LETTER);
         }
 

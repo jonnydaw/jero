@@ -1,7 +1,9 @@
 package com.example.demo.validator.signup;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 // import java.util.HashSet;
 // import java.util.Set;
@@ -9,17 +11,18 @@ import org.springframework.stereotype.Component;
 // import java.util.regex.Pattern;
 
 import com.example.demo.user.DTO.UserSignupHandler;
+import com.example.demo.user.enumeration.user.SignupErrorMessages;
 
 @Primary
 @Component
 public class EmailMatchValidator extends AbstractSignupValidator {
 
     @Override
-    public boolean validateRequest(UserSignupHandler user) {
+    public boolean validateRequest(UserSignupHandler user) throws Exception {
         boolean isMatch = user.getEmail().equals(user.getConfirmEmail());
         if(!isMatch){
-            System.out.println("email mismatch cor");
-            return false;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.EMAIL_ERROR_MISMATCH.toString());
+            //return false;
         }
         return validateNextRequest(user);
     }
