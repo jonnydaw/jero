@@ -9,6 +9,7 @@ import { Link } from "@/i18n/routing";
 import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
 import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
+import OTPModal from "./SignupModal";
 
 
 type FormData = {
@@ -258,6 +259,7 @@ const Signup = () => {
         e.preventDefault();
         console.log(emailError)
         if(allowSubmission()){
+            setPostSuccess(true)
         try {
             const response = await axios.post('http://localhost:8080/auth/signup', {
                 firstName : formData.firstName,
@@ -387,6 +389,7 @@ const Signup = () => {
             </button>
         </form>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
+            {postSuccess && <OTPModal/>}
         </div>
         </div>
     );

@@ -6,7 +6,7 @@ package com.example.demo.controller.User;
 
 import com.example.demo.repository.UserRepository; 
 import com.example.demo.response.AuthResponse; 
-import com.example.demo.service.UserServiceImplementation;
+import com.example.demo.service.UserService;
 import com.example.demo.enumeration.user.*;
 import com.example.demo.enumeration.validator.PasswordError;
 import com.example.demo.validator.signup.SignupValidator;
@@ -58,7 +58,7 @@ public class UserAuthController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	@Autowired
-	private UserServiceImplementation userServiceImplementation; 
+	private UserService userServiceImplementation; 
 	@Autowired 
 	private EmailService emailService;
 	
@@ -85,7 +85,7 @@ public class UserAuthController {
 		if (isEmailExist != null) { 
 			String message = "Email already in use.";
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
-		}else if(!sv.checkFieldsMatch(userEmail, userConfirmEmail) || !sv.validPasswordMsg(userPassword).isEmpty() || !sv.checkFieldsMatch(userPassword, userConfirmPassword)){
+		} else if(!sv.checkFieldsMatch(userEmail, userConfirmEmail) || !sv.validPasswordMsg(userPassword).isEmpty() || !sv.checkFieldsMatch(userPassword, userConfirmPassword)){
 				String message = buildErrorMessage(sv, userEmail, userConfirmEmail, userPassword, userConfirmPassword);
 				// https://stackoverflow.com/questions/24292373/spring-boot-rest-controller-how-to-return-different-http-status-codes
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
