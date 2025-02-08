@@ -1,11 +1,17 @@
 package com.example.demo.validator.signup;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import com.example.demo.user.DTO.UserSignupHandler;
+import com.example.demo.user.enumeration.user.SignupErrorMessages;
 
 public abstract class AbstractSignupValidator {
 
     private AbstractSignupValidator next;
-    public String errorMessage;
+    //private List<SignupErrorMessages> accumulatedErrors;
+
     
     public AbstractSignupValidator link(AbstractSignupValidator first, AbstractSignupValidator... chain) {
         AbstractSignupValidator head = first;
@@ -16,16 +22,16 @@ public abstract class AbstractSignupValidator {
         return first;
     }
 
-    public abstract boolean validateRequest(UserSignupHandler user) throws Exception ;
+    public abstract ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors) throws Exception ;
 
     /**
      * Runs check on the next object in chain or ends traversing if we're in
      * last object in chain.
      */
-    protected boolean validateNextRequest(UserSignupHandler user) throws Exception  {
+    protected ArrayList<SignupErrorMessages> validateNextRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors) throws Exception  {
         if (next == null) {
-            return true;
+            return accumulatedErrors;
         }
-        return next.validateRequest(user);
+        return next.validateRequest(user, accumulatedErrors);
     }
 }

@@ -6,7 +6,7 @@ package com.example.demo.user.userCMRS.controller;
 
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.UserSignupHandler;
-
+import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
@@ -16,6 +16,8 @@ import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import org.springframework.http.HttpHeaders;
 import com.example.demo.SecurityConfig.JwtProvider;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping; 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/auth") 
@@ -60,27 +63,13 @@ public class UserAuthController {
 	} 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<?> signup(@RequestBody UserSignupHandler user) throws Exception { 
-		// String userEmail = user.getEmail();
-		// String userConfirmEmail = user.getConfirmEmail();
-		// String userPassword = user.getPassword();
-		// String userConfirmPassword = user.getConfirmPassword();
-
+	public ResponseEntity<?> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 
 		boolean isEmailInUse = userAuthService.isEmailInUse(user.getEmail());
-
-		// if (isEmailInUse) { 
-		// 	String message = "Email already in use.";
-		// 	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
-		// } else if(!signupValidator.checkFieldsMatch(userEmail, userConfirmEmail) || !signupValidator.validPasswordMsg(userPassword).isEmpty() || !signupValidator.checkFieldsMatch(userPassword, userConfirmPassword)){
-		// 		String message = signupValidator.buildErrorMessage(userEmail, userConfirmEmail, userPassword, userConfirmPassword);
-		// 		// https://stackoverflow.com/questions/24292373/spring-boot-rest-controller-how-to-return-different-http-status-codes
-		// 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
-		// 	}
+		if(isEmailInUse) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already in use");
 		userAuthService.validate(user);
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
 		userAuthService.sendRegisterEmail(user.getEmail());
-
 		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
 	}
 

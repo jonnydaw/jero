@@ -1,6 +1,7 @@
 package com.example.demo.validator.signup;
 
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ import com.example.demo.user.enumeration.user.SignupErrorMessages;
 public class ValidPasswordValidator extends AbstractSignupValidator {
 
     @Override
-    public boolean validateRequest(UserSignupHandler user) throws Exception {
+    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) throws Exception {
         String password = user.getPassword();
         Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");
@@ -46,7 +47,7 @@ public class ValidPasswordValidator extends AbstractSignupValidator {
             // errors.add(PasswordError.NO_LETTER);
         }
 
-        return validateNextRequest(user);
+        return validateNextRequest(user, list);
     }
     
 }

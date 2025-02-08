@@ -1,12 +1,18 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.email.EmailTemplate;
 import com.example.demo.email.IEmailService;
 import com.example.demo.user.DTO.UserSignupHandler;
+import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.enumeration.user.UserStatus;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
@@ -65,7 +71,12 @@ public class UserAuthService implements IUserAuthService {
         @Override
         public void validate(UserSignupHandler user) throws Exception {
             signupValidator.link(emailMatchValidator, passwordMatchValidator,validPasswordValidator);
-            signupValidator.validateRequest(user);
-    }
+            ArrayList<SignupErrorMessages> arr = new ArrayList<>();
+            ArrayList<SignupErrorMessages> res = signupValidator.validateRequest(user, arr);
+            if(res.size() > 0){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, res.toString() );
+            }
+            signupValidator.validateRequest(user, arr);
+        }
     
 }

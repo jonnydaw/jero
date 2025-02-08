@@ -1,5 +1,8 @@
 package com.example.demo.validator.signup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,13 +21,14 @@ import com.example.demo.user.enumeration.user.SignupErrorMessages;
 public class EmailMatchValidator extends AbstractSignupValidator {
 
     @Override
-    public boolean validateRequest(UserSignupHandler user) throws Exception {
+    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) throws Exception {
         boolean isMatch = user.getEmail().equals(user.getConfirmEmail());
         if(!isMatch){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.EMAIL_ERROR_MISMATCH.toString());
+            list.add(SignupErrorMessages.EMAIL_ERROR_MISMATCH);
+            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, SignupErrorMessages.EMAIL_ERROR_MISMATCH.toString());
             //return false;
         }
-        return validateNextRequest(user);
+        return validateNextRequest(user, list);
     }
 
     
