@@ -5,10 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class EmailTemplate {
-    private String recipient;
-    private String subject;
-    private String msgBody;
+     String recipient;
+     String subject;
+     String msgBody;
 }

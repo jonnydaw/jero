@@ -23,7 +23,7 @@ public class UserAuthService implements IUserAuthService {
         @Autowired ValidPasswordValidator validPasswordValidator;
         @Autowired private PasswordEncoder passwordEncoder; 
         @Autowired private UserRepository userRepository;
-        @Autowired private EmailTemplate emailTemplate;
+        //@Autowired private EmailTemplate emailTemplate;
         @Autowired private IEmailService emailService;
         @Autowired private AbstractSignupValidator signupValidator;
     
@@ -49,7 +49,7 @@ public class UserAuthService implements IUserAuthService {
         @Override
         public void sendRegisterEmail(String email){
             // this will become the OTP
-            //EmailTemplate emailTemplate = new EmailTemplate();
+            EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.setMsgBody("12345");
             emailTemplate.setSubject("Welcome");
             emailTemplate.setRecipient(email);
