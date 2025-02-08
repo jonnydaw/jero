@@ -1,16 +1,10 @@
-package com.example.demo.dto.User;
-import java.util.Set;
+package com.example.demo.user.DTO;
 
-import com.example.demo.enumeration.user.UserStatus;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor; 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter; 
+
 
 
 @Data

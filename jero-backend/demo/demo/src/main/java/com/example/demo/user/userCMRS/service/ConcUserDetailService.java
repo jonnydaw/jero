@@ -1,46 +1,46 @@
- package com.example.demo.service;
+package com.example.demo.user.userCMRS.service;
 
 
- import com.example.demo.repository.UserRepository; 
- 
- 
- import com.example.demo.usermodel.User; 
  import org.springframework.beans.factory.annotation.Autowired; 
  import org.springframework.security.core.GrantedAuthority;
  import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails; 
  import org.springframework.security.core.userdetails.UserDetailsService; 
  import org.springframework.security.core.userdetails.UsernameNotFoundException; 
- import org.springframework.stereotype.Service; 
- 
- 
- import java.util.ArrayList; 
+ import org.springframework.stereotype.Service;
+
+import com.example.demo.user.userCMRS.model.UserModel;
+import com.example.demo.user.userCMRS.repository.UserRepository;
+
+import java.util.ArrayList; 
  import java.util.List; 
  
  	
  @Service
- public class UserService implements UserDetailsService { 
+ public class ConcUserDetailService implements UserDetailsService { 
  
 	 @Autowired
 	 private UserRepository userRepository; 
 	 
-	 public UserService(UserRepository userRepository) { 
+	 public ConcUserDetailService(UserRepository userRepository) { 
 		 this.userRepository=userRepository; 
 	 } 
 	 
 	 
 	 @Override
 	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
-		 User user = userRepository.findByEmail(username); 
+		 UserModel user = userRepository.findByEmail(username); 
 		 System.out.println(user); 
-		 
-		 if(user==null) { 
-			 throw new UsernameNotFoundException("User not found with this email"+username); 
+		 if(user==null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("User not found with this email ");
+			sb.append(username);
+			 throw new UsernameNotFoundException(sb.toString()); 
  
 		 } 
  
 		 
-		 System.out.println("Loaded user: " + user.getEmail() + ", Role: " + user.getRoles()); 
+		 //System.out.println("Loaded user: " + user.getEmail() + ", Role: " + user.getRoles()); 
 		 List<GrantedAuthority> authorities = new ArrayList<>(); 
 		 authorities.add(new SimpleGrantedAuthority(user.getRoles().toString()));
 		 authorities.add(new SimpleGrantedAuthority(user.getStatus().toString()));

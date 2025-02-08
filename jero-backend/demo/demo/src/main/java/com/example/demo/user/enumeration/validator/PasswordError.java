@@ -1,4 +1,4 @@
-package com.example.demo.enumeration.validator;
+package com.example.demo.user.enumeration.validator;
 
 public enum PasswordError {
     NO_DIGIT,

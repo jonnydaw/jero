@@ -1,4 +1,4 @@
-package com.example.demo.enumeration.user;
+package com.example.demo.user.enumeration.user;
 
 public enum UserStatus {
     PENDING,

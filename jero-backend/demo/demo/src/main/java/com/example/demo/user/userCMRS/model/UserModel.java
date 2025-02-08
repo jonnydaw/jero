@@ -1,11 +1,10 @@
-package com.example.demo.usermodel;
+package com.example.demo.user.userCMRS.model;
 
 
-import java.util.*;
-import com.example.demo.enumeration.user.*;
 import org.springframework.data.annotation.Id; 
-import org.springframework.data.mongodb.core.mapping.Document; 
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.example.demo.user.enumeration.user.*;
 import com.fasterxml.jackson.annotation.JsonProperty; 
 
 import lombok.AllArgsConstructor; 
@@ -20,7 +19,7 @@ import lombok.Setter;
 @Data
 @Setter
 @Getter
-public class User { 
+public class UserModel { 
 	@Id
 	private String id; 
 	private String firstName; 
