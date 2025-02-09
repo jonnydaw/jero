@@ -1,12 +1,9 @@
 package com.example.demo.validator.signup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 // import java.util.HashSet;
 // import java.util.Set;
@@ -31,60 +28,4 @@ public class EmailMatchValidator extends AbstractSignupValidator {
         return validateNextRequest(user, list);
     }
 
-    
-
-
 }
-
-
-    // public Set<PasswordError> validPasswordMsg(String password){
-        
-    //     Set<PasswordError> errors =  new HashSet<>();
-        
-    //     Pattern letter = Pattern.compile("[a-zA-z]");
-    //     Pattern digit = Pattern.compile("[0-9]");
-    //     Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
-    //     Matcher hasLetter = letter.matcher(password);
-    //     Matcher hasDigit = digit.matcher(password);
-    //     Matcher hasSpecial = special.matcher(password);
-
-
-    //     if(password.length() < 8){
-    //         errors.add(PasswordError.TOO_SHORT);
-    //     }
-
-    //     if(!hasDigit.find()){
-    //         errors.add(PasswordError.NO_DIGIT);
-    //     }
-
-    //     if(!hasSpecial.find()){
-    //         errors.add(PasswordError.NO_SPECIAL);
-    //     }
-
-    //     if(!hasLetter.find()){
-    //         errors.add(PasswordError.NO_LETTER);
-    //     }
-
-    //     return errors;
-    // }
-
-    // public String buildErrorMessage(String userEmail, String userConfirmEmail, String userPassword, String userConfirmPassword){
-    //     StringBuilder errorMsg = new StringBuilder();
-	// 	if(!this.checkFieldsMatch(userEmail, userConfirmEmail)){
-	// 		errorMsg.append("Emails do not match.");
-	// 	} 
-
-	// 	if(!this.checkFieldsMatch(userPassword, userConfirmPassword)){
-	// 		errorMsg.append("Passwords do not match.");
-	// 	}
-
-	// 	if(!this.validPasswordMsg(userPassword).isEmpty()){
-	// 		for(PasswordError err : this.validPasswordMsg(userPassword)){
-	// 			errorMsg.append(err.toString() + " ");
-	// 		}
-	// 	}
-		
-	// 	return errorMsg.toString().trim();
-    // }
-
-

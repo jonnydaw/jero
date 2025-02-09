@@ -36,7 +36,6 @@ import java.util.ArrayList;
 			sb.append("User not found with this email ");
 			sb.append(username);
 			 throw new UsernameNotFoundException(sb.toString()); 
- 
 		 } 
  
 		 

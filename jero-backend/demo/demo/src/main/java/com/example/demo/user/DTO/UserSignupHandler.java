@@ -18,7 +18,7 @@ public class UserSignupHandler {
     
     @NotBlank
     String lastName;
-    
+    // to-do change to date type
     @NotBlank
     String dob;
     

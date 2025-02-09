@@ -1,12 +1,8 @@
 package com.example.demo.validator.signup;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
 
