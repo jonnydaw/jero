@@ -25,7 +25,7 @@ public class JwtProvider {
 		//@SuppressWarnings("deprecation") 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
-				.setExpiration(new Date(new Date().getTime()+86400000)) 
+				.setExpiration(new Date(new Date().getTime()+86_400_000)) 
 				.claim("email", auth.getName()) 
 				.claim( "role",roles)
 				.signWith(key) 

@@ -1,6 +1,9 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
 
+import org.springframework.security.core.Authentication;
+
+import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.userCMRS.model.UserModel; 
 
@@ -16,6 +19,8 @@ public interface IUserAuthService {
 	public void sendRegisterEmail(String email);
 
 	public void validate(UserSignupHandler user) throws Exception;
+
+	public Authentication authenticate(UserLoginHandler user);
 		
 		
 } 

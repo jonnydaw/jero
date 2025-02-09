@@ -5,17 +5,23 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.email.EmailTemplate;
 import com.example.demo.email.IEmailService;
+import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.enumeration.user.UserStatus;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
+import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.validator.signup.AbstractSignupValidator;
 import com.example.demo.validator.signup.EmailMatchValidator;
 import com.example.demo.validator.signup.PasswordMatchValidator;
@@ -27,6 +33,7 @@ public class UserAuthService implements IUserAuthService {
         @Autowired EmailMatchValidator emailMatchValidator;
         @Autowired PasswordMatchValidator passwordMatchValidator;
         @Autowired ValidPasswordValidator validPasswordValidator;
+        @Autowired ConcUserDetailService concUserDetailService;
         @Autowired private PasswordEncoder passwordEncoder; 
         @Autowired private UserRepository userRepository;
         //@Autowired private EmailTemplate emailTemplate;
@@ -78,5 +85,32 @@ public class UserAuthService implements IUserAuthService {
             }
             signupValidator.validateRequest(user, arr);
         }
+
+        @Override
+        public Authentication authenticate(UserLoginHandler user) {
+            //System.out.println(username+"---++----"+password); 
+            final String username = user.getUserName();
+            final String password = user.getPassword();
+
+
+            UserDetails ud = concUserDetailService.loadUserByUsername(username); 
+    
+            System.out.println("Sign in in user details"+ ud); 
+    
+            if(ud == null) { 
+                System.out.println("Sign in details - null" + ud); 
+    
+                throw new BadCredentialsException("Invalid username and password"); 
+            } 
+            if(!passwordEncoder.matches(password,ud.getPassword())) { 
+                System.out.println("Sign in userDetails - password mismatch"+ud); 
+    
+                throw new BadCredentialsException("Invalid password"); 
+                
+    
+            } 
+            return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities()); 
+        }
+        
     
 }

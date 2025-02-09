@@ -5,6 +5,7 @@ package com.example.demo.user.userCMRS.controller;
 
 
 import com.example.demo.response.AuthResponse;
+import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.userCMRS.model.UserModel;
@@ -82,14 +83,14 @@ public class UserAuthController {
 
 
 	@PostMapping("/signin") 
-	public ResponseEntity<AuthResponse> signin(@RequestBody UserModel user, HttpServletResponse response) { 
-		String username = user.getEmail(); 
+	public ResponseEntity<AuthResponse> signin(@RequestBody UserLoginHandler user, HttpServletResponse response) { 
+		String username = user.getUserName(); 
 		String password = user.getPassword(); 
 		System.out.println(username); 
 
 		System.out.println(username+"-------"+password); 
 
-		Authentication authentication = authenticate(username,password); 
+		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
 
 		String token = JwtProvider.generateToken(authentication); 
@@ -117,29 +118,29 @@ public class UserAuthController {
 
 
 	
-	private Authentication authenticate(String username, String password) { 
+	// private Authentication authenticate(String username, String password) { 
 
-		System.out.println(username+"---++----"+password); 
+	// 	System.out.println(username+"---++----"+password); 
 
-		UserDetails userDetails = concUserDetailService.loadUserByUsername(username); 
+	// 	UserDetails userDetails = concUserDetailService.loadUserByUsername(username); 
 
-		System.out.println("Sign in in user details"+ userDetails); 
+	// 	System.out.println("Sign in in user details"+ userDetails); 
 
-		if(userDetails == null) { 
-			System.out.println("Sign in details - null" + userDetails); 
+	// 	if(userDetails == null) { 
+	// 		System.out.println("Sign in details - null" + userDetails); 
 
-			throw new BadCredentialsException("Invalid username and password"); 
-		} 
-		if(!passwordEncoder.matches(password,userDetails.getPassword())) { 
-			System.out.println("Sign in userDetails - password mismatch"+userDetails); 
+	// 		throw new BadCredentialsException("Invalid username and password"); 
+	// 	} 
+	// 	if(!passwordEncoder.matches(password,userDetails.getPassword())) { 
+	// 		System.out.println("Sign in userDetails - password mismatch"+userDetails); 
 
-			throw new BadCredentialsException("Invalid password"); 
+	// 		throw new BadCredentialsException("Invalid password"); 
 			
 
-		} 
-		return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities()); 
+	// 	} 
+	// 	return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities()); 
 
-	} 
+	// } 
 
 } 
 
