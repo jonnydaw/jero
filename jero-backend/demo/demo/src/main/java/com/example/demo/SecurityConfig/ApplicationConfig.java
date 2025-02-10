@@ -2,11 +2,12 @@ package com.example.demo.SecurityConfig;
 
 
 
-import jakarta.servlet.http.HttpServletRequest; 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean; 
-import org.springframework.context.annotation.Configuration; 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy; 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; 
 import org.springframework.security.crypto.password.PasswordEncoder; 
@@ -21,24 +22,28 @@ import java.util.Collections;
 @Configuration
 public class ApplicationConfig { 
 
-	@SuppressWarnings("deprecation") 
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
 		System.out.println("Security Config is Active");
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
 		.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-				.authorizeRequests( 
+				.authorizeHttpRequests( 
 						authorize -> authorize
 						.requestMatchers("/recommendation").authenticated()
 						.requestMatchers("auth/profile").authenticated()
 						.requestMatchers("/signup").permitAll()
-						 //.requestMatchers("/recommendation/**").hasRole("ADMIN")
-						.anyRequest().permitAll()) 
+						.anyRequest().permitAll())
+						.logout((logout) -> logout
+							.deleteCookies("JWT")
+							// https://stackoverflow.com/questions/79314702/spring-authorization-server-threw-exception-with-message-delegatingauthenticati
+							.logoutSuccessHandler((request, response, authentication) -> {
+								response.setStatus(HttpServletResponse.SC_OK);
+								response.getWriter().flush();
+							})
+					)
 				.addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);
-				 
-				//.httpBasic(Customizer.withDefaults()) 
-				//.formLogin(Customizer.withDefaults()); 
 		return http.build(); 
 	} 
 

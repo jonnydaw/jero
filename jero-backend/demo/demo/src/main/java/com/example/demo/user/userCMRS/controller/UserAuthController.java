@@ -64,14 +64,24 @@ public class UserAuthController {
 	} 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<?> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 
+	public ResponseEntity<AuthResponse> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 
 		boolean isEmailInUse = userAuthService.isEmailInUse(user.getEmail());
 		if(isEmailInUse) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already in use");
 		userAuthService.validate(user);
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
+
+		
+		Authentication authentication = userAuthService.authenticate(user); 
+		SecurityContextHolder.getContext().setAuthentication(authentication); 
+		String token = userAuthService.provideJWTCookie(authentication); 
+		AuthResponse authResponse = userAuthService.buildAuthResponse(token);
+		String jwtCookie = userAuthService.buildCookie(token);
+
 		userAuthService.sendRegisterEmail(user.getEmail());
-		return new ResponseEntity<String>("Signup success", HttpStatus.OK); 
+		return ResponseEntity.ok()
+			.header(HttpHeaders.SET_COOKIE, jwtCookie)
+			.body(authResponse);
 	}
 
 
@@ -83,64 +93,23 @@ public class UserAuthController {
 
 
 	@PostMapping("/signin") 
-	public ResponseEntity<AuthResponse> signin(@RequestBody UserLoginHandler user, HttpServletResponse response) { 
-		String username = user.getUserName(); 
-		String password = user.getPassword(); 
-		System.out.println(username); 
+	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user) { 
+		// String username = user.getUsername(); 
+		// String password = user.getPassword(); 
+		// System.out.println(username); 
 
-		System.out.println(username+"-------"+password); 
+		// System.out.println(username+"-------"+password); 
 
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
+		String token = userAuthService.provideJWTCookie(authentication); 
+		AuthResponse authResponse = userAuthService.buildAuthResponse(token);
+		String jwtCookie = userAuthService.buildCookie(token);
 
-		String token = JwtProvider.generateToken(authentication); 
-		AuthResponse authResponse = new AuthResponse(); 
-		
-		authResponse.setMessage("Login success"); 
-		authResponse.setJwt(token);
-		System.out.println(JwtProvider.getEmailFromJwtToken(token));
-		authResponse.setStatus(true); 
-
-		ResponseCookie jwtCookie = ResponseCookie.from("JWT", token)
-			.httpOnly(true)
-			.secure(false)
-			.path("/")
-			.maxAge(3600) 
-			.sameSite("Strict") 
-			.build();
-
-
-	return ResponseEntity.ok()
-	.header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-	.body(authResponse);
+		return ResponseEntity.ok()
+			.header(HttpHeaders.SET_COOKIE, jwtCookie)
+			.body(authResponse);
 	} 
-
-
-
-	
-	// private Authentication authenticate(String username, String password) { 
-
-	// 	System.out.println(username+"---++----"+password); 
-
-	// 	UserDetails userDetails = concUserDetailService.loadUserByUsername(username); 
-
-	// 	System.out.println("Sign in in user details"+ userDetails); 
-
-	// 	if(userDetails == null) { 
-	// 		System.out.println("Sign in details - null" + userDetails); 
-
-	// 		throw new BadCredentialsException("Invalid username and password"); 
-	// 	} 
-	// 	if(!passwordEncoder.matches(password,userDetails.getPassword())) { 
-	// 		System.out.println("Sign in userDetails - password mismatch"+userDetails); 
-
-	// 		throw new BadCredentialsException("Invalid password"); 
-			
-
-	// 	} 
-	// 	return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities()); 
-
-	// } 
 
 } 
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.demo.SecurityConfig.JwtProvider;
 import com.example.demo.email.EmailTemplate;
 import com.example.demo.email.IEmailService;
+import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
@@ -89,10 +92,49 @@ public class UserAuthService implements IUserAuthService {
         @Override
         public Authentication authenticate(UserLoginHandler user) {
             //System.out.println(username+"---++----"+password); 
-            final String username = user.getUserName();
+            final String username = user.getUsername();
             final String password = user.getPassword();
 
+            return authenticateHelper(username, password); 
+        }
 
+
+
+        @Override
+        public String provideJWTCookie(Authentication auth) {
+            return JwtProvider.generateToken(auth); 
+        }
+
+        @Override
+        public AuthResponse buildAuthResponse(String token){
+            AuthResponse authResponse = new AuthResponse(); 
+            authResponse.setMessage("Login success"); 
+            authResponse.setJwt(token);
+            authResponse.setStatus(true); 
+            return authResponse;
+        }
+
+        @Override
+        public String buildCookie(String token){
+            ResponseCookie jwtCookie = ResponseCookie.from("JWT", token)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(3600) 
+                .sameSite("Lax") 
+                .build();
+                return jwtCookie.toString();
+
+        }
+
+        @Override
+        public Authentication authenticate(UserSignupHandler user) {
+            final String username = user.getEmail();
+            final String password = user.getPassword();
+            return authenticateHelper(username, password);
+        }
+
+        private Authentication authenticateHelper(final String username, final String password) {
             UserDetails ud = concUserDetailService.loadUserByUsername(username); 
     
             System.out.println("Sign in in user details"+ ud); 
@@ -109,8 +151,8 @@ public class UserAuthService implements IUserAuthService {
                 
     
             } 
-            return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities()); 
+            return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());
         }
-        
+                    
     
 }
