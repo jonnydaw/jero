@@ -8,7 +8,8 @@ import Search from "../../Search/Search";
 import { useState } from "react";
 import style from "./NavbarMobile.module.css"
 import DropdownSearchMobile from "./Dropdowns/BasicSearch/DropdownSearchMobile";
-import DropdownAdvancedSearchMobile from "./Dropdowns/AdvancedSearch/DropdownAdvancedSearchMobile";
+import DropdownAdvancedSearchMobile from "./Dropdowns/DropdownAdvancedSearchMobile/DropdownAdvancedSearchMobile";
+import GenericDropdownSearch from "./Dropdowns/GenericDropdown";
 
 // https://stackoverflow.com/questions/33949469/using-css-modules-how-do-i-define-more-than-one-style-name
 
@@ -52,8 +53,8 @@ const NavbarMobile = (props: Props) => {
         </div>
       </nav>
       <div>
-          {openSearch && <DropdownSearchMobile setOpen={setOpenSearch} />}
-          {openSmartSearch && <DropdownAdvancedSearchMobile />}
+          {openSearch && <GenericDropdownSearch setOpen={setOpenSearch} isAdvanced={false} />}
+          {openSmartSearch && <GenericDropdownSearch setOpen={setOpenSmartSearch} isAdvanced={true}/>}
           </div>
       </div>
     )
