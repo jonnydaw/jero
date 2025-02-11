@@ -38,12 +38,14 @@ const NavbarMobile = (props: Props) => {
         <Link  href="/" ><IoHomeOutline size = '1.5em' style={hamstyle} /></Link>
         </div>
         <div id={style.searchButtonsArea}>
+
+        <button onClick={handleSmartSearchOnClick} className={style.searchButtons}>
+                Smart Search
+            </button>
             <button onClick={handleSearchOnClick} className={style.searchButtons}>
                 Search
             </button >
-            <button onClick={handleSmartSearchOnClick} className={style.searchButtons}>
-                Smart Search
-            </button>
+
             </div>
         <div id={style.hamburger}>
         <GiHamburgerMenu style={hamstyle}/>
