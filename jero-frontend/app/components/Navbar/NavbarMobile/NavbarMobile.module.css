@@ -1,0 +1,33 @@
+#navContainer{
+    background-color: #000;
+    min-width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5em;
+}
+
+#searchButtonsArea{
+    align-items: center;
+    justify-items: center;
+    position: absolute;
+    margin: auto;
+}
+
+#homeButton{
+    margin-right: auto;
+    align-items: start;
+    justify-items: start;
+}
+#hamburger{
+    margin-left: auto;
+    align-items: end;
+    justify-items: end;
+}
+
+
+.searchButtons{
+    background-color: white;
+    color: black;
+}

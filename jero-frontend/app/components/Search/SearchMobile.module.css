@@ -1,0 +1,42 @@
+.searchContainer{
+    margin: 1em; 
+    padding: 0;
+    gap: 1em;
+}
+
+
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    /*https://stackoverflow.com/questions/51426012/set-the-same-height-of-a-reactjs-component-to-a-div*/
+}
+
+
+.inputs{
+    background-color: white;
+    min-width: 4em;
+    padding: 0.75em;
+    margin: 0.75em 0.1em ;
+    border-radius: 1em;
+    border: 0.1em solid black;
+    line-height: 0;
+    min-height: 5ch;
+}
+
+
+.inputs:hover{
+    transform: scale(1.05);
+}
+
+.button{
+    padding: 0.75em;
+    margin: 1em 0.2em ;
+    border-radius: 1em;
+    border: 0.1em solid #fff;
+    background-color: #fff ;
+    box-shadow: 0.2em 0.2em 0.2em #fff;
+    cursor: pointer;
+}

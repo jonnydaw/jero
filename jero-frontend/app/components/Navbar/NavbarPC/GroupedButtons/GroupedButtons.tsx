@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { CiShoppingBasket } from 'react-icons/ci'
-import style from "../Navbar.module.css"
+import style from "../NavbarPC.module.css"
 import { CgProfile } from 'react-icons/cg'
 import NavButton from './NavButton/NavButton'
 type Props = {}

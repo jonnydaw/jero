@@ -1,9 +1,7 @@
 package com.example.demo.user.DTO;
 
 
-import org.springframework.validation.annotation.Validated;
 
-import com.example.demo.user.enumeration.user.Roles;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

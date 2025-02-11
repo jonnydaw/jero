@@ -1,13 +1,14 @@
 'use client';
 // https://www.w3schools.com/react/react_forms.asp
 import React, { useEffect, useState } from 'react';
-import style from "./Search.module.css";
+import style from "./SearchPC.module.css";
+import styleMobile from "./SearchMobile.module.css";
 import { CiSearch } from "react-icons/ci";
 import Dropdown from '../GuestDropdown/Dropdown';
 import {GuestCounts} from "../../types/types"
-type Props = {};
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
+import { isMobile } from 'react-device-detect';
 
 
 type FormData =  {
@@ -17,9 +18,13 @@ type FormData =  {
   count : GuestCounts
 }
 
+interface Props {
+  isMobileSearch : boolean
+}
 
 
-const Search : React.FC<Props> =  () => {
+
+const Search : React.FC<Props> =  (props : Props) => {
 
   const t = useTranslations('SearchBar');
   const [count, setCount] = useState<GuestCounts>({adultCount : 1, childCount : 0, petCount : 0});
@@ -50,10 +55,10 @@ const Search : React.FC<Props> =  () => {
 
 
   return (
-    <div className={style.searchContainer}>
-      <form className={style.form} onSubmit={handleSubmit}>
+    <div className={props.isMobileSearch ? styleMobile.searchContainer : style.searchContainer}>
+      <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>
         <select
-          className={style.inputs}
+          className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           name="options"
           onChange={handleChange}
           value={formData.options}
@@ -67,7 +72,7 @@ const Search : React.FC<Props> =  () => {
         </select>
 
         <input
-          className={style.inputs}
+          className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           type="text"
           name="where"
           id="where"
@@ -77,7 +82,7 @@ const Search : React.FC<Props> =  () => {
         />
 
         <input
-          className={style.inputs}
+          className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           type="text"
           name="dates"
           id="dates"
@@ -91,7 +96,7 @@ const Search : React.FC<Props> =  () => {
         setCount={setCount}
       />
 
-      <button type="submit" className={style.button}>
+      <button type="submit" className={props.isMobileSearch ? styleMobile.button : style.button}>
           <CiSearch />
       </button>
       </form>

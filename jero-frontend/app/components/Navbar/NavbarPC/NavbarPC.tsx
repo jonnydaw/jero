@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link"
-import style from "./Navbar.module.css"
+import style from "./NavbarPC.module.css"
 import { CiShoppingBasket } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoHomeOutline } from "react-icons/io5";
@@ -22,7 +22,7 @@ const NavbarPC = (props: Props) => {
         </div>
 
           <div className={style.searchBar}>
-          <Search />
+          <Search isMobileSearch={false} />
           </div>
 
           <GroupedButtons/>

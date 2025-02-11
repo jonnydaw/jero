@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { CiShoppingBasket } from 'react-icons/ci'
-import style from "../../Navbar.module.css"
+import style from "../../NavbarPC.module.css"
 import { CgProfile } from 'react-icons/cg'
 import { IconType } from 'react-icons'
 

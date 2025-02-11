@@ -1,0 +1,14 @@
+#buttonContainer{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+
+}
+
+#close{
+    margin: 0.5em;
+    background-color: white;
+    color: red;
+    border: white;
+    
+}
