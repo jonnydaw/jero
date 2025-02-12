@@ -100,6 +100,16 @@ const Signup = () => {
                 blurred : true
                 }
         })
+        if(isFieldMatch(formData.confirmEmail, value)){
+                setErrors({...errors, [`confirmEmail`] : 
+                    {
+                    empty: errors.confirmEmail.empty,
+                    invalid : errors.confirmEmail.invalid,
+                    mismatch: !isFieldMatch(formData.confirmEmail, value),
+                    blurred : errors.confirmEmail.blurred
+                    }
+            })
+        }
     }
         } else if(name === `confirmEmail`){
             if(blurredStatus || errors.confirmEmail.blurred === true){
@@ -116,7 +126,7 @@ const Signup = () => {
         } else if(name === `dob`){
             console.log(calculateAge());
         } else if (name === `password`){
-            if(blurredStatus || errors.password.blurred === true)
+            if(blurredStatus || errors.password.blurred === true){
             setErrors({...errors, [name] : 
                 {
                 empty: value.length === 0,
@@ -125,6 +135,17 @@ const Signup = () => {
                 blurred : true
             }
         })
+        if(isFieldMatch(formData.confirmPassword, value)){
+            setErrors({...errors, [`confirmPassword`] : 
+                {
+                empty: errors.confirmPassword.empty,
+                invalid : errors.confirmPassword.invalid,
+                mismatch: !isFieldMatch(formData.confirmPassword, value),
+                blurred : errors.confirmPassword.blurred
+                }
+        })
+    }
+        }
         } else if(name === `confirmPassword`){
             console.log(isValidPassword(value));
             if(blurredStatus || errors.confirmPassword.blurred === true){
