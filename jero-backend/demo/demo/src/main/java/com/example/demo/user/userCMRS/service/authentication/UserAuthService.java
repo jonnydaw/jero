@@ -1,7 +1,9 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +24,16 @@ import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.enumeration.user.UserStatus;
+import com.example.demo.user.userCMRS.model.OtpModel;
 import com.example.demo.user.userCMRS.model.UserModel;
+import com.example.demo.user.userCMRS.repository.OtpRepository;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.validator.signup.AbstractSignupValidator;
 import com.example.demo.validator.signup.EmailMatchValidator;
 import com.example.demo.validator.signup.PasswordMatchValidator;
 import com.example.demo.validator.signup.ValidPasswordValidator;
-
+// split into two separate classes
 @Service
 public class UserAuthService implements IUserAuthService {
 
@@ -39,6 +43,7 @@ public class UserAuthService implements IUserAuthService {
         @Autowired ConcUserDetailService concUserDetailService;
         @Autowired private PasswordEncoder passwordEncoder; 
         @Autowired private UserRepository userRepository;
+        @Autowired private OtpRepository otpRepository;
         //@Autowired private EmailTemplate emailTemplate;
         @Autowired private IEmailService emailService;
         @Autowired private AbstractSignupValidator signupValidator;
@@ -60,14 +65,26 @@ public class UserAuthService implements IUserAuthService {
         public void saveUser(UserModel createdUser) {
             UserModel savedUser = userRepository.save(createdUser); 
             userRepository.save(savedUser);
+            saveOTP(createdUser);
         }
     
         @Override
-        public void sendRegisterEmail(String email){
-            // this will become the OTP
+        public void sendRegisterEmail(String email, String locale){
+            System.out.println(locale);
+            String[] arr = locale.split("/");
+            String subject = "";
+            Map<String,String> localeToWelcome = new HashMap<>();
+            localeToWelcome.put("en", "Welcome");
+            localeToWelcome.put("br", "Bem-vindo");
+            localeToWelcome.put("es", "Bienvenido");
+            for(String split : arr){
+                if(localeToWelcome.containsKey(split)){
+                    subject = localeToWelcome.get(split);
+                }
+            }
             EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.setMsgBody("12345");
-            emailTemplate.setSubject("Welcome");
+            emailTemplate.setSubject(subject.length() > 0 ? subject : "Welcome");
             emailTemplate.setRecipient(email);
             emailService.sendSimpleMail(emailTemplate);
         }
@@ -153,6 +170,13 @@ public class UserAuthService implements IUserAuthService {
             } 
             return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());
         }
-                    
-    
+
+        //@Override
+        private void saveOTP(UserModel createdUser) {
+            OtpModel otpModel = new OtpModel();
+            otpModel.setId(createdUser.getId());
+            otpModel.setOtp(12345);
+            otpModel.setCreatedAt(new Date(System.currentTimeMillis()));
+            otpRepository.save(otpModel);
+        }
 }

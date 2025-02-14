@@ -5,6 +5,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+// # https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
+
 
 @Service
 public class EmailService implements IEmailService {

@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
 import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
 import OTPModal from "./SignupModal";
+import { useRouter } from "next/navigation";
 
 
 type FormData = {
@@ -174,6 +175,7 @@ const Signup = () => {
     }
 
 
+    const router = useRouter()
 
 
     const allowSubmission = () : boolean => {
@@ -197,7 +199,8 @@ const Signup = () => {
                 confirmEmail : formData.confirmEmail,    
                 password : formData.password,
                 confirmPassword : formData.confirmPassword,
-                roles : formData.roles
+                roles : formData.roles,
+                locale : window.location.href
                 },
                 { withCredentials: true}
             );
@@ -316,8 +319,10 @@ const Signup = () => {
                 Signup
             </button>
         </form>
+        <div onClick={() => router.back()}>Go Back</div>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
             {postSuccess && <OTPModal/>}
+            {/* {true && <OTPModal/>} */}
         </div>
         </div>
     );

@@ -35,4 +35,7 @@ public class UserSignupHandler {
 
     @NotBlank
     String roles;
+
+    @NotBlank
+    String locale;
 }

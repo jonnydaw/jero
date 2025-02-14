@@ -10,7 +10,6 @@ public class UserLoginHandler {
     @NotBlank
     @Email
     String username;
-
     @NotBlank String password;
     
 }

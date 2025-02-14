@@ -17,7 +17,7 @@ public interface IUserAuthService {
 
 	public boolean isEmailInUse(String email);
 
-	public void sendRegisterEmail(String email);
+	public void sendRegisterEmail(String email, String locale);
 
 	public void validate(UserSignupHandler user) throws Exception;
 
@@ -30,6 +30,8 @@ public interface IUserAuthService {
 	public AuthResponse buildAuthResponse(String token);
 
 	public String buildCookie(String token);
+
+	//public void saveOTP(UserModel createdUser);
 		
 		
 } 
