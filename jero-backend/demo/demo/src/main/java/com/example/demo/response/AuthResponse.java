@@ -1,11 +1,5 @@
 package com.example.demo.response;
 
-
-
-
-
-import org.springframework.http.ResponseCookie;
-
 import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

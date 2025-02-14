@@ -1,11 +1,9 @@
 package com.example.demo.user.userCMRS.model;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
+
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;

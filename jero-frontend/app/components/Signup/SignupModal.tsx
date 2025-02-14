@@ -5,9 +5,12 @@ import style from "./otp.module.css"
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 
+interface Props {
+  pass: string
+}
 
 
-const OTPModal = () => {
+const OTPModal = (props : Props) => {
     const router = useRouter()
     const [modalIsOpen, setIsOpen] = useState<boolean>(true);
     const [formData, setFormData] = useState<string>();
@@ -44,7 +47,8 @@ const OTPModal = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:8080/auth/otp', {
-       otpPassword : Number(formData)
+       otpPassword : Number(formData),
+       pass : props.pass
       },
           { withCredentials: true}
       );

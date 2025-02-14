@@ -5,5 +5,7 @@ import com.example.demo.user.DTO.OtpHandler;
 public interface IOtpService {
 
     public void checkOTP(String token, OtpHandler otp);
+
+    public String reissue(String token, OtpHandler otp);
     
 }

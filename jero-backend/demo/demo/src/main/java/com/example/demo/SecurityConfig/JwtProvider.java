@@ -21,8 +21,6 @@ public class JwtProvider {
 	public static String generateToken(Authentication auth) { 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities(); 
 		String roles = populateAuthorities(authorities); 
-		//String status = populateAuthorities(authorities); 
-		//@SuppressWarnings("deprecation") 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
 				.setExpiration(new Date(new Date().getTime()+86_400_000)) 
@@ -43,7 +41,6 @@ public class JwtProvider {
 	} 
 
 
-	//@SuppressWarnings("deprecation") 
 	public static String getEmailFromJwtToken(String jwt) { 
 		try { 
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 

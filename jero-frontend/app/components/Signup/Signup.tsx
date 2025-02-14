@@ -321,7 +321,7 @@ const Signup = () => {
         </form>
         <div onClick={() => router.back()}>Go Back</div>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
-            {postSuccess && <OTPModal/>}
+            {postSuccess && <OTPModal pass={formData.password}/>}
             {/* {true && <OTPModal/>} */}
         </div>
         </div>

@@ -1,8 +1,5 @@
 package com.example.demo.user.DTO;
 
-import org.springframework.web.bind.annotation.CookieValue;
-
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -16,6 +13,8 @@ public class OtpHandler {
     int otpPassword; 
     @NotBlank
     String locale;
+    @NotBlank
+    String pass;
 }
 
     
