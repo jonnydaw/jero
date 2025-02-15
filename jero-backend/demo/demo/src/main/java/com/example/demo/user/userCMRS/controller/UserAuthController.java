@@ -50,13 +50,15 @@ public class UserAuthController {
 
 
 	@GetMapping("/profile") 
-	public String getProfile(@CookieValue("JWT") String token)  { 
+	public ResponseEntity<String> getProfile(@CookieValue("JWT") String token)  { 
 		System.out.println("hi");
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
 		// 27/11/24
 		String email =  JwtProvider.getEmailFromJwtToken(token);
 		UserModel user = userRepository.findByEmail(email);
-		return user.getFirstName();
+		System.out.println("Firstname " + user.getFirstName());
+		return ResponseEntity.ok()
+		.body(user.getFirstName());
 	} 
 
 	@PostMapping("/signup") 

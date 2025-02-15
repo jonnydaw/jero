@@ -41,7 +41,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
     private String extractToken(HttpServletRequest request) {
         String token = request.getHeader(JwtConstant.JWT_HEADER);
-        
         if (token == null && request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if ("JWT".equals(cookie.getName())) {
