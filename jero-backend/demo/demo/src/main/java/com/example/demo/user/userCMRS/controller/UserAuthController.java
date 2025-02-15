@@ -10,6 +10,7 @@ import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 
 import com.example.demo.user.userCMRS.model.UserModel;
+import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import com.example.demo.user.userCMRS.service.authentication.OtpService;
 
@@ -40,7 +41,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserAuthController { 
 	// https://stackoverflow.com/questions/12899372/spring-why-do-we-autowire-the-interface-and-not-the-implemented-class
 
-
+	@Autowired UserRepository userRepository;
 	@Autowired OtpService otpService;
 
 
@@ -50,9 +51,12 @@ public class UserAuthController {
 
 	@GetMapping("/profile") 
 	public String getProfile(@CookieValue("JWT") String token)  { 
+		System.out.println("hi");
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
 		// 27/11/24
-		return JwtProvider.getEmailFromJwtToken(token);
+		String email =  JwtProvider.getEmailFromJwtToken(token);
+		UserModel user = userRepository.findByEmail(email);
+		return user.getFirstName();
 	} 
 
 	@PostMapping("/signup") 

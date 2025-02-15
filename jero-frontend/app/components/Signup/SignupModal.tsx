@@ -53,7 +53,7 @@ const OTPModal = (props : Props) => {
           { withCredentials: true}
       );
       setIsOpen(false);
-      router.back();
+      router.push('profile');
 
 
       console.log(response);
@@ -75,12 +75,12 @@ const OTPModal = (props : Props) => {
           style={customStyles}
         >
         <div id={style.otpContainer}>
-            <h3 id={style.title}>Please check your email and enter the six digit code we sent.</h3>
+            <h3 id={style.title}>Please check your email and enter the five digit code we sent.</h3>
           <form id={style.otpForm}>
             <label htmlFor=""></label>
             <input type="text" id={style.otpInput} autoComplete="one-time-code"
               inputMode="numeric"
-              maxLength={6}
+              maxLength={5}
               pattern="\d{5}"
               onChange={handleChange} />
               <button onClick={handleSubmit}>Submit</button>

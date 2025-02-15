@@ -1,18 +1,24 @@
 // 'use client'
 // import React, { useState, useEffect } from "react";
+import Profile from "@/app/components/Profile/Profile";
 import axios from "axios"
 import { cookies } from "next/headers";
+import { redirect } from 'next/navigation'
 
 // https://nextjs.org/docs/app/api-reference/functions/cookies
 
-const Profile = async () => {
+const ProfilePage = async () => {
 
     const cookieStore = await cookies();
     const jwtToken = cookieStore.get("JWT")?.value;
+    console.log(jwtToken);
+    if(!jwtToken){
+        redirect("/")
+    }
     return (
-        <div>{jwtToken || `Not logged in`}</div>
+        <div> {<Profile/>}</div>
     );
 }
 
 
-export default Profile;
+export default ProfilePage;

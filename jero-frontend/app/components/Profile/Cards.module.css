@@ -1,0 +1,15 @@
+.card{
+    display: flex;
+    width: 30%;
+    color: white;
+    height: 15em;
+    background-color: pink;
+    margin: 1em;
+    border-radius: 1em;
+    border: solid black 0.01em;
+    padding: 0.5em;
+}
+
+.card:hover{
+    cursor: pointer;
+}

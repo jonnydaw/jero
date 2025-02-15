@@ -1,0 +1,17 @@
+#mainContainer{
+    padding: 1em !important;
+}
+
+
+#anotherStupidContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cardContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 80%;
+}

@@ -28,7 +28,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             throws ServletException, IOException {
         
         String jwt = extractToken(request);
-        
         if (jwt != null) {
             try {
                 validateAndSetAuthentication(jwt);
@@ -47,6 +46,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             for (Cookie cookie : request.getCookies()) {
                 if ("JWT".equals(cookie.getName())) {
                     token = cookie.getValue();
+                    System.out.println("valid " + token);
                     break;
                 }
             }

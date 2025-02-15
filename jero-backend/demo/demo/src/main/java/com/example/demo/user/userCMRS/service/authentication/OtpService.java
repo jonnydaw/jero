@@ -56,7 +56,7 @@ public class OtpService implements IOtpService {
     private void verifyWithDB(String id, int userOtp){
         OtpModel dbOtp = otpRepo.findOTPById(id);
 		if(dbOtp.getOtp() != userOtp){
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "bad");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect OTP");
 		}
     }
 

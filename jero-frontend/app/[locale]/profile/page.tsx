@@ -1,11 +1,12 @@
 import React from 'react'
-import Profile from "@/app/[locale]/profile/Profile";
+import ProfilePage from "@/app/[locale]/profile/ProfilePage";
+import style from "./profile.module.css"
 
 type Props = {}
 
 const page = (props: Props) => {
     return (
-        <div><Profile/></div>
+        <div><ProfilePage/></div>
     )
 }
 
