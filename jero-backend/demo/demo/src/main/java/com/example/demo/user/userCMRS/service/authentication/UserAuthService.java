@@ -137,7 +137,7 @@ public class UserAuthService implements IUserAuthService {
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
-                .maxAge(3600) 
+                .maxAge(86_400) 
                 .sameSite("Lax") 
                 .build();
                 return jwtCookie.toString();
