@@ -111,7 +111,6 @@ public class UserAuthService implements IUserAuthService {
             //System.out.println(username+"---++----"+password); 
             final String username = user.getUsername();
             final String password = user.getPassword();
-
             return authenticateHelper(username, password); 
         }
 

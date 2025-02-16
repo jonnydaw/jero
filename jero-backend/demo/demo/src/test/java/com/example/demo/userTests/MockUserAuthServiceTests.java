@@ -1,17 +1,22 @@
 package com.example.demo.userTests;
 
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.email.EmailService;
+import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.UserStatus;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
+import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.user.userCMRS.service.authentication.UserAuthService;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -33,6 +38,7 @@ class MockUserAuthServiceTests {
     @Mock PasswordEncoder mockPasswordEncoder;
     @Mock UserRepository mockUserRepository;
     @Mock EmailService mockEmailService;
+    @Mock ConcUserDetailService mockConcUserDetailService;
 
     //https://stackoverflow.com/questions/75482134/generating-unit-tests-for-my-service-implementations-on-the-spring-boot-applicat
     @Test
@@ -73,5 +79,29 @@ class MockUserAuthServiceTests {
         when(mockUserRepository.findByEmail(EMAIL)).thenReturn(new UserModel());
         boolean res = userAuthService.isEmailInUse(EMAIL);
         assertEquals(res, true);
+    }
+
+    @Test 
+    void invalidCredentials_LOGIN_INVALID_USERNAME_AND_PASSWORD(){
+        UserLoginHandler request = new UserLoginHandler();
+        request.setUsername(EMAIL);
+        request.setPassword(PASSWORD);
+
+        when(mockConcUserDetailService.loadUserByUsername(EMAIL)).thenReturn(null);
+                Throwable exception = assertThrows(BadCredentialsException.class, 
+        () -> userAuthService.authenticate(request));
+        assertEquals("Invalid username and password", exception.getMessage());
+    }
+
+    @Test 
+    void invalidCredentials_LOGIN_INVALID_PASSWORD(){
+        UserLoginHandler request = new UserLoginHandler();
+        request.setUsername(EMAIL);
+        request.setPassword(PASSWORD);
+
+        when(mockConcUserDetailService.loadUserByUsername(EMAIL)).thenReturn(null);
+                Throwable exception = assertThrows(BadCredentialsException.class, 
+        () -> userAuthService.authenticate(request));
+        assertEquals("Invalid username and password", exception.getMessage());
     }
 }
