@@ -59,7 +59,7 @@ public class UserAuthController {
 		System.out.println("Firstname " + user.getFirstName());
 		return ResponseEntity.ok()
 		.body(user.getFirstName());
-	} 
+	}
 
 	@PostMapping("/signup") 
 	public ResponseEntity<AuthResponse> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 

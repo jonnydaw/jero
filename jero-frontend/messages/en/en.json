@@ -1,9 +1,10 @@
 {
   "HomePage": {
-    "title": "Hello world!",
     "about": "Go to the about page"
   },
   "SearchBar": {
+    "smartSearch": "Not sure where you want to go to? Try our smart search feature",
+    "here" : "here!",
     "select": {
               "default":"Select Booking Type",
               "accommodation" : "Accommodation",

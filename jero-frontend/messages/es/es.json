@@ -1,10 +1,11 @@
 {
   "HomePage" : {
-  "title": "Hola Mundo!",
   "about": "aprende mas"
 },
 
   "SearchBar": {
+    "smartSearch": "¿No sabes a dónde quieres ir? Prueba nuestra búsqueda inteligente ",
+    "here" : "aquí!",
     "select": {
       "default":"Tipo de Booking",
       "accommodation" : "Alojamiento",

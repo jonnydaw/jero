@@ -1,9 +1,27 @@
+
+
 .searchContainer{
     margin: 1em; 
     padding: 0;
     gap: 1em;
 }
 
+#smartLinkContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#smartP{
+    color: white;
+    text-align: center;
+    font-size: large;
+}
+
+#anc{
+    color: white;
+    font-size: large;
+}
 
 .form{
     display: flex;

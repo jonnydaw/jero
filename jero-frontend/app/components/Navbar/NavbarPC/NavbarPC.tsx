@@ -1,4 +1,3 @@
-'use client'
 import Link from "next/link"
 import style from "./NavbarPC.module.css"
 import { CiShoppingBasket } from "react-icons/ci";

@@ -71,15 +71,15 @@ public class UserAuthService implements IUserAuthService {
         @Override
         public void sendRegisterEmail(String email, String locale){
             System.out.println(locale);
-            String[] arr = locale.split("/");
+            String[] split = locale.split("/");
             String subject = "";
             Map<String,String> localeToWelcome = new HashMap<>();
             localeToWelcome.put("en", "Welcome");
             localeToWelcome.put("br", "Bem-vindo");
             localeToWelcome.put("es", "Bienvenido");
-            for(String split : arr){
-                if(localeToWelcome.containsKey(split)){
-                    subject = localeToWelcome.get(split);
+            for(String chop : split){
+                if(localeToWelcome.containsKey(chop)){
+                    subject = localeToWelcome.get(chop);
                 }
             }
             EmailTemplate emailTemplate = new EmailTemplate();
@@ -108,7 +108,6 @@ public class UserAuthService implements IUserAuthService {
 
         @Override
         public Authentication authenticate(UserLoginHandler user) {
-            //System.out.println(username+"---++----"+password); 
             final String username = user.getUsername();
             final String password = user.getPassword();
             return authenticateHelper(username, password); 

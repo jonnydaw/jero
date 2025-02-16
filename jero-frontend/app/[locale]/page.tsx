@@ -23,13 +23,12 @@ export default function HomePage() {
     const t = useTranslations('HomePage');
     return (
         <div>
-            <h1>{t('title')}</h1>
-            <Link href="/about">{t('about')}</Link>
-            <form onSubmit={handleSubmit}>
+            <h1>{t('about')}</h1>
+            {/* <form onSubmit={handleSubmit}>
                 <button type='submit'>
                     Logout
                     </button>
-                    </form>
+            </form> */}
         </div>
-    );
+    );  
 }
