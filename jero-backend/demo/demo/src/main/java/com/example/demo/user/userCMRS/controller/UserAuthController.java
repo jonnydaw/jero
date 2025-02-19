@@ -4,7 +4,6 @@ package com.example.demo.user.userCMRS.controller;
 
 
 
-import com.example.demo.SecurityConfig.jwt.JwtConstant;
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.OtpHandler;
@@ -17,19 +16,14 @@ import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import com.example.demo.user.userCMRS.service.authentication.OtpService;
 import com.example.demo.user.userCMRS.service.authentication.RefreshTokenService;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+
 
 import org.springframework.http.HttpHeaders;
 
 import jakarta.validation.Valid;
 
-import java.util.Date;
-
-import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Lettuce.Cluster.Refresh;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.core.Authentication; 
@@ -133,12 +127,11 @@ public class UserAuthController {
 		UserModel user = userRepository.findByEmail(email);
 
 		refreshTokenService.checkRefreshToken(user,rt);
-		
+
 		Authentication auth = refreshTokenService.authenticateHelper(email);
 		String token = userAuthService.provideJWTCookie(auth, 200 * 1000);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
-		System.out.println(JwtProvider.getEmailFromJwtToken(token));
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);

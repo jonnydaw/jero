@@ -8,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,13 +20,11 @@ import com.example.demo.user.userCMRS.repository.RefreshRepository;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Service
 public class RefreshTokenService implements IRefreshTokenService {
     @Autowired RefreshRepository refreshRepository;
-    @Autowired private PasswordEncoder passwordEncoder; 
     @Autowired ConcUserDetailService concUserDetailService;
     @Autowired UserRepository userRepo;
 
@@ -61,6 +58,10 @@ public class RefreshTokenService implements IRefreshTokenService {
     @Override
     public void checkRefreshToken(UserModel user, String messageRefreshToken) {
        RefreshModel rm =  refreshRepository.findRefreshById(user.getId());
+       if(rm == null){
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "refresh token not found");
+
+       }
        System.out.println("db:" +rm.getRefreshToken());
         System.out.println("Message: " + messageRefreshToken);
        if(messageRefreshToken.equals(rm.getRefreshToken())){

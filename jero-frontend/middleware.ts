@@ -25,6 +25,10 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
     const jwtValue = cookieStore.get("JWT")?.value;
     const rtValue = cookieStore.get("RT")?.value;
 
+    if(!rtValue && protectedEndpoints.includes(page)){
+        return NextResponse.redirect(`http://localhost:3000/${locale}`);
+    }
+
     // https://stackoverflow.com/questions/51292406/check-if-token-expired-using-this-jwt-library
     function isTokenExpired(jwtValue : string) {
         const expiry = (JSON.parse(atob(jwtValue.split('.')[1]))).exp;

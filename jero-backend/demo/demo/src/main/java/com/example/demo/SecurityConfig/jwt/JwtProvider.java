@@ -10,8 +10,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication; 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.example.demo.user.userCMRS.model.UserModel;
-
 import javax.crypto.SecretKey; 
 import java.util.Collection; 
 import java.util.Date; 

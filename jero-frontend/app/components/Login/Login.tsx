@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import axios from "axios"
 import style from "../Signup/Signup.module.css"
 import { Link } from "@/i18n/routing";
+import next from "next";
+// https://stackoverflow.com/questions/74421327/nextrouter-was-not-mounted-next-js
+import { useRouter } from "next/navigation";
 const Login = () => {
 
     const [formData, setFormData] = useState({
@@ -11,6 +14,8 @@ const Login = () => {
         password: "",
 
     });
+
+    const router = useRouter();
 
     const handleChange = (e : any) => {
         const { name, value} = e.target;
@@ -27,6 +32,7 @@ const Login = () => {
                 },
                 { withCredentials: true}
             );
+            router.push("/")
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
