@@ -1,6 +1,6 @@
 
 
-package com.example.demo.SecurityConfig;
+package com.example.demo.SecurityConfig.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +32,10 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             try {
                 validateAndSetAuthentication(jwt);
             } catch (Exception e) {
-                System.out.println("Token validation failed: " + e);
+                if(e.getMessage().equals("io.jsonwebtoken.ExpiredJwtException")){
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().write("JWT expired");
+            }
             }
         }
         

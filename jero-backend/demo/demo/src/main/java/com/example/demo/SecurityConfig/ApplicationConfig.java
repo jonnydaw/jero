@@ -14,7 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain; 
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter; 
 import org.springframework.web.cors.CorsConfiguration; 
-import org.springframework.web.cors.CorsConfigurationSource; 
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import com.example.demo.SecurityConfig.jwt.JwtTokenValidator;
 
 import java.util.Arrays; 
 import java.util.Collections; 
@@ -34,6 +36,7 @@ public class ApplicationConfig {
 						.requestMatchers("/recommendation").authenticated()
 						.requestMatchers("auth/profile").authenticated()
 						.requestMatchers("/signup").permitAll()
+						.requestMatchers("/auth/refresh").permitAll()
 						.anyRequest().permitAll())
 						.logout((logout) -> logout
 							.deleteCookies("JWT")

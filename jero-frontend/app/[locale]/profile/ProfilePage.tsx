@@ -10,13 +10,12 @@ import { redirect } from 'next/navigation'
 const ProfilePage = async () => {
     
     const cookieStore = await cookies();
-    const jwtToken = cookieStore.get("JWT")?.value;
-
+    const jwtValue = cookieStore.get("JWT")?.value;
     
 
     // console.log("server " + jwtToken);
 
-    if(!jwtToken){
+    if(!jwtValue){
         redirect("/");
     }
     let firstName;
@@ -25,16 +24,43 @@ const ProfilePage = async () => {
     const response = await fetch("http://localhost:8080/auth/profile", {
         method: "GET",
         headers: {
-            Cookie: `JWT=${jwtToken};`
-        }
+            Cookie: `JWT=${jwtValue};`
+        },       
     });
     firstName = await response.text();
+    //     console.log(response.status)
+    //     if (response.status === 403) {
+    //         const refreshResponse = await fetch('http://localhost:8080/auth/refresh', {
+    //             method: 'GET',
+    //             headers: {
+    //                 Cookie: `JWT=${jwtValue}; RT=${rtValue};`,
+    //             },
+    //             credentials : "include"
+    //         });
+
+    //         // const { JWT: newJWT } = await refreshResponse.json();
+
+    //         // cookieStore.set("JWT",newJWT);
+
+        
+    //     if(refreshResponse.status === 200){
+    //         const response = await fetch("http://localhost:8080/auth/profile", {
+    //             method: "GET",
+    //             headers: {
+    //                 Cookie: `JWT=${cookieStore.get("JWT")?.value};`
+    //             },
+    //             credentials : "include"
+    //         });
+    //         console.log(await response.json())
+
+    //     }
+    // } 
     }catch(error : any){
         console.error(error);
-        redirect("/");
+        // redirect("/");
     }
     return (
-        <div> {<Profile firstName={firstName}/>}</div>
+        <div> {<Profile firstName={firstName|| "hi"}/>}</div>
     );
 }
 

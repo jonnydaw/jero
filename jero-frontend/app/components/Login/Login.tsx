@@ -33,9 +33,23 @@ const Login = () => {
             console.log('Login failed:', error.response ? error.response.data : error.message);
         }
     }
+    // const myRefresh = async (e:any) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.get('http://localhost:8080/auth/refresh', {
+    //             withCredentials: true
+    //         }
+    //         );
+    //         console.log(response.data);
+    //     } catch (error : any) {
+    //         console.log(formData)
+    //         console.log('Login failed:', error.response ? error.response.data : error.message);
+    //     }
+    // }
 
     return (
         <div id={style.container}   >
+            {/* <button onClick={myRefresh}></button> */}
         <div>
         <form onSubmit={handleSubmit} id={style.form}>
             <input

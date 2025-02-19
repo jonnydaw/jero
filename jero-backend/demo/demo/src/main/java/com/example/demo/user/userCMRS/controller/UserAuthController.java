@@ -4,6 +4,8 @@ package com.example.demo.user.userCMRS.controller;
 
 
 
+import com.example.demo.SecurityConfig.jwt.JwtConstant;
+import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.OtpHandler;
 import com.example.demo.user.DTO.UserLoginHandler;
@@ -13,14 +15,21 @@ import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import com.example.demo.user.userCMRS.service.authentication.OtpService;
+import com.example.demo.user.userCMRS.service.authentication.RefreshTokenService;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 import org.springframework.http.HttpHeaders;
-import com.example.demo.SecurityConfig.JwtProvider;
 
 import jakarta.validation.Valid;
 
+import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Lettuce.Cluster.Refresh;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.core.Authentication; 
@@ -43,6 +52,7 @@ public class UserAuthController {
 
 	@Autowired UserRepository userRepository;
 	@Autowired OtpService otpService;
+	@Autowired RefreshTokenService refreshTokenService;
 
 
 	@Autowired
@@ -72,9 +82,9 @@ public class UserAuthController {
 		
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication); 
-		AuthResponse authResponse = userAuthService.buildAuthResponse(token);
-		String jwtCookie = userAuthService.buildCookie(token);
+		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "signup success");
+		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 
 		userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
@@ -88,8 +98,8 @@ public class UserAuthController {
 		
 		otpService.checkOTP(token, otp);
 		String newToken = otpService.reissue(token, otp);
-		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken);
-		String jwtCookie = userAuthService.buildCookie(newToken);
+		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
+		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
 
 		//userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
@@ -103,10 +113,32 @@ public class UserAuthController {
 	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user) { 
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication); 
-		AuthResponse authResponse = userAuthService.buildAuthResponse(token);
-		String jwtCookie = userAuthService.buildCookie(token);
+		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Login success");
+		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600);
+		
+		String rt = refreshTokenService.createRefreshToken();
+		refreshTokenService.saveRefreshToken(user, rt);
+		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
+		//refreshTokenService.saveRefreshToken(user, token);
 
+		return ResponseEntity.ok()
+			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie )
+			.body(authResponse);
+	} 
+
+	@GetMapping("/refresh") 
+	public ResponseEntity<AuthResponse> refresh(@CookieValue("JWT") String expiredJWT, @CookieValue("RT") String rt) { 
+		String email =  JwtProvider.getEmailFromJwtToken(expiredJWT);
+		UserModel user = userRepository.findByEmail(email);
+
+		refreshTokenService.checkRefreshToken(user,rt);
+		
+		Authentication auth = refreshTokenService.authenticateHelper(email);
+		String token = userAuthService.provideJWTCookie(auth, 200 * 1000);
+		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 
+		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
+		System.out.println(JwtProvider.getEmailFromJwtToken(token));
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);

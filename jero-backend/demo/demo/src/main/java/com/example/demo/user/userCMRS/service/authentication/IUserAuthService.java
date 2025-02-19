@@ -25,12 +25,11 @@ public interface IUserAuthService {
 
 	public Authentication authenticate(UserSignupHandler user);
 
-	public String provideJWTCookie(Authentication auth);
+	public String provideJWTCookie(Authentication auth, long age) ;
 
-	public AuthResponse buildAuthResponse(String token);
+	public AuthResponse buildAuthResponse(String token, String message);
 
-	public String buildCookie(String token);
-
+	public String buildCookie(String value, String cookieName, int age );
 	//public void saveOTP(UserModel createdUser);
 		
 		

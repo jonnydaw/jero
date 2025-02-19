@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.demo.SecurityConfig.JwtProvider;
+import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.email.EmailTemplate;
 import com.example.demo.email.IEmailService;
 import com.example.demo.response.AuthResponse;
@@ -116,30 +116,29 @@ public class UserAuthService implements IUserAuthService {
 
 
         @Override
-        public String provideJWTCookie(Authentication auth) {
-            return JwtProvider.generateToken(auth); 
+        public String provideJWTCookie(Authentication auth, long age) {
+            return JwtProvider.generateToken(auth, age); 
         }
 
         @Override
-        public AuthResponse buildAuthResponse(String token){
+        public AuthResponse buildAuthResponse(String token, String message){
             AuthResponse authResponse = new AuthResponse(); 
-            authResponse.setMessage("Login success"); 
+            authResponse.setMessage(message); 
             authResponse.setJwt(token);
             authResponse.setStatus(true); 
             return authResponse;
         }
 
         @Override
-        public String buildCookie(String token){
-            ResponseCookie jwtCookie = ResponseCookie.from("JWT", token)
+        public String buildCookie(String value, String cookieName, int age ){
+            ResponseCookie cookie = ResponseCookie.from(cookieName, value)
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
-                .maxAge(86_400) 
+                .maxAge(age) 
                 .sameSite("Lax") 
                 .build();
-                return jwtCookie.toString();
-
+                return cookie.toString();
         }
 
         @Override
@@ -168,6 +167,8 @@ public class UserAuthService implements IUserAuthService {
             } 
             return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());
         }
+
+
 
         //@Override
         private void saveOTP(UserModel createdUser) {
