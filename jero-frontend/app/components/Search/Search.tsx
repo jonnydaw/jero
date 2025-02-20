@@ -12,9 +12,9 @@ import { isMobile } from 'react-device-detect';
 
 
 type FormData =  {
-  options :string,
-  where :string,
-  dates :string,
+  where : string,
+  start : string,
+  end : string
   count : GuestCounts
 }
 
@@ -27,18 +27,27 @@ interface Props {
 const Search : React.FC<Props> =  (props : Props) => {
 
   const t = useTranslations('SearchBar');
+  const currentDate = new Date().toISOString().split('T')[0];
+  
+  const [minEndDate, setMinEndDate] = useState<string>("");
   const [count, setCount] = useState<GuestCounts>({adultCount : 1, childCount : 0, petCount : 0});
   // const [childCount, setChildCount] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
-    options: "",
     where: "",
-    dates: "",
+    start: "",
+    end : "",
     count: {adultCount : 1, childCount : 0, petCount : 0}
   });
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name] : value });
+    if(name === `start`){
+      let startPlusDay : Date = new Date(value);
+      startPlusDay.setDate(startPlusDay.getDate() + 1);
+      const minEndDate = startPlusDay.toISOString().split("T")[0]; 
+      setMinEndDate(minEndDate);
+    }
   };
 
   const handleSubmit =  (e: any) => {
@@ -61,8 +70,8 @@ const Search : React.FC<Props> =  (props : Props) => {
      <p id={style.smartP}>{t('smartSearch')} <Link id={style.anc} href={`/advanced_search`}> {t('here')}</Link></p>
      </div>
      }
-      <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>
-        <select
+     <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>
+         {/* <select
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           name="options"
           onChange={handleChange}
@@ -74,7 +83,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           <option value="accommodation">{t('select.accommodation')}</option>
           <option value="flights">{t('select.flights')}</option>
           <option value="both">{t('select.both')}</option>
-        </select>
+        </select> */}
 
         <input
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
@@ -88,12 +97,23 @@ const Search : React.FC<Props> =  (props : Props) => {
 
         <input
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
-          type="text"
-          name="dates"
-          id="dates"
-          value={formData.dates}
+          type="date"
+          name="start"
+          id="start"
+          value={formData.start}
+          min={currentDate}
           onChange={handleChange}
-          placeholder={t('when')}
+        />
+
+      <input
+          className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
+          type="date"
+          name="end"
+          id="end"
+          value={formData.end}
+          min={minEndDate}
+          onChange={handleChange}
+          
         />
         
       <Dropdown 

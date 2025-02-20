@@ -3,7 +3,6 @@ package com.example.demo.userTests;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.email.EmailService;
 import com.example.demo.user.DTO.UserLoginHandler;
