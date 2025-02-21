@@ -52,7 +52,6 @@ public class UserAuthController {
 	@Autowired
 	private IUserAuthService userAuthService;	
 
-
 	@GetMapping("/profile") 
 	public ResponseEntity<String> getProfile(@CookieValue("JWT") String token)  { 
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
@@ -87,7 +86,6 @@ public class UserAuthController {
 			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
 			.body(authResponse);
 	}
-
 
 	@PostMapping("/otp")
 	public ResponseEntity<?> otp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){

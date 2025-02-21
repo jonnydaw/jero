@@ -22,11 +22,7 @@ import java.util.ArrayList;
 	 @Autowired
 	 private UserRepository userRepository; 
 	 
-	 public ConcUserDetailService(UserRepository userRepository) { 
-		 this.userRepository=userRepository; 
-	 } 
-	 
-	 
+	
 	 @Override
 	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
 		 UserModel user = userRepository.findByEmail(username); 
