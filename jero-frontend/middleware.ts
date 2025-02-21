@@ -13,10 +13,13 @@ const authIngressPages : string[] = ["login","signup"];
 
 
 
+const parseJWT = (jwtValue : string) => {
+    return (JSON.parse(atob(jwtValue.split('.')[1])))
+}
 
 // https://stackoverflow.com/questions/51292406/check-if-token-expired-using-this-jwt-library
 function isTokenExpired(jwtValue : string) {
-    const expiry : number = (JSON.parse(atob(jwtValue.split('.')[1]))).exp;
+    const expiry : number = parseJWT(jwtValue).exp;
     return (Math.floor((new Date()).getTime() / 1000)) >= expiry;
 }
 
@@ -29,6 +32,10 @@ export default async function middleware(request: NextRequest) {
     if (authIngressPages.includes(page)) {
         console.log(await blockAuthIngress(locale))
         return await blockAuthIngress(locale);
+    }
+
+    if(page === "otp"){
+        return await blockOtpIfNotPending(locale);
     }
 
     return await refreshAccess(response,locale, page);
@@ -46,6 +53,15 @@ const blockAuthIngress = async (locale :string) => {
     }
 
     return NextResponse.redirect(`http://localhost:3000/${locale}`);
+}
+
+const blockOtpIfNotPending = async (locale : string) => {
+    const cookieStore = await cookies();
+    const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
+    if(!jwtValue) return NextResponse.redirect(`http://localhost:3000/${locale}`)
+    const isPending = parseJWT(jwtValue).role.split(",")[0];
+    if(isPending !== `PENDING`) return NextResponse.redirect(`http://localhost:3000/${locale}`);
+
 
 }
 
