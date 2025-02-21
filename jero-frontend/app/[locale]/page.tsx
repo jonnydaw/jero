@@ -24,11 +24,11 @@ export default function HomePage() {
     return (
         <div>
             <h1>{t('about')}</h1>
-            {/* <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <button type='submit'>
                     Logout
                     </button>
-            </form> */}
+            </form>
         </div>
     );  
 }

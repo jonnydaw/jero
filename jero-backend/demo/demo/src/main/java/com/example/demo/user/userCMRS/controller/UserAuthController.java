@@ -94,10 +94,15 @@ public class UserAuthController {
 
 	@PostMapping("/otp")
 	public ResponseEntity<?> otp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
-		
+		System.out.println(otp.getOtpPassword());
 		otpService.checkOTP(token, otp);
+		System.out.println("HI1");
 		String newToken = otpService.reissue(token, otp);
+		System.out.println(69);
+		System.out.println("Controller :" + otp.getOtpPassword());
+		System.out.println("poo");
 		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
+		System.out.println("bum");
 		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
 
 		//userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());

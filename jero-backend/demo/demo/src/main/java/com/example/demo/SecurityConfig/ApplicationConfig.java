@@ -39,7 +39,7 @@ public class ApplicationConfig {
 						.requestMatchers("/auth/refresh").permitAll()
 						.anyRequest().permitAll())
 						.logout((logout) -> logout
-							.deleteCookies("JWT")
+							.deleteCookies("JWT","RT")
 							// https://stackoverflow.com/questions/79314702/spring-authorization-server-threw-exception-with-message-delegatingauthenticati
 							.logoutSuccessHandler((request, response, authentication) -> {
 								response.setStatus(HttpServletResponse.SC_OK);

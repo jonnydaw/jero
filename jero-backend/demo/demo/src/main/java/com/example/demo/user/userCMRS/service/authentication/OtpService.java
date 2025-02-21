@@ -23,6 +23,7 @@ public class OtpService implements IOtpService {
     @Autowired UserRepository userRepository;
     @Autowired OtpRepository otpRepo;
     @Autowired UserAuthService userAuthService;
+    @Autowired RefreshTokenService refreshTokenService;
    
     @Override
     public void checkOTP(String token, OtpHandler otp) {
@@ -33,12 +34,8 @@ public class OtpService implements IOtpService {
 
     @Override
     public String reissue(String token, OtpHandler otp){
-        String pass = otp.getPass();
         String email = JwtProvider.getEmailFromJwtToken(token);
-        UserLoginHandler ul = new UserLoginHandler();
-        ul.setPassword(pass);
-        ul.setUsername(email);
-        Authentication auth = userAuthService.authenticate(ul);
+		Authentication auth = refreshTokenService.authenticateHelper(email);
 		SecurityContextHolder.getContext().setAuthentication(auth); 
 		String newToken = userAuthService.provideJWTCookie(auth);
         return newToken;
@@ -57,9 +54,12 @@ public class OtpService implements IOtpService {
 
     private void verifyWithDB(ObjectId id, int userOtp){
         OtpModel dbOtp = otpRepo.findOTPById(id);
+        System.out.println("****************");
+        System.out.println(userOtp);
         if(dbOtp == null){
             throw new BadCredentialsException("OTP has expired"); 
         }
+        System.out.println(dbOtp);
 		if(dbOtp.getOtp() != userOtp){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect OTP");
 		}
