@@ -25,7 +25,7 @@ public interface IUserAuthService {
 
 	public Authentication authenticate(UserSignupHandler user);
 
-	public String provideJWTCookie(Authentication auth, long age) ;
+	public String provideJWTCookie(Authentication auth) ;
 
 	public AuthResponse buildAuthResponse(String token, String message);
 

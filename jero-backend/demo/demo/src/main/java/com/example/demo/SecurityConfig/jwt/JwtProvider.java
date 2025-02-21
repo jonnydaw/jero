@@ -19,12 +19,12 @@ import java.util.Set;
 public class JwtProvider { 
 	static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes()); 
 
-	public static String generateToken(Authentication auth, long age) { 
+	public static String generateToken(Authentication auth) { 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities(); 
 		String roles = populateAuthorities(authorities); 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
-				.setExpiration(new Date(System.currentTimeMillis() + 60_000)) 
+				.setExpiration(new Date(System.currentTimeMillis() + 300_000)) 
 				.claim("email", auth.getName()) 
 				.claim( "role",roles)
 				.signWith(key) 

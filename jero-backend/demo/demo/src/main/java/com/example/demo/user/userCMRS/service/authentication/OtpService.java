@@ -40,7 +40,7 @@ public class OtpService implements IOtpService {
         ul.setUsername(email);
         Authentication auth = userAuthService.authenticate(ul);
 		SecurityContextHolder.getContext().setAuthentication(auth); 
-		String newToken = userAuthService.provideJWTCookie(auth,200 * 1000);
+		String newToken = userAuthService.provideJWTCookie(auth);
         return newToken;
         
     }

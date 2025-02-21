@@ -116,8 +116,8 @@ public class UserAuthService implements IUserAuthService {
 
 
         @Override
-        public String provideJWTCookie(Authentication auth, long age) {
-            return JwtProvider.generateToken(auth, age); 
+        public String provideJWTCookie(Authentication auth) {
+            return JwtProvider.generateToken(auth); 
         }
 
         @Override

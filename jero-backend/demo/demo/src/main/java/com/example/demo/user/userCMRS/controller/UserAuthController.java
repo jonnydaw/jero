@@ -77,13 +77,17 @@ public class UserAuthController {
 		
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		String token = userAuthService.provideJWTCookie(authentication); 
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "signup success");
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 
+		String rt = refreshTokenService.createRefreshToken();
+		refreshTokenService.saveRefreshToken(user, rt);
+		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
+
 		userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
-			.header(HttpHeaders.SET_COOKIE, jwtCookie)
+			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
 			.body(authResponse);
 	}
 
@@ -108,7 +112,7 @@ public class UserAuthController {
 	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user) { 
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		String token = userAuthService.provideJWTCookie(authentication); 
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Login success");
 		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600);
 		
@@ -130,7 +134,7 @@ public class UserAuthController {
 		refreshTokenService.checkRefreshToken(user,rt);
 
 		Authentication auth = refreshTokenService.authenticateHelper(email);
-		String token = userAuthService.provideJWTCookie(auth, 200 * 1000);
+		String token = userAuthService.provideJWTCookie(auth);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 		return ResponseEntity.ok()
