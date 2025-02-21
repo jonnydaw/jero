@@ -55,12 +55,10 @@ public class UserAuthController {
 
 	@GetMapping("/profile") 
 	public ResponseEntity<String> getProfile(@CookieValue("JWT") String token)  { 
-		System.out.println("hi");
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
 		// 27/11/24
 		String email =  JwtProvider.getEmailFromJwtToken(token);
 		UserModel user = userRepository.findByEmail(email);
-		System.out.println("Firstname " + user.getFirstName());
 		return ResponseEntity.ok()
 		.body(user.getFirstName());
 	}
@@ -72,7 +70,6 @@ public class UserAuthController {
 		userAuthService.validate(user);
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
-		System.out.println(user.getDob());
 
 		
 		Authentication authentication = userAuthService.authenticate(user); 
@@ -94,18 +91,10 @@ public class UserAuthController {
 
 	@PostMapping("/otp")
 	public ResponseEntity<?> otp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
-		System.out.println(otp.getOtpPassword());
 		otpService.checkOTP(token, otp);
-		System.out.println("HI1");
 		String newToken = otpService.reissue(token, otp);
-		System.out.println(69);
-		System.out.println("Controller :" + otp.getOtpPassword());
-		System.out.println("poo");
 		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
-		System.out.println("bum");
 		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
-
-		//userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);

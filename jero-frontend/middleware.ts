@@ -59,7 +59,7 @@ const blockOtpIfNotPending = async (locale : string) => {
     const cookieStore = await cookies();
     const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
     if(!jwtValue) return NextResponse.redirect(`http://localhost:3000/${locale}`)
-    const isPending = parseJWT(jwtValue).role.split(",")[0];
+    const isPending = parseJWT(jwtValue).status;
     if(isPending !== `PENDING`) return NextResponse.redirect(`http://localhost:3000/${locale}`);
 
 

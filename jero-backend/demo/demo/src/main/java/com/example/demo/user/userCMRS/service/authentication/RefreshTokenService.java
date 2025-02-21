@@ -80,7 +80,7 @@ public class RefreshTokenService implements IRefreshTokenService {
             if(ud == null) { 
                 System.out.println("Sign in details - null" + ud); 
     
-                throw new BadCredentialsException("Invalid username and password"); 
+                throw new BadCredentialsException("Invalid email"); 
             } 
 
             return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());

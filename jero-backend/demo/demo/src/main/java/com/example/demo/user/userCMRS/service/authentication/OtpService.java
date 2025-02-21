@@ -54,12 +54,9 @@ public class OtpService implements IOtpService {
 
     private void verifyWithDB(ObjectId id, int userOtp){
         OtpModel dbOtp = otpRepo.findOTPById(id);
-        System.out.println("****************");
-        System.out.println(userOtp);
         if(dbOtp == null){
             throw new BadCredentialsException("OTP has expired"); 
         }
-        System.out.println(dbOtp);
 		if(dbOtp.getOtp() != userOtp){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect OTP");
 		}
