@@ -72,6 +72,7 @@ public class UserAuthController {
 		userAuthService.validate(user);
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
+		System.out.println(user.getDob());
 
 		
 		Authentication authentication = userAuthService.authenticate(user); 

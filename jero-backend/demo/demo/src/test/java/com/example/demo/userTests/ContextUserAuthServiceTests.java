@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +27,7 @@ class ContextUserAuthServiceInputTests {
 
     private final String FIRST_NAME = "fname";
     private final String LAST_NAME = "lname";
-    private final String DOB = "dob";
+    private final Date DOB = new Date();
     private final String EMAIL = "email@email.com";
     private final String DIFFERENT_EMAIL = "email1@email.com";
     private final String PASSWORD = "password12!";

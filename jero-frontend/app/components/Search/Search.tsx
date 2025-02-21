@@ -9,6 +9,7 @@ import {GuestCounts} from "../../types/types"
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
 import { isMobile } from 'react-device-detect';
+import axios from 'axios';
 
 
 type FormData =  {
@@ -50,9 +51,17 @@ const Search : React.FC<Props> =  (props : Props) => {
     }
   };
 
-  const handleSubmit =  (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData);
+    try {
+      const response = await axios.get("http://localhost:8080/property/get_properties", {
+        params : {where : formData.where}
+      });
+      console.log(response.data)
+    } catch (error) {
+        console.error(error)
+    }
   };
 
 

@@ -1,5 +1,6 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -54,7 +55,7 @@ public class OtpService implements IOtpService {
 		return user;
     }
 
-    private void verifyWithDB(String id, int userOtp){
+    private void verifyWithDB(ObjectId id, int userOtp){
         OtpModel dbOtp = otpRepo.findOTPById(id);
         if(dbOtp == null){
             throw new BadCredentialsException("OTP has expired"); 

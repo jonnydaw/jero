@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +30,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class MockUserAuthServiceTests {
     private final String FIRST_NAME = "fname";
     private final String LAST_NAME = "lname";
-    private final String DOB = "dob";
+    private final Date DOB = new Date();
     private final String EMAIL = "email@email.com";
     private final String PASSWORD = "password12!";
     private final String ROLES = "tourist";

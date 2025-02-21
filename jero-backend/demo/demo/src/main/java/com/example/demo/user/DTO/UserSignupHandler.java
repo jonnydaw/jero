@@ -3,6 +3,8 @@ package com.example.demo.user.DTO;
 
 
 
+import java.util.Date;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -17,8 +19,7 @@ public class UserSignupHandler {
     @NotBlank
     String lastName;
     // to-do change to date type
-    @NotBlank
-    String dob;
+    Date dob;
     
     @Email
     @NotBlank

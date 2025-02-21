@@ -3,6 +3,7 @@ package com.example.demo.user.userCMRS.model;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Getter
 public class OtpModel {
     @Id
-	private String id;
+	private ObjectId id;
     private int otp;
     private Date createdAt;
 }
