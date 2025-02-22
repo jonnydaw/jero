@@ -71,20 +71,6 @@ const Search : React.FC<Props> =  (props : Props) => {
      </div>
      }
      <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>
-         {/* <select
-          className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
-          name="options"
-          onChange={handleChange}
-          value={formData.options}
-        >
-          <option value="" disabled hidden>
-              {t('select.default')}
-          </option>
-          <option value="accommodation">{t('select.accommodation')}</option>
-          <option value="flights">{t('select.flights')}</option>
-          <option value="both">{t('select.both')}</option>
-        </select> */}
-
         <input
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           type="text"
