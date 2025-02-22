@@ -88,8 +88,14 @@ public class RefreshTokenService implements IRefreshTokenService {
 
     @Override
     public void deleteRefreshToken(String id) {
-        refreshRepository.deleteById(id);
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteRefreshToken'");
     }
+
+    // @Override
+    // public void deleteRefreshToken(String id) {
+    //     refreshRepository.deleteById(id);
+    // }
 
     
 }
