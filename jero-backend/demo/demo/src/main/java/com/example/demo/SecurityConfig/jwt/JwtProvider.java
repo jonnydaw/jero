@@ -15,9 +15,7 @@ import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.Collection; 
 import java.util.Date; 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set; 
 
 public class JwtProvider { 
 	static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes()); 

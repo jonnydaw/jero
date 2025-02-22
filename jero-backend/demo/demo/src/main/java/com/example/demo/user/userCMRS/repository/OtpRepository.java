@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.user.userCMRS.model.OtpModel;
 
 @Repository
-public interface OtpRepository extends MongoRepository<OtpModel,String> { 
+public interface OtpRepository extends MongoRepository<OtpModel,ObjectId> { 
 	OtpModel findOTPById(ObjectId id); 
 } 
 

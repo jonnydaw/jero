@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.user.userCMRS.model.RefreshModel;
 
 @Repository
-public interface RefreshRepository extends MongoRepository<RefreshModel,String> {
+public interface RefreshRepository extends MongoRepository<RefreshModel,ObjectId> {
     RefreshModel findRefreshById(ObjectId id);
 }
