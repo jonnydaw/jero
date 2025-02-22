@@ -43,8 +43,6 @@ public class UserAuthService implements IUserAuthService {
         @Autowired ConcUserDetailService concUserDetailService;
         @Autowired private PasswordEncoder passwordEncoder; 
         @Autowired private UserRepository userRepository;
-        @Autowired private OtpRepository otpRepository;
-        //@Autowired private EmailTemplate emailTemplate;
         @Autowired private IEmailService emailService;
         @Autowired private AbstractSignupValidator signupValidator;
     
@@ -65,7 +63,6 @@ public class UserAuthService implements IUserAuthService {
         public void saveUser(UserModel createdUser) {
             UserModel savedUser = userRepository.save(createdUser); 
             userRepository.save(savedUser);
-            saveOTP(createdUser);
         }
     
         @Override
@@ -167,15 +164,6 @@ public class UserAuthService implements IUserAuthService {
             } 
             return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());
         }
+    }
 
 
-
-        //@Override
-        private void saveOTP(UserModel createdUser) {
-            OtpModel otpModel = new OtpModel();
-            otpModel.setId(createdUser.getId());
-            otpModel.setOtp(12345);
-            otpModel.setCreatedAt(new Date(System.currentTimeMillis()));
-            otpRepository.save(otpModel);
-        }
-}

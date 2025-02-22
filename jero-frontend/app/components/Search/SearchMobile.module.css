@@ -17,13 +17,13 @@
 
 .inputs{
     background-color: white;
-    min-width: 4em;
-    padding: 0.75em;
-    margin: 0.75em 0.1em ;
+    min-width: 66%;
+    max-width: 66%;
+    padding: 1em;
+    margin: 1em 0.1em ;
     border-radius: 1em;
     border: 0.1em solid black;
-    line-height: 0;
-    min-height: 5ch;
+
 }
 
 

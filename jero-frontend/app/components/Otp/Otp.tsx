@@ -17,11 +17,24 @@ const Otp = () => {
        
 }
 
+const handleRegen = async (e : any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8080/auth/regenerate_otp', {},
+          { withCredentials: true}
+      );
+
+      console.log(response);
+  } catch (error : any) {
+      console.log(formData)
+      console.log('OTP verification failed:', error.response ? error.response.data : error.message);
+}
+  }
 
   const handleSubmit = async (e : any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/auth/otp', {
+      const response = await axios.post('http://localhost:8080/auth/verify_otp', {
        otpPassword : Number(formData),
       },
           { withCredentials: true}
@@ -47,7 +60,7 @@ const Otp = () => {
                 <input id={style.otpInput} onChange={handleChange} type="text" />
                 <button className={`${style.submit} ${style.button}`}>Submit</button>
             </form>
-            <button className={`${style.resend} ${style.button}`}>Didn't receive an email? Click here to resend</button>
+            <button onClick={handleRegen}className={`${style.resend} ${style.button}`}>Didn't receive an email? Click here to resend</button>
             </div>
         </div>
     )

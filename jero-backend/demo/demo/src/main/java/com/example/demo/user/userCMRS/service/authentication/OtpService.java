@@ -1,5 +1,7 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,7 +9,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.server.ResponseStatusException;
+import com.example.demo.user.userCMRS.repository.OtpRepository;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.user.DTO.OtpHandler;
@@ -24,6 +28,8 @@ public class OtpService implements IOtpService {
     @Autowired OtpRepository otpRepo;
     @Autowired UserAuthService userAuthService;
     @Autowired RefreshTokenService refreshTokenService;
+    @Autowired private OtpRepository otpRepository;
+
    
     @Override
     public void checkOTP(String token, OtpHandler otp) {
@@ -65,5 +71,24 @@ public class OtpService implements IOtpService {
     private void updateStatus(UserModel user){
         user.setStatus(UserStatus.VERIFIED);
         userRepository.save(user);
+    }
+
+    @Override
+    public void saveOTPOnCreation(UserModel user) {
+            OtpModel otpModel = new OtpModel();
+            otpModel.setId(user.getId());
+            otpModel.setOtp(12345);
+            otpModel.setCreatedAt(new Date(System.currentTimeMillis()));
+            otpRepository.save(otpModel);
+    }
+
+    @Override
+    public void saveOTPOnRegen(String token) {
+            OtpModel otpModel = new OtpModel();
+            UserModel tardyUser = getUserFromToken(token);
+            otpModel.setId(tardyUser.getId());
+            otpModel.setOtp(54321);
+            otpModel.setCreatedAt(new Date(System.currentTimeMillis()));
+            otpRepository.save(otpModel);
     }
 }

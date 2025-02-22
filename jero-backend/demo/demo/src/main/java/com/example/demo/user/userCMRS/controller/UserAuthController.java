@@ -12,9 +12,10 @@ import com.example.demo.user.DTO.UserSignupHandler;
 
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
+import com.example.demo.user.userCMRS.service.authentication.IOtpService;
+import com.example.demo.user.userCMRS.service.authentication.IRefreshTokenService;
 import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
-import com.example.demo.user.userCMRS.service.authentication.OtpService;
-import com.example.demo.user.userCMRS.service.authentication.RefreshTokenService;
+
 
 
 
@@ -45,8 +46,8 @@ public class UserAuthController {
 	// https://stackoverflow.com/questions/12899372/spring-why-do-we-autowire-the-interface-and-not-the-implemented-class
 
 	@Autowired UserRepository userRepository;
-	@Autowired OtpService otpService;
-	@Autowired RefreshTokenService refreshTokenService;
+	@Autowired IOtpService otpService;
+	@Autowired IRefreshTokenService refreshTokenService;
 
 
 	@Autowired
@@ -70,6 +71,8 @@ public class UserAuthController {
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
 
+		otpService.saveOTPOnCreation(createdUser);
+
 		
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
@@ -87,8 +90,9 @@ public class UserAuthController {
 			.body(authResponse);
 	}
 
-	@PostMapping("/otp")
-	public ResponseEntity<?> otp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
+	@PostMapping("/verify_otp")
+	public ResponseEntity<?> verifyOtp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
+		System.out.println("hit otp");
 		otpService.checkOTP(token, otp);
 		String newToken = otpService.reissue(token, otp);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
@@ -97,6 +101,13 @@ public class UserAuthController {
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);
 	}
+
+	@PostMapping("/regenerate_otp")
+	public ResponseEntity<?> regenerateOtp(@CookieValue("JWT") String token){
+		otpService.saveOTPOnRegen(token);
+		return ResponseEntity.ok().body("OTP Regenerated");
+	}
+
 
 
 
