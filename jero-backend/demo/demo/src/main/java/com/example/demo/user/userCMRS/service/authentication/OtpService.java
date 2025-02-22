@@ -5,21 +5,17 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.server.ResponseStatusException;
 import com.example.demo.user.userCMRS.repository.OtpRepository;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.user.DTO.OtpHandler;
-import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.enumeration.user.UserStatus;
 import com.example.demo.user.userCMRS.model.OtpModel;
 import com.example.demo.user.userCMRS.model.UserModel;
-import com.example.demo.user.userCMRS.repository.OtpRepository;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 
 @Service
@@ -61,7 +57,7 @@ public class OtpService implements IOtpService {
     private void verifyWithDB(ObjectId id, int userOtp){
         OtpModel dbOtp = otpRepo.findOTPById(id);
         if(dbOtp == null){
-            throw new BadCredentialsException("OTP has expired"); 
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"OTP has expired"); 
         }
 		if(dbOtp.getOtp() != userOtp){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect OTP");

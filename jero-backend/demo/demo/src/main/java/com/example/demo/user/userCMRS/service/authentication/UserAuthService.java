@@ -1,7 +1,6 @@
 package com.example.demo.user.userCMRS.service.authentication;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,9 +23,7 @@ import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.enumeration.user.SignupErrorMessages;
 import com.example.demo.user.enumeration.user.UserStatus;
-import com.example.demo.user.userCMRS.model.OtpModel;
 import com.example.demo.user.userCMRS.model.UserModel;
-import com.example.demo.user.userCMRS.repository.OtpRepository;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.validator.signup.AbstractSignupValidator;
