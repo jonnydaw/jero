@@ -28,6 +28,7 @@ function isTokenExpired(jwtValue : string) {
 
 export default async function middleware(request: NextRequest) {
     let response = handleI18nRouting(request);
+    
     const [, locale, page, ..._] = request.nextUrl.pathname.split('/');
     if (authIngressPages.includes(page)) {
         console.log(await blockAuthIngress(locale))
@@ -97,7 +98,8 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
         }
     }
 
-    const cookie = refreshResponse.headers.get("set-cookie")?.split("=")[1]
+    const cookie = refreshResponse.headers.get("set-cookie")?.split("=")[1].split(";")[0]
+    console.log(cookie)
     if(cookie){
         response.cookies.set("JWT", cookie, {
             httpOnly: true,
