@@ -12,9 +12,10 @@ import com.example.demo.user.DTO.UserSignupHandler;
 
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
+import com.example.demo.user.userCMRS.service.authentication.IOtpService;
+import com.example.demo.user.userCMRS.service.authentication.IRefreshTokenService;
 import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
-import com.example.demo.user.userCMRS.service.authentication.OtpService;
-import com.example.demo.user.userCMRS.service.authentication.RefreshTokenService;
+
 
 
 
@@ -45,22 +46,19 @@ public class UserAuthController {
 	// https://stackoverflow.com/questions/12899372/spring-why-do-we-autowire-the-interface-and-not-the-implemented-class
 
 	@Autowired UserRepository userRepository;
-	@Autowired OtpService otpService;
-	@Autowired RefreshTokenService refreshTokenService;
+	@Autowired IOtpService otpService;
+	@Autowired IRefreshTokenService refreshTokenService;
 
 
 	@Autowired
 	private IUserAuthService userAuthService;	
 
-
 	@GetMapping("/profile") 
 	public ResponseEntity<String> getProfile(@CookieValue("JWT") String token)  { 
-		System.out.println("hi");
 		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
 		// 27/11/24
 		String email =  JwtProvider.getEmailFromJwtToken(token);
 		UserModel user = userRepository.findByEmail(email);
-		System.out.println("Firstname " + user.getFirstName());
 		return ResponseEntity.ok()
 		.body(user.getFirstName());
 	}
@@ -73,33 +71,43 @@ public class UserAuthController {
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
 
+		otpService.saveOTPOnCreation(createdUser);
+
 		
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		String token = userAuthService.provideJWTCookie(authentication); 
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "signup success");
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 
+		String rt = refreshTokenService.createRefreshToken();
+		refreshTokenService.saveRefreshToken(user, rt);
+		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
+
 		userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
-			.header(HttpHeaders.SET_COOKIE, jwtCookie)
+			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
 			.body(authResponse);
 	}
 
-
-	@PostMapping("/otp")
-	public ResponseEntity<?> otp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
-		
+	@PostMapping("/verify_otp")
+	public ResponseEntity<?> verifyOtp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
+		System.out.println("hit otp");
 		otpService.checkOTP(token, otp);
 		String newToken = otpService.reissue(token, otp);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
 		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
-
-		//userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);
 	}
+
+	@PostMapping("/regenerate_otp")
+	public ResponseEntity<?> regenerateOtp(@CookieValue("JWT") String token){
+		otpService.saveOTPOnRegen(token);
+		return ResponseEntity.ok().body("OTP Regenerated");
+	}
+
 
 
 
@@ -107,7 +115,7 @@ public class UserAuthController {
 	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user) { 
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		String token = userAuthService.provideJWTCookie(authentication, 200 * 1000); 
+		String token = userAuthService.provideJWTCookie(authentication); 
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Login success");
 		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600);
 		
@@ -129,7 +137,7 @@ public class UserAuthController {
 		refreshTokenService.checkRefreshToken(user,rt);
 
 		Authentication auth = refreshTokenService.authenticateHelper(email);
-		String token = userAuthService.provideJWTCookie(auth, 200 * 1000);
+		String token = userAuthService.provideJWTCookie(auth);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 		return ResponseEntity.ok()

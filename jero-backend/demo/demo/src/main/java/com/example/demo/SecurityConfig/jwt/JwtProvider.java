@@ -10,23 +10,27 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication; 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.crypto.SecretKey; 
+import javax.crypto.SecretKey;
+
+import java.util.ArrayList;
 import java.util.Collection; 
 import java.util.Date; 
-import java.util.HashSet; 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set; 
 
 public class JwtProvider { 
 	static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes()); 
 
-	public static String generateToken(Authentication auth, long age) { 
+	public static String generateToken(Authentication auth) { 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities(); 
-		String roles = populateAuthorities(authorities); 
+		List<String> roles = populateAuthorities(authorities); 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
-				.setExpiration(new Date(System.currentTimeMillis() + 60_000)) 
+				.setExpiration(new Date(System.currentTimeMillis() + 300_000)) 
 				.claim("email", auth.getName()) 
-				.claim( "role",roles)
+				.claim("status", roles.get(0))
+				.claim( "role",roles.get(1))
 				.signWith(key) 
 				.compact(); 
 		return jwt; 
@@ -34,12 +38,12 @@ public class JwtProvider {
 
 
 
-	private static String populateAuthorities(Collection<? extends GrantedAuthority> authorities) { 
-		Set<String> auths = new HashSet<>(); 
+	private static List<String> populateAuthorities(Collection<? extends GrantedAuthority> authorities) { 
+		List<String> auths = new ArrayList<>(); 
 		for(GrantedAuthority authority: authorities) { 
 			auths.add(authority.getAuthority()); 
 		} 
-		return String.join(",",auths); 
+		return auths; 
 	} 
 
 

@@ -9,7 +9,6 @@ import { Link } from "@/i18n/routing";
 import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
 import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
-import OTPModal from "./SignupModal";
 import { useRouter } from "next/navigation";
 
 
@@ -205,6 +204,7 @@ const Signup = () => {
                 { withCredentials: true}
             );
             setPostSuccess(true);
+            router.push("otp");
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
@@ -321,8 +321,6 @@ const Signup = () => {
         </form>
         <div onClick={() => router.back()}>Go Back</div>
             <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
-            {postSuccess && <OTPModal pass={formData.password}/>}
-            {/* {true && <OTPModal/>} */}
         </div>
         </div>
     );

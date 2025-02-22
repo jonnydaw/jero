@@ -1,0 +1,55 @@
+#componentContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+
+#formContainer{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em;
+    background-color: pink;
+    border-radius: 2em;
+    min-height: 20em;
+    max-width: 30em;
+    border: solid 0.01em black;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#form *{
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    font-size: large;
+}
+
+#otpInput{
+    max-width: 10ch;
+
+    text-align: center;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.submit{
+    background-color: black;
+    color: white
+}
+
+.resend{
+    margin: 1em;
+    background-color: transparent;
+    border: none;
+    font-size: large;
+}
+

@@ -6,36 +6,81 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const handleI18nRouting = createMiddleware(routing);
+//helpers start
 
-const protectedEndpoints = ["profile"];
+const protectedPages : string[] = ["profile"];
+const authIngressPages : string[] = ["login","signup"];
 
+
+
+const parseJWT = (jwtValue : string) => {
+    return (JSON.parse(atob(jwtValue.split('.')[1])))
+}
+
+// https://stackoverflow.com/questions/51292406/check-if-token-expired-using-this-jwt-library
+function isTokenExpired(jwtValue : string) {
+    const expiry : number = parseJWT(jwtValue).exp;
+    return (Math.floor((new Date()).getTime() / 1000)) >= expiry;
+}
+
+
+//helpers end
 
 export default async function middleware(request: NextRequest) {
+    let response = handleI18nRouting(request);
 
-    const response = handleI18nRouting(request);
     const [, locale, page, ..._] = request.nextUrl.pathname.split('/');
+    if (authIngressPages.includes(page)) {
+        console.log(await blockAuthIngress(response, locale))
+        return await blockAuthIngress(response, locale);
+    }
+
+    if(page === "otp"){
+        const otpReponse = await blockOtpIfNotPending(locale);
+        if(otpReponse) return otpReponse;
+    }
 
     return await refreshAccess(response,locale, page);
 
 }
+
+
+const blockAuthIngress = async (response : NextResponse, locale :string) => {
+    const cookieStore = await cookies();
+    const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
+    const rtValue : string | undefined  = cookieStore.get("RT")?.value;
+
+    if(!jwtValue || !rtValue){
+        return response;
+    }
+
+    return NextResponse.redirect(`http://localhost:3000/${locale}`);
+}
+
+const blockOtpIfNotPending = async (locale : string) => {
+    const cookieStore = await cookies();
+    const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
+    if(!jwtValue) return NextResponse.redirect(`http://localhost:3000/${locale}`)
+    const isPending = parseJWT(jwtValue).status;
+    if(isPending !== `PENDING`) return NextResponse.redirect(`http://localhost:3000/${locale}`);
+    return null;
+
+}
+
 // https://stackoverflow.com/questions/71525415/set-http-only-cookies-inside-nextjs-middleware
 const refreshAccess = async (response : NextResponse, locale: string, page : string) => {
 
     const cookieStore = await cookies();
-    const jwtValue = cookieStore.get("JWT")?.value;
-    const rtValue = cookieStore.get("RT")?.value;
+    const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
+    const rtValue : string | undefined  = cookieStore.get("RT")?.value;
 
-    if(!rtValue && protectedEndpoints.includes(page)){
+
+    if(!rtValue && protectedPages.includes(page)){
         return NextResponse.redirect(`http://localhost:3000/${locale}`);
     }
 
-    // https://stackoverflow.com/questions/51292406/check-if-token-expired-using-this-jwt-library
-    function isTokenExpired(jwtValue : string) {
-        const expiry = (JSON.parse(atob(jwtValue.split('.')[1]))).exp;
-        return (Math.floor((new Date()).getTime() / 1000)) >= expiry;
-    }
 
-    let isInvalid;
+    let isInvalid : boolean = false;
     if(jwtValue){
         isInvalid = isTokenExpired(jwtValue)
     }
@@ -49,12 +94,13 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
             credentials : "include",
         });
     if (!refreshResponse.ok) {
-        if(protectedEndpoints.includes(page)){
+        if(protectedPages.includes(page)){
             return NextResponse.redirect(`http://localhost:3000/${locale}`);
         }
     }
 
-    const cookie = refreshResponse.headers.get("set-cookie")?.split("=")[1]
+    const cookie = refreshResponse.headers.get("set-cookie")?.split("=")[1].split(";")[0]
+    console.log(cookie)
     if(cookie){
         response.cookies.set("JWT", cookie, {
             httpOnly: true,

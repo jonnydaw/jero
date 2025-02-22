@@ -15,7 +15,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
@@ -67,10 +70,11 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             .getBody();
 
         String email = String.valueOf(claims.get("email"));
-        String authorities = String.valueOf(claims.get("authorities"));
+        String role = String.valueOf(claims.get("role"));
+        String status = String.valueOf(claims.get("status"));
+        //System.out.println("authorities" + authorities);
         
-        List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
-        
+        List<GrantedAuthority> auth = AuthorityUtils.createAuthorityList(role,status);
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         
