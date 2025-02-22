@@ -28,15 +28,16 @@ function isTokenExpired(jwtValue : string) {
 
 export default async function middleware(request: NextRequest) {
     let response = handleI18nRouting(request);
-    
+
     const [, locale, page, ..._] = request.nextUrl.pathname.split('/');
     if (authIngressPages.includes(page)) {
-        console.log(await blockAuthIngress(locale))
-        return await blockAuthIngress(locale);
+        console.log(await blockAuthIngress(response, locale))
+        return await blockAuthIngress(response, locale);
     }
 
     if(page === "otp"){
-        return await blockOtpIfNotPending(locale);
+        const otpReponse = await blockOtpIfNotPending(locale);
+        if(otpReponse) return otpReponse;
     }
 
     return await refreshAccess(response,locale, page);
@@ -44,13 +45,13 @@ export default async function middleware(request: NextRequest) {
 }
 
 
-const blockAuthIngress = async (locale :string) => {
+const blockAuthIngress = async (response : NextResponse, locale :string) => {
     const cookieStore = await cookies();
     const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
     const rtValue : string | undefined  = cookieStore.get("RT")?.value;
 
     if(!jwtValue || !rtValue){
-        return;
+        return response;
     }
 
     return NextResponse.redirect(`http://localhost:3000/${locale}`);
@@ -62,7 +63,7 @@ const blockOtpIfNotPending = async (locale : string) => {
     if(!jwtValue) return NextResponse.redirect(`http://localhost:3000/${locale}`)
     const isPending = parseJWT(jwtValue).status;
     if(isPending !== `PENDING`) return NextResponse.redirect(`http://localhost:3000/${locale}`);
-
+    return null;
 
 }
 
