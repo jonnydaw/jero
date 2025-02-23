@@ -27,7 +27,7 @@ fi
 
 
 echo "Unit tests"
-(cd jero-backend/demo/demo; mvn run test)
+(cd jero-backend/demo/demo; mvn test)
 
 if [ $? -eq 1 ]; then
     echo "unit tests failed. ༼ つ ಥ_ಥ ༽つ"
@@ -35,6 +35,18 @@ if [ $? -eq 1 ]; then
 else
     echo "unit tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
 fi
+
+
+echo "Rest assured tests"
+(cd jero-testing/restAssuredTests/my-app; mvn test)
+
+if [ $? -eq 1 ]; then
+    echo "rest assured tests failed. ༼ つ ಥ_ಥ ༽つ"
+    exit 1
+else
+    echo "rest assured tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
+fi
+
 echo "Proceed with commit. \ (•◡•) /"
 exit 0
 
