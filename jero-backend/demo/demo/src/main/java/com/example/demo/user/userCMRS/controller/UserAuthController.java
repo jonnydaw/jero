@@ -21,6 +21,8 @@ import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 
 import org.springframework.http.HttpHeaders;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 
@@ -28,9 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.core.Authentication; 
-import org.springframework.security.core.context.SecurityContextHolder; 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping; 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -90,9 +94,25 @@ public class UserAuthController {
 			.body(authResponse);
 	}
 
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteUser(HttpServletRequest req, @CookieValue("JWT") String JWT, @CookieValue("RT") String refresh){
+		try {
+			req.logout();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String email =  JwtProvider.getEmailFromJwtToken(JWT);
+		UserModel user = userRepository.findByEmail(email);
+		refreshTokenService.checkRefreshToken(user, refresh);
+		userAuthService.deleteUser(user);
+		return ResponseEntity.ok().body("Account deleted");
+	}
+
 	@PostMapping("/verify_otp")
 	public ResponseEntity<?> verifyOtp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
 		System.out.println("hit otp");
+
 		otpService.checkOTP(token, otp);
 		String newToken = otpService.reissue(token, otp);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
@@ -127,7 +147,7 @@ public class UserAuthController {
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie )
 			.body(authResponse);
-	} 
+	}
 
 	@GetMapping("/refresh") 
 	public ResponseEntity<AuthResponse> refresh(@CookieValue("JWT") String expiredJWT, @CookieValue("RT") String rt) { 

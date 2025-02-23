@@ -33,8 +33,8 @@ public class ApplicationConfig {
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests( 
 						authorize -> authorize
-						.requestMatchers("/recommendation").authenticated()
-						.requestMatchers("auth/profile").authenticated()
+						.requestMatchers("/auth/delete").authenticated()
+						.requestMatchers("/auth/profile").authenticated()
 						.requestMatchers("/signup").permitAll()
 						.requestMatchers("/auth/refresh").permitAll()
 						.anyRequest().permitAll())

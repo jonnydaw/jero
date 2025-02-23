@@ -61,6 +61,11 @@ public class UserAuthService implements IUserAuthService {
             UserModel savedUser = userRepository.save(createdUser); 
             userRepository.save(savedUser);
         }
+
+        @Override
+        public void deleteUser(UserModel user){
+            userRepository.deleteById(user.getId());
+        }
     
         @Override
         public void sendRegisterEmail(String email, String locale){

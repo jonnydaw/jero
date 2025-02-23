@@ -8,9 +8,7 @@ export default function HomePage() {
     const handleSubmit = async (e : any) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/logout', {
-
-                },
+            const response = await axios.delete('http://localhost:8080/auth/delete',
                 { withCredentials: true}
             );
             console.log("hi" + response.data);
@@ -26,7 +24,7 @@ export default function HomePage() {
             <h1>{t('about')}</h1>
             <form onSubmit={handleSubmit}>
                 <button type='submit'>
-                    Logout
+                    Delete
                     </button>
             </form>
         </div>
