@@ -1,31 +1,24 @@
 package com.example.demo.authServiceTests.authenticate;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.email.EmailService;
 import com.example.demo.user.DTO.UserLoginHandler;
-import com.example.demo.user.DTO.UserSignupHandler;
-import com.example.demo.user.enumeration.user.UserStatus;
-import com.example.demo.user.userCMRS.model.UserModel;
-import com.example.demo.user.userCMRS.repository.UserRepository;
+
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
 import com.example.demo.user.userCMRS.service.authentication.UserAuthService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,9 +30,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class AuthenticateUnitTests {
 
-    private final String FIRST_NAME = "fname";
-    private final String LAST_NAME = "lname";
-    private final Date DOB = new Date();
     private final String EMAIL = "email@email.com";
     private final String PASSWORD = "password12!";
     private final String DIFFERENT_PASSWORD = "password123!";
