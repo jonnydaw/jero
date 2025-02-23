@@ -1,4 +1,4 @@
-package com.example.demo.userTests;
+package com.example.demo.authServiceTests;
 
 
 import org.springframework.security.authentication.BadCredentialsException;

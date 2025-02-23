@@ -1,4 +1,4 @@
-package com.example.demo.userTests;
+package com.example.demo.authServiceTests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

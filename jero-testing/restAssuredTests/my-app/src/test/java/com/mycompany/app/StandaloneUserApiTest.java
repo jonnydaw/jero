@@ -1,14 +1,11 @@
 package com.mycompany.app;
 import static org.hamcrest.Matchers.equalTo;
 
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
+
 
 import static io.restassured.RestAssured.*;
 

@@ -31,7 +31,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity; 
 import org.springframework.security.core.Authentication; 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -153,9 +152,7 @@ public class UserAuthController {
 	public ResponseEntity<AuthResponse> refresh(@CookieValue("JWT") String expiredJWT, @CookieValue("RT") String rt) { 
 		String email =  JwtProvider.getEmailFromJwtToken(expiredJWT);
 		UserModel user = userRepository.findByEmail(email);
-
 		refreshTokenService.checkRefreshToken(user,rt);
-
 		Authentication auth = refreshTokenService.authenticateHelper(email);
 		String token = userAuthService.provideJWTCookie(auth);
 		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 

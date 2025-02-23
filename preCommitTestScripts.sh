@@ -22,5 +22,19 @@ if [ $? -eq 1 ]; then
 else
     echo "Jest tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
 fi
+# echo "Proceed with commit. \ (•◡•) /"
+# exit 0
+
+
+echo "Unit tests"
+(cd jero-backend/demo/demo; mvn run test)
+
+if [ $? -eq 1 ]; then
+    echo "unit tests failed. ༼ つ ಥ_ಥ ༽つ"
+    exit 1
+else
+    echo "unit tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
+fi
 echo "Proceed with commit. \ (•◡•) /"
 exit 0
+
