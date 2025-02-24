@@ -4,7 +4,6 @@ const page = async ({ params }: { params: { property_id: string} }) => {
 
     const { property_id } = await params
     return <p>ID: {property_id}</p>
-  return <p>Post: {params?.property_id}</p>
 }
 
 export default page;
