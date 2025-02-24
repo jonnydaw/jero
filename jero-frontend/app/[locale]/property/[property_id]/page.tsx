@@ -1,7 +1,9 @@
 
  // https://stackoverflow.com/questions/77412027/using-next-13-5-6-app-router-how-to-get-params-of-dynamic-route
-const page = ({ params }: { params: { property_id: string } }) => {
+const page = async ({ params }: { params: { property_id: string} }) => {
 
+    const { property_id } = await params
+    return <p>ID: {property_id}</p>
   return <p>Post: {params?.property_id}</p>
 }
 
