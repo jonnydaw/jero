@@ -1,5 +1,5 @@
 import React from 'react'
-import Signup from "@/app/components/Signup/Signup";
+import Signup from "@/components/Signup/Signup";
 import style from './page.module.css'
 type Props = {}
 

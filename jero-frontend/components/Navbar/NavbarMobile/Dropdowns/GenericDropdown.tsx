@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react"
 import styleContainer from "./Container.module.css"
 import style from "./GenericSearchMobile.module.css"
-import Search from "@/app/components/Search/Search"
-import AdvancedSearchMobile from "@/app/components/AdvancedSearch/AdvanceSearchMobile/AdvancedSearchMobile"
+import Search from "@/components/Search/Search"
+import AdvancedSearchMobile from "@/components/AdvancedSearch/AdvanceSearchMobile/AdvancedSearchMobile"
 interface Props {
     setOpen : Dispatch<SetStateAction<boolean>>
     //searchComponent : React.FC;

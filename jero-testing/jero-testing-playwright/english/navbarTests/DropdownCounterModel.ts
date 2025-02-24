@@ -16,13 +16,13 @@ export class DropdownCounterModel {
   
     constructor(page: Page) {
         this.page = page;
-        this.guestHoverAreaText = page.locator('.Dropdown_dropdown__Ry3RD > span');
-        this.guestHoverArea = page.locator('div.Dropdown_dropdown__Ry3RD');
-        this.guestDropdownContent = page.locator('div.Dropdown_dropdownContent__68Zte');
-        this.adultButtonSection = page.locator('div.Dropdown_buttonArea__z7Wyx > span').nth(0);
+        this.guestHoverAreaText = page.locator('.Dropdown_dropdown__QZdz9 > span');
+        this.guestHoverArea = page.locator('div.Dropdown_dropdown__QZdz9');
+        this.guestDropdownContent = page.locator('div.Dropdown_dropdownContent__h6PpO');
+        this.adultButtonSection = page.locator('div.Dropdown_toggleButton__yYcfr > span').nth(0);
         this.adultIncrementButton = page.locator('button:text("+")').nth(0);
         this.adultDecrementButton = page.locator('button:text("−")').nth(0);
-        this.childButtonSection = page.locator('div.Dropdown_buttonArea__z7Wyx > span').nth(1);
+        this.childButtonSection = page.locator('div.Dropdown_toggleButton__yYcfr > span').nth(1);
         this.childIncrementButton = page.locator('button:text("+")').nth(1);
         this.childDecrementButton = page.locator('button:text("−")').nth(1);
     }

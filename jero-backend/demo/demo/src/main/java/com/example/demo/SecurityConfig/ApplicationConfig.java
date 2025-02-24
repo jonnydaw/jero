@@ -35,6 +35,7 @@ public class ApplicationConfig {
 						authorize -> authorize
 						.requestMatchers("/auth/delete").authenticated()
 						.requestMatchers("/auth/profile").authenticated()
+						.requestMatchers("/property/add_property").authenticated()
 						.requestMatchers("/signup").permitAll()
 						.requestMatchers("/auth/refresh").permitAll()
 						.anyRequest().permitAll())

@@ -5,7 +5,7 @@ import style from "./SearchPC.module.css";
 import styleMobile from "./SearchMobile.module.css";
 import { CiSearch } from "react-icons/ci";
 import Dropdown from '../GuestDropdown/Dropdown';
-import {GuestCounts} from "../../types/types"
+import {GuestCounts} from "../../app/types/types"
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
 import { isMobile } from 'react-device-detect';

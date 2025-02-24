@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import style from './Dropdown.module.css'
-import {GuestCounts} from "../../types/types"
+import {GuestCounts} from "../../app/types/types"
 import {useTranslations} from 'next-intl';
 
 type Props = {

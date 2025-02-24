@@ -1,5 +1,5 @@
 import React from 'react'
-import Login from "@/app/components/Login/Login";
+import Login from "@/components/Login/Login";
 import style from "./page.module.css"
 import { cookies } from 'next/headers';
 type Props = {}

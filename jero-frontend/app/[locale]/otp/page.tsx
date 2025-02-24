@@ -1,4 +1,4 @@
-import Otp from "@/app/components/Otp/Otp";
+import Otp from "@/components/Otp/Otp";
 
 const page = () => {
     return(

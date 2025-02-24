@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import { isValidEmail, isFieldMatch } from '@/app/components/Signup/SignupErrors'
+import { isValidEmail, isFieldMatch } from '@/components/Signup/SignupErrors'
 
 // Email Test Start
 

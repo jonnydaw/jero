@@ -1,6 +1,6 @@
 // 'use client'
 // import React, { useState, useEffect } from "react";
-import Profile from "@/app/components/Profile/Profile";
+import Profile from "@/components/Profile/Profile";
 import axios from "axios"
 import { cookies } from "next/headers";
 import { redirect } from 'next/navigation'
