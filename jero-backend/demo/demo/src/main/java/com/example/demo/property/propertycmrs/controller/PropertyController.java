@@ -30,21 +30,11 @@ public class PropertyController {
     }
 
     @GetMapping("/property/{property_id}")
-    public ResponseEntity<?> getPropertyFromId(@Param("property_id") String property_id){
+    public ResponseEntity<?> getPropertyFromId(@Param("property_id") String propertyId){
 
         return ResponseEntity.ok().body("hi");
     }
 
-    // @GetMapping("/coordinates/{search}")
-    // public ResponseEntity<?> getCoord(@Param("search") String property_id){
-    //     final String uri = "http://localhost:8080/springrestexample/employees.xml";
-
-    //     RestTemplate restTemplate = new RestTemplate();
-    //     String result = restTemplate.getForObject(uri, String.class);
-
-    //     System.out.println(result);
-    //     return ResponseEntity.ok().body("hi");
-    // }
 
 
 }

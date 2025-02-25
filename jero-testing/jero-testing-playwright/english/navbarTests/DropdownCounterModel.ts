@@ -19,10 +19,10 @@ export class DropdownCounterModel {
         this.guestHoverAreaText = page.locator('.Dropdown_dropdown__QZdz9 > span');
         this.guestHoverArea = page.locator('div.Dropdown_dropdown__QZdz9');
         this.guestDropdownContent = page.locator('div.Dropdown_dropdownContent__h6PpO');
-        this.adultButtonSection = page.locator('div.Dropdown_toggleButton__yYcfr > span').nth(0);
+        this.adultButtonSection = page.locator('div.Dropdown_buttonArea__ZDksg > span').nth(0);
         this.adultIncrementButton = page.locator('button:text("+")').nth(0);
         this.adultDecrementButton = page.locator('button:text("−")').nth(0);
-        this.childButtonSection = page.locator('div.Dropdown_toggleButton__yYcfr > span').nth(1);
+        this.childButtonSection = page.locator('div.Dropdown_buttonArea__ZDksg > span').nth(1);
         this.childIncrementButton = page.locator('button:text("+")').nth(1);
         this.childDecrementButton = page.locator('button:text("−")').nth(1);
     }
@@ -47,7 +47,7 @@ export class DropdownCounterModel {
      * @returns {number} The number in the respective "button area".
      */
     async _getFinalDigitFromButtonSection_(guestType : number) : Promise<number>{
-        const text = await this.page.locator('div.Dropdown_buttonArea__z7Wyx > span').nth(guestType).textContent();
+        const text = await this.page.locator('div.Dropdown_buttonArea__ZDksg > span').nth(guestType).textContent();
         const num = (Number(text?.trim()))
         return num;
     }

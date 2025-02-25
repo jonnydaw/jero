@@ -1,13 +1,33 @@
 'use client'
 
 import dynamic from 'next/dynamic';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import style from "./Step1AddProperty.module.css"
+interface LocationResults {
+    locationName : string,
+    lat : number,
+    lon : number,
+    osm_id : string,
+    osm_type : string
+}
 
+interface Address {
+
+}
 const Step1AddProperty = () => {
     const [formData, setFormData] = useState<string>("");
-    const [coords, setCoords] = useState<number[]>([0,0]);
+    //const [coords, setCoords] = useState<number[]>([0,0]);
     const [zoom, setZoom] = useState<number>(1)
+    const [results, setResults] = useState<LocationResults[]>(
+        // [{
+        //     locationName : "",
+        //     lat : 0,
+        //     lon : 0
+        // }]
+    );
+    const [chosen, setChosen] = useState<LocationResults>();
+
+    const address = useRef<Address>("");
 
     // https://medium.com/@tomisinabiodun/displaying-a-leaflet-map-in-nextjs-85f86fccc10c
     const Map = useMemo(() => dynamic(
@@ -16,7 +36,7 @@ const Step1AddProperty = () => {
           loading: () => <p>A map is loading</p>,
           ssr: false,
         }
-      ), [coords])
+      ), [chosen])
 
 
       const handleChange = (e : any) => {
@@ -24,32 +44,91 @@ const Step1AddProperty = () => {
       }
 
       const handleSubmit = async (e: any) => {
+        setChosen(undefined);
+        setZoom(1);
         e.preventDefault();
         try {
             const response = await fetch(`/api/osm?q=${formData}`)
             const res = await response.json();
-            //console.log(res)
-            const lat = res[0]?.lat
-            const lon = (res[0]?.lon)
-            setCoords([lat,lon])
-            setZoom(10)
+            setResults(res);
+            console.log(res);
+            const locationResults = res.map((element: any) => ({
+                locationName: element.display_name,
+                lat: element.lat,
+                lon: element.lon,
+                osm_id : element.osm_id,
+                osm_type : element.osm_type
+              }));
+            
+              setResults(locationResults); 
         } catch (error) {
             console.error(error)
         }
-        
+      }
 
+      const handleSave = async (e : any) => {
+        e.preventDefault();
+        if(chosen){
+            try {
+                const country = chosen.locationName.split(",").pop()?.trim()
+                const response = await fetch(`http://localhost:8080/country/get_country?country_name=${country}`, {
+                    next: {
+                        revalidate: 60 * 60 * 24 * 2,
+                    },
+                });
+                if(response.ok){
+                    const type = chosen.osm_type.charAt(0).toUpperCase();
+                    const newResponse = await fetch(`/api/osmId?osm_id=${type}${chosen.osm_id}`)
+                    console.log(await newResponse.json())
+                    // localStorage.setItem("address", chosen?.locationName);
+                    // localStorage.setItem("lat", String(chosen.lat));
+                    // localStorage.setItem("lon", String(chosen.lon)); 
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        }
+
+      const handleRadioChange = (e : any, item : LocationResults) => {
+        if(e.target.checked){
+            console.log(item);
+            setChosen(item);
+            setZoom(13)
+        }
 
       }
     
     
     return(
         <div id={style.container}>
-                <Map position={coords} zoom={zoom}/>
+                <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom}/>
                 <form  onSubmit={handleSubmit}>
                     <input onChange={handleChange}type="text" placeholder='Enter property location' value={formData}/>
                     <button>Search</button>
                 </form>
-
+            
+           { results && 
+            <> 
+                <h3>Please choose your address</h3>
+                <form onSubmit={handleSave}>
+                {results.map((item, index) => (
+                    <div key={index}>
+                        <label htmlFor={item.locationName}>{item.locationName}</label>
+                        <input 
+                            onChange={(e) => handleRadioChange(e, item)} 
+                            type='radio'  
+                            id={item.locationName} 
+                            name="address"
+                            checked={chosen===item}
+                            placeholder={item.locationName}/>
+                    </div>
+                ))}
+                <button>Save address and continue.</button>
+                </form>
+            </>    
+             }
             {/* <form>
                 Location Information
                 <fieldset>
