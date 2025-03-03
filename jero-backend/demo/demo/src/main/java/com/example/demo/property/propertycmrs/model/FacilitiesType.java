@@ -1,6 +1,5 @@
 package com.example.demo.property.propertycmrs.model;
 
-import jakarta.annotation.sql.DataSourceDefinition;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,7 @@
-package com.example.demo.locations.country.countryCMRS.model;
+package com.example.demo.locations.locationCMRS.model;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,16 +11,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Document(collection = "country")
+@Document(collection = "location")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Setter
 @Getter
-public class CountryModel{
+public class LocationModel{
     @Id
-    private ObjectId id;
-    private String country;
-    private String pLanguage;
+    private String id;
+    private String parent;
     private String overview;
+    List<LocationModel> nParents;
+
 }

@@ -2,7 +2,6 @@ package com.example.demo.property.propertycmrs.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;

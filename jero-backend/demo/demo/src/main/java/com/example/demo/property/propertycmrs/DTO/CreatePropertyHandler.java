@@ -2,14 +2,8 @@ package com.example.demo.property.propertycmrs.DTO;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
 import org.bson.types.ObjectId;
-
-import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.FacilitiesType;
-import com.example.demo.property.propertycmrs.model.ReviewsType;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;

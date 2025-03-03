@@ -3,6 +3,8 @@
 import dynamic from 'next/dynamic';
 import { useMemo, useRef, useState } from 'react';
 import style from "./Step1AddProperty.module.css"
+import next from 'next';
+import { useRouter } from 'next/navigation';
 interface LocationResults {
     locationName : string,
     lat : number,
@@ -14,6 +16,17 @@ interface LocationResults {
 interface Address {
 
 }
+
+const osmTypeToChar = new Map<string,string>();
+osmTypeToChar.set("node","N");
+osmTypeToChar.set("way","W");
+osmTypeToChar.set("relation","R");
+osmTypeToChar.set("polygon","P");
+
+
+
+
+
 const Step1AddProperty = () => {
     const [formData, setFormData] = useState<string>("");
     //const [coords, setCoords] = useState<number[]>([0,0]);
@@ -27,6 +40,7 @@ const Step1AddProperty = () => {
     );
     const [chosen, setChosen] = useState<LocationResults>();
 
+
     const address = useRef<Address>("");
 
     // https://medium.com/@tomisinabiodun/displaying-a-leaflet-map-in-nextjs-85f86fccc10c
@@ -38,7 +52,7 @@ const Step1AddProperty = () => {
         }
       ), [chosen])
 
-
+      const router = useRouter();
       const handleChange = (e : any) => {
         setFormData(e.target.value);
       }
@@ -69,23 +83,42 @@ const Step1AddProperty = () => {
       const handleSave = async (e : any) => {
         e.preventDefault();
         if(chosen){
-            try {
-                const country = chosen.locationName.split(",").pop()?.trim()
-                const response = await fetch(`http://localhost:8080/country/get_country?country_name=${country}`, {
-                    next: {
-                        revalidate: 60 * 60 * 24 * 2,
-                    },
-                });
-                if(response.ok){
-                    const type = chosen.osm_type.charAt(0).toUpperCase();
+  //          try {
+                // const country = chosen.locationName.split(",").pop()?.trim()
+                // const response = await fetch(`http://localhost:8080/country/get_country?country_name=${country}`, {
+                //     next: {
+                //         revalidate: 60 * 60 * 24 * 2,
+                //     },
+                // });
+                    const type = osmTypeToChar.get(chosen.osm_type)
                     const newResponse = await fetch(`/api/osmId?osm_id=${type}${chosen.osm_id}`)
-                    console.log(await newResponse.json())
-                    // localStorage.setItem("address", chosen?.locationName);
-                    // localStorage.setItem("lat", String(chosen.lat));
-                    // localStorage.setItem("lon", String(chosen.lon)); 
-                }
+                    //console.log(await newResponse.json())
+                    const data = await newResponse.json();
+                    const addressData = data[0].address;
+                    console.log("madres" + chosen.locationName);
+                    const query = new URLSearchParams(addressData).toString();
+                    console.log(query)
+
+                    try {
+                        const response = await fetch(`http://localhost:8080/country/get_location?${query}`, {
+                            next: {
+                                revalidate: 60 * 60 * 24 * 2,
+                            },
+                        });
+                    const data  = await response.json()
+                    console.log(data)
+                    if(response.status === 404){
+                        alert("Sorry we are not supporting that location yet.")
+                    }
+                    alert(data)
+                    localStorage.setItem("address", chosen?.locationName);
+                    localStorage.setItem("lat", String(chosen.lat));
+                    localStorage.setItem("lon", String(chosen.lon)); 
+                    router.replace("step2")
+
+                //}
             } catch (error) {
-                console.error(error)
+                //if(error.sta)
             }
         }
 
@@ -95,7 +128,7 @@ const Step1AddProperty = () => {
         if(e.target.checked){
             console.log(item);
             setChosen(item);
-            setZoom(13)
+            setZoom(15)
         }
 
       }
