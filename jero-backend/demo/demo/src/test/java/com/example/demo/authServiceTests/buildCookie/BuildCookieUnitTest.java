@@ -52,7 +52,7 @@ public class BuildCookieUnitTest {
         final Date currentTime = new Date(System.currentTimeMillis() + (AGE) * 1000);
 
         final SimpleDateFormat sdf =
-                new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss z");
+                new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 
         // Give it to me in GMT time.
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
