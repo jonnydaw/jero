@@ -43,6 +43,10 @@ public class CreatePropertyHandler {
     
     @NotNull
     private int maxGuests;
+
+
+    @NotNull
+    private int minGuests;
     
     @NotNull
     private String propertyType;
