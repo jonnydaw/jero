@@ -20,13 +20,14 @@ import java.util.List;
 public class JwtProvider { 
 	static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes()); 
 
-	public static String generateToken(Authentication auth) { 
+	public static String generateToken(Authentication auth, String id) { 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities(); 
 		List<String> roles = populateAuthorities(authorities); 
 		String jwt = Jwts.builder() 
 				.setIssuedAt(new Date()) 
 				.setExpiration(new Date(System.currentTimeMillis() + 300_000)) 
-				.claim("email", auth.getName()) 
+				.claim("email", auth.getName())
+				.claim("id", id)
 				.claim("status", roles.get(0))
 				.claim( "role",roles.get(1))
 				.signWith(key) 
@@ -61,6 +62,27 @@ public class JwtProvider {
 
 			}
 			System.err.println("Error extracting email from JWT: " + e.getMessage()); 
+			e.printStackTrace(); 
+			return null; 
+		} 
+	}
+
+	public static String getIdFromJwtToken(String jwt) { 
+		try { 
+		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 
+			String id = String.valueOf(claims.get("id")); 
+			System.out.println("Id extracted from JWT: " + claims); 
+			return id; 
+		} catch (Exception e) { 
+			// https://stackoverflow.com/questions/35791465/is-there-a-way-to-parse-claims-from-an-expired-jwt-token
+			if(e.getClass() == io.jsonwebtoken.ExpiredJwtException.class){
+				Claims claims = ((ClaimJwtException) e).getClaims();
+				String id = String.valueOf(claims.get("id")); 
+				System.out.println("id extracted from expired JWT: " + claims); 
+				return id; 
+
+			}
+			System.err.println("Error extracting id from JWT: " + e.getMessage()); 
 			e.printStackTrace(); 
 			return null; 
 		} 

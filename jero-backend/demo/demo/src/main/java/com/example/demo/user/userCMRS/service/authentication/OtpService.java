@@ -36,10 +36,12 @@ public class OtpService implements IOtpService {
 
     @Override
     public String reissue(String token, OtpHandler otp){
+        // get id from jwt
         String email = JwtProvider.getEmailFromJwtToken(token);
+        String id = JwtProvider.getIdFromJwtToken(token);
 		Authentication auth = refreshTokenService.authenticateHelper(email);
 		SecurityContextHolder.getContext().setAuthentication(auth); 
-		String newToken = userAuthService.provideJWTCookie(auth);
+		String newToken = userAuthService.provideJWTCookie(auth, id);
         return newToken;
         
     }

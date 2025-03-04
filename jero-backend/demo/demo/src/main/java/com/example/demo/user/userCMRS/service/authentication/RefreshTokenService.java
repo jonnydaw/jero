@@ -2,6 +2,7 @@ package com.example.demo.user.userCMRS.service.authentication;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -56,8 +57,8 @@ public class RefreshTokenService implements IRefreshTokenService {
 
 
     @Override
-    public void checkRefreshToken(UserModel user, String messageRefreshToken) {
-       RefreshModel rm =  refreshRepository.findRefreshById(user.getId());
+    public void checkRefreshToken(String id, String messageRefreshToken) {
+       RefreshModel rm =  refreshRepository.findRefreshById(new ObjectId(id));
        if(rm == null){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "refresh token not found");
 

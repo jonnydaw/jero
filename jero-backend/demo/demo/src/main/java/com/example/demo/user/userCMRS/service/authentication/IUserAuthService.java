@@ -15,7 +15,7 @@ public interface IUserAuthService {
 
 	public void saveUser(UserModel createdUser);
 
-	public void deleteUser(UserModel user);
+	public void deleteUser(String id);
 
 	public boolean isEmailInUse(String email);
 
@@ -27,7 +27,7 @@ public interface IUserAuthService {
 
 	public Authentication authenticate(UserSignupHandler user);
 
-	public String provideJWTCookie(Authentication auth);
+	public String provideJWTCookie(Authentication auth, String id);
 
 	public AuthResponse buildAuthResponse(String token, String message);
 

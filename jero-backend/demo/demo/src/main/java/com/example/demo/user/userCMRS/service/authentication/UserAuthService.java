@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -63,8 +64,8 @@ public class UserAuthService implements IUserAuthService {
         }
 
         @Override
-        public void deleteUser(UserModel user){
-            userRepository.deleteById(user.getId());
+        public void deleteUser(String id){
+            userRepository.deleteById(new ObjectId(id));
         }
     
         @Override
@@ -115,8 +116,8 @@ public class UserAuthService implements IUserAuthService {
 
 
         @Override
-        public String provideJWTCookie(Authentication auth) {
-            return JwtProvider.generateToken(auth); 
+        public String provideJWTCookie(Authentication auth, String id) {
+            return JwtProvider.generateToken(auth, id); 
         }
 
         @Override

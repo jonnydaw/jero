@@ -14,7 +14,7 @@ public interface IRefreshTokenService {
 
     public void saveRefreshToken(UserSignupHandler user, String refreshToken);
 
-    public void checkRefreshToken(UserModel user, String refreshToken);
+    public void checkRefreshToken(String id, String refreshToken);
 
     public void deleteRefreshToken(String id);
 
