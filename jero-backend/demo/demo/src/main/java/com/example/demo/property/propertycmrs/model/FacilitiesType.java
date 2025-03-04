@@ -19,5 +19,6 @@ public class FacilitiesType {
     private boolean hasBalcony;
     private boolean hasSwimmingPool;
     private boolean hasGarden;
+    private boolean hasBath;
     
 }

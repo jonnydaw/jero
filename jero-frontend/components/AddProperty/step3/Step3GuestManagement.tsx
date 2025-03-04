@@ -11,7 +11,11 @@ type GuestManagement = {
     acceptsPets : boolean,
     disabilityFriendly : boolean
     minGuests : number,
-    maxGuests : number
+    maxGuests : number,
+    doubleBeds : number,
+    singleBeds : number,
+    hammocks : number,
+    sofaBeds : number
 }
 
 type Errors = {
@@ -21,7 +25,8 @@ type Errors = {
     acceptsPets : string | null,
     disabilityFriendly : string | null
     minGuests : string | null,
-    maxGuests : string | null
+    maxGuests : string | null,
+    
 }
 
 
@@ -30,16 +35,54 @@ import BigCheckbox from "../BigCheckbox";
 
 
 const Step3GuestManagement = () => {
+    /*
     
+        localStorage.setItem("pricePerNight", String(formData.pricePerNight));
+        localStorage.setItem("priceIncreasePerPerson", String(formData.priceIncreasePerPerson));
+        localStorage.setItem("acceptsChildren", String(formData.acceptsChildren));
+        localStorage.setItem("acceptsPets", String(formData.acceptsPets));
+        localStorage.setItem("disabilityFriendly", String(formData.disabilityFriendly));
+        localStorage.setItem("minGuests", String(formData.minGuests));
+        localStorage.setItem("maxGuests",String(formData.maxGuests));
+    */
+
+        // https://stackoverflow.com/questions/76300847/getting-referenceerror-localstorage-is-not-defined-even-after-adding-use-clien
+
+        ////wouihfe
+    useEffect(() => {
+        setFormData({
+            pricePerNight: Number(localStorage.getItem("pricePerNight")) || 0,
+            priceIncreasePerPerson: Number(localStorage.getItem("priceIncreasePerPerson")) || 0,
+            acceptsChildren: localStorage.getItem("acceptsChildren") === "true",
+            acceptsPets: localStorage.getItem("acceptsPets") === "true",
+            disabilityFriendly: localStorage.getItem("disabilityFriendly") === "true",
+            minGuests: Number(localStorage.getItem("minGuests")) || 0,
+            maxGuests: Number(localStorage.getItem("maxGuests")) || 0,
+            doubleBeds : Number(localStorage.getItem("doubleBeds")) || 0,
+            singleBeds : Number(localStorage.getItem("singleBeds")) || 0,
+            hammocks : Number(localStorage.getItem("hammocks")) || 0,
+            sofaBeds : Number(localStorage.getItem("sofaBeds")) || 0,
+        });
+    }, []);
+
+ 
+
     const [formData, setFormData] = useState<GuestManagement>({
         pricePerNight : 0,
         priceIncreasePerPerson : 0,
         acceptsChildren : false,
         acceptsPets : false,
         disabilityFriendly : false,
-        minGuests : 1,
-        maxGuests : 1
+        minGuests : 0,
+        maxGuests : 0,
+        doubleBeds : 0,
+        singleBeds : 0,
+        hammocks : 0,
+        sofaBeds : 0
     });
+
+
+
 
     const [errors, setErrors] = useState<Errors>({
         pricePerNight : null,
@@ -89,8 +132,19 @@ const Step3GuestManagement = () => {
         console.log(value)
         setDays(value);
     }
+
+    const potentialBedProblem = () : boolean => {
+        console.log((formData.maxGuests / 2));
+        console.log((formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds));
+
+        if((formData.maxGuests) < (formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds)){
+            return true;
+        }
+        return false;
+    }
     
     const validate = () : boolean => {
+      
         let flag = true;
         let messages: Errors = { ...errors };
     
@@ -111,7 +165,13 @@ const Step3GuestManagement = () => {
     }
     
     const handleSubmit = (e :any) => {
-        e.preventDefault();
+        e.preventDefault(); 
+        if(potentialBedProblem()){
+            if(!confirm("Bed count seems low. pls check")){
+                return;
+            }
+
+        }
         const continueWithSubmit = validate();
         console.log(continueWithSubmit)
         if(!continueWithSubmit){
@@ -124,6 +184,11 @@ const Step3GuestManagement = () => {
         localStorage.setItem("disabilityFriendly", String(formData.disabilityFriendly));
         localStorage.setItem("minGuests", String(formData.minGuests));
         localStorage.setItem("maxGuests",String(formData.maxGuests));
+        localStorage.setItem("doubleBeds",String(formData.doubleBeds));
+        localStorage.setItem("singleBeds",String(formData.singleBeds));
+        localStorage.setItem("hammocks",String(formData.hammocks));
+        localStorage.setItem("sofaBeds", String(formData.singleBeds))
+
         router.replace("step4")
     }
 
@@ -226,6 +291,55 @@ const Step3GuestManagement = () => {
                 onChange={handleChange}
                 />
                 {errors.maxGuests && errors.maxGuests}
+            </label>
+            
+            <label htmlFor="doubleBeds">doubleBeds
+            <input
+                id="doubleBeds"
+                type="number" 
+                min={0}
+                name="doubleBeds"
+                placeholder="doubleBeds"
+                value={formData.doubleBeds}
+                onChange={handleChange}
+                />
+            </label>
+            
+            <label htmlFor="singleBeds">singleBeds
+            <input
+                id="singleBeds"
+                type="number" 
+                min={0}
+                name="singleBeds"
+                placeholder="singleBeds"
+                value={formData.singleBeds}
+                onChange={handleChange}
+                />
+            </label>
+            
+            <label htmlFor="hammocks">hammocks
+            <input
+                id="hammocks"
+                type="number" 
+                min={0}
+                name="hammocks"
+                placeholder="hammocks"
+                value={formData.hammocks}
+                onChange={handleChange}
+                />
+
+            </label>
+
+            <label htmlFor="sofaBeds">sofaBeds
+            <input
+                id="sofaBeds"
+                type="number" 
+                min={0}
+                name="sofaBeds"
+                placeholder="sofaBeds"
+                value={formData.sofaBeds}
+                onChange={handleChange}
+                />
             </label>
 
                 <form onSubmit={handleSubmit}><button>Save guest details and continue.</button></form>

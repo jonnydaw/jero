@@ -1,0 +1,27 @@
+.options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.options input[type=checkbox] {
+   display: none;
+}
+
+.options label{
+    background-color: grey;
+    min-width: 20em;
+    min-height: 20em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.options label strong{
+    position: fixed;
+    position:absolute; 
+    bottom:0.5em;
+}
