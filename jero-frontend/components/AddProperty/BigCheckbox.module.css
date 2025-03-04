@@ -1,3 +1,23 @@
+.who{
+    min-width: 20em;
+    min-height: 20em;
+    margin: 2em;
+    position: relative;
+    border-radius: 0.66em;
+}
+
+.img{
+    max-width: 10em;
+    max-height: 10em;
+    margin-bottom: 1.5em;
+}
+
+.selected{
+    transform: scale(1.15);
+    background-color: aquamarine !important;
+}
+
+
 .options{
     display: flex;
     justify-content: center;
