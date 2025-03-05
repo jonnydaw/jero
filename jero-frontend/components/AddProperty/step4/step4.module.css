@@ -2,8 +2,47 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+
 }
+
+.subsection{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 2em;
+    padding: 1em 0;
+    text-align: center;
+    border-radius: 2em;
+    border: solid 0.1em #f7deb4;
+    box-shadow: 0.25em 0.25em 0.25em 0.25em #f7deb4;
+    min-width: 75%;
+    max-width: 75%;
+}
+
+.group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+
+.title{
+    text-align: center;
+    font-size: large;
+    padding: 1em;
+    border: none;
+    border-radius: 1em;
+    background-color: transparent;
+    cursor: pointer;
+    background-color: #f7deb4;
+
+}
+
 
 .options input[type=checkbox] {
    display: none;

@@ -19,6 +19,7 @@
     cursor: pointer;
 }
 
+/*https://stackoverflow.com/questions/526035/how-can-i-position-my-div-at-the-bottom-of-its-container*/
 .options label strong{
     position: fixed;
     position:absolute; 

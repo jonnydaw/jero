@@ -13,8 +13,8 @@
 }
 
 .selected{
-    transform: scale(1.15);
-    background-color: aquamarine !important;
+    transform: scale(1.1);
+    background-color: #54AD56 !important;
 }
 
 

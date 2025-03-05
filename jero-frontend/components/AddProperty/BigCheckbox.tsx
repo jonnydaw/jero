@@ -11,6 +11,7 @@ interface Props {
 
 }
 
+// https://stackoverflow.com/questions/44116800/how-to-show-html-entity-using-react
 const BigCheckbox = (props : Props) => {
     return (
     <label htmlFor={props.jsxnames} className={`${style.who} ${props.val && style.selected} `}>
