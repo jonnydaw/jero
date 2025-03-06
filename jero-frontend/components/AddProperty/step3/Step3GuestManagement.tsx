@@ -95,7 +95,7 @@ const Step3GuestManagement = () => {
     });
 
     const [estimation, setEstimation] = useState<string>("");
-    const [days, setDays] = useState<number>(0);
+    const [days, setDays] = useState<number>(30);
 
 
     useEffect(() => {
@@ -194,50 +194,60 @@ const Step3GuestManagement = () => {
         router.push(`/${locale}/add-property/step4`);
     }
 
-    return (<div>
-        <h2>GuestManagement</h2>
-        <form>
+    return (
+        <div className={style.container}>
+        <h1 className={style.shiftLeft}>Guest Management</h1>
+        <section className={style.section}>
+            <h3>Pricing</h3>
+            <div className={style.pricing}>
             <label htmlFor="pricePerNight">Price per night
-                
+            <div>
+            <span>£</span>
             <input
                 id="pricePerNight"
                 type="number" 
                 min="0"
                 name="pricePerNight"
-                placeholder="Price per night"
                 value={formData.pricePerNight}
                 onChange={handleChange}
                 />
-                </label>
-            <label htmlFor="priceIncreasePerPerson">Price increase per person per night</label>
+            </div>
+            </label>
+            <label htmlFor="priceIncreasePerPerson">Price increase per person per night
+                <div>
+            <span>£</span>
             <input
                 id="priceIncreasePerPerson"
                 type="number" 
                 min="0"
                 name="priceIncreasePerPerson"
-                placeholder="Price increase per person"
                 value={formData.priceIncreasePerPerson}
                 onChange={handleChange}
                 />
-        </form>
+                </div>
+            </label>
+          
+        </div>
         <div>
-            <h3>Earnings over time (assuming two people every visit)</h3>
-            <h4>{estimation}</h4>
+            <strong>Earnings over time (assuming two people every visit)</strong>
+            <h3>£{estimation}</h3>
             <div>
             <input 
                 type="range" 
-                id="months" 
-                name="months" 
+                id="days" 
+                name="days" 
                 min="1" 
                 max="366" 
                 value={days}
                 onChange={handleSlide}
              />
-            <label htmlFor="volume">Days: {days}</label>
+            <label htmlFor="days">Days: {days}</label>
             </div>
-        </div>
+            </div>
+        </section>
 
-        <h2>Who can you accommodate</h2>
+        <section className={style.section}>
+        <h3>Who can you accommodate</h3>
         <div className={style.options}>
 
             <BigCheckbox 
@@ -268,6 +278,7 @@ const Step3GuestManagement = () => {
                 handler={handleCheckChange}
             />
         </div>
+        </section>
         <h2>How many can stay?</h2>
         <label htmlFor="minGuests">Minimum number of guests
             
