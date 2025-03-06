@@ -4,7 +4,8 @@ import dynamic from 'next/dynamic';
 import { useMemo, useRef, useState } from 'react';
 import style from "./Step1AddProperty.module.css"
 import next from 'next';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+
 interface LocationResults {
     locationName : string,
     lat : number,
@@ -28,6 +29,7 @@ osmTypeToChar.set("polygon","P");
 
 
 const Step1AddProperty = () => {
+    
     const [formData, setFormData] = useState<string>("");
     //const [coords, setCoords] = useState<number[]>([0,0]);
     const [zoom, setZoom] = useState<number>(1)
@@ -42,6 +44,8 @@ const Step1AddProperty = () => {
 
 
     const address = useRef<Address>("");
+    const pathname = usePathname();
+    
 
     // https://medium.com/@tomisinabiodun/displaying-a-leaflet-map-in-nextjs-85f86fccc10c
     const Map = useMemo(() => dynamic(
@@ -111,10 +115,13 @@ const Step1AddProperty = () => {
                         alert("Sorry we are not supporting that location yet.")
                     }
                     alert(data)
-                    localStorage.setItem("address", chosen?.locationName);
-                    localStorage.setItem("lat", String(chosen.lat));
-                    localStorage.setItem("lon", String(chosen.lon)); 
-                    router.replace("step2")
+                    const addressAndCoordinates : string[] = [chosen?.locationName, String(chosen.lat), String(chosen.lon)]
+                    localStorage.setItem("addressAndCoordinates", JSON.stringify(addressAndCoordinates));
+                    // localStorage.setItem("address", chosen?.locationName);
+                    // localStorage.setItem("lat", String(chosen.lat));
+                    // localStorage.setItem("lon", String(chosen.lon)); 
+                    const locale = (pathname.split("/").at(1));
+                    router.push(`/${locale}/add-property/step2`);
 
                 //}
             } catch (error) {
@@ -162,16 +169,7 @@ const Step1AddProperty = () => {
                 </form>
             </>    
              }
-            {/* <form>
-                Location Information
-                <fieldset>
-                    <input type="text" placeholder="continent"/>
-                    <input type="text" placeholder="country"/>
-                    <input type="text" placeholder="metro area"/>
-                    <input type="text" placeholder="borough"/>
-                    <input type="text" placeholder=""/>
-                </fieldset>
-            </form> */}
+
         </div>
     )
 }

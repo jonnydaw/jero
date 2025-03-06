@@ -3,7 +3,7 @@
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 
 
@@ -11,6 +11,8 @@ import { useRouter } from 'next/navigation';
  // https://vercel.com/docs/storage/vercel-blob/client-upload
 export default function Step2AddImages() {
     const inputFileRef = useRef<HTMLInputElement>(null);
+    const pathname = usePathname();
+    const router = useRouter();
     const [blobs, setBlobs] = useState<(PutBlobResult | null)[]>([]);
 
     const handleClick = (Unwantedblob : PutBlobResult) => {
@@ -25,6 +27,9 @@ export default function Step2AddImages() {
                 localStorage.setItem(`imageUrl_${index}`, blob.url);
             }
             });
+
+            const locale = (pathname.split("/").at(1));
+            router.push(`/${locale}/add-property/step3`);
         }else{
             alert("No images have been uploaded");
         }

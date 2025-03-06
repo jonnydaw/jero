@@ -7,7 +7,6 @@ const page = () => {
         <div>
             <h1>Step 1: Add your location</h1>
             <Step1AddProperty/>
-            <Link href="/add_property/step2">Next</Link>
         </div>        
     )
 }

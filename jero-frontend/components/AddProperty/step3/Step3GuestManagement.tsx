@@ -30,7 +30,7 @@ type Errors = {
 }
 
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import BigCheckbox from "../BigCheckbox";
 
 
@@ -109,6 +109,7 @@ const Step3GuestManagement = () => {
       }, [formData.pricePerNight, days, formData.priceIncreasePerPerson]);
 
     const router = useRouter();
+    const pathname = usePathname();
 
     const handleChange = (e : any) => {
         const { name, value} = e.target;
@@ -189,7 +190,8 @@ const Step3GuestManagement = () => {
         localStorage.setItem("hammocks",String(formData.hammocks));
         localStorage.setItem("sofaBeds", String(formData.singleBeds))
 
-        router.replace("step4")
+        const locale = (pathname.split("/").at(1));
+        router.push(`/${locale}/add-property/step4`);
     }
 
     return (<div>
