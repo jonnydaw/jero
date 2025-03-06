@@ -1,0 +1,24 @@
+#textAreaContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+}
+
+#textAreaContainer label {
+    margin: 1em;
+    font-size: large;
+}
+
+
+
+#textAreaContainer label textarea{
+    display: block;  
+    font-size: large;  
+    width: 50em;
+    resize: none;
+    border-radius: 1em;
+    padding: 0.5em;
+    line-height: 1.5;
+}
