@@ -26,7 +26,11 @@ const Step5AddDescription = () => {
     const handleChange = (e : any) => {
         const {value , name} = e.target;
         setOverview({...overview, [name] :  value})
-
+    }
+    
+    const handleSubmit = (e : any) => {
+        e.preventDefault();
+        localStorage.setItem("overview",JSON.stringify(overview));
     }
 
     return (
@@ -74,6 +78,12 @@ const Step5AddDescription = () => {
                 value={overview.propertyRules}
                 onChange={handleChange} />
             </label>
+
+            <form onSubmit={handleSubmit}>
+                <button>
+                    Thank you for going through all the steps.<br></br> Click here to add your property!
+                </button>
+            </form>
             </div>
         </div>
     )
