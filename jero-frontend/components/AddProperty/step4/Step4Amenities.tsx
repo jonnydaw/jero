@@ -4,6 +4,7 @@ import BigCheckbox from "../BigCheckbox";
 import style from "./step4.module.css"
 import { useRouter, usePathname } from "next/navigation";
 import { cookies } from "next/headers";
+import AddPropertyBottomNav from "../AddPropertyBottomNav";
 
 
 
@@ -527,12 +528,10 @@ const Step4Amenities = () => {
     
             }
             </div>
-            <form onSubmit={handleSubmit}>
-            <button>
-                Save and go to the final step.
-            </button>
-        </form>
-
+            <AddPropertyBottomNav
+                handleSubmitFunction={handleSubmit} 
+                buttonText="Save and Continue to the final step."
+                prevSteps={[1,2,3]} />
             </div>
         
 

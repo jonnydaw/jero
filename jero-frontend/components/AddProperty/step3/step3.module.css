@@ -8,6 +8,7 @@
 
 .section{
     min-width: 75%;
+    margin: 3em;
 }
 
 /* .shiftLeft{
@@ -15,10 +16,54 @@
 } */
 
 
+
+#guestSection label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    margin: 1em;
+}
+
+#guestSection h3{
+    align-self: flex-start;
+}
+
+#guestSection label input:focus{
+    outline: none;
+}
+
+#guestSection label input{
+   max-width: 8ch;
+   padding: 0.25em;
+   background-color: white;
+   border: solid black 0.1em;
+   border-radius: 0.5em;
+   font-size: x-large;
+   text-align: center;
+}
+
+.flat{
+    display: flex;
+    flex-direction: row ;
+}
+
+
+
+
 .options{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#guestSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 75%;
 }
 
 .pricing{
@@ -56,6 +101,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    max-width: 25%;
+    min-width: 25%;
+}
+
+#earningsEst{
+    font-size: large;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 

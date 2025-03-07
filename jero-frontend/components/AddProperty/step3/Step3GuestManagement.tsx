@@ -3,6 +3,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import style from "./step3.module.css"
+import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
 type GuestManagement = {
     pricePerNight : number,
@@ -32,6 +33,8 @@ type Errors = {
 
 import { usePathname, useRouter } from "next/navigation";
 import BigCheckbox from "../BigCheckbox";
+import { Link } from "@/i18n/routing";
+import AddPropertyBottomNav from "../AddPropertyBottomNav";
 
 
 const Step3GuestManagement = () => {
@@ -135,10 +138,10 @@ const Step3GuestManagement = () => {
     }
 
     const potentialBedProblem = () : boolean => {
-        console.log((formData.maxGuests / 2));
+        console.log((formData.maxGuests));
         console.log((formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds));
 
-        if((formData.maxGuests) < (formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds)){
+        if((formData.maxGuests) > (formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds)){
             return true;
         }
         return false;
@@ -229,9 +232,9 @@ const Step3GuestManagement = () => {
           
         </div>
         <div>
-            <strong>Earnings over time (assuming two people every visit)</strong>
-            <h3>£{estimation}</h3>
-            <div>
+            <h3>Earnings over time (assuming two people every visit)</h3>
+            <div id={style.earningsEst}>
+            <strong>£{estimation}</strong>
             <input 
                 type="range" 
                 id="days" 
@@ -279,9 +282,11 @@ const Step3GuestManagement = () => {
             />
         </div>
         </section>
-        <h2>How many can stay?</h2>
+
+        <section id={style.guestSection}>
+        <h3>How many can stay?</h3>
+        <div className={style.flat}>
         <label htmlFor="minGuests">Minimum number of guests
-            
             <input
                 id="minGuests"
                 type="number" 
@@ -293,7 +298,6 @@ const Step3GuestManagement = () => {
                 />
             </label>
             <label htmlFor="maxGuests">Maximum number of guests 
-            
             <input
                 id="maxGuests"
                 type="number" 
@@ -305,8 +309,10 @@ const Step3GuestManagement = () => {
                 />
                 {errors.maxGuests && errors.maxGuests}
             </label>
-            
-            <label htmlFor="doubleBeds">doubleBeds
+            </div>
+
+            <div className={style.flat}>
+            <label htmlFor="doubleBeds">Double Beds
             <input
                 id="doubleBeds"
                 type="number" 
@@ -318,7 +324,7 @@ const Step3GuestManagement = () => {
                 />
             </label>
             
-            <label htmlFor="singleBeds">singleBeds
+            <label htmlFor="singleBeds">Single Beds
             <input
                 id="singleBeds"
                 type="number" 
@@ -330,7 +336,7 @@ const Step3GuestManagement = () => {
                 />
             </label>
             
-            <label htmlFor="hammocks">hammocks
+            <label htmlFor="hammocks">Hammocks
             <input
                 id="hammocks"
                 type="number" 
@@ -343,7 +349,7 @@ const Step3GuestManagement = () => {
 
             </label>
 
-            <label htmlFor="sofaBeds">sofaBeds
+            <label htmlFor="sofaBeds">sofa Beds
             <input
                 id="sofaBeds"
                 type="number" 
@@ -354,8 +360,12 @@ const Step3GuestManagement = () => {
                 onChange={handleChange}
                 />
             </label>
-
-                <form onSubmit={handleSubmit}><button>Save guest details and continue.</button></form>
+            </div>
+            </section>
+            <AddPropertyBottomNav
+                handleSubmitFunction={handleSubmit} 
+                buttonText="Save and Continue to the next step."
+                prevSteps={[1,2]} />
         </div>
         
 

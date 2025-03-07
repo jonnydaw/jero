@@ -4,6 +4,10 @@ import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { Link } from "@/i18n/routing";
+
+
+import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
 
 
@@ -36,7 +40,7 @@ export default function Step2AddImages() {
     }
 
     return (
-        <>
+        <div>
         <h1>Upload Your Avatar</h1>
     
         <form
@@ -74,9 +78,15 @@ export default function Step2AddImages() {
     ))}
             </div>
         )}
+        <nav id={bottomNavStyle.hi}>
         <form onSubmit={handleSubmit}>
             <button>Save and next</button>
         </form>
-        </>
+        <div id={bottomNavStyle.links}>
+            <Link href={"/add-property/step2"}>2</Link>
+
+        </div>
+        </nav>
+        </div>
     );
 }
