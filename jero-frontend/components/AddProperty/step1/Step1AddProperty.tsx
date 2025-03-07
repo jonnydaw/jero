@@ -115,7 +115,7 @@ const Step1AddProperty = () => {
                         alert("Sorry we are not supporting that location yet.")
                     }
                     alert(data)
-                    const addressAndCoordinates : string[] = [chosen?.locationName, String(chosen.lat), String(chosen.lon)]
+                    const addressAndCoordinates : string[] = [chosen?.locationName, String(chosen.lat), String(chosen.lon), data]
                     localStorage.setItem("addressAndCoordinates", JSON.stringify(addressAndCoordinates));
                     // localStorage.setItem("address", chosen?.locationName);
                     // localStorage.setItem("lat", String(chosen.lat));

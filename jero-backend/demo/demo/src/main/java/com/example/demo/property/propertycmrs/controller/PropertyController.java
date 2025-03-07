@@ -1,5 +1,7 @@
 package com.example.demo.property.propertycmrs.controller;
 
+import java.util.Map;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,10 +20,10 @@ import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 @CrossOrigin(origins="http:localhost:3000", allowCredentials = "true")
 public class PropertyController {
 
-    @PreAuthorize("hasAuthority('host')")
-    @PostMapping("/property/add_property")
-    public ResponseEntity<?> addProperty(@CookieValue("JWT") String token, CreatePropertyHandler cph){
-
+    //@PreAuthorize("hasAuthority('host')")
+    @PostMapping("/add_property")
+    public ResponseEntity<?> addProperty(@CookieValue("JWT") String token, @RequestBody CreatePropertyHandler cph){
+        System.out.println(cph);
         return ResponseEntity.ok().body("hi");
     }
 

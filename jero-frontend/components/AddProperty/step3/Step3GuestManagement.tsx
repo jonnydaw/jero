@@ -53,18 +53,20 @@ const Step3GuestManagement = () => {
 
         ////wouihfe
     useEffect(() => {
+        const step3Val = JSON.parse(localStorage.getItem("step3") || "{}");
+        console.log(step3Val.pricePerNight)
         setFormData({
-            pricePerNight: Number(localStorage.getItem("pricePerNight")) || 0,
-            priceIncreasePerPerson: Number(localStorage.getItem("priceIncreasePerPerson")) || 0,
-            acceptsChildren: localStorage.getItem("acceptsChildren") === "true",
-            acceptsPets: localStorage.getItem("acceptsPets") === "true",
-            disabilityFriendly: localStorage.getItem("disabilityFriendly") === "true",
-            minGuests: Number(localStorage.getItem("minGuests")) || 0,
-            maxGuests: Number(localStorage.getItem("maxGuests")) || 0,
-            doubleBeds : Number(localStorage.getItem("doubleBeds")) || 0,
-            singleBeds : Number(localStorage.getItem("singleBeds")) || 0,
-            hammocks : Number(localStorage.getItem("hammocks")) || 0,
-            sofaBeds : Number(localStorage.getItem("sofaBeds")) || 0,
+            pricePerNight: step3Val.pricePerNight || 0,
+            priceIncreasePerPerson: Number(step3Val.priceIncreasePerPerson) || 0,
+            acceptsChildren: step3Val.acceptsChildren,
+            acceptsPets: step3Val.acceptsPets,
+            disabilityFriendly: step3Val.disabilityFriendly,
+            minGuests: Number(step3Val.minGuests) || 0,
+            maxGuests: Number(step3Val.maxGuests) || 0,
+            doubleBeds : Number(step3Val.doubleBeds) || 0,
+            singleBeds : Number(step3Val.singleBeds) || 0,
+            hammocks : Number(step3Val.hammocks) || 0,
+            sofaBeds : Number(step3Val.sofaBeds) || 0,
         });
     }, []);
 
@@ -138,10 +140,10 @@ const Step3GuestManagement = () => {
     }
 
     const potentialBedProblem = () : boolean => {
-        console.log((formData.maxGuests));
-        console.log((formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds));
+        console.log("maxguests" + (formData.maxGuests));
+        console.log("Bed count" + (formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds));
 
-        if((formData.maxGuests) > (formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds)){
+        if(Number(formData.maxGuests) > Number(formData.doubleBeds * 2 + formData.singleBeds + formData.hammocks + formData.sofaBeds)){
             return true;
         }
         return false;
@@ -151,7 +153,8 @@ const Step3GuestManagement = () => {
       
         let flag = true;
         let messages: Errors = { ...errors };
-    
+        console.log("maxg " + formData.maxGuests)
+        console.log("ming " + formData.minGuests)
         if (formData.maxGuests <= 0) {
             messages.maxGuests = "Cannot be less than zero";
             flag = false;
@@ -181,17 +184,24 @@ const Step3GuestManagement = () => {
         if(!continueWithSubmit){
             return;
         }
-        localStorage.setItem("pricePerNight", String(formData.pricePerNight));
-        localStorage.setItem("priceIncreasePerPerson", String(formData.priceIncreasePerPerson));
-        localStorage.setItem("acceptsChildren", String(formData.acceptsChildren));
-        localStorage.setItem("acceptsPets", String(formData.acceptsPets));
-        localStorage.setItem("disabilityFriendly", String(formData.disabilityFriendly));
-        localStorage.setItem("minGuests", String(formData.minGuests));
-        localStorage.setItem("maxGuests",String(formData.maxGuests));
-        localStorage.setItem("doubleBeds",String(formData.doubleBeds));
-        localStorage.setItem("singleBeds",String(formData.singleBeds));
-        localStorage.setItem("hammocks",String(formData.hammocks));
-        localStorage.setItem("sofaBeds", String(formData.singleBeds))
+
+        localStorage.setItem("step3", JSON.stringify(formData))
+        // const pricing : number[] = [formData.pricePerNight, formData.priceIncreasePerPerson];
+        // localStorage.setItem("pricing", JSON.stringify(pricing));
+
+        // const who : Map<string, boolean> = new Map();
+
+        // localStorage.setItem("acceptsChildren", String(formData.acceptsChildren));
+        // localStorage.setItem("acceptsPets", String(formData.acceptsPets));
+        // localStorage.setItem("disabilityFriendly", String(formData.disabilityFriendly));
+
+
+        // localStorage.setItem("minGuests", String(formData.minGuests));
+        // localStorage.setItem("maxGuests",String(formData.maxGuests));
+        // localStorage.setItem("doubleBeds",String(formData.doubleBeds));
+        // localStorage.setItem("singleBeds",String(formData.singleBeds));
+        // localStorage.setItem("hammocks",String(formData.hammocks));
+        // localStorage.setItem("sofaBeds", String(formData.singleBeds))
 
         const locale = (pathname.split("/").at(1));
         router.push(`/${locale}/add-property/step4`);

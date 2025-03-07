@@ -25,13 +25,14 @@ export default function Step2AddImages() {
 
     const handleSubmit = (e : any) => {
         e.preventDefault()
+        const images : string[] = [];
         if (blobs) {
             blobs.forEach((blob, index) => {
             if (blob?.url) {
-                localStorage.setItem(`imageUrl_${index}`, blob.url);
-            }
+                images.push(blob.url); 
+            }   
             });
-
+            localStorage.setItem(`images`,JSON.stringify(images));
             const locale = (pathname.split("/").at(1));
             router.push(`/${locale}/add-property/step3`);
         }else{

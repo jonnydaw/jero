@@ -331,6 +331,8 @@ const Step4Amenities = () => {
         console.log(sectionVisibility[id])
         console.log()
     }
+
+    
     return(
         <div>
             <h1>Amenities</h1>

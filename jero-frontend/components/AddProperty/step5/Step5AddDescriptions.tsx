@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import style from "./Step5.module.css"
+import AddPropertyBottomNav from "../AddPropertyBottomNav";
+import axios from "axios";
 
 
 type Overview = {
@@ -28,9 +30,46 @@ const Step5AddDescription = () => {
         setOverview({...overview, [name] :  value})
     }
     
-    const handleSubmit = (e : any) => {
+    const handleSubmit = async (e : any) => {
         e.preventDefault();
+        // done in case the user leaves still
         localStorage.setItem("overview",JSON.stringify(overview));
+
+        const addressData = JSON.parse(localStorage.getItem("addressAndCoordinates") || "");
+        const beautyData = localStorage.getItem("beauty");
+        const climateData = localStorage.getItem("climateControl");
+        const entertainmentData = localStorage.getItem("entertainment");
+        const healthAndSafetyData = localStorage.getItem("healthAndSafety");
+        const imagesData = localStorage.getItem("images");
+        const kitchenData = localStorage.getItem("kitchen");
+        const laundryData = localStorage.getItem("laundry");
+        const overviewData = localStorage.getItem("overview");
+        const step3Data = localStorage.getItem("step3");
+        const transportData = localStorage.getItem("transport");
+        const waterData = localStorage.getItem("water");
+
+
+
+        try {
+            const response = await axios.post("http://localhost:8080/property/add_property", {
+                addressData : (addressData),
+                beautyData : beautyData,
+                climateData : climateData,
+                entertainmentData : entertainmentData,
+                healthAndSafetyData : healthAndSafetyData,
+                imagesData : imagesData,
+                kitchenData : kitchenData,
+                laundryData : laundryData,
+                step3Data : step3Data,
+                transportData : transportData,
+                waterData : waterData,
+               },
+                   { withCredentials: true}
+               );
+               console.log(response.status);
+        } catch (error) {
+            
+        }
     }
 
     return (
@@ -79,11 +118,10 @@ const Step5AddDescription = () => {
                 onChange={handleChange} />
             </label>
 
-            <form onSubmit={handleSubmit}>
-                <button>
-                    Thank you for going through all the steps.<br></br> Click here to add your property!
-                </button>
-            </form>
+            <AddPropertyBottomNav
+                handleSubmitFunction={handleSubmit} 
+                buttonText="Thank you for going through all the steps. Click here to add your property."
+                prevSteps={[1,2,3,4]} />
             </div>
         </div>
     )
