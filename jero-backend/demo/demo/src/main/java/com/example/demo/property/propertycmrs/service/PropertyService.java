@@ -1,12 +1,19 @@
 package com.example.demo.property.propertycmrs.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.locations.locationCMRS.model.LocationModel;
+import com.example.demo.locations.locationCMRS.repository.LocationRepository;
+import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
@@ -18,6 +25,8 @@ import com.example.demo.user.userCMRS.repository.UserRepository;
 public class PropertyService implements IPropertyService {
 
     @Autowired private PropertyRepo propertyRepo;
+    @Autowired private LocationRepository locationRepository;
+    @Autowired private ILocationService locationService;
     @Autowired private UserRepository userRepository;
 
     @Override
@@ -26,7 +35,6 @@ public class PropertyService implements IPropertyService {
         System.out.println(userID);
 		//UserModel user = userRepository.findByEmail(email);
         PropertyModel pm = new PropertyModel();
-
         pm.setOwnerId(new ObjectId(userID));
         System.out.println("hitwio");
         Map<String,String> hierarchy = cph.getAddressData().getHierarchy();
@@ -37,17 +45,12 @@ public class PropertyService implements IPropertyService {
         pm.setCityId((hierarchy.get("city")));
         pm.setCountyId((hierarchy.get("county")));
         pm.setStateId((hierarchy.get("state")));
-        
         pm.setCountryId((hierarchy.get("country")));
-        
         pm.setAddress(cph.getAddressData().getLocationName());
         pm.setLongitude(cph.getAddressData().getLon());
         pm.setLatitude(cph.getAddressData().getLat());
-
-
         // pm.setNumberBedrooms(cph.getNumberBedrooms());
         // pm.setNumberBathrooms(cph.getNumberBathrooms());
-
         pm.setNumberDoubleBeds(cph.getStep3Data().getDoubleBeds());
         pm.setNumberSingleBeds(cph.getStep3Data().getSingleBeds());
         pm.setNumberHammocks(cph.getStep3Data().getHammocks());
@@ -63,7 +66,6 @@ public class PropertyService implements IPropertyService {
         pm.setDescription(cph.getOverviewData().getPropertyDescription());
         pm.setGuide(cph.getOverviewData().getPropertyGuide());
         pm.setRules(cph.getOverviewData().getPropertyRules());
-
         pm.setClimateData(cph.getClimateData());
         pm.setBeautyData(cph.getBeautyData());
         pm.setEntertainmentData(cph.getEntertainmentData());
@@ -72,19 +74,34 @@ public class PropertyService implements IPropertyService {
         pm.setLaundryData(cph.getLaundryData());
         pm.setTransportData(cph.getTransportData());
         pm.setWaterData(cph.getWaterData());
-       
         // pm.setPropertyType(EProperty.APARTMENT);
-        
         pm.setImageUrls(cph.getImagesData());
         // dates
         //pm.setAvailableDates(cph.getAvailableDates());
-
-
-
         pm.setStatus(false);
-
-
         propertyRepo.save(pm);
+    }
+
+    @Override
+    public List<String> getPropertiesByLocation(String queriedLocation) {
+        LocationModel location  = locationRepository.findLocationById(queriedLocation);
+        if(location == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+        }
+
+        String locationType = location.getLocationType();
+        System.out.println(locationType);
+        System.out.println(location.getId());
+        List<PropertyModel> pms = new ArrayList<>();
+        if(locationType.equals("city")){
+            pms = propertyRepo.findPropertiesByCityId(location.getId());
+        }
+        List<String> res = new ArrayList<>();
+        System.out.println(pms.isEmpty());
+        for(PropertyModel pm : pms){
+            res.add(pm.getAddress());
+        }
+        return res;
         
     }
 }

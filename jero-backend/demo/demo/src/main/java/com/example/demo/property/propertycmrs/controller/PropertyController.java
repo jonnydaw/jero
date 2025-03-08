@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
@@ -36,10 +39,16 @@ public class PropertyController {
         return ResponseEntity.ok().body("hi");
     }
 
-    @GetMapping("/property/{property_id}")
+    @GetMapping("{property_id}")
     public ResponseEntity<?> getPropertyFromId(@Param("property_id") String propertyId){
-
         return ResponseEntity.ok().body("hi");
+    }
+
+    @GetMapping("/search-properties-by")
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location){
+        List<String> res = propertyService.getPropertiesByLocation(location);
+        System.out.println("hit controller");
+        return ResponseEntity.ok().body(res);
     }
 
 

@@ -55,8 +55,9 @@ const Search : React.FC<Props> =  (props : Props) => {
     e.preventDefault();
     console.log(formData);
     try {
-      const response = await axios.get("http://localhost:8080/property/get_properties", {
-        params : {where : formData.where}
+      console.log("ttry")
+      const response = await axios.get("http://localhost:8080/property/search-properties-by", {
+        params : {location : formData.where}
       });
       console.log(response.data)
     } catch (error) {
