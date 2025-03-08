@@ -20,8 +20,9 @@ import lombok.Setter;
 public class LocationModel{
     @Id
     private String id;
+    private String locationType;
     private String parent;
     private String overview;
-    List<LocationModel> nParents;
+    private List<LocationModel> nParents;
 
 }

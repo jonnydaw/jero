@@ -1,5 +1,6 @@
 // package com.example.demo.property.propertycmrs.service;
 
+// import org.bson.types.ObjectId;
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.stereotype.Service;
 
@@ -19,10 +20,11 @@
 
 //     @Override
 //     public void createProperty(String token, CreatePropertyHandler cph) {
-//         String email =  JwtProvider.getEmailFromJwtToken(token);
-// 		UserModel user = userRepository.findByEmail(email);
+//         String userID =  JwtProvider.getIdFromJwtToken(token);
+// 		//UserModel user = userRepository.findByEmail(email);
 //         PropertyModel pm = new PropertyModel();
-//         pm.setOwnerId(user.getId());
+
+//         pm.setOwnerId(new ObjectId(userID));
 //         pm.setTownId(cph.getTownId());
 //         pm.setBoroughId(cph.getBoroughId());
 //         pm.setMetroAreaId(cph.getMetroAreaId());

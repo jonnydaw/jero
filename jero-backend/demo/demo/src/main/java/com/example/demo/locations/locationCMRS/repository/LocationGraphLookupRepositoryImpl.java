@@ -1,7 +1,10 @@
 package com.example.demo.locations.locationCMRS.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -21,7 +24,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
 
 
     @Override
-    public List<String> getLocationHierarchy(String mostPreciseLocation){
+    public Map<String,String> getLocationHierarchy(String mostPreciseLocation){
 
         // https://github.com/kmandalas/spring-mongodb-graphlookup/blob/master/src/main/java/com/github/kmandalas/mongodb/repository/NodeRepositoryImpl.java
         final MatchOperation matchStage = Aggregation.match(new Criteria("_id").is(mostPreciseLocation));
@@ -44,6 +47,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
             Aggregation.sort(Sort.Direction.ASC, "nParents.order"),
             Aggregation.group("_id")
                 .first("parent").as("parent")
+                .first("locationType").as("locationType")
                 .push("nParents").as("nParents")
             );
       
@@ -54,13 +58,15 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
         // List<Document> hi = mongoTemplate.aggregate(aggregation, "location", Document.class).getMappedResults();
         // System.out.println("first " + hi);
         System.out.println("*****************");
+
         List<LocationModel> subList = results.getFirst().getNParents();
-        List<String> arr = new ArrayList<>();
-        arr.add(mostPreciseLocation);
+        Map<String,String> map = new HashMap<>();
+        map.put(results.getFirst().getLocationType(), results.getFirst().getId());
+        //arr.add(mostPreciseLocation);
         for(LocationModel he : subList){
             // Object x = he.get("id");
             // System.out.println(x.toString());
-            arr.add(he.getId());
+            map.put(he.getLocationType(), he.getId());
             // System.out.println(he.getId());
             // System.out.println();
         }
@@ -68,7 +74,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
         //System.out.println(results.get(0).getNParents());
         System.out.println("results" + results);
 
-        return arr;
+        return map;
     }
     
 }

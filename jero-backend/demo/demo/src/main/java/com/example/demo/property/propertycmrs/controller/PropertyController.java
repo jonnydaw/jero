@@ -2,6 +2,7 @@ package com.example.demo.property.propertycmrs.controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 
 @RestController
 @RequestMapping("/property")
 @CrossOrigin(origins="http:localhost:3000", allowCredentials = "true")
 public class PropertyController {
+
 
     //@PreAuthorize("hasAuthority('host')")
     @PostMapping("/add_property")

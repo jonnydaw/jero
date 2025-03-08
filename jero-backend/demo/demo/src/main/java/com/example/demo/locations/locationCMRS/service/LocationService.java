@@ -22,7 +22,7 @@ public class LocationService implements ILocationService {
         //System.out.println("Locations: " + areaTypeToName.toString());
         for(String loc : areaTypeToName.values()){
             if(locationRepository.findLocationById(loc.toLowerCase()) != null){
-               // System.out.println("mostprecise: " + loc);
+               System.out.println("mostprecise: " + loc);
                 mostPreciseLocation = loc;
                 break;
             }
@@ -35,8 +35,8 @@ public class LocationService implements ILocationService {
     }
 
     @Override
-    public List<String> graphLookUpFinder(String mostPreciseLocation) {
-        List<String> hierarchy = locationRepository.getLocationHierarchy(mostPreciseLocation.toLowerCase());
+    public Map<String,String> graphLookUpFinder(String mostPreciseLocation) {
+        Map<String,String> hierarchy = locationRepository.getLocationHierarchy(mostPreciseLocation.toLowerCase());
         System.out.println(hierarchy);
         return hierarchy;
     }

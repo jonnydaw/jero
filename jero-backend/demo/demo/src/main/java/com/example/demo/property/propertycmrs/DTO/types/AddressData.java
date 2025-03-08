@@ -1,6 +1,7 @@
 package com.example.demo.property.propertycmrs.DTO.types;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,5 +16,5 @@ public class AddressData {
     private String locationName;
     private String lat;
     private String lon;
-    private List<String> hierarchy;
+    private Map<String, String> hierarchy;
 }
