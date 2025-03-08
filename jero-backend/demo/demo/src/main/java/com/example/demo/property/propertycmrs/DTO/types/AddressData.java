@@ -12,8 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddressData {
-    private String fullAddress;
-    private String latitude;
-    private String longitude;
+    private String locationName;
+    private String lat;
+    private String lon;
     private List<String> hierarchy;
 }

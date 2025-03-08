@@ -36,17 +36,17 @@ const Step5AddDescription = () => {
         localStorage.setItem("overview",JSON.stringify(overview));
 
         const addressData = JSON.parse(localStorage.getItem("addressAndCoordinates") || "");
-        const beautyData = localStorage.getItem("beauty");
-        const climateData = localStorage.getItem("climateControl");
-        const entertainmentData = localStorage.getItem("entertainment");
-        const healthAndSafetyData = localStorage.getItem("healthAndSafety");
-        const imagesData = localStorage.getItem("images");
-        const kitchenData = localStorage.getItem("kitchen");
-        const laundryData = localStorage.getItem("laundry");
-        const overviewData = localStorage.getItem("overview");
-        const step3Data = localStorage.getItem("step3");
-        const transportData = localStorage.getItem("transport");
-        const waterData = localStorage.getItem("water");
+        const beautyData = JSON.parse(localStorage.getItem("beauty") || "");
+        const climateData = JSON.parse(localStorage.getItem("climateControl")|| "");
+        const entertainmentData = JSON.parse(localStorage.getItem("entertainment")|| "");
+        const healthAndSafetyData = JSON.parse(localStorage.getItem("healthAndSafety")|| "");
+        const imagesData = JSON.parse(localStorage.getItem("images")|| "");
+        const kitchenData = JSON.parse(localStorage.getItem("kitchen")|| "");
+        const laundryData = JSON.parse(localStorage.getItem("laundry")|| "");
+        const overviewData = JSON.parse(localStorage.getItem("overview")|| "");
+        const step3Data = JSON.parse(localStorage.getItem("step3")|| "");
+        const transportData = JSON.parse(localStorage.getItem("transport")|| "");
+        const waterData = JSON.parse(localStorage.getItem("water")|| "");
 
 
 

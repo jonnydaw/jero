@@ -14,11 +14,7 @@ import com.example.demo.property.propertycmrs.DTO.types.LaundryData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.DTO.types.TransportData;
 import com.example.demo.property.propertycmrs.DTO.types.WaterData;
-import com.example.demo.property.propertycmrs.model.FacilitiesType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +35,4 @@ public class CreatePropertyHandler {
     private Step3Data step3Data;
     private TransportData transportData;
     private WaterData waterData;
-    
-    
 }

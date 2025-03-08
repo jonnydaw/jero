@@ -23,7 +23,7 @@ public class PropertyController {
     //@PreAuthorize("hasAuthority('host')")
     @PostMapping("/add_property")
     public ResponseEntity<?> addProperty(@CookieValue("JWT") String token, @RequestBody CreatePropertyHandler cph){
-        System.out.println(cph);
+        System.out.println(cph.getAddressData().getHierarchy().toString());
         return ResponseEntity.ok().body("hi");
     }
 
