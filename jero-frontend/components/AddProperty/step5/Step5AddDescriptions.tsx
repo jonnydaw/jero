@@ -11,8 +11,8 @@ type Overview = {
     propertyDescription : string;
     propertyGuide : string;
     propertyRules : string;
-    propertyCheckInTime : string;
-    propertyCheckoutTime : string;
+    // propertyCheckInTime : string;
+    // propertyCheckoutTime : string;
 }
 const Step5AddDescription = () => {
 
@@ -21,8 +21,8 @@ const Step5AddDescription = () => {
         propertyDescription : "",
         propertyGuide : "",
         propertyRules : "",
-        propertyCheckInTime : "",
-        propertyCheckoutTime : "",
+        // propertyCheckInTime : "",
+        // propertyCheckoutTime : "",
     });
 
     const handleChange = (e : any) => {
@@ -44,6 +44,7 @@ const Step5AddDescription = () => {
         const kitchenData = JSON.parse(localStorage.getItem("kitchen")|| "");
         const laundryData = JSON.parse(localStorage.getItem("laundry")|| "");
         const overviewData = JSON.parse(localStorage.getItem("overview")|| "");
+        console.log(overviewData);
         const step3Data = JSON.parse(localStorage.getItem("step3")|| "");
         const transportData = JSON.parse(localStorage.getItem("transport")|| "");
         const waterData = JSON.parse(localStorage.getItem("water")|| "");
@@ -60,6 +61,7 @@ const Step5AddDescription = () => {
                 imagesData : imagesData,
                 kitchenData : kitchenData,
                 laundryData : laundryData,
+                overviewData : overviewData,
                 step3Data : step3Data,
                 transportData : transportData,
                 waterData : waterData,

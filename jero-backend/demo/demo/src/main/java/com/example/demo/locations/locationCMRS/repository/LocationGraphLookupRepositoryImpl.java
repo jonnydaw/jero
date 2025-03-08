@@ -61,6 +61,18 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
 
         List<LocationModel> subList = results.getFirst().getNParents();
         Map<String,String> map = new HashMap<>();
+        String[] locationOptions = new String[]{
+            "town", 
+            "city_district",
+            "city", 
+            "county", 
+            "state",
+            "country"
+        }; 
+        for(String locationOption : locationOptions){
+            map.put(locationOption, "");
+        }
+
         map.put(results.getFirst().getLocationType(), results.getFirst().getId());
         //arr.add(mostPreciseLocation);
         for(LocationModel he : subList){

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class AddressData {
     private String locationName;
-    private String lat;
-    private String lon;
+    private double lat;
+    private double lon;
     private Map<String, String> hierarchy;
 }

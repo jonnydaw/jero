@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Step3Data {
-    private String pricePerNight;
+    private int pricePerNight;
     private int priceIncreasePerPerson;
     private boolean acceptsChildren;
     private boolean acceptsPets;
