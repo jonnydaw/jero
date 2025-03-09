@@ -58,7 +58,7 @@ const Search : React.FC<Props> =  (props : Props) => {
     e.preventDefault();
     console.log(formData);
     const params = new URLSearchParams();
-    params.set("param", formData.where);
+    params.set("location", formData.where);
     // https://stackoverflow.com/questions/58306983/how-do-i-add-a-query-param-to-router-push-in-nextjs
     const locale = (pathname.split("/").at(1));
     router.push(`/${locale}/search-property?${params.toString()}`);
