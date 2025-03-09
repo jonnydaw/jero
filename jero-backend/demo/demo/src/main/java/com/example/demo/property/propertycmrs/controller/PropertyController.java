@@ -44,7 +44,7 @@ public class PropertyController {
         return ResponseEntity.ok().body("hi");
     }
 
-    @GetMapping("/search-properties-by")
+    @GetMapping("/search-properties")
     public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location){
         List<String> res = propertyService.getPropertiesByLocation(location);
         System.out.println("hit controller");

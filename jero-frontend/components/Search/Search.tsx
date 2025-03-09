@@ -10,6 +10,7 @@ import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
 import { isMobile } from 'react-device-detect';
 import axios from 'axios';
+import { useRouter, usePathname } from 'next/navigation';
 
 
 type FormData =  {
@@ -28,6 +29,8 @@ interface Props {
 const Search : React.FC<Props> =  (props : Props) => {
 
   const t = useTranslations('SearchBar');
+  const router = useRouter();
+  const pathname = usePathname();
   const currentDate = new Date().toISOString().split('T')[0];
   
   const [minEndDate, setMinEndDate] = useState<string>("");
@@ -54,15 +57,21 @@ const Search : React.FC<Props> =  (props : Props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(formData);
-    try {
-      console.log("ttry")
-      const response = await axios.get("http://localhost:8080/property/search-properties-by", {
-        params : {location : formData.where}
-      });
-      console.log(response.data)
-    } catch (error) {
-        console.error(error)
-    }
+    const params = new URLSearchParams();
+    params.set("param", formData.where);
+    // https://stackoverflow.com/questions/58306983/how-do-i-add-a-query-param-to-router-push-in-nextjs
+    const locale = (pathname.split("/").at(1));
+    router.push(`/${locale}/search-property?${params.toString()}`);
+
+    // try {
+    //   console.log("ttry")
+    //   const response = await axios.get("http://localhost:8080/property/search-properties", {
+    //     params : {location : formData.where}
+    //   });
+    //   console.log(response.data)
+    // } catch (error) {
+    //     console.error(error)
+    // }
   };
 
 
