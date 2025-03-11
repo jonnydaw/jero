@@ -8,7 +8,7 @@ const Page = async ({searchParams} : any) =>{
     console.log(sp)
     try {
       console.log("ttry")
-      const response = await axios.get("http://localhost:8080/property/search-properties", {
+      const response = await axios.get("https://api.jero.travel/property/search-properties", {
         params : sp
       });
       console.log(response.data)
