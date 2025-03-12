@@ -131,12 +131,16 @@ public class UserAuthService implements IUserAuthService {
 
         @Override
         public String buildCookie(String value, String cookieName, int age ){
+            // if local do secure false, comment out domain, sameSite Lax.
+            // if deploing secure true domain("".jero.travel") same site none
             ResponseCookie cookie = ResponseCookie.from(cookieName, value)
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .maxAge(age) 
-                .sameSite("Lax") 
+                .sameSite("None")
+                //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
+                .domain(".jero.travel")
                 .build();
                 return cookie.toString();
         }
