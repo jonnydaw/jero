@@ -24,7 +24,8 @@ import com.example.demo.property.propertycmrs.service.IPropertyService;
 
 @RestController
 @RequestMapping("/property")
-@CrossOrigin(origins="http:localhost:3000", allowCredentials = "true")
+
+//@CrossOrigin(origins="http:localhost:3000", allowCredentials = "true")
 public class PropertyController {
 
    @Autowired private IPropertyService propertyService;

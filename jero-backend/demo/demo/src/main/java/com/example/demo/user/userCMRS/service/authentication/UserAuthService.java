@@ -133,10 +133,11 @@ public class UserAuthService implements IUserAuthService {
         public String buildCookie(String value, String cookieName, int age ){
             ResponseCookie cookie = ResponseCookie.from(cookieName, value)
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
+                .domain(".jero.travel")
                 .path("/")
                 .maxAge(age) 
-                .sameSite("Lax") 
+                .sameSite("None") 
                 .build();
                 return cookie.toString();
         }

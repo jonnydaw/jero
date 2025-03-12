@@ -1,4 +1,5 @@
 import axios from "axios";
+import { inDevEnvironment } from "@/base";
 
 
 // https://stackoverflow.com/questions/74580728/get-url-params-next-js-13
@@ -8,7 +9,8 @@ const Page = async ({searchParams} : any) =>{
     console.log(sp)
     try {
       console.log("ttry")
-      const response = await axios.get("https://api.jero.travel/property/search-properties", {
+      const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+      const response = await axios.get(`${base}/property/search-properties`, {
         params : sp
       });
       console.log(response.data)

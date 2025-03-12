@@ -17,7 +17,7 @@ import com.example.demo.locations.locationCMRS.service.LocationService;
 
 @RestController
 @RequestMapping("/country")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//@CrossOrigin(origins = "http://000", allowCredentials = "true")
 
 public class LocationController {
     @Autowired

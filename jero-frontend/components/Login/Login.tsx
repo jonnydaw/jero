@@ -7,6 +7,7 @@ import { Link } from "@/i18n/routing";
 import next from "next";
 // https://stackoverflow.com/questions/74421327/nextrouter-was-not-mounted-next-js
 import { useRouter } from "next/navigation";
+import { inDevEnvironment } from "@/base";
 const Login = () => {
 
     const [formData, setFormData] = useState({
@@ -24,8 +25,10 @@ const Login = () => {
 
     const handleSubmit = async (e : any) => {
         e.preventDefault();
+        const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+        console.log(base)
         try {
-            const response = await axios.post('http://localhost:8080/auth/signin', {
+            const response = await axios.post(`${base}/auth/signin`, {
                     username : formData.email,
                     password : formData.password
 

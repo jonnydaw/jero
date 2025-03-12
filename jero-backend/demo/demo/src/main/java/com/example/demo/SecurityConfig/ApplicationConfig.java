@@ -56,7 +56,7 @@ public class ApplicationConfig {
 			@Override
 			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) { 
 				CorsConfiguration ccfg = new CorsConfiguration(); 
-				ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000")); 
+				ccfg.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://jero.travel", "https://www.jero.travel")); 
 				ccfg.setAllowedMethods(Collections.singletonList("*")); 
 				ccfg.setAllowCredentials(true); 
 				ccfg.setAllowedHeaders(Collections.singletonList("*")); 
