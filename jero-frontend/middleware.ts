@@ -4,8 +4,13 @@ import {routing} from './i18n/routing';
 
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { inDevEnvironment } from './base';
 
 const handleI18nRouting = createMiddleware(routing);
+const baseInternal = inDevEnvironment ? "http://localhost:3000" : "https://jero.travel";
+const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
+
 //helpers start
 
 const protectedPages : string[] = ["profile"];
@@ -54,15 +59,15 @@ const blockAuthIngress = async (response : NextResponse, locale :string) => {
         return response;
     }
 
-    return NextResponse.redirect(`http://localhost:3000/${locale}`);
+    return NextResponse.redirect(`${baseInternal}/${locale}`);
 }
 
 const blockOtpIfNotPending = async (locale : string) => {
     const cookieStore = await cookies();
     const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
-    if(!jwtValue) return NextResponse.redirect(`http://localhost:3000/${locale}`)
+    if(!jwtValue) return NextResponse.redirect(`${baseInternal}/${locale}`)
     const isPending = parseJWT(jwtValue).status;
-    if(isPending !== `PENDING`) return NextResponse.redirect(`http://localhost:3000/${locale}`);
+    if(isPending !== `PENDING`) return NextResponse.redirect(`${baseInternal}/${locale}`);
     return null;
 
 }
@@ -76,7 +81,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
 
 
     if(!rtValue && protectedPages.includes(page)){
-        return NextResponse.redirect(`http://localhost:3000/${locale}`);
+        return NextResponse.redirect(`${baseInternal}/${locale}`);
     }
 
 
@@ -86,7 +91,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
     }
     if(isInvalid && rtValue){
 
-        const refreshResponse = await fetch("http://localhost:8080/auth/refresh", {
+        const refreshResponse = await fetch(`${baseApi}/auth/refresh`, {
             method: "GET",
             headers: {
                 Cookie: `JWT=${jwtValue}; RT=${rtValue}`
@@ -95,7 +100,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
         });
     if (!refreshResponse.ok) {
         if(protectedPages.includes(page)){
-            return NextResponse.redirect(`http://localhost:3000/${locale}`);
+            return NextResponse.redirect(`${baseInternal}${locale}`);
         }
     }
 

@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom';
 import Portal from "../Modal/Portal";
 import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
 import { useRouter } from "next/navigation";
+import { inDevEnvironment } from "@/base";
 
 
 type FormData = {
@@ -54,7 +55,8 @@ const Signup = () => {
     const t = useTranslations('Signup');
     
     const [postSuccess, setPostSuccess] = useState<boolean>(false);
-
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    
     const calculateAge = () => {
         const dob = new Date(formData.dob);
         const now = new Date();
@@ -190,7 +192,7 @@ const Signup = () => {
         if(allowSubmission()){
             setPostSuccess(true)
         try {
-            const response = await axios.post('http://localhost:8080/auth/signup', {
+            const response = await axios.post(`${baseApi}/auth/signup`, {
                 firstName : formData.firstName,
                 lastName : formData.lastName,
                 dob: formData.dob,

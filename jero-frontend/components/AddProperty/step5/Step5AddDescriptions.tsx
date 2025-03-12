@@ -4,6 +4,7 @@ import { useState } from "react";
 import style from "./Step5.module.css"
 import AddPropertyBottomNav from "../AddPropertyBottomNav";
 import axios from "axios";
+import { inDevEnvironment } from "@/base";
 
 
 type Overview = {
@@ -15,7 +16,7 @@ type Overview = {
     // propertyCheckoutTime : string;
 }
 const Step5AddDescription = () => {
-
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const [overview, setOverview] = useState<Overview>({
         propertyTitle : "",
         propertyDescription : "",
@@ -52,7 +53,7 @@ const Step5AddDescription = () => {
 
 
         try {
-            const response = await axios.post("http://localhost:8080/property/add_property", {
+            const response = await axios.post(`${baseApi}/property/add_property`, {
                 addressData : (addressData),
                 beautyData : beautyData,
                 climateData : climateData,

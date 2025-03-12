@@ -5,6 +5,7 @@ import { useMemo, useRef, useState } from 'react';
 import style from "./Step1AddProperty.module.css"
 import next from 'next';
 import { useRouter, usePathname } from 'next/navigation';
+import { inDevEnvironment } from '@/base';
 
 interface LocationResults {
     locationName : string,
@@ -31,6 +32,8 @@ osmTypeToChar.set("polygon","P");
 const Step1AddProperty = () => {
     
     const [formData, setFormData] = useState<string>("");
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
     //const [coords, setCoords] = useState<number[]>([0,0]);
     const [zoom, setZoom] = useState<number>(1)
     const [results, setResults] = useState<LocationResults[]>(
@@ -104,7 +107,7 @@ const Step1AddProperty = () => {
                     console.log(query)
 
                     try {
-                        const response = await fetch(`http://localhost:8080/country/get_location?${query}`, {
+                        const response = await fetch(`${baseApi}/country/get_location?${query}`, {
                             next: {
                                 revalidate: 60 * 60 * 24 * 2,
                             },

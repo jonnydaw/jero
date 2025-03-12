@@ -134,10 +134,9 @@ public class UserAuthService implements IUserAuthService {
             ResponseCookie cookie = ResponseCookie.from(cookieName, value)
                 .httpOnly(true)
                 .secure(true)
-                .domain(".jero.travel")
                 .path("/")
                 .maxAge(age) 
-                .sameSite("None") 
+                .sameSite("Lax") 
                 .build();
                 return cookie.toString();
         }

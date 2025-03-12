@@ -3,10 +3,12 @@ import { useState } from "react";
 import style from "./Otp.module.css"
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { inDevEnvironment } from "@/base";
 
 
 const Otp = () => {
-
+    const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    
     const router = useRouter();
 
     const [formData, setFormData] = useState<string>("");
@@ -20,7 +22,7 @@ const Otp = () => {
 const handleRegen = async (e : any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/auth/regenerate_otp', {},
+      const response = await axios.post(`{baseApi}/auth/regenerate_otp`, {},
           { withCredentials: true}
       );
 
@@ -34,7 +36,7 @@ const handleRegen = async (e : any) => {
   const handleSubmit = async (e : any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/auth/verify_otp', {
+      const response = await axios.post(`{baseApi}/auth/verify_otp`, {
        otpPassword : Number(formData),
       },
           { withCredentials: true}

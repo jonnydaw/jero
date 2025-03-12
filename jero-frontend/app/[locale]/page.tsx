@@ -2,13 +2,15 @@
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
 import axios from 'axios';
+import { inDevEnvironment } from '@/base';
 
 export default function HomePage() {
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
     const handleSubmit = async (e : any) => {
         e.preventDefault();
         try {
-            const response = await axios.delete('http://localhost:8080/auth/delete',
+            const response = await axios.delete(`${baseApi}/auth/delete`,
                 { withCredentials: true}
             );
             console.log("hi" + response.data);
