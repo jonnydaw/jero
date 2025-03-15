@@ -9,12 +9,10 @@ const PropertyCard = (props : Props) => {
     console.log(props)
     return(
         <div className={style.card}>
-            
-                <h3>Title: {props.propertyAttribute.title}</h3>
+                <h3>{props.propertyAttribute.title}</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
-                <p>Location : {props.propertyAttribute.townId}, {props.propertyAttribute.cityDistrictId}</p>
+                <p>Location : {props.propertyAttribute.displayLocation}</p>
                 <strong>Price: {props.propertyAttribute.pricePerNight}</strong>
-            
         </div>
     )
 }

@@ -135,12 +135,12 @@ public class UserAuthService implements IUserAuthService {
             // if deploing secure true domain("".jero.travel") same site none
             ResponseCookie cookie = ResponseCookie.from(cookieName, value)
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
                 .maxAge(age) 
-                .sameSite("None")
+                .sameSite("Lax")
                 //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
-                .domain(".jero.travel")
+                //.domain(".jero.travel")
                 .build();
                 return cookie.toString();
         }

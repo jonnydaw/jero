@@ -91,24 +91,42 @@ public class PropertyService implements IPropertyService {
         }
 
         String locationType = location.getLocationType();
-        System.out.println(locationType);
-        System.out.println(location.getId());
         List<PropertyModel> pms = new ArrayList<>();
-        if(locationType.equals("city")){
-            pms = propertyRepo.findPropertiesByCityId(location.getId());
-        }
+        pms = extracted2(location, locationType, pms);
+
         List<Map<String,String>> res = new ArrayList<>();
         for(PropertyModel pm : pms){
+            String displayLocation = extracted(pm);
             Map<String,String> propertyAttributes = new HashMap<>();
             propertyAttributes.put("id", pm.getId().toHexString());
             propertyAttributes.put("title", pm.getTitle());
-            propertyAttributes.put("townId", pm.getTownId());
-            propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
+            propertyAttributes.put("displayLocation",displayLocation);
+            // propertyAttributes.put("townId", pm.getTownId());
+            // propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
             propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
             propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
             res.add(propertyAttributes);
         }
         return res;
         
+    }
+
+    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms) {
+        if(locationType.equals("city")){
+            pms = propertyRepo.findPropertiesByCityId(location.getId());
+        }
+        return pms;
+    }
+
+    private String extracted(PropertyModel pm) {
+        String displayLocation = "";
+        if(pm.getTownId() != null && !pm.getTownId().equals("")){
+            displayLocation = pm.getTownId();
+        }else if(pm.getCityDistrictId() != null && !pm.getCityDistrictId().equals("")){
+            displayLocation = pm.getCityDistrictId();
+        } else if(pm.getCityId() != null && !pm.getCityId().equals("")){
+            displayLocation = pm.getCityId();
+        }
+        return displayLocation;
     }
 }

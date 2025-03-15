@@ -1,13 +1,22 @@
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import SearchResults from "@/components/SearchResults/SearchResults";
+// https://stackoverflow.com/questions/65436443/how-to-access-locale-in-custom-app-on-server-side-in-next-js
+import { getLocale } from "next-intl/server";
+
 
 
 // https://stackoverflow.com/questions/74580728/get-url-params-next-js-13
 const Page = async ({searchParams} : any) =>{
     console.log(await searchParams)
     const sp = await searchParams;
-    let data;
+    const locale =  await getLocale();
+    console.log(locale)
+    // const fullUrl = heads.get('referer') || "";
+    // console.log(fullUrl)
+
+
+    let dataProperties;
     console.log(sp)
     try {
       console.log("ttry")
@@ -16,7 +25,20 @@ const Page = async ({searchParams} : any) =>{
         params : sp
       });
       console.log(response.data)
-      data = response.data;
+      dataProperties = response.data;
+    } catch (error) {
+        console.error(error)
+    }
+
+    let overviewData = "hi";
+    try {
+      console.log("ttry")
+      const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+      const response = await axios.get(`${base}/location/location-overview`, {
+        params : {...sp,"locale" : locale}
+      });
+      console.log(response.data)
+      overviewData = response.data;
     } catch (error) {
         console.error(error)
     }
@@ -24,7 +46,7 @@ const Page = async ({searchParams} : any) =>{
     return (
         <div>
             <h1>Search For {sp.location}</h1>
-            <SearchResults propertyAttributes={data}  />
+            <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData}  />
         </div>
     )
 }

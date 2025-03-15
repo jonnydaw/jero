@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service;
 public interface ILocationService {
      public String findMostPreciseLocation(Map<String,String> areaTypeToName);
      public Map<String, String> graphLookUpFinder(String mostPreciseLocation);
+     public String getLocationOverview(String queriedLocation, String locale);
 }

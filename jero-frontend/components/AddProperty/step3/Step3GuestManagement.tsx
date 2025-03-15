@@ -53,14 +53,14 @@ const Step3GuestManagement = () => {
 
         ////wouihfe
     useEffect(() => {
-        const step3Val = JSON.parse(localStorage.getItem("step3") || "{}");
-        console.log(step3Val.pricePerNight)
+            const step3Val = JSON.parse(localStorage.getItem("step3") || "{}");
+        // console.log(step3Val.pricePerNight)
         setFormData({
             pricePerNight: step3Val.pricePerNight || 0,
             priceIncreasePerPerson: Number(step3Val.priceIncreasePerPerson) || 0,
-            acceptsChildren: step3Val.acceptsChildren,
-            acceptsPets: step3Val.acceptsPets,
-            disabilityFriendly: step3Val.disabilityFriendly,
+            acceptsChildren: step3Val.acceptsChildren || false,
+            acceptsPets: step3Val.acceptsPets || false,
+            disabilityFriendly: step3Val.disabilityFriendly || false,
             minGuests: Number(step3Val.minGuests) || 0,
             maxGuests: Number(step3Val.maxGuests) || 0,
             doubleBeds : Number(step3Val.doubleBeds) || 0,

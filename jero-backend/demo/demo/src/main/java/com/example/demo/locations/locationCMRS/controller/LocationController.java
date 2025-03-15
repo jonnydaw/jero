@@ -16,7 +16,7 @@ import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.locations.locationCMRS.service.LocationService;
 
 @RestController
-@RequestMapping("/country")
+@RequestMapping("/location")
 //@CrossOrigin(origins = "http://000", allowCredentials = "true")
 
 public class LocationController {
@@ -33,6 +33,13 @@ public class LocationController {
         // list.add(mp);
         Map<String,String> granularLocations = locationService.graphLookUpFinder(mp.toLowerCase());
         return ResponseEntity.ok().body(granularLocations);
+    }
+
+    @GetMapping("/location-overview")
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, @RequestParam("locale") String locale){
+        System.out.println(locale);
+        String res = locationService.getLocationOverview(location, locale);
+        return ResponseEntity.ok().body(res);
     }
     
 }

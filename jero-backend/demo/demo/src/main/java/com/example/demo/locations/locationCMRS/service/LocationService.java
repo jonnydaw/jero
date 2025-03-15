@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 
 @Service
@@ -39,6 +41,15 @@ public class LocationService implements ILocationService {
         Map<String,String> hierarchy = locationRepository.getLocationHierarchy(mostPreciseLocation.toLowerCase());
         System.out.println(hierarchy);
         return hierarchy;
+    }
+
+    @Override 
+    public String getLocationOverview(String queriedLocation, String locale){
+        LocationModel location  = locationRepository.findLocationById(queriedLocation);
+        if(location == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+        }
+        return location.getOverview().get(locale);
     }
 
 

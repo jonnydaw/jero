@@ -107,7 +107,7 @@ const Step1AddProperty = () => {
                     console.log(query)
 
                     try {
-                        const response = await fetch(`${baseApi}/country/get_location?${query}`, {
+                        const response = await fetch(`${baseApi}/location/get_location?${query}`, {
                             next: {
                                 revalidate: 60 * 60 * 24 * 2,
                             },

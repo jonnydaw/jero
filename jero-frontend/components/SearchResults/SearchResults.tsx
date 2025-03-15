@@ -14,11 +14,16 @@ import PropertyCard from "../PropertyCard/PropertyCard";
   
   interface Props {
     propertyAttributes: PropertyAttribute[];
+    locationOverview : string;
   }
 
 const SearchResults = (props : Props) => {
     return (
         <div id ={style.container}>
+          <div id={style.locationOverview}>
+            <p>{props.locationOverview}</p>
+          </div>
+
             <div id={style.properties}>
                 
             {props.propertyAttributes.map((item, index) => (

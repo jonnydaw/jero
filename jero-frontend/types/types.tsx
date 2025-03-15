@@ -1,8 +1,7 @@
 export type PropertyAttribute = {    
-    id : string
-    cityDistrictId : string 
+    id : string;
+    displayLocation : string;
     pricePerNight : string;
     title : string;
-    townId : string;
     mainImage : string;
 }
