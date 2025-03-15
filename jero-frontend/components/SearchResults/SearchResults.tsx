@@ -20,19 +20,21 @@ import PropertyCard from "../PropertyCard/PropertyCard";
 const SearchResults = (props : Props) => {
     return (
         <div id ={style.container}>
-          <div id={style.locationOverview}>
-            <p>{props.locationOverview}</p>
-          </div>
+           <div id={style.searchResultsArea}>
 
-            <div id={style.properties}>
-                
-            {props.propertyAttributes.map((item, index) => (
+          <section id={style.locationOverview}>
+            <p>{props.locationOverview}</p>
+          </section>
+          <section id={style.cards}>
+            {props.propertyAttributes.map((item, _) => (
                 <div className={style.propertyArea} key={item.id}>
                     <PropertyCard propertyAttribute={item}/>
                 </div>
               ))
               }
-              </div>
+             
+        </section>
+        </div>
               <div id={style.map}>
 
               </div>

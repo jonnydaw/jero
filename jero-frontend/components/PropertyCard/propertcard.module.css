@@ -18,6 +18,9 @@
     height:15em;
     object-fit: cover;
     border-radius: 0.5em;
+    border: solid 0.1em black;
+    box-shadow: 0 4px 2px -2px gray;
+    margin-bottom: 0.5em;
 }
 
 
