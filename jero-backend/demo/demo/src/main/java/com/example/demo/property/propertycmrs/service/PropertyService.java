@@ -1,6 +1,7 @@
 package com.example.demo.property.propertycmrs.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +41,7 @@ public class PropertyService implements IPropertyService {
         Map<String,String> hierarchy = cph.getAddressData().getHierarchy();
         System.out.println("hi:" + hierarchy.get("city_district"));
         System.out.println(hierarchy.get("town"));
-        //pm.setTownId(new ObjectId(hierarchy.get("town")) || null);
+        pm.setTownId((hierarchy.get("town")));
         pm.setCityDistrictId((hierarchy.get("city_district")));
         pm.setCityId((hierarchy.get("city")));
         pm.setCountyId((hierarchy.get("county")));
@@ -83,7 +84,7 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public List<String> getPropertiesByLocation(String queriedLocation) {
+    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         if(location == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
@@ -96,10 +97,15 @@ public class PropertyService implements IPropertyService {
         if(locationType.equals("city")){
             pms = propertyRepo.findPropertiesByCityId(location.getId());
         }
-        List<String> res = new ArrayList<>();
+        List<Map<String,String>> res = new ArrayList<>();
         System.out.println(pms.isEmpty());
         for(PropertyModel pm : pms){
-            res.add(pm.getAddress());
+            Map<String,String> propertyAttributes = new HashMap<>();
+            propertyAttributes.put("title", pm.getTitle());
+            propertyAttributes.put("townId", pm.getTownId());
+            propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
+            propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
+            res.add(propertyAttributes);
         }
         return res;
         
