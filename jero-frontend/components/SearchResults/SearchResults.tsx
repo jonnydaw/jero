@@ -1,13 +1,16 @@
 
+import { PropertyAttribute } from "@/types/types";
 import style from "./searchresults.module.css"
+import PropertyCard from "../PropertyCard/PropertyCard";
 
 
-interface PropertyAttribute {    
-    cityDistrictId : string 
-    pricePerNight : string;
-    title : string;
-    townId : string;
-}
+// type PropertyAttribute = {    
+//     id : string
+//     cityDistrictId : string 
+//     pricePerNight : string;
+//     title : string;
+//     townId : string;
+// }
   
   interface Props {
     propertyAttributes: PropertyAttribute[];
@@ -19,15 +22,15 @@ const SearchResults = (props : Props) => {
             <div id={style.properties}>
                 
             {props.propertyAttributes.map((item, index) => (
-                    <div key={index}>
-                        <p>{item.cityDistrictId}</p>
-                        <p>{item.pricePerNight}</p>
-                        <p>{item.title}</p>
-                        <p>{item.townId}</p>
-                        <p>break</p>
-                    </div>
-                ))}
-            </div>
+                <div className={style.propertyArea} key={item.id}>
+                    <PropertyCard propertyAttribute={item}/>
+                </div>
+              ))
+              }
+              </div>
+              <div id={style.map}>
+
+              </div>
 
         </div>
     )

@@ -98,13 +98,14 @@ public class PropertyService implements IPropertyService {
             pms = propertyRepo.findPropertiesByCityId(location.getId());
         }
         List<Map<String,String>> res = new ArrayList<>();
-        System.out.println(pms.isEmpty());
         for(PropertyModel pm : pms){
             Map<String,String> propertyAttributes = new HashMap<>();
+            propertyAttributes.put("id", pm.getId().toHexString());
             propertyAttributes.put("title", pm.getTitle());
             propertyAttributes.put("townId", pm.getTownId());
             propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
             propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
+            propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
             res.add(propertyAttributes);
         }
         return res;
