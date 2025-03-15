@@ -11,10 +11,20 @@
 }
 
 #locationOverview{
-    padding: 0.5em;
     background-color: pink;
     border-radius: 0.5em;
     font-size: large;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1em;
+}
+
+.overviewSubsection{
+    display: flex;
+    flex-direction: column;
+    min-width: 30%;
+    margin: 0.5em;
 }
 
 #cards{
@@ -25,7 +35,6 @@
 }
 
 .propertyArea{
-
     min-width: 33%;
     max-width: 33%;
 }

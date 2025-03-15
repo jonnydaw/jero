@@ -23,7 +23,41 @@ const SearchResults = (props : Props) => {
            <div id={style.searchResultsArea}>
 
           <section id={style.locationOverview}>
-            <p>{props.locationOverview}</p>
+            
+            <div className={style.overviewSubsection}>
+              <h3>Overview</h3>
+              <p>{props.locationOverview}</p>
+            </div>
+
+            <div className={style.overviewSubsection}>
+              <h3>Climate</h3>
+              <p>25c</p>
+            </div>
+
+            <div className={style.overviewSubsection}>
+              <h3>Famous Places</h3>
+              <ul><
+                li></li>
+              <li></li>
+              <li></li>
+              </ul>
+            </div>
+
+            <div className={style.overviewSubsection}>
+              <h3>Crime Level</h3>
+              <p>{props.locationOverview}</p>
+            </div>
+
+            <div className={style.overviewSubsection}>
+              <h3>Traditional Dish</h3>
+              <p>{props.locationOverview}</p>
+            </div>
+
+            <div className={style.overviewSubsection}>
+              <h3>Off the beaten track</h3>
+              <p>{props.locationOverview}</p>
+            </div>
+
           </section>
           <section id={style.cards}>
             {props.propertyAttributes.map((item, _) => (
