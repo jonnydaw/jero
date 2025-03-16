@@ -21,23 +21,6 @@ export const Profile = (props : Props) => {
         "messages" : {"id" : 6, "title" : "Wishlists", "content" : "does2"},
     }
 
-    // const getProfile = async () => {
-    //     try{
-    //     const response =  await axios.get('http://localhost:8080/auth/profile',{withCredentials : true})
-    //     //console.log(response);
-    //     setNameOfUser(response.data)
-    // }catch(error : any){
-    //     console.log('Get profile error verification failed:', error.response ? error.response.data : error.message);
-    //     //console.log(error.response)
-    //     if(error.response.status === 403){
-    //         router.push("/")
-    //     }
-    // }
-    // }
-    // useEffect(()=>{
-    //     getProfile()
-
-    // }, [])
     return (
         <div id={style.mainContainer}>
             <h1>

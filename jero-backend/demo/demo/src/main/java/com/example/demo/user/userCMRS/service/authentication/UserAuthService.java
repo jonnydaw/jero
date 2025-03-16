@@ -54,6 +54,10 @@ public class UserAuthService implements IUserAuthService {
             createdUser.setPassword(passwordEncoder.encode(user.getPassword())); 
             createdUser.setRoles(user.getRoles());
             createdUser.setStatus(UserStatus.PENDING);
+            Map<String,String> prefs = new HashMap<>();
+            prefs.put("language", "en");
+            prefs.put("currency", "gbp");
+            createdUser.setInternationalisationPreferences(prefs);
             return createdUser;
         }
     

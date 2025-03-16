@@ -54,7 +54,7 @@
   display: flex;
   align-content: center;
   border-radius: 1.5em;
-  margin: 1em;
+  /* margin: 1em; */
   max-width: 1em;
   background-color: #fff;
   border: solid 0.05em #fff ;

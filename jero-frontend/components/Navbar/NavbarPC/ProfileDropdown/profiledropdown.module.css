@@ -1,0 +1,34 @@
+.dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative; 
+}
+
+.dropdownContent {
+    position: absolute;
+    top: 100%; 
+    display: none;
+    border: 0.1em solid black;
+    background-color: white;
+    border-radius: 1em;
+    min-width: 15ch;
+    max-width: 15ch;
+    box-shadow: 0 1em 1em 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.dropdown:hover .dropdownContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.links{
+    padding: 0.5em;
+    font-size: large;
+}
+
+.links:not(:last-child){
+    border-bottom: solid 0.1em black;
+}

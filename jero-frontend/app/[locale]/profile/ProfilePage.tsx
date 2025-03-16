@@ -10,7 +10,6 @@ import { redirect } from 'next/navigation'
 
 const ProfilePage = async () => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-
     const cookieStore = await cookies();
     const jwtValue = cookieStore.get("JWT")?.value;
     

@@ -1,7 +1,7 @@
 'use client'
 import Form from 'next/form'
 import style from "./AdvancedSearchPC.module.css"
-import GuestToggler from '../../GuestDropdown/GuestToggler'
+import GuestToggler from '../../Navbar/NavbarPC/GuestDropdown/GuestToggler'
 import { useState } from 'react'
 import { GuestCounts } from '@/app/types/types'
 export const AdvancedSearchPC = () => {

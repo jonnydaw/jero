@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import style from "./SearchPC.module.css";
 import styleMobile from "./SearchMobile.module.css";
 import { CiSearch } from "react-icons/ci";
-import Dropdown from '../GuestDropdown/Dropdown';
+import Dropdown from '../Navbar/NavbarPC/GuestDropdown/Dropdown';
 import {GuestCounts} from "../../app/types/types"
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/routing';
@@ -86,7 +86,7 @@ const Search : React.FC<Props> =  (props : Props) => {
     <div className={props.isMobileSearch ? styleMobile.searchContainer : style.searchContainer}>
      {!props.isMobileSearch && 
      <div id={style.smartLinkContainer}>
-     <p id={style.smartP}>{t('smartSearch')} <Link id={style.anc} href={`/advanced_search`}> {t('here')}</Link></p>
+     <p id={style.smartP}>{t('smartSearch')} <Link id={style.anc} href={`/advanced-search`}> {t('here')}</Link></p>
      </div>
      }
      <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>

@@ -2,6 +2,7 @@ package com.example.demo.user.userCMRS.model;
 
 
 import java.util.Date;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id; 
@@ -33,4 +34,5 @@ public class UserModel {
 	private String password; 
 	private String roles;
 	private UserStatus status;
+	private Map<String,String> internationalisationPreferences;
 } 
