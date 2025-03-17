@@ -22,28 +22,10 @@ const ProfileDropdown = async () => {
 
     const parseJWT = (jwtValue : string) => {
       return (JSON.parse(atob(jwtValue.split('.')[1])))
-    }
+    };
     
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     
-
-    // const handleClick = async (e : any) => {
-    //   console.log
-    //   e.preventDefault();
-    //   try {
-    //     const response = await fetch(`${baseApi}/auth/refresh`, {
-    //       method: "GET",
-    //       headers: {
-    //           Cookie: `JWT=${jwtValue}; RT=${rtValue}`
-    //       },
-    //       credentials : "include",
-    //   });
-    //     console.log("hi" + response);
-    // } catch (error : any) {
-    //     console.log(error)
-    //     //onsole.log('Login failed:', error.response ? error.response.data : error.message);
-    // }
-    // }
       let authMap : Map<string, string> = new Map();
       let profileMap : Map<string, string> = new Map();
       let internationalMap : Map<string, string> = new Map();
@@ -60,14 +42,12 @@ const ProfileDropdown = async () => {
           profileMap.set("manage-profile", "Manage Profile");
           profileMap.set("past-bookings","Past Bookings");
           profileMap.set("upcoming-bookings","Upcoming Bookings");
-          profileMap.set("upcoming-bookings","Upcoming Bookings");
           profileMap.set("analytic-privacy","Analytics and Privacy");
           profileMap.set("messages","Messages");
         }else if(parsedJwt.role === "host"){
           profileMap.set("manage-profile", "Manage Profile");
           profileMap.set("manage-properties","Manage Properties");
           profileMap.set("past-bookings/host","Past Bookings");
-          profileMap.set("upcoming-bookings/host","Upcoming Bookings");
           profileMap.set("upcoming-bookings/host","Upcoming Bookings");
           profileMap.set("analytic-privacy/host","Analytics and Privacy");
           profileMap.set("messages","Messages");

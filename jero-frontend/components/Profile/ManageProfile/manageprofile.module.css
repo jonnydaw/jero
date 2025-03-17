@@ -1,0 +1,41 @@
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: large;
+}
+
+#subcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.updateSection{
+    flex-direction: column;
+    margin: 1.5em;
+}
+.updateSection > form{
+    display: flex;
+    flex-direction: column;
+}
+
+.updateSection > form *{
+    margin-bottom: 0.5em;
+}
+
+.updateSection > form button{
+    align-self: center;
+    max-width: 20ch;
+}
+.updateSection > form input{
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+
+#delete{
+    background-color: red;
+}

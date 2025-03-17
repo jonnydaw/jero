@@ -5,3 +5,10 @@ export type PropertyAttribute = {
     title : string;
     mainImage : string;
 }
+
+export interface UpdateFields {
+    firstName: string;
+    lastName : string;
+    introduction : string;
+    imgLink : string;
+}

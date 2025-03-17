@@ -17,6 +17,7 @@ public interface IUserAuthService {
 
 	public void deleteUser(String id);
 
+
 	public boolean isEmailInUse(String email);
 
 	public void sendRegisterEmail(String email, String locale);

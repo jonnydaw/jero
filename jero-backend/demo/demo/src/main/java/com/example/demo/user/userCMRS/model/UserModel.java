@@ -35,4 +35,6 @@ public class UserModel {
 	private String roles;
 	private UserStatus status;
 	private Map<String,String> internationalisationPreferences;
+	private String profileImgUrl;
+	private String introduction;
 } 

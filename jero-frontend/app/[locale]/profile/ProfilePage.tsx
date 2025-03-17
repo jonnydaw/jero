@@ -1,6 +1,7 @@
 // 'use client'
 // import React, { useState, useEffect } from "react";
 import { inDevEnvironment } from "@/base";
+import { profileKeysCustomer, profileKeysHost } from "@/components/Navbar/NavbarPC/ProfileDropdown/helper";
 import Profile from "@/components/Profile/Profile";
 import axios from "axios"
 import { cookies } from "next/headers";
@@ -13,12 +14,19 @@ const ProfilePage = async () => {
     const cookieStore = await cookies();
     const jwtValue = cookieStore.get("JWT")?.value;
     
-
-    // console.log("server " + jwtToken);
+    const parseJWT = (jwtValue : string) => {
+        return (JSON.parse(atob(jwtValue.split('.')[1])))
+    }
 
     if(!jwtValue){
         redirect("/");
     }
+    const arr : string[] = parseJWT(jwtValue).role === "customer" 
+    ? profileKeysCustomer 
+    : profileKeysHost
+    ;
+
+
     let firstName;
     try{
     // https://stackoverflow.com/questions/60168695/how-to-include-cookies-with-fetch-request-in-nextjs
@@ -29,39 +37,12 @@ const ProfilePage = async () => {
         },       
     });
     firstName = await response.text();
-    //     console.log(response.status)
-    //     if (response.status === 403) {
-    //         const refreshResponse = await fetch('http://localhost:8080/auth/refresh', {
-    //             method: 'GET',
-    //             headers: {
-    //                 Cookie: `JWT=${jwtValue}; RT=${rtValue};`,
-    //             },
-    //             credentials : "include"
-    //         });
 
-    //         // const { JWT: newJWT } = await refreshResponse.json();
-
-    //         // cookieStore.set("JWT",newJWT);
-
-        
-    //     if(refreshResponse.status === 200){
-    //         const response = await fetch("http://localhost:8080/auth/profile", {
-    //             method: "GET",
-    //             headers: {
-    //                 Cookie: `JWT=${cookieStore.get("JWT")?.value};`
-    //             },
-    //             credentials : "include"
-    //         });
-    //         console.log(await response.json())
-
-    //     }
-    // } 
     }catch(error : any){
         console.error(error);
-        // redirect("/");
     }
     return (
-        <div> {<Profile firstName={firstName|| "hi"}/>}</div>
+        <div> {<Profile firstName={firstName || "You should not be here"} profileKeys={arr}/>}</div>
     );
 }
 

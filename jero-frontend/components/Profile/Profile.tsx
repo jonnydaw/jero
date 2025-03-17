@@ -1,25 +1,28 @@
-'use client'
 import style from "./Profile.module.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Cards } from "./Cards";
+import { internationalKeys } from "../Navbar/NavbarPC/ProfileDropdown/helper";
 
 interface Props {
-    firstName: string
+    firstName: string;
+    profileKeys : string[];
 }
 
 export const Profile = (props : Props) => {
-    const [nameOfUser, setNameOfUser] = useState<string | null>();
-    const router = useRouter()
-    const customerList : Object = {
-        "mangage" : {"id" : 1, "title" : "Manage Profile", "content" : "does"},
-        "past" : {"id" : 2, "title" : "Past Bookings", "content" : "does1"},
-        "upcoming" : {"id" : 3, "title" : "Upcoming Bookings", "content" : "does2"},
-        "analyticsAndPrivacy" : {"id" : 4, "title" : "Analytics & Privacy", "content" : "does2"},
-        "wishlists" : {"id" : 5, "title" : "Wishlists", "content" : "does2"},
-        "messages" : {"id" : 6, "title" : "Wishlists", "content" : "does2"},
-    }
+    let arr : string[] = props.profileKeys;
+    arr.push(...internationalKeys);
+    
+    // const router = useRouter()
+    // const customerList : Object = {
+    //     "mangage" : {"id" : 1, "title" : "Manage Profile", "content" : "does"},
+    //     "past" : {"id" : 2, "title" : "Past Bookings", "content" : "does1"},
+    //     "upcoming" : {"id" : 3, "title" : "Upcoming Bookings", "content" : "does2"},
+    //     "analyticsAndPrivacy" : {"id" : 4, "title" : "Analytics & Privacy", "content" : "does2"},
+    //     "wishlists" : {"id" : 5, "title" : "Wishlists", "content" : "does2"},
+    //     "messages" : {"id" : 6, "title" : "Wishlists", "content" : "does2"},
+    // }
 
     return (
         <div id={style.mainContainer}>
@@ -30,9 +33,12 @@ export const Profile = (props : Props) => {
             <div id={style.anotherStupidContainer}>
             <div id={style.cardContainer}>
                 
-            {Object.values(customerList).map(value => (
-                <Cards key={value.id} cardName={value.title} cardContent={value.content} />            
-                ))}
+            {arr.map((item,idx) => (
+                // translations used in future;
+                <Cards key={idx} cardName={item} cardContent={item} cardOnwardLink={item} />            
+
+            ))
+            }
                 
             </div>
             </div>

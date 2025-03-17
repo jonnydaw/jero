@@ -58,6 +58,8 @@ public class UserAuthService implements IUserAuthService {
             prefs.put("language", "en");
             prefs.put("currency", "gbp");
             createdUser.setInternationalisationPreferences(prefs);
+            createdUser.setProfileImgUrl("");
+            createdUser.setIntroduction("");
             return createdUser;
         }
     
@@ -71,6 +73,8 @@ public class UserAuthService implements IUserAuthService {
         public void deleteUser(String id){
             userRepository.deleteById(new ObjectId(id));
         }
+
+
     
         @Override
         public void sendRegisterEmail(String email, String locale){
