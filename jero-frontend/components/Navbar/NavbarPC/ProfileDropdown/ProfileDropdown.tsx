@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import LogoutFakeLink from "./LogoutFakeLink";
+import { internationalKeys } from "./helper";
 
 
 const ProfileDropdown = async () => {
@@ -43,39 +44,45 @@ const ProfileDropdown = async () => {
     //     //onsole.log('Login failed:', error.response ? error.response.data : error.message);
     // }
     // }
-      let linkToTextAuth : Map<string, string> = new Map();
-      let linkToTextCommonProfile : Map<string, string> = new Map();
-      let linkToTextInternational : Map<string, string> = new Map();
+      let authMap : Map<string, string> = new Map();
+      let profileMap : Map<string, string> = new Map();
+      let internationalMap : Map<string, string> = new Map();
 
 
 
 
       if(!jwtValue || !rtValue){
-        linkToTextAuth.set("login","Login");
-        linkToTextAuth.set("signup", "Sign up");
+        authMap.set("login","Login");
+        authMap.set("signup", "Sign up");
       }else if(jwtValue && rtValue){
         const parsedJwt = parseJWT(jwtValue);
         if(parsedJwt.role === "customer"){
-          linkToTextCommonProfile.set("manage-profile", "Manage Profile");
-          linkToTextCommonProfile.set("past-bookings","Past Bookings");
-          linkToTextCommonProfile.set("upcoming-bookings","Upcoming Bookings");
-          linkToTextCommonProfile.set("upcoming-bookings","Upcoming Bookings");
-          linkToTextCommonProfile.set("analytic-privacy","Analytics and Privacy");
-          linkToTextCommonProfile.set("messages","Messages");
+          profileMap.set("manage-profile", "Manage Profile");
+          profileMap.set("past-bookings","Past Bookings");
+          profileMap.set("upcoming-bookings","Upcoming Bookings");
+          profileMap.set("upcoming-bookings","Upcoming Bookings");
+          profileMap.set("analytic-privacy","Analytics and Privacy");
+          profileMap.set("messages","Messages");
         }else if(parsedJwt.role === "host"){
-          linkToTextCommonProfile.set("manage-profile", "Manage Profile");
-          linkToTextCommonProfile.set("manage-properties","Manage Properties");
-          linkToTextCommonProfile.set("past-bookings/host","Past Bookings");
-          linkToTextCommonProfile.set("upcoming-bookings/host","Upcoming Bookings");
-          linkToTextCommonProfile.set("upcoming-bookings/host","Upcoming Bookings");
-          linkToTextCommonProfile.set("analytic-privacy/host","Analytics and Privacy");
-          linkToTextCommonProfile.set("messages","Messages");
-
+          profileMap.set("manage-profile", "Manage Profile");
+          profileMap.set("manage-properties","Manage Properties");
+          profileMap.set("past-bookings/host","Past Bookings");
+          profileMap.set("upcoming-bookings/host","Upcoming Bookings");
+          profileMap.set("upcoming-bookings/host","Upcoming Bookings");
+          profileMap.set("analytic-privacy/host","Analytics and Privacy");
+          profileMap.set("messages","Messages");
         }
       }
+
+      const arr : string[] = internationalKeys;
+
+      arr.map((i) => {
+        internationalMap.set(i,i);
+      })
       //const expiry : number = parseJWT(jwtValue).exp;
-      const authItems = Object.fromEntries(linkToTextAuth);
-      const manageCommonItems = Object.fromEntries(linkToTextCommonProfile)
+      const authItems = Object.fromEntries(authMap);
+      const manageCommonItems = Object.fromEntries(profileMap);
+      const internationItems = Object.fromEntries(internationalMap);
 
 
     return (
@@ -116,6 +123,14 @@ const ProfileDropdown = async () => {
           
       </div>)
       }
+      <div className={style.authDropdown}>
+        <h3>International?</h3>
+          {
+            Object.entries(internationItems).map(([key,value]) => (
+              <Link className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+            ))
+          }
+      </div>
   
         </div>
   </div>
