@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import style from "./manageprofile.module.css"
 import ProfileCard from "./ProfileCard";
 import { UpdateFields } from "@/types/types";
+import axios from "axios";
+import { inDevEnvironment } from "@/base";
 /*
 update name
 update last name
@@ -18,6 +20,8 @@ interface UpdateFieldsWithSecret extends UpdateFields{
 
 const ManageProfile = (props : UpdateFields) => {
 
+        const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    
 
 
     const [updateFields, setUpdateFields] = useState<UpdateFieldsWithSecret>(
@@ -44,10 +48,23 @@ const ManageProfile = (props : UpdateFields) => {
         console.log(value)
     }
 
-    // const handleSubmit = (e: any) => {
-    //     e.preventDefault();
-    //     console.log(e.name);
-    // }
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        const name : keyof UpdateFieldsWithSecret = e.target.name;
+        console.log(name)
+        console.log(updateFields[name]);
+        // const postVal = ;
+        try {
+            const response = await axios.put(`${baseApi}/profile/update-first-name`, {
+                    updateVal : updateFields[name]
+                },
+                { withCredentials: true}
+            );
+            console.log(response.data);
+        } catch (error : any) {
+            console.log('update failed:', error.response ? error.response.data : error.message);
+    }
+    }
 
     return(
         <div id={style.container}>
@@ -57,6 +74,8 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
                 <section className={style.updateSection}>
                     <form
+                    onSubmit={handleSubmit}
+                    name="firstName"
                     >
                         <label htmlFor="firstName"> Update First Name
                         </label>

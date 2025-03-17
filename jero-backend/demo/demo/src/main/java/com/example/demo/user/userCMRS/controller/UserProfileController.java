@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,9 @@ public class UserProfileController {
 	    }
 
         @PutMapping("/update-first-name") 
-	    public ResponseEntity<String> updateName(UpdateHandler newName, @CookieValue("JWT") String token)  { 
+	    public ResponseEntity<String> updateName(@RequestBody UpdateHandler newName, @CookieValue("JWT") String token)  { 
+            System.out.println(token);
+            System.out.println(newName);
             //https://stackoverflow.com/questions/61831493/type-mismatch-cannot-convert-from-type-optionaluser-to-user
             updateService.updateUserFirstName(newName.getUpdateVal(), token);
             return ResponseEntity.ok().body("hi");
