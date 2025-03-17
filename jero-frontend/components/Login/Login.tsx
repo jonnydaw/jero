@@ -36,6 +36,7 @@ const Login = () => {
                 { withCredentials: true}
             );
             router.push("/")
+            location.reload();
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
