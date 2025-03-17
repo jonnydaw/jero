@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./manageprofile.module.css"
 import ProfileCard from "./ProfileCard";
 import { UpdateFields } from "@/types/types";
@@ -18,39 +18,52 @@ interface UpdateFieldsWithSecret extends UpdateFields{
 
 const ManageProfile = (props : UpdateFields) => {
 
+
+
     const [updateFields, setUpdateFields] = useState<UpdateFieldsWithSecret>(
         {
-            firstName : props.firstName,
-            lastName : props.lastName,
-            introduction : props.introduction,
-            imgLink : props.imgLink,
+            firstName : "",
+            lastName : "",
+            introduction : "",
+            imgLink : "",
             oldPassword : "",
             password : ""
         }
     );
 
+    const firstNameProp = updateFields.firstName.length > 0 ? updateFields.firstName : props.firstName;
+    const lastNameProp = updateFields.lastName.length  > 0 ?  updateFields.lastName :  props.lastName;
+    const introductionProp = updateFields.introduction.length > 0 ? updateFields.introduction : props.introduction;
+    const imgLinkProp = updateFields.imgLink.length > 0 ? updateFields.imgLink : props.imgLink;
+
+    
     const handleChange = (e : any) => {
-        e.preventDefault();
         const {name, value} = e.target;
         setUpdateFields({...updateFields, [name] : value});
         console.log(name)
         console.log(value)
     }
 
+    // const handleSubmit = (e: any) => {
+    //     e.preventDefault();
+    //     console.log(e.name);
+    // }
+
     return(
         <div id={style.container}>
             <div id={style.subcontainer}>
                 <section id={style.cardContainer}>
-                    <ProfileCard firstName={""} lastName={""} introduction={""} imgLink={""}/>
+                    <ProfileCard firstName={firstNameProp} lastName={lastNameProp} introduction={introductionProp} imgLink={imgLinkProp}/>
                 </section>
                 <section className={style.updateSection}>
-                    <form>
-                        <label htmlFor="fname"> Update First Name
+                    <form
+                    >
+                        <label htmlFor="firstName"> Update First Name
                         </label>
                         <input 
                             type="text" 
-                            id="fname" 
-                            name="fname" 
+                            id="firstName" 
+                            name="firstName" 
                             value={updateFields.firstName}
                             onChange={handleChange}
     
@@ -62,12 +75,12 @@ const ManageProfile = (props : UpdateFields) => {
 
                 <section className={style.updateSection}>
                     <form>
-                        <label htmlFor="lname"> Update Last Name
+                        <label htmlFor="lastName"> Update Last Name
                         </label>
                         <input 
                             type="text" 
-                            id="lname" 
-                            name="lname" 
+                            id="lastName" 
+                            name="lastName" 
                             value={updateFields.lastName}
                             onChange={handleChange}
                             />
@@ -80,12 +93,12 @@ const ManageProfile = (props : UpdateFields) => {
                 
                 <section className={style.updateSection}> 
                 <form>
-                        <label htmlFor="intro"> Update Introduction
+                        <label htmlFor="introduction"> Update Introduction
                         </label>
                         <input 
                             type="text" 
-                            id="intro" 
-                            name="intro"
+                            id="introduction" 
+                            name="introduction"
                             value={updateFields.introduction}
                             onChange={handleChange}
 
@@ -97,12 +110,12 @@ const ManageProfile = (props : UpdateFields) => {
                 
                 <section className={style.updateSection}>
                     <form>
-                        <label htmlFor="photo"> Update Profile Photo
+                        <label htmlFor="imgLink"> Update Profile Photo
                         </label>
                         <input 
                             type="img" 
-                            id="photo" 
-                            name="photo" 
+                            id="imgLink" 
+                            name="imgLink" 
                             value={updateFields.imgLink}
                             onChange={handleChange}
     

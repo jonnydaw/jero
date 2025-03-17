@@ -13,6 +13,7 @@ const ProfileCard = (props : Props) => {
             <p>{props.lastName}</p>
             <p>{props.introduction}</p>
             <p>{props.imgLink}</p>
+            <p>hi</p>
 
         </div>
     )

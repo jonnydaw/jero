@@ -30,7 +30,7 @@ const ProfilePage = async () => {
     let firstName;
     try{
     // https://stackoverflow.com/questions/60168695/how-to-include-cookies-with-fetch-request-in-nextjs
-    const response = await fetch(`${baseApi}/auth/profile`, {
+    const response = await fetch(`${baseApi}/profile/get-first-name`, {
         method: "GET",
         headers: {
             Cookie: `JWT=${jwtValue};`

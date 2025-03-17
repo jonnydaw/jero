@@ -8,13 +8,29 @@ const page = async () => {
     const cookieStore = await cookies();
     const jwtValue = cookieStore.get("JWT")?.value;
 
+    let propVals;
+    try{
+        // https://stackoverflow.com/questions/60168695/how-to-include-cookies-with-fetch-request-in-nextjs
+        const response = await fetch(`${baseApi}/profile/get-update-fields`, {
+            method: "GET",
+            headers: {
+                Cookie: `JWT=${jwtValue};`
+            },       
+        });
+        propVals = (await response.json())
+        //firstName = await response.text();
+    
+        }catch(error : any){
+            console.error(error);
+        }
+
 
     
     
     return (
 
         <div>
-            <ManageProfile firstName={""} lastName={""} introduction={""} imgLink={""} />
+            <ManageProfile firstName={propVals.firstName || "no name"} lastName={propVals.lastName} introduction={propVals.introduction || "none"} imgLink={propVals.profileImgUrl || "none"} />
         </div>
     )
 }

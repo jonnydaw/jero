@@ -56,15 +56,7 @@ public class UserAuthController {
 	@Autowired
 	private IUserAuthService userAuthService;	
 
-	@GetMapping("/profile") 
-	public ResponseEntity<String> getProfile(@CookieValue("JWT") String token)  { 
-		// https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
-		// 27/11/24
-		String email =  JwtProvider.getEmailFromJwtToken(token);
-		UserModel user = userRepository.findByEmail(email);
-		return ResponseEntity.ok()
-		.body(user.getFirstName());
-	}
+
 
 	@PostMapping("/signup") 
 	public ResponseEntity<AuthResponse> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 
