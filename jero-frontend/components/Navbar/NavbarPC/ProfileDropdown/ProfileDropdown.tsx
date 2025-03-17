@@ -44,17 +44,38 @@ const ProfileDropdown = async () => {
     // }
     // }
       let linkToTextAuth : Map<string, string> = new Map();
+      let linkToTextCommonProfile : Map<string, string> = new Map();
+      let linkToTextInternational : Map<string, string> = new Map();
 
 
-      if(!jwtValue){
+
+
+      if(!jwtValue || !rtValue){
         linkToTextAuth.set("login","Login");
         linkToTextAuth.set("signup", "Sign up");
       }else if(jwtValue && rtValue){
         const parsedJwt = parseJWT(jwtValue);
-        console.log(parsedJwt);
+        if(parsedJwt.role === "customer"){
+          linkToTextCommonProfile.set("manage-profile", "Manage Profile");
+          linkToTextCommonProfile.set("past-bookings","Past Bookings");
+          linkToTextCommonProfile.set("upcoming-bookings","Upcoming Bookings");
+          linkToTextCommonProfile.set("upcoming-bookings","Upcoming Bookings");
+          linkToTextCommonProfile.set("analytic-privacy","Analytics and Privacy");
+          linkToTextCommonProfile.set("messages","Messages");
+        }else if(parsedJwt.role === "host"){
+          linkToTextCommonProfile.set("manage-profile", "Manage Profile");
+          linkToTextCommonProfile.set("manage-properties","Manage Properties");
+          linkToTextCommonProfile.set("past-bookings/host","Past Bookings");
+          linkToTextCommonProfile.set("upcoming-bookings/host","Upcoming Bookings");
+          linkToTextCommonProfile.set("upcoming-bookings/host","Upcoming Bookings");
+          linkToTextCommonProfile.set("analytic-privacy/host","Analytics and Privacy");
+          linkToTextCommonProfile.set("messages","Messages");
+
+        }
       }
       //const expiry : number = parseJWT(jwtValue).exp;
       const authItems = Object.fromEntries(linkToTextAuth);
+      const manageCommonItems = Object.fromEntries(linkToTextCommonProfile)
 
 
     return (
@@ -67,17 +88,34 @@ const ProfileDropdown = async () => {
           {( Object.keys(authItems).length > 0) ? 
                     Object.entries(authItems).map(([key, value]) => (
                   
-                      <Link className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+                      <Link key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
                     ))
                   
                     :
 
                     <LogoutFakeLink/>
                   
-                  }
-    
-
+          } 
       </div>
+      {
+      
+      (jwtValue && rtValue) &&
+      (
+      <div className={style.authDropdown}>
+        
+            
+                    <h3>Profile</h3>
+                
+                   { Object.entries(manageCommonItems).map(([key, value]) => (
+                  
+                      <Link className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+                    ))}
+                  
+                  
+                  
+          
+      </div>)
+      }
   
         </div>
   </div>

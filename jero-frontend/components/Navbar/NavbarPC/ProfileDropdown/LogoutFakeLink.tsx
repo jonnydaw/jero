@@ -27,7 +27,7 @@ const LogoutFakeLink = () => {
     }
 
     return(
-        <span id={style.fakeLink} onClick={handleClick}>
+        <span id={style.fakeLink} className={style.links} onClick={handleClick}>
             Logout
         </span>
     )
