@@ -51,11 +51,11 @@ const ManageProfile = (props : UpdateFields) => {
     const handleSubmit = async (e: any) => {
         e.preventDefault()
         const name : keyof UpdateFieldsWithSecret = e.target.name;
-        console.log(name)
+        const endpointFin = e.target.name.toLowerCase();
         console.log(updateFields[name]);
         // const postVal = ;
         try {
-            const response = await axios.put(`${baseApi}/profile/update-first-name`, {
+            const response = await axios.put(`${baseApi}/profile/update-${endpointFin}`, {
                     updateVal : updateFields[name]
                 },
                 { withCredentials: true}
@@ -85,7 +85,6 @@ const ManageProfile = (props : UpdateFields) => {
                             name="firstName" 
                             value={updateFields.firstName}
                             onChange={handleChange}
-    
                         />
 
                         <button>Confirm Change</button>
@@ -93,7 +92,10 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
 
                 <section className={style.updateSection}>
-                    <form>
+                    <form 
+                            onSubmit={handleSubmit}
+                            name="lastName"
+                                        >
                         <label htmlFor="lastName"> Update Last Name
                         </label>
                         <input 
@@ -111,7 +113,9 @@ const ManageProfile = (props : UpdateFields) => {
 
                 
                 <section className={style.updateSection}> 
-                <form>
+                <form 
+                                    onSubmit={handleSubmit}
+                                    name="introduction">
                         <label htmlFor="introduction"> Update Introduction
                         </label>
                         <input 
@@ -128,7 +132,8 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
                 
                 <section className={style.updateSection}>
-                    <form>
+                    <form                     onSubmit={handleSubmit}
+                    name="imgLink">
                         <label htmlFor="imgLink"> Update Profile Photo
                         </label>
                         <input 
@@ -145,7 +150,9 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
 
                 <section className={style.updateSection}>
-                    <form>
+                    <form
+                                        onSubmit={handleSubmit}
+                                        name="oldpassword">
                         <label htmlFor="oldpassword"> Old Password
                         </label>
                         <input 

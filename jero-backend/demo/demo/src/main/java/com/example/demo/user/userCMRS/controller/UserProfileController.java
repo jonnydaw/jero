@@ -36,12 +36,28 @@ public class UserProfileController {
             .body(user.getFirstName());
 	    }
 
-        @PutMapping("/update-first-name") 
-	    public ResponseEntity<String> updateName(@RequestBody UpdateHandler newName, @CookieValue("JWT") String token)  { 
-            System.out.println(token);
-            System.out.println(newName);
-            //https://stackoverflow.com/questions/61831493/type-mismatch-cannot-convert-from-type-optionaluser-to-user
-            updateService.updateUserFirstName(newName.getUpdateVal(), token);
+        @PutMapping("/update-firstname") 
+	    public ResponseEntity<String> updateFirstName(@RequestBody UpdateHandler newFirstName, @CookieValue("JWT") String token)  { 
+            updateService.updateUserFirstName(newFirstName.getUpdateVal(), token);
+            return ResponseEntity.ok().body("hi");
+	    }
+
+        @PutMapping("/update-lastname") 
+	    public ResponseEntity<String> updateLastName(@RequestBody UpdateHandler newLastName, @CookieValue("JWT") String token)  { 
+     
+            updateService.updateUserLastName(newLastName.getUpdateVal(), token);
+            return ResponseEntity.ok().body("hi");
+	    }
+
+        @PutMapping("/update-introduction") 
+	    public ResponseEntity<String> updateIntroduction(@RequestBody UpdateHandler newIntroduction, @CookieValue("JWT") String token)  { 
+            updateService.updateUserIntroduction(newIntroduction.getUpdateVal(), token);
+            return ResponseEntity.ok().body("hi");
+	    }
+
+        @PutMapping("/update-imgLink") 
+	    public ResponseEntity<String> updateProfilePic(@RequestBody UpdateHandler newImageUrl, @CookieValue("JWT") String token)  { 
+            updateService.updateImageUrl(newImageUrl.getUpdateVal(), token);
             return ResponseEntity.ok().body("hi");
 	    }
 
