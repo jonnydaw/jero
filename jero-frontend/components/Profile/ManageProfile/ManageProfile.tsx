@@ -68,10 +68,11 @@ const ManageProfile = (props : UpdateFields) => {
 
     return(
         <div id={style.container}>
-            <div id={style.subcontainer}>
-                <section id={style.cardContainer}>
+                            <section id={style.cardContainer}>
                     <ProfileCard firstName={firstNameProp} lastName={lastNameProp} introduction={introductionProp} imgLink={imgLinkProp}/>
                 </section>
+            <div id={style.subcontainer}>
+
                 <section className={style.updateSection}>
                     <form
                     onSubmit={handleSubmit}

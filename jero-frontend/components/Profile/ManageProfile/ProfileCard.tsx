@@ -5,16 +5,39 @@ interface Props  {
     introduction : string;
     imgLink : string;
 }
+import { DOMAttributes } from "react";
+import style from "./profilecard.module.css"
 
 const ProfileCard = (props : Props) => {
-    return(
-        <div>
-            <p>{props.firstName}</p>
-            <p>{props.lastName}</p>
-            <p>{props.introduction}</p>
-            <p>{props.imgLink}</p>
-            <p>hi</p>
+    // https://stackoverflow.com/questions/18837735/check-if-image-exists-on-server-using-javascript
 
+    function imageExists(image_url : string){
+        if(image_url === null || image_url === "") return false;
+        let http = new XMLHttpRequest();
+        http.open('HEAD', image_url, false);
+        http.send();
+        return http.status != 404;
+    
+    }
+ 
+   const imageLink =  imageExists(props.imgLink) ? props.imgLink : "/vercel.svg";
+    return(
+        <div id={style.container}>
+            <div id={style.guessWhatAnotherContainer}>
+                <div id={style.imageContainer}>
+                    <img 
+                    src={imageLink}
+                  />
+                </div>
+                {/* <img src="/vercel.svg" alt="" /> */}
+                <div id={style.theRest}>
+                    <div id={style.names}>
+                    <h3>{`${props.firstName} ${props.lastName}` }</h3>
+                    </div>
+                    <p>{props.introduction}</p>
+                </div>
+
+            </div>
         </div>
     )
 }
