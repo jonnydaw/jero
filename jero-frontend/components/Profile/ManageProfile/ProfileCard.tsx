@@ -26,6 +26,7 @@ const ProfileCard = (props : Props) => {
             <div id={style.guessWhatAnotherContainer}>
                 <div id={style.imageContainer}>
                     <img 
+                    id={style.image}
                     src={imageLink}
                   />
                 </div>
@@ -34,7 +35,7 @@ const ProfileCard = (props : Props) => {
                     <div id={style.names}>
                     <h3>{`${props.firstName} ${props.lastName}` }</h3>
                     </div>
-                    <p>{props.introduction}</p>
+                    <p id={style.intro}>{props.introduction}</p>
                 </div>
 
             </div>
