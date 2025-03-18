@@ -111,6 +111,15 @@ public class PropertyService implements IPropertyService {
         
     }
 
+    @Override
+    public PropertyModel getPropertyById(ObjectId propertyId) {
+        PropertyModel property = propertyRepo.findById(propertyId).get();
+        if(property == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+        }
+        return property;
+    }
+
     private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms) {
         if(locationType.equals("city")){
             pms = propertyRepo.findPropertiesByCityId(location.getId());
@@ -129,4 +138,6 @@ public class PropertyService implements IPropertyService {
         }
         return displayLocation;
     }
+
+
 }

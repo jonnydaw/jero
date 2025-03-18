@@ -3,6 +3,7 @@ package com.example.demo.property.propertycmrs.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.property.propertycmrs.service.IPropertyService;
 
@@ -41,8 +43,12 @@ public class PropertyController {
     }
 
     @GetMapping("{property_id}")
-    public ResponseEntity<?> getPropertyFromId(@Param("property_id") String propertyId){
-        return ResponseEntity.ok().body("hi");
+    public ResponseEntity<?> getPropertyFromId(@PathVariable("property_id") String propertyId){
+        System.out.println("hit");
+        System.out.println(propertyId);
+        PropertyModel property = propertyService.getPropertyById(new ObjectId(propertyId));
+        System.out.println(property.toString());
+        return ResponseEntity.ok().body(property);
     }
 
     @GetMapping("/search-properties")
