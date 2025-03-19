@@ -56,13 +56,15 @@ const Search : React.FC<Props> =  (props : Props) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    localStorage.setItem("start",String(formData.start))
+    localStorage.setItem("end", formData.end);
     const params = new URLSearchParams();
     params.set("location", formData.where);
-    params.set("start-date",formData.start);
-    params.set("end-date",formData.end);
-    params.set("num-adults",String(formData.count.adultCount));
-    params.set("num-children",String(formData.count.childCount));
-    params.set("num-pets",String(formData.count.petCount));
+    params.set("startdate",formData.start);
+    params.set("enddate",formData.end);
+    params.set("numadults",String(formData.count.adultCount));
+    params.set("numchildren",String(formData.count.childCount));
+    params.set("numpets",String(formData.count.petCount));
 
 
 

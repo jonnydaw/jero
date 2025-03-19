@@ -57,11 +57,11 @@ public class PropertyController {
 
     @GetMapping("/search-properties")
     public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, 
-                                                       @RequestParam("start-date") Optional<LocalDate> startDate, 
-                                                       @RequestParam("end-date") Optional<LocalDate> endDate,
-                                                       @RequestParam("num-adults") Optional<Integer> numAdults,
-                                                       @RequestParam("num-children") Optional<Integer> numChildren,
-                                                       @RequestParam("num-pets") Optional<Integer> numPets
+                                                       @RequestParam("startdate") Optional<LocalDate> startDate, 
+                                                       @RequestParam("enddate") Optional<LocalDate> endDate,
+                                                       @RequestParam("numadults") Optional<Integer> numAdults,
+                                                       @RequestParam("numchildren") Optional<Integer> numChildren,
+                                                       @RequestParam("numpets") Optional<Integer> numPets
                                                        ){
 
         List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, startDate.get(), endDate.get(), numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0));
