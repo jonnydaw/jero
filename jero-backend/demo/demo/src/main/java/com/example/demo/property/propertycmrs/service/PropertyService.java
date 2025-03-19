@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -77,6 +79,9 @@ public class PropertyService implements IPropertyService {
         pm.setWaterData(cph.getWaterData());
         // pm.setPropertyType(EProperty.APARTMENT);
         pm.setImageUrls(cph.getImagesData());
+        List<LocalDate> today = new ArrayList<>();
+        today.add(LocalDate.now());
+        pm.setBlockedDates(today);
         // dates
         //pm.setAvailableDates(cph.getAvailableDates());
         pm.setStatus(false);
@@ -84,7 +89,7 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation) {
+    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         if(location == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
@@ -92,7 +97,7 @@ public class PropertyService implements IPropertyService {
 
         String locationType = location.getLocationType();
         List<PropertyModel> pms = new ArrayList<>();
-        pms = extracted2(location, locationType, pms);
+        pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets);
 
         List<Map<String,String>> res = new ArrayList<>();
         for(PropertyModel pm : pms){
@@ -108,8 +113,9 @@ public class PropertyService implements IPropertyService {
             res.add(propertyAttributes);
         }
         return res;
-        
     }
+
+    
 
     @Override
     public PropertyModel getPropertyById(ObjectId propertyId) {
@@ -120,10 +126,10 @@ public class PropertyService implements IPropertyService {
         return property;
     }
 
-    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms) {
-        if(locationType.equals("city")){
-            pms = propertyRepo.findPropertiesByCityId(location.getId());
-        }
+    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets) {
+       // if(locationType.equals("city")){
+            pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0);
+        //}
         return pms;
     }
 

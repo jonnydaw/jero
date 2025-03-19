@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public interface IPropertyService {
 
     void createProperty(String jwt, CreatePropertyHandler cph);
 
-    List<Map<String,String>> getPropertiesByLocation(String location);
+    List<Map<String,String>> getPropertiesByLocation(String queriedLocation, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets);
 
     PropertyModel getPropertyById(ObjectId propertyId);
     

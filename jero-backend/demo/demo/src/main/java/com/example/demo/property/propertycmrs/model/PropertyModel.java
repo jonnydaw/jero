@@ -1,6 +1,7 @@
 package com.example.demo.property.propertycmrs.model;
 
 import java.beans.JavaBean;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class PropertyModel {
     private List<String> imageUrls;
     // private List<FacilitiesType> facilities;
     private Map<ObjectId,ReviewsType> userIdToReviews;
-    private List<Date> availableDates;
+    private List<LocalDate> blockedDates;
 
     private boolean acceptsChildren;
     private boolean acceptsPets;

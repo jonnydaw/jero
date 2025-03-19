@@ -1,7 +1,9 @@
 package com.example.demo.property.propertycmrs.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,18 +44,27 @@ public class PropertyController {
         return ResponseEntity.ok().body("hi");
     }
 
+
     @GetMapping("{property_id}")
-    public ResponseEntity<?> getPropertyFromId(@PathVariable("property_id") String propertyId){
+    public ResponseEntity<?> getPropertyFromId(@PathVariable("property_id") String propertyId, PropertyModel property ){
         System.out.println("hit");
         System.out.println(propertyId);
-        PropertyModel property = propertyService.getPropertyById(new ObjectId(propertyId));
+        property = propertyService.getPropertyById(new ObjectId(propertyId));
         System.out.println(property.toString());
         return ResponseEntity.ok().body(property);
     }
+    // https://stackoverflow.com/questions/22373696/requestparam-in-spring-mvc-handling-optional-parameters
 
     @GetMapping("/search-properties")
-    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location){
-        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location);
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, 
+                                                       @RequestParam("start-date") Optional<LocalDate> startDate, 
+                                                       @RequestParam("end-date") Optional<LocalDate> endDate,
+                                                       @RequestParam("num-adults") Optional<Integer> numAdults,
+                                                       @RequestParam("num-children") Optional<Integer> numChildren,
+                                                       @RequestParam("num-pets") Optional<Integer> numPets
+                                                       ){
+
+        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, startDate.get(), endDate.get(), numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0));
         System.out.println("hit controller");
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);
