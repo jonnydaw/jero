@@ -1,0 +1,16 @@
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#container section{
+    margin: 2em;
+}
+
+#imageArea{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

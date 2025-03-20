@@ -82,6 +82,10 @@ export type PropertyAttributeFull = {
     title : string;
     description : string;
     pricePerNight: string;
+    priceIncreasePerPerson : string,
+    acceptsChildren : boolean;
+    acceptsPets : boolean;
+    disabilityFriendly : boolean;
     rules : string;
     numberDoubleBeds : number;
     numberSingleBeds : number;
