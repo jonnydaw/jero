@@ -95,7 +95,7 @@ const ProfileDropdown = async () => {
                 
                    { Object.entries(manageCommonItems).map(([key, value]) => (
                   
-                      <Link className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+                      <Link  key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
                     ))}
                   
                   
@@ -107,7 +107,7 @@ const ProfileDropdown = async () => {
         <h3>International?</h3>
           {
             Object.entries(internationItems).map(([key,value]) => (
-              <Link className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+              <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
             ))
           }
       </div>

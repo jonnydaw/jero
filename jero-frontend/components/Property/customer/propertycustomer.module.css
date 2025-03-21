@@ -1,16 +1,75 @@
 #container{
     display: flex;
-    justify-content: center;
-    align-items: center;
+   justify-content: center;
     flex-direction: row;
 }
 
 #container section{
     margin: 2em;
+    flex-direction: column;
+    justify-self: flex-start;
 }
+
+/* #info{
+    position: absolute;
+} */
 
 #imageArea{
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+#imageArea > figure >img{
+    border-radius: 1em;
+    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.5);  
+}
+
+#imageArea > button{
+    border: none;
+    display: inline-block;
+    border-radius: 1em;
+    font-size: 2em;
+    padding-bottom: 0.2em;
+    background-color: black;
+    opacity: 50%;
+    color: white;
+}
+
+#imageArea > button:first-child{
+    margin-right: -3.5em ;
+}
+
+#imageArea > button:last-child{
+    margin-left: -3.5em ;
+}
+
+#imageArea > button:hover{
+    opacity: 90%;
+    cursor: pointer;
+}
+
+#book{
+    top: 0.5em;
+    position: sticky;
+    display: flex;
+    align-items: flex-end;
+    align-self: flex-start;
+    min-width: 33vw;
+    padding-top: 5%;
+}
+
+#book > form{
+    max-width: 75%;
+    padding: 1em;
+    margin-bottom: 1.5em;
+    background-color: white;
+    border: 0.01em solid lightgray;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+}
+
+#book > form *{
+    font-size: large;
+    padding: 0.5em;
 }

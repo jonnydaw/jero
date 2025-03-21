@@ -1,0 +1,23 @@
+#amenitiesList{
+    padding: 1em;
+    margin-bottom: 1.5em;
+    background-color: white;
+    border: 0.01em solid lightgray;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.1);
+  }
+
+#amenitiesList > ul{
+
+    list-style: none;
+
+}
+
+#has{
+    min-width: 50%;
+    color: green;
+}
+#hasnt{
+    min-width: 50%;
+    color: red;
+}

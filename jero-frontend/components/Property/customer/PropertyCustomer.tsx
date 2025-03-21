@@ -5,6 +5,8 @@ import style from "./propertycustomer.module.css"
 import GuestToggler from "@/components/Navbar/NavbarPC/GuestDropdown/GuestToggler";
 import { GuestCounts } from "@/app/types/types";
 import { SetStateAction, useState } from "react";
+import Amenities from "./Amenities/Amenities";
+import { useSearchParams } from "next/navigation";
 
 
 type UserDeets = {
@@ -21,28 +23,79 @@ interface Props{
     userDeets : UserDeets;
 }
 
+interface Dates {
+    start : string;
+    end : string;
+}
 const PropertyCustomer = (props : Props) => {
-    const [count, setCount] = useState<GuestCounts>({adultCount : 1, childCount : 0, petCount : 0});
+    const sp = useSearchParams();
+    const adultCountSp = Number(sp.get("numadults"))
+    let childCountSp = Number(sp.get("numchildren"))
+    let petCountSp = Number(sp.get("numpets"))
+    const startDate = sp.get("startdate")
+    const endDate = sp.get("enddate")
+
+    if(childCountSp > 0 && !props.propertyAttributes.acceptsChildren){
+        childCountSp = 0;
+    }
+
+    if(petCountSp > 0 && !props.propertyAttributes.acceptsPets){
+        petCountSp = 0;
+    }
+    const [guestCounts, setGuestCounts] = useState<GuestCounts>(
+        { 
+            adultCount : adultCountSp,
+            childCount : childCountSp,
+             petCount : petCountSp
+        });
+    
+    const [dates, setDates] = useState<Dates>({
+        start : String(startDate),
+        end : String(endDate)
+    })
+    const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+
+
+    const handleIncrement = (e : any) => {
+        e.preventDefault();
+        setCurrentImageIdx(currentImageIdx < props.propertyAttributes.images.length - 1 ? currentImageIdx + 1 : 0);
+    }
+
+    const handleDecrement = (e : any) => {
+        e.preventDefault();
+        setCurrentImageIdx(currentImageIdx > 0 ? currentImageIdx - 1 :  props.propertyAttributes.images.length - 1)
+        console.log(currentImageIdx)
+    }
+
+    const handleDateChange = (e: any) => {
+        e.preventDefault();
+
+    }
 
     console.log(props.userDeets.startDate)
     console.log(props.propertyAttributes.beauty);
     return( 
         <div id={style.container}>
-            <section>
+            {/* <section>
                 <h3>what is nearby</h3>
-            </section>
+            </section> */}
             <section id={style.info}>
             <h2>{props.propertyAttributes.title}</h2>
             <div id={style.imageArea}>
-            <button>left</button>
+            <button onClick={handleDecrement}> &larr;</button>
+            <figure>
             <Image
-                src={props.propertyAttributes.images.at(0) || "/vercel.svg"}
-                width={500}
-                height={500}
+                src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
+                width={800}
+                height={533}
                 alt="Picture of the author"
               />
-              <button>right</button>
+              <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
+              </figure>
+              <button onClick={handleIncrement}>&rarr;</button>
             </div>
+            <p></p>
+
             <h3>{props.propertyAttributes.description}</h3>
             <strong>{`Price per night £${props.propertyAttributes.pricePerNight} | Price increase per person £${props.propertyAttributes.priceIncreasePerPerson}`}</strong>
             <br />
@@ -65,22 +118,29 @@ const PropertyCustomer = (props : Props) => {
         </strong>
 
         <h3>Amenities</h3>
-        {Object.entries(props.propertyAttributes.beauty).map(([key, value]) => (
-            <div key={key}>
-            <p >{key} {String(value)}</p>
-            </div>
-        ))}
-
+        <Amenities object={props.propertyAttributes.beauty} amenityName={"beauty"}  />
             </section>
             <section id={style.book}>
                 <form>
-                <input type="date" name="" id="" />
-                <input type="date" name="" id="" />
+                <input 
+                    type="date" 
+                    name="" 
+                    id="" 
+                    value={dates.start} 
+                    onChange={handleDateChange}
+                />
+                <input
+                    type="date" 
+                    name="" 
+                    id="" 
+                    value={dates.end}
+                    onChange={handleDateChange}
+                />
                 <GuestToggler count={{
-                        adultCount: count.adultCount,
-                        childCount: count.childCount,
-                        petCount: count.petCount
-                    }} setCount={setCount}/>
+                        adultCount: guestCounts.adultCount,
+                        childCount: guestCounts.childCount,
+                        petCount: guestCounts.petCount
+                    }} setCount={setGuestCounts}/>
                 <button>Book</button>
                 </form>
             </section>
