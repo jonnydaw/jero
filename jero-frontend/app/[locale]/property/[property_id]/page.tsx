@@ -7,7 +7,7 @@ import { cookies, headers } from 'next/headers'
 
  // https://stackoverflow.com/questions/77412027/using-next-13-5-6-app-router-how-to-get-params-of-dynamic-route
  // https://stackoverflow.com/questions/74889841/how-to-get-query-params-using-server-component-next-13
-const page = async ({params, searchParams}: {params: { property_id : string }; searchParams?: { [key: string]: string | string[] | undefined };}) => {
+const page = async ({params, searchParams}: {params: Promise<{ property_id : string }>; searchParams?: { [key: string]: string | string[] | undefined };}) => {
         const cookieStore = await cookies();
         const jwtValue = cookieStore.get("JWT")?.value;
         const parseJWT = (jwtValue : string) => {
@@ -16,7 +16,7 @@ const page = async ({params, searchParams}: {params: { property_id : string }; s
         const id = jwtValue ? parseJWT(jwtValue).id : null;
         console.log("id" + id);
         const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-        const { property_id} = await params;
+        const { property_id }: {property_id: string} = await params;
         const startDate = searchParams?.startdate || "";
         const endDate = searchParams?.enddate || "";
         const adultCount = searchParams?.numadults
