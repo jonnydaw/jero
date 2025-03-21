@@ -7,7 +7,7 @@ import { cookies, headers } from 'next/headers'
 
  // https://stackoverflow.com/questions/77412027/using-next-13-5-6-app-router-how-to-get-params-of-dynamic-route
  // https://stackoverflow.com/questions/74889841/how-to-get-query-params-using-server-component-next-13
-const page = async ({params, searchParams}: {params: Promise<{ property_id : string }>; searchParams?: { [key: string]: string | string[] | undefined };}) => {
+const page = async ({params, searchParams}: {params: Promise<{ property_id : string }>; searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;}) => {
         const cookieStore = await cookies();
         const jwtValue = cookieStore.get("JWT")?.value;
         const parseJWT = (jwtValue : string) => {
@@ -17,11 +17,13 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         console.log("id" + id);
         const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
         const { property_id }: {property_id: string} = await params;
-        const startDate = searchParams?.startdate || "";
-        const endDate = searchParams?.enddate || "";
-        const adultCount = searchParams?.numadults
-        const childCount = searchParams?.numhildren
-        const petCount = searchParams?.numpets
+        const queries = await searchParams;
+
+        const startDate = await queries?.startdate || "";
+        const endDate = await queries?.enddate || "";
+        const adultCount = await queries?.numadults
+        const childCount = await queries?.numhildren
+        const petCount = await queries?.numpets
 
 
         const headersList = await headers()
