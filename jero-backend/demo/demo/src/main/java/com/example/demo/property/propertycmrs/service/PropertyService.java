@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.booking.DTO.PropertyBooking;
+import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
@@ -115,7 +117,53 @@ public class PropertyService implements IPropertyService {
         return res;
     }
 
-    
+    @Override
+    public Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings) {
+        Map<String, List<PropertyBooking>>  res = new HashMap<>();
+        for(String key : bookings.keySet()){
+            List<PropertyBooking> arr = new ArrayList<>();
+            for(BookingModel booking : bookings.get(key)){
+                PropertyBooking pb = new PropertyBooking();
+                PropertyModel pm = this.getPropertyById(booking.getPropertyId());
+
+                pb.setPropertyId(booking.getPropertyId());
+                pb.setBookingId(booking.getId());
+                pb.setTitle(pm.getTitle());
+                pb.setImage(pm.getImageUrls().getFirst());
+                pb.setStart(booking.getStartDate());
+                pb.setEnd(booking.getEndDate());
+                pb.setNumAdults(booking.getNumAdults());
+                pb.setNumChildren(booking.getNumChildren());
+                pb.setNumPets(booking.getNumPets());
+                pb.setTotalCost(booking.getTotalCost());
+                arr.add(pb);
+            }
+            res.put(key,arr);
+            System.out.println("*********************8");
+        }
+    //    for(List<BookingModel> bookingList : bookings.values()){
+    //         System.out.println(count);
+    //         count++;
+    //     for(BookingModel booking : bookingList){
+    //         System.out.println("******************");
+    //         System.out.println(booking.toString());
+    //         System.out.println();
+    //         PropertyBooking pb = new PropertyBooking();
+    //         PropertyModel pm = this.getPropertyById(booking.getPropertyId());
+    //         pb.setId(booking.getPropertyId());
+    //         pb.setImage(pm.getImageUrls().getFirst());
+    //         pb.setTitle(pm.getTitle());
+    //         pb.setStart(booking.getStartDate());
+    //         pb.setEnd(booking.getEndDate());
+    //         System.out.println("Description " + pm.getDescription());
+    //         //res.put(booking.getId(), pb);
+    //     }
+
+
+    //     // List<PropertyBooking>
+    //    }
+        return res;
+    }
 
     @Override
     public PropertyModel getPropertyById(ObjectId propertyId) {
@@ -144,6 +192,8 @@ public class PropertyService implements IPropertyService {
         }
         return displayLocation;
     }
+
+
 
 
 }

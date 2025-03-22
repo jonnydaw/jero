@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import com.example.demo.booking.DTO.PropertyBooking;
+import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 
@@ -16,5 +18,7 @@ public interface IPropertyService {
     List<Map<String,String>> getPropertiesByLocation(String queriedLocation, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets);
 
     PropertyModel getPropertyById(ObjectId propertyId);
+
+    Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings);
     
 }

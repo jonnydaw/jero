@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.booking.DTO.AddBookingHandler;
+import com.example.demo.booking.DTO.GetAllBookingsHandler;
+import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.locations.locationCMRS.service.LocationService;
+import com.example.demo.property.propertycmrs.service.IPropertyService;
 
 @RestController
 @RequestMapping("/booking")
@@ -29,6 +32,7 @@ import com.example.demo.locations.locationCMRS.service.LocationService;
 public class BookingController {
 
     @Autowired IBookingService bookingService;
+    @Autowired IPropertyService propertyService;
 
     @PostMapping("/add-booking")
     public ResponseEntity<?> addBooking(@RequestBody AddBookingHandler booking, @CookieValue("JWT") String token){
@@ -47,9 +51,10 @@ public class BookingController {
         System.out.println("cont");
         // System.out.println(booking.getPropertyId());
         //List<BookingModel> bookings = ;
-        return ResponseEntity.ok().body(bookingService.getBookings(token));
+        // GetAllBookingsHandler gabh = new GetAllBookingsHandler();
+        // gabh.setBookingData(bookingService.getBookings(token));
+        Map<String, List<PropertyBooking>> hi = propertyService.getPropertiesFromBookings(bookingService.getBookings(token));
+        return ResponseEntity.ok().body(hi);
     }
-
-    
 }
  

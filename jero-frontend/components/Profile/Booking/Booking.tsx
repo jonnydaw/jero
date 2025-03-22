@@ -15,7 +15,7 @@ const Booking = (props : Props) => {
            </section>
            <section id={style.present}>
            <h2>Present</h2>
-            {props.bookings.present.length > 0 ? props.bookings.present : "Empty here" }
+            {-1> 0 ? "hi" : "Empty here" }
            </section>
            
            <section id={style.future}>
