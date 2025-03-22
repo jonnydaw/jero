@@ -2,8 +2,7 @@ export const authMapKeys  : string[] = ["login","signup"]
 
 export const profileKeysCustomer : string[] = [
     "manage-profile",
-    "past-bookings",
-    "upcoming-bookings",
+"bookings",
     "analytic-privacy",
     "messages",
 ]
@@ -11,8 +10,7 @@ export const profileKeysCustomer : string[] = [
 export const profileKeysHost : string[] = [
     "manage-profile",
     "manage-properties",
-    "past-bookings",
-    "upcoming-bookings",
+"bookings",
     "messages",
     "analytic-privacy",
 ]

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.booking.DTO.AddBookingHandler;
+import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.locations.locationCMRS.service.LocationService;
@@ -37,7 +38,16 @@ public class BookingController {
         System.out.println(booking.getPropertyId());
         bookingService.addBooking(booking, token);
         return ResponseEntity.ok().body("confirmed");
- 
+    }
+
+    @GetMapping("/get-upcoming-bookings")
+    public ResponseEntity<?> addBooking(@CookieValue("JWT") String token){
+        // System.out.println("hit");
+        // System.out.println(booking.toString());
+        System.out.println("cont");
+        // System.out.println(booking.getPropertyId());
+        //List<BookingModel> bookings = ;
+        return ResponseEntity.ok().body(bookingService.getBookings(token));
     }
 
     

@@ -1,0 +1,15 @@
+#container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#container > section{
+    padding: 5em ;
+    margin: 1em;
+    background-color: white;
+    border: 0.01em solid lightgray;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+}

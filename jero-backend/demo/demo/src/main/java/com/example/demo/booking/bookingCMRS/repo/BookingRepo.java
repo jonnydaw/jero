@@ -11,8 +11,9 @@ import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.locations.locationCMRS.model.LocationModel;
 
 @Repository
-public interface BookingRepo extends MongoRepository<BookingModel, ObjectId> {
-	// Map<String, String> getLocationHierarchy(String id);
-	// LocationModel findLocationById(String lowerCase);    
+public interface BookingRepo extends MongoRepository<BookingModel, ObjectId>, BookingTemplateRepository{
+	List<BookingModel> findBookingByOwnerId(ObjectId ownerId);
+	List<BookingModel> findBookingByGuestId(ObjectId guestId);
+
 } 
 

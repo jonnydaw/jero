@@ -2,6 +2,8 @@ package com.example.demo.booking.bookingCMRS.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -57,6 +59,18 @@ public class BookingService implements IBookingService {
         sendEmail(pm, ownerEmail);
     }
 
+
+    @Override
+    public Map<String,List<BookingModel>> getBookings(String token) {
+        //String id = JwtProvider.getIdFromJwtToken(token);
+        
+       //List<BookingModel> bms = bookingRepo.findBookingByGuestId(new ObjectId(id));
+       return bookingRepo.getBookings(token);
+    }
+
+
+    
+
     private void sendEmail(Optional<PropertyModel> pm, String ownerEmail) {
         EmailTemplate et = new EmailTemplate();
         et.setMsgBody("New booking request for property\n" + pm.get().getTitle());
@@ -80,6 +94,8 @@ public class BookingService implements IBookingService {
         }
         return totalCost;
     }
+
+
 
     
 }

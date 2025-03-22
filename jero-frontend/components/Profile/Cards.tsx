@@ -1,6 +1,7 @@
 'use client'
 import { usePathname, useRouter } from "next/navigation"
 import style from "./Cards.module.css"
+
 interface Props {
     cardName : string;
     cardContent: string;

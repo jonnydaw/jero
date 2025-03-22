@@ -88,6 +88,27 @@ public class JwtProvider {
 		} 
 	} 
 
+	public static String getRoleFromJwtToken(String jwt) { 
+		try { 
+		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 
+			String role = String.valueOf(claims.get("role")); 
+			System.out.println("role extracted from JWT: " + claims); 
+			return role; 
+		} catch (Exception e) { 
+			// https://stackoverflow.com/questions/35791465/is-there-a-way-to-parse-claims-from-an-expired-jwt-token
+			if(e.getClass() == io.jsonwebtoken.ExpiredJwtException.class){
+				Claims claims = ((ClaimJwtException) e).getClaims();
+				String role = String.valueOf(claims.get("role")); 
+				System.out.println("id extracted from expired JWT: " + claims); 
+				return role; 
+
+			}
+			System.err.println("Error extracting role from JWT: " + e.getMessage()); 
+			e.printStackTrace(); 
+			return null; 
+		} 
+	} 
+
 } 
 
 
