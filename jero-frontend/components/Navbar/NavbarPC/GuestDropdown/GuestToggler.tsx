@@ -6,11 +6,12 @@ import {useTranslations} from 'next-intl';
 type Props = {
   count : GuestCounts
   setCount : Dispatch<SetStateAction<GuestCounts>>
+  disabled: string[];
 }
 
 
 
-const GuestToggler : React.FC<Props> = ({count, setCount}) => {
+const GuestToggler : React.FC<Props> = ({count, setCount, disabled}) => {
   
   const increment = (e: React.MouseEvent,key : string) => {
     if(count[key] < 256){
@@ -37,6 +38,10 @@ const GuestToggler : React.FC<Props> = ({count, setCount}) => {
     <>
        {
        Object.entries(count).map(([key, value]) => {
+        console.log(disabled, jsonToText.get(key));
+        if(disabled && disabled.includes(key)){
+          return null;
+        }
         return (
           <div key={key} className={style.toggles}>
           <span className={style.textArea}>{jsonToText.get(key)}</span>

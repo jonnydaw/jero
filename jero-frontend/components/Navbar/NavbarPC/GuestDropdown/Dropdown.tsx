@@ -22,6 +22,7 @@ const Dropdown : React.FC<Props> = ({count, setCount}) => {
     <GuestToggler
         count = {count}
         setCount={setCount}
+        disabled={[]}
       />
   </div>
 </div>

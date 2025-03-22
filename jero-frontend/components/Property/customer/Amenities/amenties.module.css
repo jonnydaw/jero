@@ -5,9 +5,15 @@
     border: 0.01em solid lightgray;
     border-radius: 1em;
     box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.1);
+    font-size: large;
   }
 
-#amenitiesList > ul{
+  #flex{
+    display: flex;
+
+  }
+
+#flex > ul{
 
     list-style: none;
 

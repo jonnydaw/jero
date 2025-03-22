@@ -19,8 +19,9 @@ const Amenities = (props : Props) => {
     });
     return(
         <div id={style.amenitiesList}>
-            <h4>{props.amenityName}</h4>
-        
+        <h4>{props.amenityName}</h4>
+        <div id={style.flex}>
+      
             <ul id={style.hasnt}>
             {falsies.map((i) => (
                 <li key={i}>{i}</li>
@@ -32,7 +33,7 @@ const Amenities = (props : Props) => {
             ))}
         </ul>
       
-
+        </div>
         </div>
     )
 

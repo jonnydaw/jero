@@ -27,7 +27,7 @@ const Step5AddDescription = () => {
     });
 
     const handleChange = (e : any) => {
-        const {value , name} = e.target;
+        const {value, name} = e.target;
         setOverview({...overview, [name] :  value})
     }
     

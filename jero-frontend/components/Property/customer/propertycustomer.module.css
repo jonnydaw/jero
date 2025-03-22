@@ -4,6 +4,7 @@
     flex-direction: row;
 }
 
+
 #container section{
     margin: 2em;
     flex-direction: column;
@@ -59,6 +60,8 @@
     padding-top: 5%;
 }
 
+
+
 #book > form{
     max-width: 75%;
     padding: 1em;
@@ -73,3 +76,16 @@
     font-size: large;
     padding: 0.5em;
 }
+
+
+/* .customCalendar{
+    font-size: small !important;
+    color: pink;
+} */
+
+.customCalendar *{
+    font-size: small !important;
+    color: pink;
+}
+
+  

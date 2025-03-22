@@ -7,7 +7,9 @@ import { GuestCounts } from "@/app/types/types";
 import { SetStateAction, useState } from "react";
 import Amenities from "./Amenities/Amenities";
 import { useSearchParams } from "next/navigation";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+//import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
     id : string | null;
@@ -34,12 +36,14 @@ const PropertyCustomer = (props : Props) => {
     let petCountSp = Number(sp.get("numpets"))
     const startDate = sp.get("startdate")
     const endDate = sp.get("enddate")
-
-    if(childCountSp > 0 && !props.propertyAttributes.acceptsChildren){
+    const disabled: string[] = []
+    if(!props.propertyAttributes.acceptsChildren){
         childCountSp = 0;
+        disabled.push("childCount")
     }
 
-    if(petCountSp > 0 && !props.propertyAttributes.acceptsPets){
+    if(!props.propertyAttributes.acceptsPets){
+        disabled.push("petCount")
         petCountSp = 0;
     }
     const [guestCounts, setGuestCounts] = useState<GuestCounts>(
@@ -53,6 +57,8 @@ const PropertyCustomer = (props : Props) => {
         start : String(startDate),
         end : String(endDate)
     })
+    const bookingLenght = (new Date(dates.end).getTime() - new Date(dates.start).getTime()) / 86_400_000;
+
     const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
 
 
@@ -69,11 +75,20 @@ const PropertyCustomer = (props : Props) => {
 
     const handleDateChange = (e: any) => {
         e.preventDefault();
+        const { name, value} = e.target;
+        setDates({...dates, [name] : value})
 
     }
 
     console.log(props.userDeets.startDate)
     console.log(props.propertyAttributes.beauty);
+    const baseCost = bookingLenght * Number(props.propertyAttributes.pricePerNight);
+    const extraCost = (Number(props.propertyAttributes.priceIncreasePerPerson) > 0 && (guestCounts.adultCount + guestCounts.childCount) > 1) 
+        ?
+        Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount)
+        :
+        0
+        ;
     return( 
         <div id={style.container}>
             {/* <section>
@@ -119,28 +134,46 @@ const PropertyCustomer = (props : Props) => {
 
         <h3>Amenities</h3>
         <Amenities object={props.propertyAttributes.beauty} amenityName={"beauty"}  />
+
+
             </section>
             <section id={style.book}>
                 <form>
+                <div>
+                <h4>price</h4>
+                <p>Base rate - £{baseCost}</p>
+                <p>Extra costs - £{extraCost}
+                </p>
+                <strong>Total - £{baseCost + extraCost}</strong>
+                </div>
                 <input 
                     type="date" 
-                    name="" 
-                    id="" 
+                    name="pop" 
+                    id="pop" 
                     value={dates.start} 
                     onChange={handleDateChange}
                 />
                 <input
                     type="date" 
-                    name="" 
-                    id="" 
+                    name="end" 
+                    id="end" 
                     value={dates.end}
                     onChange={handleDateChange}
                 />
+                <DatePicker
+                    name="start"
+                    selected={new Date(dates.start)}
+                    onChange={handleDateChange}
+                    className={style.customCalendar}
+                    calendarClassName={style.customCalendar} 
+                    />
                 <GuestToggler count={{
                         adultCount: guestCounts.adultCount,
                         childCount: guestCounts.childCount,
                         petCount: guestCounts.petCount
-                    }} setCount={setGuestCounts}/>
+                    }} setCount={setGuestCounts}
+                    
+                    disabled={disabled}/>
                 <button>Book</button>
                 </form>
             </section>
