@@ -14,4 +14,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface PropertyRepo extends MongoRepository<PropertyModel,ObjectId>, PropertyTemplateRepository {
     List<PropertyModel> findPropertiesByCityId(String city);
     
+    
 }

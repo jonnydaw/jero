@@ -9,6 +9,7 @@ import Amenities from "./Amenities/Amenities";
 import { useSearchParams } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Pay from "./Pay";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -26,16 +27,17 @@ interface Props{
 }
 
 interface Dates {
-    start : string;
-    end : string;
+    start : Date;
+    end : Date;
 }
+
 const PropertyCustomer = (props : Props) => {
     const sp = useSearchParams();
     const adultCountSp = Number(sp.get("numadults"))
     let childCountSp = Number(sp.get("numchildren"))
     let petCountSp = Number(sp.get("numpets"))
-    const startDate = sp.get("startdate")
-    const endDate = sp.get("enddate")
+    const startDate = sp.get("startdate") || "";
+    const endDate = sp.get("enddate") || "";
     const disabled: string[] = []
     if(!props.propertyAttributes.acceptsChildren){
         childCountSp = 0;
@@ -53,11 +55,11 @@ const PropertyCustomer = (props : Props) => {
              petCount : petCountSp
         });
     
-    const [dates, setDates] = useState<Dates>({
-        start : String(startDate),
-        end : String(endDate)
-    })
-    const bookingLenght = (new Date(dates.end).getTime() - new Date(dates.start).getTime()) / 86_400_000;
+    const [getStartDate, setStartDate] = useState<Date>(new Date(startDate));
+    const [getEndDate, setEndDate] = useState<Date>(new Date(endDate));
+
+
+    const bookingLength = ((getEndDate.getTime() - getStartDate.getTime()) / 86_400_000);
 
     const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
 
@@ -73,19 +75,14 @@ const PropertyCustomer = (props : Props) => {
         console.log(currentImageIdx)
     }
 
-    const handleDateChange = (e: any) => {
-        e.preventDefault();
-        const { name, value} = e.target;
-        setDates({...dates, [name] : value})
 
-    }
 
     console.log(props.userDeets.startDate)
     console.log(props.propertyAttributes.beauty);
-    const baseCost = bookingLenght * Number(props.propertyAttributes.pricePerNight);
+    const baseCost = bookingLength * Number(props.propertyAttributes.pricePerNight);
     const extraCost = (Number(props.propertyAttributes.priceIncreasePerPerson) > 0 && (guestCounts.adultCount + guestCounts.childCount) > 1) 
         ?
-        Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount)
+        Number(props.propertyAttributes.priceIncreasePerPerson) * bookingLength * (guestCounts.adultCount + guestCounts.childCount - 1)
         :
         0
         ;
@@ -146,7 +143,7 @@ const PropertyCustomer = (props : Props) => {
                 </p>
                 <strong>Total - £{baseCost + extraCost}</strong>
                 </div>
-                <input 
+                {/* <input 
                     type="date" 
                     name="pop" 
                     id="pop" 
@@ -159,14 +156,28 @@ const PropertyCustomer = (props : Props) => {
                     id="end" 
                     value={dates.end}
                     onChange={handleDateChange}
-                />
+                /> */}
+                <div id={style.dates}>
                 <DatePicker
                     name="start"
-                    selected={new Date(dates.start)}
-                    onChange={handleDateChange}
+                    selected={getStartDate}
+                    onChange={(date) => setStartDate(date || new Date(""))}
                     className={style.customCalendar}
+                    enableTabLoop={false}
+
                     calendarClassName={style.customCalendar} 
                     />
+                <DatePicker
+                    name="end"
+                    selected={getEndDate}
+                    onChange={(date) => setEndDate(date || new Date(""))}
+                    className={style.customCalendar}
+                    //https://stackoverflow.com/questions/73123315/react-datepicker-datepicker-pushing-other-elements-to-the-right-on-toggle-and
+                    enableTabLoop={false}
+
+                    calendarClassName={style.customCalendar} 
+                    />
+                </div>
                 <GuestToggler count={{
                         adultCount: guestCounts.adultCount,
                         childCount: guestCounts.childCount,
@@ -177,6 +188,7 @@ const PropertyCustomer = (props : Props) => {
                 <button>Book</button>
                 </form>
             </section>
+                <Pay open={true} price={baseCost + extraCost} startDate={getStartDate} endDate={getEndDate} guests={guestCounts} propertyId={props.propertyAttributes.id}/>
         </div> 
     )
 }

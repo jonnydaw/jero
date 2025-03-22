@@ -30,7 +30,7 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
 
         DBObject c1 = new BasicDBObject("blockedDates", null);
         DBObject c2 = BasicDBObjectBuilder.start().push("blockedDates").push("$not").
-                                push("$elemMatch").add("$gte", startDate).add("$lt", endDate).get();
+                                push("$elemMatch").add("$gte", startDate).add("$lte", endDate).get();
         Criteria dateCriterion = where("$or").is(Arrays.asList(c1, c2));
         criteria.add(dateCriterion);
 

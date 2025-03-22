@@ -41,7 +41,7 @@ export const AdvancedSearchPC = () => {
                 <div className={style.underlineDiv}>
                 <h3>Who</h3>
                 </div>
-                <GuestToggler count={count} setCount={setCount}/>
+                <GuestToggler count={count} setCount={setCount} disabled={[]}/>
                 </fieldset>
             </Form>
             </div>
