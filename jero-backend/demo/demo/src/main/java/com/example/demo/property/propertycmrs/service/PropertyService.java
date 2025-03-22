@@ -126,8 +126,8 @@ public class PropertyService implements IPropertyService {
                 PropertyBooking pb = new PropertyBooking();
                 PropertyModel pm = this.getPropertyById(booking.getPropertyId());
 
-                pb.setPropertyId(booking.getPropertyId());
-                pb.setBookingId(booking.getId());
+                pb.setPropertyId(booking.getPropertyId().toHexString());
+                pb.setBookingId(booking.getId().toHexString());
                 pb.setTitle(pm.getTitle());
                 pb.setImage(pm.getImageUrls().getFirst());
                 pb.setStart(booking.getStartDate());
@@ -141,27 +141,6 @@ public class PropertyService implements IPropertyService {
             res.put(key,arr);
             System.out.println("*********************8");
         }
-    //    for(List<BookingModel> bookingList : bookings.values()){
-    //         System.out.println(count);
-    //         count++;
-    //     for(BookingModel booking : bookingList){
-    //         System.out.println("******************");
-    //         System.out.println(booking.toString());
-    //         System.out.println();
-    //         PropertyBooking pb = new PropertyBooking();
-    //         PropertyModel pm = this.getPropertyById(booking.getPropertyId());
-    //         pb.setId(booking.getPropertyId());
-    //         pb.setImage(pm.getImageUrls().getFirst());
-    //         pb.setTitle(pm.getTitle());
-    //         pb.setStart(booking.getStartDate());
-    //         pb.setEnd(booking.getEndDate());
-    //         System.out.println("Description " + pm.getDescription());
-    //         //res.put(booking.getId(), pb);
-    //     }
-
-
-    //     // List<PropertyBooking>
-    //    }
         return res;
     }
 

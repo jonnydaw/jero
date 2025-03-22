@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Data
 public class PropertyBooking {
-    private ObjectId propertyId;
-    private Object bookingId;
+    private String propertyId;
+    private String bookingId;
     private String title;
     private String image;
     private LocalDate start;

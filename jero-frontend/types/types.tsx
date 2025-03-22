@@ -114,3 +114,16 @@ export interface UpdateFields {
     introduction : string;
     imgLink : string;
 }
+
+export type BookingProperty = {
+    propertyId: string;
+    bookingId: string;
+    title: string;
+    image: string;
+    start: Date;
+    end: Date;
+    numAdults: number;
+    numChildren: number;
+    numPets: number;
+    totalCost: number;
+  }

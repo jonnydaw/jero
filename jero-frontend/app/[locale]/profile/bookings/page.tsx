@@ -1,5 +1,6 @@
 import { inDevEnvironment } from "@/base";
 import Booking from "@/components/Profile/Booking/Booking";
+import { BookingProperty } from "@/types/types";
 import { cookies } from "next/headers";
 
 const page = async () => {
@@ -16,7 +17,7 @@ const page = async () => {
                 Cookie: `JWT=${jwtValue};`
             },       
         });
-        vals  = (await response.json())
+        vals  = (await (response.json()))
         //firstName = await response.text();
     
         }catch(error : any){
@@ -25,11 +26,12 @@ const page = async () => {
 
 
     console.log(vals)
-    
+    // cannot stand js "objects" anymore. 
+    const data  : Map<String, BookingProperty[]> = new Map(Object.entries(vals)) 
     return (
 
         <div>
-            <Booking bookings={vals}/>
+            <Booking bookings={data}/>
         </div>
     )
 }
