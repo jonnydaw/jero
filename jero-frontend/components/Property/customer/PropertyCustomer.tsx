@@ -92,7 +92,7 @@ const PropertyCustomer = (props : Props) => {
                 <h3>what is nearby</h3>
             </section> */}
             <section id={style.info}>
-            <h2>{props.propertyAttributes.title}</h2>
+            <h1>{props.propertyAttributes.title || "No title provided"}</h1>
             <div id={style.imageArea}>
             <button onClick={handleDecrement}> &larr;</button>
             <figure>
@@ -106,33 +106,35 @@ const PropertyCustomer = (props : Props) => {
               </figure>
               <button onClick={handleIncrement}>&rarr;</button>
             </div>
-            <p></p>
+            <div id={style.overview}>
+                <h2>Overview</h2>
+            <div className={style.bubbleArea}>
+                <strong className={style.bubble}>{`Price per night £${props.propertyAttributes.pricePerNight} `}</strong>
+                <strong className={style.bubble}>{`Price increase per person £${props.propertyAttributes.priceIncreasePerPerson}`}</strong>
+            </div>
 
-            <h3>{props.propertyAttributes.description}</h3>
-            <strong>{`Price per night £${props.propertyAttributes.pricePerNight} | Price increase per person £${props.propertyAttributes.priceIncreasePerPerson}`}</strong>
-            <br />
-            <strong>
+            <div className={style.bubbleArea}>
+            <strong className={style.bubble}>{props.propertyAttributes.numberDoubleBeds > 0 && `Double beds ${props.propertyAttributes.numberDoubleBeds} `}</strong>
+            <strong className={props.propertyAttributes.numberSingleBeds > 0 ? style.bubble : ""}>{props.propertyAttributes.numberSingleBeds > 0 && `Single beds ${props.propertyAttributes.numberSingleBeds} `}</strong>
+            <strong className={props.propertyAttributes.numberSofaBeds > 0 ? style.bubble : ""}>{props.propertyAttributes.numberSofaBeds > 0 && `Sofa beds ${props.propertyAttributes.numberSofaBeds} `}</strong>
+            <strong className={props.propertyAttributes.numberHammocks > 0 ? style.bubble : ""}>{props.propertyAttributes.numberHammocks > 0 && `Hammocks ${props.propertyAttributes.numberHammocks} `}</strong>
+            </div>
             
-                {props.propertyAttributes.numberDoubleBeds > 0 && `Double beds ${props.propertyAttributes.numberDoubleBeds} | `}
-                {props.propertyAttributes.numberSingleBeds > 0 && `Single beds ${props.propertyAttributes.numberSingleBeds} | `}
-                {props.propertyAttributes.numberSofaBeds > 0 && `Sofa beds ${props.propertyAttributes.numberSofaBeds} | `}
-                {props.propertyAttributes.numberHammocks > 0 && `Hammocks ${props.propertyAttributes.numberHammocks} | `}
+            <div className={style.bubbleArea}>
+            <strong className={props.propertyAttributes.acceptsChildren ? style.bubble : style.bubbleFalse}>{`Accepts children: ${props.propertyAttributes.acceptsChildren ? "yes" : "no"} `}</strong>
+            <strong className={props.propertyAttributes.acceptsPets ? style.bubble : style.bubbleFalse}> {`Accepts pets: ${props.propertyAttributes.acceptsPets ? "yes" : "no"} `}</strong>
+            <strong className={props.propertyAttributes.disabilityFriendly ? style.bubble : style.bubbleFalse}>{`Is disability friendly: ${props.propertyAttributes.disabilityFriendly ? "yes" : "no"} `}</strong>
+            </div>
+            <div id={style.description}>
+            <p >{props.propertyAttributes.description || "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."}
 
-
-            
-            </strong>
-            <br />
-            <strong>
-            
-            {`Accepts children: ${props.propertyAttributes.acceptsChildren ? "yes" : "no"} | `}
-            {`Accepts pets: ${props.propertyAttributes.acceptsPets ? "yes" : "no"} | `}
-            {`Is disability friendly: ${props.propertyAttributes.disabilityFriendly ? "yes" : "no"} | `}
-        </strong>
-
-        <h3>Amenities</h3>
-        <Amenities object={props.propertyAttributes.beauty} amenityName={"beauty"}  />
-
-
+            </p>
+            </div>
+            </div>
+<div id={style.amentiesArea}>
+        <h2>Amenities</h2>
+        <Amenities object={props.propertyAttributes.beauty} amenityName={"🪞 beauty"}  />
+        </div>
             </section>
             <section id={style.book}>
                 <form>
@@ -188,7 +190,7 @@ const PropertyCustomer = (props : Props) => {
                 <button>Book</button>
                 </form>
             </section>
-                <Pay open={true} price={baseCost + extraCost} startDate={getStartDate} endDate={getEndDate} guests={guestCounts} propertyId={props.propertyAttributes.id}/>
+                {/* <Pay open={true} price={baseCost + extraCost} startDate={getStartDate} endDate={getEndDate} guests={guestCounts} propertyId={props.propertyAttributes.id}/> */}
         </div> 
     )
 }

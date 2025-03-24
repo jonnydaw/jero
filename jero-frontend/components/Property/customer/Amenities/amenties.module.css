@@ -1,11 +1,13 @@
 #amenitiesList{
-    padding: 1em;
-    margin-bottom: 1.5em;
+    /* padding: 1em;
+    margin-bottom: 1.5em; */
     background-color: white;
     border: 0.01em solid lightgray;
     border-radius: 1em;
     box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.1);
     font-size: large;
+
+
   }
 
   #flex{
@@ -14,9 +16,39 @@
   }
 
 #flex > ul{
-
     list-style: none;
+}
 
+/* 
+#flex > ul:first{
+  border-right: black 0.1em solid ;
+} */
+
+#title{
+  border-radius: 0.99em;
+  background-color:#FAF9F6;
+  border-bottom: pink groove 0.2em;
+  padding: 0.5em;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+#title:hover{
+  cursor: pointer;
+}
+
+/* #title >  h4{
+  font-size: large;
+} */
+
+#title > h4{
+  font-size: small;
+  background-color: lightgray;
+  padding: 0.5em;
+  margin-left: 1em ;
+  border-radius: 1em;
 }
 
 #has{
@@ -26,4 +58,5 @@
 #hasnt{
     min-width: 50%;
     color: red;
+    border-right: solid black 0.1em;
 }

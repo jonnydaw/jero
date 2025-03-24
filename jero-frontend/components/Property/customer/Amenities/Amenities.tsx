@@ -19,7 +19,10 @@ const Amenities = (props : Props) => {
     });
     return(
         <div id={style.amenitiesList}>
-        <h4>{props.amenityName}</h4>
+        <div id={style.title}>
+        <h3>{props.amenityName}</h3>
+        <h4>{`${truthies.length} / ${truthies.length + falsies.length} `}</h4>
+        </div>
         <div id={style.flex}>
       
             <ul id={style.hasnt}>
@@ -32,7 +35,7 @@ const Amenities = (props : Props) => {
                 <li key={i}>{i}</li>
             ))}
         </ul>
-      
+    
         </div>
         </div>
     )

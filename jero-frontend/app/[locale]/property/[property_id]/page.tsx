@@ -41,7 +41,7 @@ console.log(property_id)
         }
     return (
         <div>
-            <p>ID: {JSON.stringify(property)}</p>
+            {/* <p>ID: {JSON.stringify(property)}</p> */}
             <PropertyCustomer propertyAttributes={{
                 id: property_id,
                 ownerId: property.ownerId,

@@ -6,29 +6,45 @@
 
 
 #container section{
-    margin: 2em;
     flex-direction: column;
     justify-self: flex-start;
 }
 
-/* #info{
-    position: absolute;
-} */
+#info{
+    padding: 5em;
+    min-width: 65vw;
+    border-right: solid 0.1em black;
+
+}
+
+#description{
+
+}
 
 #imageArea{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+
 }
+
+#imageArea > figure{
+    display: flex;
+    flex-direction: column;
+
+}
+
+
 
 #imageArea > figure >img{
     border-radius: 1em;
     box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.5);  
+    margin-bottom: 0.5em;
 }
 
 #imageArea > button{
     border: none;
-    display: inline-block;
     border-radius: 1em;
     font-size: 2em;
     padding-bottom: 0.2em;
@@ -54,7 +70,9 @@
     top: 0.5em;
     position: sticky;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    /* align-items: flex-end;
+    align-self: flex-start; */
     align-self: flex-start;
     min-width: 33vw;
     padding-top: 5%;
@@ -138,4 +156,25 @@
 }
 
 
-  
+#amentiesArea{
+   border-top: 0.1em solid black;
+}
+
+
+.bubbleArea{
+    padding: 1.5em 0;
+}
+
+.bubble{
+    border-radius: 1em;
+    padding: 0.5em;
+    background-color: #C1E1C1;
+    margin: 0.5em;
+}
+
+.bubbleFalse{
+    border-radius: 1em;
+    padding: 0.5em;
+    background-color: #FF746C;
+    margin: 0.5em;
+}
