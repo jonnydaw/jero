@@ -104,6 +104,7 @@
 }
 
 #pay{
+    top: 15%;
     display: fixed;
     background-color: white;
     z-index: 1000;

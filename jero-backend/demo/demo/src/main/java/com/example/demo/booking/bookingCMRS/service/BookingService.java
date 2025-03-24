@@ -48,13 +48,31 @@ public class BookingService implements IBookingService {
 
     @Override
     public void addBooking(AddBookingHandler booking, String token) {
+
+        Instant start = Instant.parse(booking.getStart()+"T00:00:00.000Z");
+        Instant end = Instant.parse(booking.getEnd()+"T00:00:00.000Z");
+
+
         BookingModel bm = new BookingModel();
         System.out.println("id test" + bm.getId());
         String userId = JwtProvider.getIdFromJwtToken(token);
         System.out.println("hi");
         Optional<PropertyModel> pm = propertyRepo.findById(new ObjectId(booking.getPropertyId()));
+
         System.out.println("property id" + booking.getPropertyId());
         System.out.println(pm.get().toString());
+        
+        Set<Instant> blocked = pm.get().getBlockedDates();
+        Set<Instant> requestedDays = populateInstantRange(start, end);
+        System.out.println("blocked: " + blocked);
+        System.out.println("request: " + requestedDays);
+        boolean unique = Collections.disjoint(blocked,requestedDays);
+        System.out.println("unqiue: " + unique);
+         if(!unique){
+             throw new ResponseStatusException(HttpStatus.CONFLICT, "DATE CONFLICT");
+ 
+         }
+
         ObjectId ownerId = pm.get().getOwnerId();
         UserModel um = userRepository.findById(ownerId).get();
         String ownerEmail = um.getEmail();
@@ -64,10 +82,10 @@ public class BookingService implements IBookingService {
         bm.setPropertyId(new ObjectId(booking.getPropertyId()));
         bm.setGuestId(new ObjectId(userId));
         bm.setOwnerId(ownerId);
-        bm.setStartDate(booking.getStart());
-        System.out.println("Booking end: " + booking.getEnd());
-        System.out.println("Booking end 2: " + booking.getEnd().toString());
-        bm.setEndDate(booking.getEnd());
+        bm.setStartDate(start);
+        System.out.println("Booking end: " + end);
+        System.out.println("Booking end 2: " + end.toString());
+        bm.setEndDate(end);
         bm.setNumChildren(booking.getGuests().get("childCount"));
         bm.setNumAdults(booking.getGuests().get("adultCount"));
         bm.setNumPets(booking.getGuests().get("petCount"));
@@ -131,8 +149,10 @@ public class BookingService implements IBookingService {
     }
 
     private double getAdditionalGuests(AddBookingHandler booking, Optional<PropertyModel> pm) {
-        long daysBetween = ChronoUnit.DAYS.between(booking.getStart(), booking.getEnd());
-        // long diff = booking.getEnd().getTime() - booking.getStart().getTime();
+        Instant start = Instant.parse(booking.getStart()+"T00:00:00.000Z");
+        Instant end = Instant.parse(booking.getEnd()+"T00:00:00.000Z");
+        long daysBetween = ChronoUnit.DAYS.between(start, end);
+        // long diff = end.getTime() - start.getTime();
         // long daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         double pricePerNight = pm.get().getPricePerNight();
         double priceIncrese = pm.get().getPriceIncreasePerPerson();

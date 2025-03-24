@@ -18,8 +18,8 @@ import lombok.Setter;
 @Setter
 public class AddBookingHandler {
     private String propertyId;
-    private Instant start;
-    private Instant end;
+    private String start;
+    private String end;
     private Map<String, Integer> guests;
     private double frontendPrice;
 }

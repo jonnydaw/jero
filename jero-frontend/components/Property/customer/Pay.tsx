@@ -27,8 +27,8 @@ const Pay = (props : Props) => {
         try {
             const response = await axios.post(`${baseApi}/booking/add-booking`, {
                 propertyId : props.propertyId,
-                start : props.startDate,
-                end : props.endDate,
+                start : props.startDate.toISOString().split('T')[0],
+                end : props.endDate.toISOString().split('T')[0],
                 guests : props.guests,
                 frontendPrice : props.price
                },
