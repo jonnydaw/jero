@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.repository;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
     MongoTemplate mongoTemplate;
 
     @Override
-    public List<PropertyModel> basicFilter(String location, LocalDate startDate, LocalDate endDate, int numGuests, boolean searchContainsChildren, boolean searchContainsPets){
+    public List<PropertyModel> basicFilter(String location, Instant startDate, Instant endDate, int numGuests, boolean searchContainsChildren, boolean searchContainsPets){
         // https://stackoverflow.com/questions/26176548/spring-data-mongodb-date-range-query
         List<Criteria> criteria = new ArrayList<>();
         Query query = new Query();

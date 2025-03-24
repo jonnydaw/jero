@@ -90,13 +90,7 @@ const Step1AddProperty = () => {
       const handleSave = async (e : any) => {
         e.preventDefault();
         if(chosen){
-  //          try {
-                // const country = chosen.locationName.split(",").pop()?.trim()
-                // const response = await fetch(`http://localhost:8080/country/get_country?country_name=${country}`, {
-                //     next: {
-                //         revalidate: 60 * 60 * 24 * 2,
-                //     },
-                // });
+
                     const type = osmTypeToChar.get(chosen.osm_type)
                     const newResponse = await fetch(`/api/osmId?osm_id=${type}${chosen.osm_id}`)
                     //console.log(await newResponse.json())
@@ -104,14 +98,10 @@ const Step1AddProperty = () => {
                     const addressData = data[0].address;
                     console.log("madres" + chosen.locationName);
                     const query = new URLSearchParams(addressData).toString();
-                    console.log(query)
+                    console.log("query " + query)
 
                     try {
-                        const response = await fetch(`${baseApi}/location/get_location?${query}`, {
-                            next: {
-                                revalidate: 60 * 60 * 24 * 2,
-                            },
-                        });
+                        const response = await fetch(`${baseApi}/location/get_location?${query}`);
                     const data  = await response.json()
                     console.log(data)
                     if(response.status === 404){

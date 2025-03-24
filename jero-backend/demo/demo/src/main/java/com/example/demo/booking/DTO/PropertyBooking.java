@@ -1,6 +1,9 @@
 package com.example.demo.booking.DTO;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
@@ -13,11 +16,12 @@ public class PropertyBooking {
     private String bookingId;
     private String title;
     private String image;
-    private LocalDate start;
-    private LocalDate end;
+    private Instant start;
+    private Instant end;
     private int numAdults;
     private int numChildren;
     private int numPets;
     private double totalCost;
-    
+    private boolean accepted;
+    private boolean cancelled;    
 }

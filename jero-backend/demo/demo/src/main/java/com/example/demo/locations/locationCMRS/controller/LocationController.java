@@ -26,21 +26,20 @@ public class LocationController {
 
     // https://stackoverflow.com/questions/60421302/spring-boot-handling-multiple-parameters-in-a-get-request
     @GetMapping("/get_location")
-    public ResponseEntity<?> checkIfLocationIsAllowed(@RequestParam Map<String,String> areaTypeToName){
+    public ResponseEntity<?> checkIfLocationIsAllowed(@RequestParam Map<String, String> areaTypeToName){
+        System.out.println("hit 5 " + areaTypeToName.toString());
         String mp = locationService.findMostPreciseLocation(areaTypeToName);
-        // System.out.println(mp);
-        // List<String> list = new ArrayList<>();
-        // list.add(mp);
+        System.out.println("area type " + areaTypeToName.toString());
         Map<String,String> granularLocations = locationService.graphLookUpFinder(mp.toLowerCase());
         return ResponseEntity.ok().body(granularLocations);
     }
 
-    @GetMapping("/location-overview")
-    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, @RequestParam("locale") String locale){
-        System.out.println(locale);
-        String res = locationService.getLocationOverview(location, locale);
-        return ResponseEntity.ok().body(res);
-    }
+    // @GetMapping("/location-overview")
+    // public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, @RequestParam("locale") String locale){
+    //     System.out.println(locale);
+    //     String res = locationService.getLocationOverview(location, locale);
+    //     return ResponseEntity.ok().body(res);
+    // }
     
 }
 // 

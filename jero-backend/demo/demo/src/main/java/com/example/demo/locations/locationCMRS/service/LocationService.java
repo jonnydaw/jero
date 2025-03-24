@@ -20,16 +20,19 @@ public class LocationService implements ILocationService {
 
     @Override
     public String findMostPreciseLocation(Map<String,String> areaTypeToName) {
+        System.out.println("hit service");
         String mostPreciseLocation = ""; 
-        //System.out.println("Locations: " + areaTypeToName.toString());
+        System.out.println("Locations: " + areaTypeToName.toString());
         for(String loc : areaTypeToName.values()){
+            System.out.println("loc " + loc);
             if(locationRepository.findLocationById(loc.toLowerCase()) != null){
+                System.out.println("if");
                System.out.println("mostprecise: " + loc);
                 mostPreciseLocation = loc;
                 break;
             }
         }
-        //System.out.println("Most precise:" + mostPreciseLocation);
+        System.out.println("Most precise:" + mostPreciseLocation);
         if(mostPreciseLocation.length() == 0){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_SUPPORTED");
         }
@@ -43,14 +46,14 @@ public class LocationService implements ILocationService {
         return hierarchy;
     }
 
-    @Override 
-    public String getLocationOverview(String queriedLocation, String locale){
-        LocationModel location  = locationRepository.findLocationById(queriedLocation);
-        if(location == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
-        }
-        return location.getOverview().get(locale);
-    }
+    // @Override 
+    // public String getLocationOverview(String queriedLocation, String locale){
+    //     LocationModel location  = locationRepository.findLocationById(queriedLocation);
+    //     if(location == null){
+    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+    //     }
+    //     return location.getOverview().get(locale);
+    // }
 
 
 

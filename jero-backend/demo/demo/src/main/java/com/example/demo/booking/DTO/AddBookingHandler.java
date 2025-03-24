@@ -1,9 +1,13 @@
 package com.example.demo.booking.DTO;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.springframework.cglib.core.Local;
 
 import lombok.Data;
 import lombok.Getter;
@@ -14,8 +18,8 @@ import lombok.Setter;
 @Setter
 public class AddBookingHandler {
     private String propertyId;
-    private LocalDate start;
-    private LocalDate end;
+    private Instant start;
+    private Instant end;
     private Map<String, Integer> guests;
     private double frontendPrice;
 }

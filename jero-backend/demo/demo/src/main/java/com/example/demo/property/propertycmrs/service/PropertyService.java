@@ -1,10 +1,14 @@
 package com.example.demo.property.propertycmrs.service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,8 +85,8 @@ public class PropertyService implements IPropertyService {
         pm.setWaterData(cph.getWaterData());
         // pm.setPropertyType(EProperty.APARTMENT);
         pm.setImageUrls(cph.getImagesData());
-        List<LocalDate> today = new ArrayList<>();
-        today.add(LocalDate.now());
+        Set<Instant> today = new HashSet<>();
+        today.add(Instant.now());
         pm.setBlockedDates(today);
         // dates
         //pm.setAvailableDates(cph.getAvailableDates());
@@ -91,7 +95,7 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets) {
+    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         if(location == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
@@ -136,6 +140,8 @@ public class PropertyService implements IPropertyService {
                 pb.setNumChildren(booking.getNumChildren());
                 pb.setNumPets(booking.getNumPets());
                 pb.setTotalCost(booking.getTotalCost());
+                pb.setAccepted(booking.isAccepted());
+                pb.setCancelled(booking.isCancelled());
                 arr.add(pb);
             }
             res.put(key,arr);
@@ -153,7 +159,7 @@ public class PropertyService implements IPropertyService {
         return property;
     }
 
-    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, LocalDate startDate, LocalDate endDate, int numAdults, int numChildren, int numPets) {
+    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
        // if(locationType.equals("city")){
             pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0);
         //}

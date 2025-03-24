@@ -39,6 +39,7 @@ public class BookingController {
         // System.out.println("hit");
         // System.out.println(booking.toString());
         System.out.println("cont");
+        System.out.println(booking.getEnd());
         System.out.println(booking.getPropertyId());
         bookingService.addBooking(booking, token);
         return ResponseEntity.ok().body("confirmed");
@@ -55,6 +56,13 @@ public class BookingController {
         // gabh.setBookingData(bookingService.getBookings(token));
         Map<String, List<PropertyBooking>> hi = propertyService.getPropertiesFromBookings(bookingService.getBookings(token));
         return ResponseEntity.ok().body(hi);
+    }
+
+    @PostMapping("/accept")
+    public ResponseEntity<?> acceptBooking(@CookieValue("JWT") String token, @RequestBody Map<String, String> bookingId){
+        System.out.println(bookingId);
+        bookingService.acceptBooking(bookingId.get("bookingId"), token);
+        return ResponseEntity.ok().body("booking accepted");
     }
 }
  

@@ -1,12 +1,15 @@
 package com.example.demo.property.propertycmrs.model;
 
 import java.beans.JavaBean;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bson.types.ObjectId;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -77,7 +80,7 @@ public class PropertyModel {
     private List<String> imageUrls;
     // private List<FacilitiesType> facilities;
     private Map<ObjectId,ReviewsType> userIdToReviews;
-    private List<LocalDate> blockedDates;
+    private Set<Instant> blockedDates;
 
     private boolean acceptsChildren;
     private boolean acceptsPets;

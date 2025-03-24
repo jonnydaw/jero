@@ -8,6 +8,16 @@ const page = async () => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const cookieStore = await cookies();
     const jwtValue = cookieStore.get("JWT")?.value;
+    const parseJWT = (jwtValue : string) => {
+        return (JSON.parse(atob(jwtValue.split('.')[1])))
+    }
+
+    if(!jwtValue){
+        // redirect
+        return null;
+    }
+    const isCustomer : boolean = parseJWT(jwtValue).role === "customer";
+    console.log(isCustomer)
     let vals
     try{
         // https://stackoverflow.com/questions/60168695/how-to-include-cookies-with-fetch-request-in-nextjs
@@ -31,7 +41,7 @@ const page = async () => {
     return (
 
         <div>
-            <Booking bookings={data}/>
+            <Booking bookings={data} isCustomer={isCustomer}/>
         </div>
     )
 }

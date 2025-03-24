@@ -90,7 +90,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
         isInvalid = isTokenExpired(jwtValue)
     }
     if(isInvalid && rtValue){
-
+        console.log("rt problem")
         const refreshResponse = await fetch(`${baseApi}/auth/refresh`, {
             method: "GET",
             headers: {
@@ -100,7 +100,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
         });
     if (!refreshResponse.ok) {
         if(protectedPages.includes(page)){
-            return NextResponse.redirect(`${baseInternal}${locale}`);
+            return NextResponse.redirect(`${baseInternal}/${locale}`);
         }
     }
 

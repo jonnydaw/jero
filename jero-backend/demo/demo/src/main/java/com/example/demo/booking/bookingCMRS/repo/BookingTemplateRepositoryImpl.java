@@ -29,7 +29,10 @@ public class BookingTemplateRepositoryImpl implements BookingTemplateRepository 
 
     @Override
     public Map<String, List<BookingModel>>  getBookings(String token) {
-        String userTypeFieldName = JwtProvider.getRoleFromJwtToken(token) == "customer" ? "guestId" : "ownerId";
+        String role = JwtProvider.getRoleFromJwtToken(token);
+        // System.out.println("role : " + role.length() + " - " + "customer".length() );
+        String userTypeFieldName = role.equals("customer") ? "guestId" : "ownerId";
+        // System.out.println("field name: " + role == "customer");
         String id = JwtProvider.getIdFromJwtToken(token);
 
         Map<String, List<BookingModel>> res = new HashMap<>();
@@ -100,8 +103,7 @@ public class BookingTemplateRepositoryImpl implements BookingTemplateRepository 
 
         DBObject pastBookings = BasicDBObjectBuilder.start().push("startDate").
                                 add("$gt", LocalDate.now()).get();
-
-                                // /67b8d989e8ddf130ce69926b
+        System.out.println("user future: " + keyFieldName + " " + id);
         Criteria pstCritierion = where("$and").is(Arrays.asList(pastBookings));
         criteria.add(pstCritierion);
 

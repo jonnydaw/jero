@@ -1,14 +1,31 @@
 package com.example.demo.booking.bookingCMRS.service;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.booking.DTO.AddBookingHandler;
@@ -48,6 +65,8 @@ public class BookingService implements IBookingService {
         bm.setGuestId(new ObjectId(userId));
         bm.setOwnerId(ownerId);
         bm.setStartDate(booking.getStart());
+        System.out.println("Booking end: " + booking.getEnd());
+        System.out.println("Booking end 2: " + booking.getEnd().toString());
         bm.setEndDate(booking.getEnd());
         bm.setNumChildren(booking.getGuests().get("childCount"));
         bm.setNumAdults(booking.getGuests().get("adultCount"));
@@ -68,6 +87,38 @@ public class BookingService implements IBookingService {
        return bookingRepo.getBookings(token);
     }
 
+    @Override
+    public void acceptBooking(String id, String token){
+        BookingModel bm = bookingRepo.findById(new ObjectId(id)).get();
+        String userId = JwtProvider.getIdFromJwtToken(token);
+        if(!userId.equals(bm.getOwnerId().toHexString())){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed");
+        }
+        PropertyModel pm = propertyRepo.findById(bm.getPropertyId()).get();
+        Set<Instant> toBlock = populateInstantRange(bm.getStartDate(), bm.getEndDate());
+        // System.out.println("End: " + bm.getEndDate().toInstant());
+        System.out.println("new " + toBlock.toString());
+        Set<Instant> currentBlockedDates = pm.getBlockedDates();
+        System.out.println("current " + currentBlockedDates);
+        
+        // https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html
+       boolean unique = Collections.disjoint(currentBlockedDates,toBlock);
+       System.out.println("unqiue: " + unique);
+        if(!unique){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "DATE CONFLICT");
+
+        }
+        bm.setAccepted(true);
+        // https://stackoverflow.com/questions/9062574/is-there-a-better-way-to-combine-two-string-sets-in-java
+        Set<Instant> updatedBlockedDates = Stream.concat(currentBlockedDates.stream(), toBlock.stream())
+        .collect(Collectors.toSet());
+        System.out.println("new");
+        System.out.println(updatedBlockedDates.toString());
+        pm.setBlockedDates(updatedBlockedDates);
+        propertyRepo.save(pm);
+        bookingRepo.save(bm);
+    }
+
 
     
 
@@ -81,6 +132,8 @@ public class BookingService implements IBookingService {
 
     private double getAdditionalGuests(AddBookingHandler booking, Optional<PropertyModel> pm) {
         long daysBetween = ChronoUnit.DAYS.between(booking.getStart(), booking.getEnd());
+        // long diff = booking.getEnd().getTime() - booking.getStart().getTime();
+        // long daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         double pricePerNight = pm.get().getPricePerNight();
         double priceIncrese = pm.get().getPriceIncreasePerPerson();
         double totalCost = daysBetween * pricePerNight;
@@ -88,14 +141,19 @@ public class BookingService implements IBookingService {
         for(int val : booking.getGuests().values()){
             additionalGuests += val;
         }
-
         if(pricePerNight > 0 && additionalGuests > 0){
             totalCost += additionalGuests * priceIncrese * daysBetween;
         }
         return totalCost;
     }
 
+    public Set<Instant> populateInstantRange(Instant start, Instant end) {
+        Set<Instant> range = new HashSet<>();
+        long days = ChronoUnit.DAYS.between(start, end);
+        for(long day = 0; day < days; day++){
+            range.add(start.plus(day, ChronoUnit.DAYS));
+        }
+        return range;
+    }
 
-
-    
 }

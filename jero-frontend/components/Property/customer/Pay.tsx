@@ -23,7 +23,7 @@ const Pay = (props : Props) => {
 
     const handleSubmit = async ( e : any) => {
         e.preventDefault();
-
+        console.log(props.endDate)
         try {
             const response = await axios.post(`${baseApi}/booking/add-booking`, {
                 propertyId : props.propertyId,

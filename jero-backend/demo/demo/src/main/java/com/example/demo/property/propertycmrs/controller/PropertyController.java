@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.controller;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -57,14 +58,16 @@ public class PropertyController {
 
     @GetMapping("/search-properties")
     public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, 
-                                                       @RequestParam("startdate") Optional<LocalDate> startDate, 
-                                                       @RequestParam("enddate") Optional<LocalDate> endDate,
+                                                       @RequestParam("startdate") Optional<String> startDate, 
+                                                       @RequestParam("enddate") Optional<String> endDate,
                                                        @RequestParam("numadults") Optional<Integer> numAdults,
                                                        @RequestParam("numchildren") Optional<Integer> numChildren,
                                                        @RequestParam("numpets") Optional<Integer> numPets
                                                        ){
+        Instant start = Instant.parse(startDate.get()+"T00:00:00.000Z");
+        Instant end = Instant.parse(endDate.get()+"T00:00:00.000Z");
 
-        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, startDate.get(), endDate.get(), numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0));
+        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0));
         System.out.println("hit controller");
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);

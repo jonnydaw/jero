@@ -126,4 +126,6 @@ export type BookingProperty = {
     numChildren: number;
     numPets: number;
     totalCost: number;
+    accepted : boolean;
+    cancelled : boolean
   }

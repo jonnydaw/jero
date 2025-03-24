@@ -23,7 +23,7 @@ public class LocationModel{
     private String id;
     private String locationType;
     private String parent;
-    private Map<String,String> overview;
+    // private Map<String,String> overview;
     private List<LocationModel> nParents;
 
 }
