@@ -1,6 +1,7 @@
 
 import { PropertyAttribute } from "@/types/types";
 import style from "./searchresults.module.css"
+import mobileStyle from "./searchresultsMobile.module.css"
 import PropertyCard from "../PropertyCard/PropertyCard";
 
 
@@ -15,14 +16,15 @@ import PropertyCard from "../PropertyCard/PropertyCard";
   interface Props {
     propertyAttributes: PropertyAttribute[];
     locationOverview : string;
+    isMobile : boolean;
   }
 
 const SearchResults = (props : Props) => {
     return (
-        <div id ={style.container}>
-           <div id={style.searchResultsArea}>
+        <div id ={!props.isMobile ? style.container : mobileStyle.container}>
+           <div id={!props.isMobile ? style.searchResultsArea : mobileStyle.searchResultsArea}>
 
-          <section id={style.locationOverview}>
+          <section id={!props.isMobile ? style.locationOverview : mobileStyle.locationOverview}>
             
             <div className={style.overviewSubsection}>
               <h3>Overview</h3>
@@ -59,9 +61,9 @@ const SearchResults = (props : Props) => {
             </div>
 
           </section>
-          <section id={style.cards}>
+          <section id={!props.isMobile ? style.cards : mobileStyle.cards}>
             {props.propertyAttributes.map((item, _) => (
-                <div className={style.propertyArea} key={item.id}>
+                <div className={!props.isMobile ? style.propertyArea : mobileStyle.propertyArea } key={item.id}>
                     <PropertyCard propertyAttribute={item}/>
                 </div>
               ))

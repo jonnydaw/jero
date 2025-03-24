@@ -1,0 +1,45 @@
+#floating{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 1%;
+    left: 50%;
+    right: 50%;
+    position: fixed;
+}
+
+#floating > button:hover{
+    min-width: 75vw;
+    opacity: 75%;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 1.5em;
+    border-radius: 2em;
+}
+
+#floating > button{
+    opacity: 100%;
+}
+
+#fixedContainer{
+    display: none;
+    border-top: solid black 0.2em;
+    background-color: white;
+    bottom: 0%;
+    position: fixed;
+    padding: 0.5em;
+}
+
+#book{
+    background-color: white;
+    bottom: 0%;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    /* align-items: flex-end;
+    align-self: flex-start; */
+    align-self: flex-start;
+    min-width: 33vw;
+    padding-top: 5%;
+}

@@ -3,6 +3,8 @@ import { inDevEnvironment } from "@/base";
 import SearchResults from "@/components/SearchResults/SearchResults";
 // https://stackoverflow.com/questions/65436443/how-to-access-locale-in-custom-app-on-server-side-in-next-js
 import { getLocale } from "next-intl/server";
+import { headers } from "next/headers"
+import { getSelectorsByUserAgent } from "react-device-detect"
 
 
 
@@ -12,6 +14,9 @@ const Page = async ({searchParams} : any) =>{
     const sp = await searchParams;
     const locale =  await getLocale();
     console.log(locale)
+    const {isMobile} = getSelectorsByUserAgent(
+      (await headers()).get("user-agent") ?? ""
+  )
     // const fullUrl = heads.get('referer') || "";
     // console.log(fullUrl)
 
@@ -46,7 +51,7 @@ const Page = async ({searchParams} : any) =>{
     return (
         <div>
             <h1>Search For {sp.location}</h1>
-            <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData}  />
+            <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData} isMobile={isMobile} />
         </div>
     )
 }

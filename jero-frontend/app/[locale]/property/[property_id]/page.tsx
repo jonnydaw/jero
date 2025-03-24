@@ -3,6 +3,8 @@
 import { inDevEnvironment } from "@/base";
 import PropertyCustomer from "@/components/Property/customer/PropertyCustomer";
 import { cookies, headers } from 'next/headers'
+import { getSelectorsByUserAgent } from "react-device-detect"
+
 
 
  // https://stackoverflow.com/questions/77412027/using-next-13-5-6-app-router-how-to-get-params-of-dynamic-route
@@ -24,7 +26,9 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         const adultCount = await queries?.numadults
         const childCount = await queries?.numhildren
         const petCount = await queries?.numpets
-
+        const {isMobile} = getSelectorsByUserAgent(
+            (await headers()).get("user-agent") ?? ""
+        )
 
         const headersList = await headers()
 console.log(property_id)
@@ -48,10 +52,10 @@ console.log(property_id)
                 title: property.title,
                 description: property.description,
                 pricePerNight: property.pricePerNight,
-                priceIncreasePerPerson : property.priceIncreasePerPerson,
-                acceptsChildren : property.acceptsChildren,
-                acceptsPets : property.acceptsPets,
-                disabilityFriendly : property.disabilityFriendly,
+                priceIncreasePerPerson: property.priceIncreasePerPerson,
+                acceptsChildren: property.acceptsChildren,
+                acceptsPets: property.acceptsPets,
+                disabilityFriendly: property.disabilityFriendly,
                 rules: property.rules,
                 numberDoubleBeds: property.numberDoubleBeds,
                 numberSingleBeds: property.numberSingleBeds,
@@ -72,12 +76,12 @@ console.log(property_id)
                 // userIdToReviews : property.userIdToReviews,
             }} userDeets={{
                 id: id,
-                startDate : String(startDate),
+                startDate: String(startDate),
                 endDate: String(endDate),
                 numAdults: Number(adultCount),
                 numChildren: Number(childCount),
                 numPets: Number(petCount)
-            }}  />
+            }} isMobile={isMobile}  />
         </div>
     )
 }

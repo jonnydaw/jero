@@ -1,0 +1,25 @@
+#info{
+    margin: 1em;
+}
+
+
+#overview{
+    font-weight: 300;
+}
+
+.bubbleArea{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1em;
+}
+
+.bubble, .bubbleFalse{
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 1em;
+    font-size: smaller;
+    white-space: 4ch;
+    background-color: #C1E1C1;
+}
+

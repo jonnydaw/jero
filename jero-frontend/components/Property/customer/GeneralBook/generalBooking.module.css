@@ -1,0 +1,64 @@
+#book{
+    top: 0.5em;
+    position: sticky;
+    display: flex;
+    align-items: center;
+    /* align-items: flex-end;
+    align-self: flex-start; */
+    align-self: flex-start;
+    min-width: 33vw;
+    padding-top: 5%;
+}
+
+
+
+#book > form{
+    max-width: 75%;
+    padding: 1em;
+    margin-bottom: 1.5em;
+    background-color: white;
+    border: 0.01em solid lightgray;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+}
+
+#book > form *{
+    font-size: large;
+    padding: 0.5em;
+    
+}
+
+#book > form > div > button{
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    border-radius: 0.5em ;
+    background-color: cornflowerblue;
+    color: black;
+}
+
+
+#dates {
+    display: flex;
+    flex-direction: row;
+}
+
+#dates > div > div > input{
+    width: 10em;
+} 
+/* #dates > div > div > div{
+    background-color: aqua;
+    width: 10em;
+}  */
+
+
+
+.customCalendar input{
+    font-size: small !important;
+}
+
+.customCalendar *{
+    font-size: small !important;
+
+
+}

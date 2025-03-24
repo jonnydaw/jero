@@ -5,11 +5,12 @@ import { CgProfile } from "react-icons/cg";
 import { IoHomeOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Search from "../../Search/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./NavbarMobile.module.css"
 import DropdownSearchMobile from "./Dropdowns/BasicSearch/DropdownSearchMobile";
 import DropdownAdvancedSearchMobile from "./Dropdowns/DropdownAdvancedSearchMobile/DropdownAdvancedSearchMobile";
 import GenericDropdownSearch from "./Dropdowns/GenericDropdown";
+import { usePathname } from "next/navigation";
 
 // https://stackoverflow.com/questions/33949469/using-css-modules-how-do-i-define-more-than-one-style-name
 
@@ -19,7 +20,15 @@ const NavbarMobile = (props: Props) => {
     const hamstyle = { color: "white", fontSize: "1.5em" }
   const [openSearch,setOpenSearch] = useState<boolean>(false);
   const [openSmartSearch,setOpenSmartSearch] = useState<boolean>(false);
+
+  const pathname = usePathname();
   
+  useEffect(() => {
+    setOpenSmartSearch(false);
+    setOpenSearch(false);
+
+  }, [pathname]);
+
   const handleSearchOnClick = (e: any) => {
     e.preventDefault();
     setOpenSmartSearch(false);

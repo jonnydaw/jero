@@ -1,0 +1,17 @@
+.bubbleArea{
+    padding: 1.5em 0;
+}
+
+.bubble{
+    border-radius: 1em;
+    padding: 0.5em;
+    background-color: #C1E1C1;
+    margin: 0.5em;
+}
+
+.bubbleFalse{
+    border-radius: 1em;
+    padding: 0.5em;
+    background-color: #FF746C;
+    margin: 0.5em;
+}
