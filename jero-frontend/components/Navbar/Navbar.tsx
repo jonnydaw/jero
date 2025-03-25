@@ -12,7 +12,10 @@ import { getSelectorsByUserAgent } from "react-device-detect"
 import NavbarMobile from "./NavbarMobile/NavbarMobile";
 // https://stackoverflow.com/questions/59494037/how-to-detect-the-device-on-react-ssr-app-with-next-js
 // danmar varela
-type Props = {}
+type Props = {
+  isLoggedIn : boolean;
+  isCustomer : boolean
+}
 
 const Navigation = async (props: Props) => {
   const {isMobile} = getSelectorsByUserAgent(
@@ -21,9 +24,9 @@ const Navigation = async (props: Props) => {
   return (
       <>
         {isMobile ? (
-            < NavbarMobile/>
+            < NavbarMobile isLoggedIn={props.isLoggedIn} isCustomer={props.isCustomer}/>
         ) : (
-            <NavbarPC/>
+            <NavbarPC isLoggedIn={props.isLoggedIn} isCustomer={props.isCustomer}/>
         )}
       </>
   )

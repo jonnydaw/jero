@@ -1,5 +1,6 @@
 import Link from "next/link";
-import style from "./profiledropdown.module.css"
+import stylePC from "./profiledropdown.module.css"
+import styleMobile from "./mobileProfileDropdown.module.css"
 import buttonStyle from "../NavbarPC.module.css"
 
 import { CgProfile } from "react-icons/cg";
@@ -9,20 +10,26 @@ import { inDevEnvironment } from "@/base";
 import LogoutFakeLink from "./LogoutFakeLink";
 import { internationalKeys } from "./helper";
 
+interface Props {
+  isLoggedIn : boolean;
+  isCustomer : boolean;
+  isMobile : boolean;
+}
 
-const ProfileDropdown = async () => {
-
-
-  const cookieStore = await cookies();
-  const jwtValue = cookieStore.get("JWT")?.value;
-  const rtValue = cookieStore.get("RT")?.value;
-  const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
-
+const ProfileDropdown = (props : Props) => {
 
 
-    const parseJWT = (jwtValue : string) => {
-      return (JSON.parse(atob(jwtValue.split('.')[1])))
-    };
+    //const cookieStore = await cookies();
+  // const jwtValue = cookieStore.get("JWT")?.value;
+  // const rtValue = cookieStore.get("RT")?.value;
+   // const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
+  const locale = "en"
+
+  const style = props.isMobile ? styleMobile : stylePC; 
+
+  //   const parseJWT = (jwtValue : string) => {
+  //     return (JSON.parse(atob(jwtValue.split('.')[1])))
+  //   };
     
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     
@@ -33,22 +40,19 @@ const ProfileDropdown = async () => {
 
 
 
-      if(!jwtValue || !rtValue){
+      if(!props.isLoggedIn){
         authMap.set("login","Login");
         authMap.set("signup", "Sign up");
-      }else if(jwtValue && rtValue){
-        const parsedJwt = parseJWT(jwtValue);
-        if(parsedJwt.role === "customer"){
+      }else {
+        if(props.isCustomer){
           profileMap.set("manage-profile", "Manage Profile");
-          profileMap.set("past-bookings","Past Bookings");
-          profileMap.set("upcoming-bookings","Upcoming Bookings");
+          profileMap.set("profile/bookings/","Bookings");
           profileMap.set("analytic-privacy","Analytics and Privacy");
           profileMap.set("messages","Messages");
-        }else if(parsedJwt.role === "host"){
+        }else{
           profileMap.set("manage-profile", "Manage Profile");
           profileMap.set("manage-properties","Manage Properties");
-          profileMap.set("past-bookings/host","Past Bookings");
-          profileMap.set("upcoming-bookings/host","Upcoming Bookings");
+          profileMap.set("profile/bookings","Tookings");
           profileMap.set("analytic-privacy/host","Analytics and Privacy");
           profileMap.set("messages","Messages");
         }
@@ -67,7 +71,13 @@ const ProfileDropdown = async () => {
 
     return (
         <div className={style.dropdown}>
-            <Link className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/${locale}/profile`}><CgProfile size = '1.5em' /></Link>
+          {
+            !props.isMobile 
+              &&
+            <Link className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/${locale}/profile`}>
+            {<CgProfile size = '1.5em' />}
+            </Link>
+          }
 
       <div className={style.dropdownContent}>
         <div key="auth" className={style.authDropdown}>
@@ -80,13 +90,13 @@ const ProfileDropdown = async () => {
                   
                     :
 
-                    <LogoutFakeLink/>
+                    <LogoutFakeLink isMobile={props.isMobile}/>
                   
           } 
       </div>
       {
       
-      (jwtValue && rtValue) &&
+      (props.isLoggedIn) &&
       (
       <div className={style.authDropdown}>
         
@@ -94,7 +104,6 @@ const ProfileDropdown = async () => {
                     <h3>Profile</h3>
                 
                    { Object.entries(manageCommonItems).map(([key, value]) => (
-                  
                       <Link  key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
                     ))}
                   

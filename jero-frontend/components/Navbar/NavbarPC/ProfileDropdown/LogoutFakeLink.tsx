@@ -4,11 +4,14 @@ import { inDevEnvironment } from "@/base";
 import axios from "axios";
 import Link from "next/link"
 import { AnyARecord } from "node:dns";
-import style from "./profiledropdown.module.css"
-
-const LogoutFakeLink = () => {
+import stylePC from "./profiledropdown.module.css"
+import styleMobile from "./mobileProfileDropdown.module.css"
+interface Props {
+    isMobile : boolean;
+}
+const LogoutFakeLink = (props : Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-    
+    const style = props.isMobile ? styleMobile : stylePC;
     const handleClick = async (e : any) => {
         e.preventDefault();
         try {

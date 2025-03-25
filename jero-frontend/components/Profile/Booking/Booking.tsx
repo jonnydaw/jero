@@ -1,21 +1,53 @@
+'use client' 
+
 import { styleText } from "util";
 
 interface Props {
     bookings : Map<String, BookingProperty[]>;
     isCustomer : boolean;
+    isMobile : boolean
 }
 
-import style from "./booking.module.css"
+import stylePC from "./booking.module.css"
+import mobileStyle from "./mobileBooking.module.css"
 import { BookingProperty } from "@/types/types";
 import BookingCard from "./BookingCard";
+import Info from "./Info";
+import { PiEyedropperSample } from "react-icons/pi";
+import { useState } from "react";
+// import { useState } from "react";
 
 const Booking = (props : Props) => {
+    const [timePeriod,setTimePeriod] = useState<string[]>(["future"]);
+    const time = props.isMobile ? timePeriod : ["past", "present", "future"];
+    const style = props.isMobile ? mobileStyle : stylePC;
+
 
     return (
         
         <div id={style.container}>
+            {
+                props.isMobile &&
+                <div>
+                <button onClick={() => setTimePeriod(["past"])}>past</button>
+                <button onClick={() => setTimePeriod(["present"])} >present</button>
+                <button onClick={() => setTimePeriod(["future"])}>future</button>
+                </div>
+            }
 
-           <section id={style.past}>
+            {
+            time.map((val, idx) => (
+                <Info
+                key={idx}
+                bookings={props.bookings} 
+                isCustomer={props.isCustomer} 
+                isMobile={props.isMobile} 
+                timeframe={val}/>
+            ))
+
+
+            }
+           {/* <section id={style.past}>
            <h2>Past</h2>
            { 
            props.bookings.get("past")!.length > 0
@@ -38,8 +70,8 @@ const Booking = (props : Props) => {
             ))
             }
 
-           </section>
-           <section id={style.present}>
+           </section> */}
+           {/* <section id={style.present}>
            <h2>Present</h2>
            {
             props.bookings.get("present")!.length > 0
@@ -70,7 +102,7 @@ const Booking = (props : Props) => {
             props.bookings.get("future")!.length > 0
         && 
             props.bookings.get("future")?.map((val, idx) => (
-                <BookingCard booking={{
+                <BookingCard key={idx} booking={{
                     propertyId: val.propertyId,
                     bookingId: val.bookingId,
                     title: val.title,
@@ -86,7 +118,7 @@ const Booking = (props : Props) => {
                 }} isCustomer={props.isCustomer} timeframe={"future"}/>            
             ))
             }
-           </section>
+           </section> */}
         </div>
     )
 }

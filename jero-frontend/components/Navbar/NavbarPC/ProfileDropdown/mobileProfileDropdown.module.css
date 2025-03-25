@@ -1,0 +1,30 @@
+.dropdown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+}
+
+
+.dropdownContent{
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    flex-direction: column;
+}
+.authDropdown{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.links{
+    padding: 1em;
+    color: white;
+}
+
+.fakeLink{
+    color: white;
+}

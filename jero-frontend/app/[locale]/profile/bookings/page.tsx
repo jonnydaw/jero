@@ -2,10 +2,16 @@ import { inDevEnvironment } from "@/base";
 import Booking from "@/components/Profile/Booking/Booking";
 import { BookingProperty } from "@/types/types";
 import { cookies } from "next/headers";
+import { isMobile } from "react-device-detect";
+import { headers } from "next/headers"
+import { getSelectorsByUserAgent } from "react-device-detect"
 
 const page = async () => {
     
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const {isMobile} = getSelectorsByUserAgent(
+        (await headers()).get("user-agent") ?? ""
+    )
     const cookieStore = await cookies();
     const jwtValue = cookieStore.get("JWT")?.value;
     const parseJWT = (jwtValue : string) => {
@@ -41,7 +47,7 @@ const page = async () => {
     return (
 
         <div>
-            <Booking bookings={data} isCustomer={isCustomer}/>
+            <Booking isMobile={isMobile} bookings={data} isCustomer={isCustomer}/>
         </div>
     )
 }

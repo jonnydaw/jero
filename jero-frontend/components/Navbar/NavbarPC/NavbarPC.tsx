@@ -9,7 +9,10 @@ import ProfileDropdown from "./ProfileDropdown/ProfileDropdown";
 
 // https://stackoverflow.com/questions/33949469/using-css-modules-how-do-i-define-more-than-one-style-name
 
-interface Props{};
+interface Props{
+  isLoggedIn : boolean;
+  isCustomer : boolean;
+};
 
 const NavbarPC = (props: Props) => {
   
@@ -24,7 +27,7 @@ const NavbarPC = (props: Props) => {
           </div>
           {/* <NavButton Icon={CgProfile} prompt='login' /> */}
           
-          <ProfileDropdown/>
+          <ProfileDropdown isLoggedIn={props.isLoggedIn} isCustomer={props.isCustomer} isMobile={false}/>
 
           {/* <GroupedButtons/> */}
       </nav>

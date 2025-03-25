@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import 'normalize.css';
 import '../globals.css'
 import { Poppins } from 'next/font/google';
+import { cookies } from 'next/headers';
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -16,12 +17,24 @@ const poppins = Poppins({
 });
 
 export default async function LocaleLayout({children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+    const cookieStore = await cookies();
+    const jwtValue = cookieStore.get("JWT")?.value;
+    const rtValue = cookieStore.get("RT")?.value;
+    const parseJWT = (jwtValue : string) => {
+        return (JSON.parse(atob(jwtValue.split('.')[1])))
+    };
+    
+    let isCustomer;
+    if(jwtValue){
+        isCustomer = parseJWT(jwtValue).role === "customer";
+    }
+    const isLoggedIn = (jwtValue && rtValue) ? true : false;
     const { locale } = await params;
     return(
         <html lang= {locale} className={`${poppins.variable}`}>
         <body >
         <NextIntlClientProvider messages={await  getMessages()}>
-            <Navbar/>
+            <Navbar isLoggedIn={isLoggedIn} isCustomer={isCustomer || false}/>
             {children}
         </NextIntlClientProvider>
         </body>
