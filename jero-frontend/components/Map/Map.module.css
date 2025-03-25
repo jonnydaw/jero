@@ -10,3 +10,10 @@
     height: 30em;
     width: 40em;
 }
+
+@media screen and (max-width: 992px) {
+    #mapContainer{
+        height: 33vh;
+        width: 80vw;
+    }
+  }

@@ -66,12 +66,14 @@ const NavbarMobile = (props: Props) => {
         </div>
         <div id={style.searchButtonsArea}>
 
+        <button onClick={handleSearchOnClick} className={style.searchButtons}>
+            Search
+        </button >
+        
         <button onClick={handleSmartSearchOnClick} className={style.searchButtons}>
                 Smart Search
             </button>
-            <button onClick={handleSearchOnClick} className={style.searchButtons}>
-                Search
-            </button >
+
 
             </div>
         <div onClick={handleNavigationsOnClick} id={style.hamburger}>

@@ -2,6 +2,7 @@
     margin: 1em; 
     padding: 0;
     gap: 1em;
+    z-index: 500;
 }
 
 
