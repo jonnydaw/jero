@@ -1,0 +1,21 @@
+#selectTimeFrameArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+}
+
+#selectTimeFrameArea > button{
+    background-color: transparent;
+    border: none;
+    margin: 0 1em;
+    font-size: large;
+}
+
+#selectTimeFrameArea .selected{
+    font-weight: bold;
+}
+
+#selectTimeFrameArea .notSelected{
+    font-weight: lighter;
+}

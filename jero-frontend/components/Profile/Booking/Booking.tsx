@@ -28,10 +28,10 @@ const Booking = (props : Props) => {
         <div id={style.container}>
             {
                 props.isMobile &&
-                <div>
-                <button onClick={() => setTimePeriod(["past"])}>past</button>
-                <button onClick={() => setTimePeriod(["present"])} >present</button>
-                <button onClick={() => setTimePeriod(["future"])}>future</button>
+                <div id={style.selectTimeFrameArea}>
+                <button className={timePeriod.at(0) === "past" ? style.selected : style.notSelected } onClick={() => setTimePeriod(["past"])}>past</button>
+                <button className={timePeriod.at(0) === "present" ? style.selected : style.notSelected } onClick={() => setTimePeriod(["present"])} >present</button>
+                <button className={timePeriod.at(0) === "future" ? style.selected : style.notSelected } onClick={() => setTimePeriod(["future"])}>future</button>
                 </div>
             }
 
