@@ -1,23 +1,28 @@
 'use client'
 
 import { inDevEnvironment } from "@/base";
-import style from "./propertycustomer.module.css"
+import stylePC from "./payPC.module.css"
+import styleMobile from "./payMobile.module.css"
 import { GuestCounts } from "@/app/types/types";
 import axios from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
     propertyId : string;
     open : boolean;
+    setOpenPay: Dispatch<SetStateAction<boolean>>;
     price : number;
     startDate : Date;
     endDate : Date;
     guests : GuestCounts;
+    isMobile : boolean
     
 }
 const Pay = (props : Props) => {
-    if(!props.open){
-        return null;
-    }
+    // if(!props.open){
+    //     return null;
+    // }
+    const style = props.isMobile ? styleMobile : stylePC;
     console.log("id2 " + JSON.stringify(props.propertyId))
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
@@ -44,6 +49,7 @@ const Pay = (props : Props) => {
 
     return (
         <section id={style.pay}>
+
             <h1>Confirm and Book</h1>
             <p>Total: £{props.price}</p>
             <p>{props.startDate.toDateString()} - {props.endDate.toDateString()} </p>
@@ -63,7 +69,10 @@ const Pay = (props : Props) => {
                 
                 <label htmlFor="cvv">cvv</label>
                 <input type="text" name="cvv" id="cvv" />
+                <div>
+                <button onClick={() => props.setOpenPay(false)}>Go Back</button>
                 <button>Confirm and Book</button>
+                </div>
 
             </form>
         

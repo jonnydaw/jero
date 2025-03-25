@@ -10,7 +10,6 @@ import Amenities from "./Amenities/Amenities";
 import { useSearchParams } from "next/navigation";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Pay from "./Pay";
 import PCBubbles from "./PCBubbles/PCBubbles";
 import MobileBubbles from "./MobileBubbles/MobileBubbles";
 import GeneralBook from "./GeneralBook/GeneralBook";
@@ -101,8 +100,8 @@ const PropertyCustomer = (props : Props) => {
             <figure>
             <Image
                 src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
-                width={props.isMobile ? 300 : 800}
-                height={props.isMobile ? 166.5 :533}
+                width={props.isMobile ? 320 : 800}
+                height={props.isMobile ? 213.2 :533}
                 alt="Picture of the author"
               />
               <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
@@ -129,16 +128,17 @@ const PropertyCustomer = (props : Props) => {
             </section>
                 {
                     props.isMobile ? 
-                    <MobileBook   baseCost={baseCost} 
-                    extraCost={extraCost} 
-                    getStartDate={getStartDate} 
-                    setStartDate={setStartDate} 
-                    getEndDate={getEndDate} 
-                    setEndDate={setEndDate} 
-                    guestCounts={guestCounts} 
-                    setGuestCounts={setGuestCounts} 
-                    acceptsChildren={props.propertyAttributes.acceptsChildren} 
-                    acceptsPets={props.propertyAttributes.acceptsPets}/> 
+                    <MobileBook   baseCost={baseCost}
+                    extraCost={extraCost}
+                    getStartDate={getStartDate}
+                    setStartDate={setStartDate}
+                    getEndDate={getEndDate}
+                    setEndDate={setEndDate}
+                    guestCounts={guestCounts}
+                    setGuestCounts={setGuestCounts}
+                    acceptsChildren={props.propertyAttributes.acceptsChildren}
+                    acceptsPets={props.propertyAttributes.acceptsPets} 
+                    propertyId={props.propertyAttributes.id}/> 
                     : 
                         <GeneralBook 
                             baseCost={baseCost} 
@@ -151,9 +151,9 @@ const PropertyCustomer = (props : Props) => {
                             setGuestCounts={setGuestCounts} 
                             acceptsChildren={props.propertyAttributes.acceptsChildren} 
                             acceptsPets={props.propertyAttributes.acceptsPets}
-                            isMobile={false}/>
+                            isMobile={false}
+                            propertyId={props.propertyAttributes.id}/>
                 }
-                {/* <Pay open={true} price={baseCost + extraCost} startDate={getStartDate} endDate={getEndDate} guests={guestCounts} propertyId={props.propertyAttributes.id}/> */}
         </div> 
     )
 }

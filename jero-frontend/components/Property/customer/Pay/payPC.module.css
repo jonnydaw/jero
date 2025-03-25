@@ -1,0 +1,31 @@
+#pay{
+    top: 15%;
+    background-color: white;
+
+    font-size: large;
+    padding: 1em;
+    margin-bottom: 1.5em;
+    background-color: white;
+    border: 0.01em solid lightgray;
+    border-radius: 1em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+}
+
+#pay > h1{
+    text-align: center;
+}
+
+#pay > form{
+    display: flex;
+    flex-direction: column;
+
+}
+
+#pay > form > label{
+    margin: 0.5em;
+}
+
+
+#pay > form > input{
+    margin-bottom: 0.5em;
+}

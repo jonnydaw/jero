@@ -8,14 +8,15 @@
     position: fixed;
 }
 
-#floating > button:hover{
+#floating > button{
     min-width: 75vw;
-    opacity: 75%;
+    opacity: 66%;
     background-color: black;
     color: white;
     border: none;
-    padding: 1.5em;
+    padding: 1em;
     border-radius: 2em;
+    font-size: large;
 }
 
 #floating > button{
@@ -23,12 +24,22 @@
 }
 
 #fixedContainer{
-    display: none;
     border-top: solid black 0.2em;
     background-color: white;
     bottom: 0%;
     position: fixed;
     padding: 0.5em;
+}
+
+#fixedContainer > button{
+    position: fixed;
+    right: 1%;
+    z-index: 50000;
+    padding: 0.5em;
+    border-radius: 1.5em;
+    border: none;
+    background-color: #FF746C;
+    color: black;
 }
 
 #book{

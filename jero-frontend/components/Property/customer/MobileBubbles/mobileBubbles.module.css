@@ -5,7 +5,16 @@
 }
 
 .bubble{
+    border-radius: 1em;
     background-color: #C1E1C1;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+.bubbleFalse{
+    border-radius: 1rem;
+
+    background-color: #FF746C;
     padding: 0.5em;
     margin: 0.5em;
 }

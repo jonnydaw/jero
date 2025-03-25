@@ -36,17 +36,17 @@ const Page = async ({searchParams} : any) =>{
     }
 
     let overviewData = "hi";
-    try {
-      console.log("ttry")
-      const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-      const response = await axios.get(`${base}/location/location-overview`, {
-        params : {...sp,"locale" : locale}
-      });
-      console.log(response.data)
-      overviewData = response.data;
-    } catch (error) {
-        console.error(error)
-    }
+    // try {
+    //   console.log("ttry")
+    //   const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    //   const response = await axios.get(`${base}/location/location-overview`, {
+    //     params : {...sp,"locale" : locale}
+    //   });
+    //   console.log(response.data)
+    //   overviewData = response.data;
+    // } catch (error) {
+    //     console.error(error)
+    // }
 
     return (
         <div>

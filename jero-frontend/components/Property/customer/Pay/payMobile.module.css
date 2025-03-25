@@ -1,0 +1,27 @@
+#pay{
+    min-width: 100vw;
+}
+
+#pay > h1{
+    text-align: center;
+}
+
+#pay > form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#pay > form > label{
+    width: 75%;
+
+    margin: 0.5em;
+}
+
+
+#pay > form > input{
+    width: 75%;
+
+    margin-bottom: 0.5em;
+}
