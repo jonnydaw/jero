@@ -5,7 +5,7 @@ import { upload } from '@vercel/blob/client';
 import { useState, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Link } from "@/i18n/routing";
-
+import style from "./step2AddProperty.module.css"
 
 import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
@@ -39,38 +39,46 @@ export default function Step2AddImages() {
             alert("No images have been uploaded");
         }
     }
+    
+    const handleInputFileChange = async (e : any) => {
+        e.preventDefault();
+        const [file] = e.target.files;
+        const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/avatar/upload',
+        });
+
+        setBlobs([...blobs, newBlob]);
+        console.log(file);
+
+    }
 
     return (
-        <div>
-        <h1>Upload Your Avatar</h1>
+        <div id={style.container}>
+        <h1>Step 2: Upload images of your property</h1>
     
-        <form
-            onSubmit={async (event) => {
-            event.preventDefault();
-    
-            if (!inputFileRef.current?.files) {
-                throw new Error('No file selected');
-            }
-    
-            const file = inputFileRef.current.files[0];
-    
-            const newBlob = await upload(file.name, file, {
-                access: 'public',
-                handleUploadUrl: '/api/avatar/upload',
-            });
-    
-            setBlobs([...blobs, newBlob]);
-            }}
-        >
-            <input name="file" ref={inputFileRef} type="file" required />
-            <button type="submit">Upload</button>
-        </form>
-        {blobs && (
+        <div id={style.uploadArea}>
+        <form>
+            {/** https://dev.to/ibn_abubakre/styling-file-inputs-like-a-boss-mhm*/}
             <div>
+                <input 
+                    onChange={handleInputFileChange} 
+                    id="file" 
+                    className={style.file}  
+                    name="file" ref={inputFileRef} 
+                    type="file" 
+                    required
+                    accept="image/png,image/jpeg" />
+                <label htmlFor="file" className={style.fileLabel}>Upload file</label>
+            </div>
+        </form>
+        </div>
+        {blobs && (
+            <div id={style.imageArea}>
             {/* Blob url: <a href={blob.url}>{blob.url}</a> */}
             {blobs.map((blob, index) => (
                 blob?.url && (
-                <div key={index}>
+                <div  className={style.imageSubArea} key={index}>
                     <h3>Image {index + 1}</h3>
                     <img src={blob.url} alt="" />
                     <button onClick={() => handleClick(blob)}>Remove image</button>
@@ -81,11 +89,10 @@ export default function Step2AddImages() {
         )}
         <nav id={bottomNavStyle.hi}>
         <form onSubmit={handleSubmit}>
-            <button>Save and next</button>
+            <button className={style.button} >Save and next</button>
         </form>
         <div id={bottomNavStyle.links}>
             <Link href={"/add-property/step1"}>1</Link>
-
         </div>
         </nav>
         </div>

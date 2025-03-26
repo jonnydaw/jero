@@ -5,7 +5,6 @@ const page = () => {
     return(
         <div>
                 <Step2AddImages/>
-            <Link href="/add_property/step1">Back</Link>
         </div>        
     )
 }

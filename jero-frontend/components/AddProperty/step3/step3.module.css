@@ -3,11 +3,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 0 5em;
+    margin: 0 2.5em;
 }
 
 .section{
-    min-width: 75%;
+    min-width: 80vw;
+    max-width: 80vw;
     margin: 3em;
 }
 
@@ -17,7 +18,7 @@
 
 
 
-#guestSection label{
+/* #guestSection label{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,9 +27,7 @@
     margin: 1em;
 }
 
-#guestSection h3{
-    align-self: flex-start;
-}
+
 
 #guestSection label input:focus{
     outline: none;
@@ -42,7 +41,7 @@
    border-radius: 0.5em;
    font-size: x-large;
    text-align: center;
-}
+} */
 
 .flat{
     display: flex;
@@ -56,14 +55,46 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+
 }
 
 #guestSection{
     display: flex;
+    flex-direction: column;
+
+}
+
+.flat{
     justify-content: center;
     align-items: center;
+    display: row;
+    flex-wrap: wrap;
+}
+
+.flat > label > input{
+    max-width: 6ch;
+    min-width: 6ch;
+    /*https://copy-paste-css.com/form-input-text*/
+    width: 100%;
+    color: rgb(36, 35, 42);
+    line-height: 20px;
+    min-height: 28px;
+    border-radius: 4px;
+    padding: 0.5em 0 0.5em 0.3em ;
+    border: 2px solid transparent;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    background: rgb(251, 251, 251);
+    transition: all 0.1s ease 0s;
+}
+
+.flat > label {
+    display: flex;
     flex-direction: column;
-    min-width: 75%;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+    font-size: large;
 }
 
 .pricing{
@@ -77,7 +108,8 @@
     background-color: transparent;
     border: none;
     max-width: 6ch;
-    min-width: 6ch
+    min-width: 6ch;
+    
 }
 .pricing label input:focus{
     outline: none;
@@ -93,6 +125,19 @@
     font-size: x-large;
     margin-top: 0.25em;
     max-width: 8ch;
+    width: 100%;
+    color: rgb(36, 35, 42);
+    line-height: 20px;
+    min-height: 28px;
+    border-radius: 4px;
+    padding: 0.5em 0 0.5em 0.3em ;
+    border: 2px solid transparent;
+    box-shadow: rgb(0 0 0 / 12%) 0px 1px 3px, rgb(0 0 0 / 24%) 0px 1px 2px;
+    background: rgb(251, 251, 251);
+    transition: all 0.1s ease 0s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pricing label{
@@ -104,6 +149,7 @@
     flex-direction: column;
     max-width: 25%;
     min-width: 25%;
+    
 }
 
 #earningsEst{
@@ -120,8 +166,8 @@
 
 .options label{
     background-color: grey;
-    min-width: 20em;
-    min-height: 20em;
+    min-width: 20vw;
+    min-height: 20vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -134,4 +180,26 @@
     position: fixed;
     position:absolute; 
     bottom:0.5em;
-}
+} 
+
+@media only screen and (max-width: 900px) {
+    .section{
+        min-width: 95vw;
+        max-width: 95vw;
+    }
+    .pricing {
+        flex-direction: column;
+    }
+
+    .pricing > label{
+        min-width: 50vw;
+    }
+    .options{
+        flex-wrap: wrap;
+    }
+
+    .options > label{
+        min-width: 40vw;
+        min-height: 40vw ;
+    }
+  }

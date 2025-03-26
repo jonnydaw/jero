@@ -6,13 +6,13 @@
 }
 
 .img{
-    max-width: 10em;
-    max-height: 10em;
+    max-width: 12.5vw;
+    max-height: 12.5vw;
     margin-bottom: 1.5em;
 }
 
 .selected{
-    transform: scale(1.1);
+    transform: scale(1.05);
     background-color: #54AD56 !important;
 }
 
@@ -29,8 +29,8 @@
 
 .options label{
     background-color: grey;
-    min-width: 20em;
-    min-height: 20em;
+    min-width: 25vw;
+    min-height: 25vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,3 +43,9 @@
     position:absolute; 
     bottom:0.5em;
 }
+
+@media only screen and (max-width: 900px) {
+    .who{
+        margin: 1em;
+    }
+  }

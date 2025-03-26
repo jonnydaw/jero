@@ -7,16 +7,18 @@ import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
 type GuestManagement = {
     pricePerNight : number,
-    priceIncreasePerPerson : number
-    acceptsChildren: boolean,
-    acceptsPets : boolean,
-    disabilityFriendly : boolean
-    minGuests : number,
-    maxGuests : number,
-    doubleBeds : number,
-    singleBeds : number,
-    hammocks : number,
-    sofaBeds : number
+    priceIncreasePerPerson : number;
+    acceptsChildren: boolean;
+    acceptsPets : boolean;
+    disabilityFriendly : boolean;
+    minGuests : number;
+    maxGuests : number;
+    numBedrooms : number;
+    numBathrooms : number;
+    doubleBeds : number;
+    singleBeds : number;
+    hammocks : number;
+    sofaBeds : number;
 }
 
 type Errors = {
@@ -63,6 +65,8 @@ const Step3GuestManagement = () => {
             disabilityFriendly: step3Val.disabilityFriendly || false,
             minGuests: Number(step3Val.minGuests) || 0,
             maxGuests: Number(step3Val.maxGuests) || 0,
+            numBedrooms : Number(step3Val.numBedrooms) || 0,
+            numBathrooms : Number(step3Val.numBathrooms) || 0,
             doubleBeds : Number(step3Val.doubleBeds) || 0,
             singleBeds : Number(step3Val.singleBeds) || 0,
             hammocks : Number(step3Val.hammocks) || 0,
@@ -80,6 +84,8 @@ const Step3GuestManagement = () => {
         disabilityFriendly : false,
         minGuests : 0,
         maxGuests : 0,
+        numBedrooms : 0,
+        numBathrooms : 0,
         doubleBeds : 0,
         singleBeds : 0,
         hammocks : 0,
@@ -209,9 +215,9 @@ const Step3GuestManagement = () => {
 
     return (
         <div className={style.container}>
-        <h1 className={style.shiftLeft}>Guest Management</h1>
+        <h1 className={style.shiftLeft}>Pricing & Guest Management</h1>
         <section className={style.section}>
-            <h3>Pricing</h3>
+            <h2>Pricing</h2>
             <div className={style.pricing}>
             <label htmlFor="pricePerNight">Price per night
             <div>
@@ -242,7 +248,7 @@ const Step3GuestManagement = () => {
           
         </div>
         <div>
-            <h3>Earnings over time (assuming two people every visit)</h3>
+            <h2>Earnings over time (assuming two people every visit)</h2>
             <div id={style.earningsEst}>
             <strong>£{estimation}</strong>
             <input 
@@ -260,7 +266,7 @@ const Step3GuestManagement = () => {
         </section>
 
         <section className={style.section}>
-        <h3>Who can you accommodate</h3>
+        <h2>Who can you accommodate</h2>
         <div className={style.options}>
 
             <BigCheckbox 
@@ -293,9 +299,10 @@ const Step3GuestManagement = () => {
         </div>
         </section>
 
-        <section id={style.guestSection}>
-        <h3>How many can stay?</h3>
-        <div className={style.flat}>
+        <section className={style.section}>
+        <h2>How many can stay?</h2>
+            <div id={style.guestSection}>
+            <div className={style.flat}>
         <label htmlFor="minGuests">Minimum number of guests
             <input
                 id="minGuests"
@@ -318,6 +325,34 @@ const Step3GuestManagement = () => {
                 onChange={handleChange}
                 />
                 {errors.maxGuests && errors.maxGuests}
+            </label>
+            </div>
+
+            <div className={style.flat}>
+
+            <label htmlFor="numBedrooms">Number of Bedrooms
+            <input
+                id="numBedrooms"
+                type="number" 
+                min={0}
+                name="numBedrooms"
+                placeholder="numBedrooms"
+                value={formData.numBedrooms}
+                onChange={handleChange}
+                />
+                {errors.maxGuests && errors.maxGuests}
+            </label>
+
+            <label htmlFor="numBathrooms">Number of Bathrooms
+            <input
+                id="numBathrooms"
+                type="number" 
+                min="0"
+                name="numBathrooms"
+                placeholder="numBathrooms"
+                value={formData.numBathrooms}
+                onChange={handleChange}
+                />
             </label>
             </div>
 
@@ -370,6 +405,7 @@ const Step3GuestManagement = () => {
                 onChange={handleChange}
                 />
             </label>
+            </div>
             </div>
             </section>
             <AddPropertyBottomNav
