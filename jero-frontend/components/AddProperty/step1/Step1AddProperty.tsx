@@ -139,7 +139,7 @@ const Step1AddProperty = () => {
     return(
         <div id={style.container}>
                 <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom}/>
-                <form  onSubmit={handleSubmit}>
+                <form id={style.formSearch} onSubmit={handleSubmit}>
                     <input onChange={handleChange}type="text" placeholder='Enter property location' value={formData}/>
                     <button>Search</button>
                 </form>
@@ -147,17 +147,18 @@ const Step1AddProperty = () => {
            { results && 
             <> 
                 <h3>Please choose your address</h3>
-                <form onSubmit={handleSave}>
+                <form  id={style.formSelect} onSubmit={handleSave}>
                 {results.map((item, index) => (
-                    <div key={index}>
-                        <label htmlFor={item.locationName}>{item.locationName}</label>
-                        <input 
+                    <div className={style.selectItem} key={index}>
+                    <input 
                             onChange={(e) => handleRadioChange(e, item)} 
                             type='radio'  
                             id={item.locationName} 
                             name="address"
                             checked={chosen===item}
                             placeholder={item.locationName}/>
+                        <label htmlFor={item.locationName}>{item.locationName}</label>
+
                     </div>
                 ))}
                 <button>Save address and continue.</button>

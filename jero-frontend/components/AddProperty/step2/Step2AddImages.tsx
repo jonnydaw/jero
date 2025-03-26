@@ -84,7 +84,7 @@ export default function Step2AddImages() {
             <button>Save and next</button>
         </form>
         <div id={bottomNavStyle.links}>
-            <Link href={"/add-property/step2"}>2</Link>
+            <Link href={"/add-property/step1"}>1</Link>
 
         </div>
         </nav>
