@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 .subsection{
@@ -11,14 +10,25 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin: 2em;
     padding: 1em 0;
     text-align: center;
-    border-radius: 2em;
-    border: solid 0.1em #f7deb4;
-    box-shadow: 0.25em 0.25em 0.25em 0.25em #f7deb4;
+    border: solid 0.1em black;
+    box-shadow: 0.1em black;
     min-width: 75%;
     max-width: 75%;
+}
+
+.subsectionToggleArea{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 0.5em;
+}
+
+.subsectionToggleArea > button{
+    display: flex;
+    margin-left: auto;;
 }
 
 .group{
@@ -31,7 +41,7 @@
 }
 
 
-.title{
+/* .title{
     text-align: center;
     font-size: large;
     padding: 1em;
@@ -41,7 +51,7 @@
     cursor: pointer;
     background-color: #f7deb4;
 
-}
+} */
 
 
 .options input[type=checkbox] {

@@ -14,7 +14,7 @@ body {
   box-sizing: border-box;
 }
 
-button{
+.basicButton{
   align-self: center;    
     background-color: #FAF9F6;
     border: 1px solid rgb(209,213,219);
@@ -32,20 +32,20 @@ button{
     touch-action: manipulation;
   }
   
-  button:hover {
+  .basicButton:hover {
     background-color: rgb(249,250,251);
   }
   
-  button:focus  {
+  .basicButton:focus  {
     outline: 2px solid transparent;
     outline-offset: 2px;
   }
   
-  button:focus-visible{
+  .basicButton:focus-visible{
     box-shadow: none;
   }
   
-  button:active{
+  .basicButton:active{
       opacity: 50%;
   }
   
