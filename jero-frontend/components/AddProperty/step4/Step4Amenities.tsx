@@ -243,7 +243,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
                     <div className={style.subsectionToggleArea}>
                         <p>Health and Safety</p>
-                        <button id="healthAndSafety" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.healthAndSafety ? `Hide` : ` Show`}</></button>
+                        <button id="healthAndSafety" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.healthAndSafety ? `Hide` : ` Show`}</></button>
                     </div>
                     {sectionVisibility.healthAndSafety &&
                 <div className={style.group}>
@@ -268,7 +268,7 @@ const Step4Amenities = () => {
                 <div className={style.subsection}>
                  <div className={style.subsectionToggleArea}>
                     <p>Kitchen</p>
-                    <button id="kitchen" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.kitchen ? `Hide` : `Show`}</></button>
+                    <button id="kitchen" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.kitchen ? `Hide` : `Show`}</></button>
                 </div>
 
                     {sectionVisibility.kitchen &&
@@ -296,7 +296,7 @@ const Step4Amenities = () => {
                 <div className={style.subsection}>                 
                     <div className={style.subsectionToggleArea}>
                     <p>Entertainment</p>
-                    <button id="entertainment" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.entertainment ? `Hide` : ` Show`}</></button>
+                    <button id="entertainment" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.entertainment ? `Hide` : ` Show`}</></button>
                 </div>
                 {sectionVisibility.entertainment &&
                     <div className={style.group}>
@@ -324,7 +324,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
                 <div className={style.subsectionToggleArea}>
                     <p>Transport</p>
-                    <button id="transport" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.transport ? `Hide` : ` Show`}</></button>
+                    <button id="transport" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.transport ? `Hide` : ` Show`}</></button>
                 </div>
                 {sectionVisibility.transport &&
                     <div className={style.group}>
@@ -352,7 +352,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
                 <div className={style.subsectionToggleArea}>
                     <p>Laundry</p>
-                    <button id="laundry" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.laundry ? `Hide` : ` Show`}</></button>
+                    <button id="laundry" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.laundry ? `Hide` : ` Show`}</></button>
                 </div>
                 {sectionVisibility.laundry &&
                     <div className={style.group}>
@@ -379,7 +379,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
             <div className={style.subsectionToggleArea}>
                 <p>Climate Control</p>
-                <button id="climateControl" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.climateControl ? `Hide` : ` Show`}</></button>
+                <button id="climateControl" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.climateControl ? `Hide` : ` Show`}</></button>
                 </div>
                 {sectionVisibility.climateControl &&
                     <div className={style.group}>
@@ -406,7 +406,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
             <div className={style.subsectionToggleArea}>
                 <p>Water</p>
-                <button id="water" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.water ? `Hide` : `Show`}</></button>
+                <button id="water" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.water ? `Hide` : `Show`}</></button>
             </div>
                 {sectionVisibility.water &&
                     <div className={style.group}>
@@ -433,7 +433,7 @@ const Step4Amenities = () => {
             <div className={style.subsection}>
             <div className={style.subsectionToggleArea}>
                 <p>Beauty</p>
-                <button id="beauty" onClick={toggleVisibility} className={style.title}><>{sectionVisibility.beauty ? `Hide` : `Show`}</></button>
+                <button id="beauty" onClick={toggleVisibility} className={`${`${style.title} basicButton` } basicButton` }><>{sectionVisibility.beauty ? `Hide` : `Show`}</></button>
             </div>
                 {sectionVisibility.beauty &&
                     <div className={style.group}>
