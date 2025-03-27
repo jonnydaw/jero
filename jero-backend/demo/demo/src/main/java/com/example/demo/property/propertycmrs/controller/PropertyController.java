@@ -51,6 +51,12 @@ public class PropertyController {
         System.out.println("hit");
         System.out.println(propertyId);
         property = propertyService.getPropertyById(new ObjectId(propertyId));
+        double lat = property.getLatitude();
+        double lon = property.getLongitude();
+
+        property.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
+        property.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
+
         System.out.println(property.toString());
         return ResponseEntity.ok().body(property);
     }

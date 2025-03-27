@@ -5,7 +5,7 @@ import stylePC from "./propertycustomer.module.css"
 import mobileStyle from "./propertyCustomerMobile.module.css"
 import GuestToggler from "@/components/Navbar/NavbarPC/GuestDropdown/GuestToggler";
 import { GuestCounts } from "@/app/types/types";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useMemo, useState } from "react";
 import Amenities from "./Amenities/Amenities";
 import { useSearchParams } from "next/navigation";
 import DatePicker from "react-datepicker";
@@ -14,6 +14,7 @@ import PCBubbles from "./PCBubbles/PCBubbles";
 import MobileBubbles from "./MobileBubbles/MobileBubbles";
 import GeneralBook from "./GeneralBook/GeneralBook";
 import MobileBook from "./MobileBook/MobileBook";
+import dynamic from "next/dynamic";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -54,7 +55,13 @@ const PropertyCustomer = (props : Props) => {
             childCount : childCountSp,
              petCount : petCountSp
         });
-    
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/Map/Map'),
+        { 
+            loading: () => <p>A map is loading</p>,
+            ssr: false,
+        }
+        ), [])
     const [getStartDate, setStartDate] = useState<Date>(new Date(startDate));
     const [getEndDate, setEndDate] = useState<Date>(new Date(endDate));
 
@@ -62,6 +69,8 @@ const PropertyCustomer = (props : Props) => {
     const bookingLength = ((getEndDate.getTime() - getStartDate.getTime()) / 86_400_000);
 
     const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+
+    const [showImage, setShowImage] = useState<boolean>(true);
 
 
     const handleIncrement = (e : any) => {
@@ -95,25 +104,47 @@ const PropertyCustomer = (props : Props) => {
             </section> */}
             <section id={style.info}>
             <h1>{props.propertyAttributes.title || "No title provided"}</h1>
-            <div id={stylePC.imageArea}>
-            <button onClick={handleDecrement}> &larr;</button>
-            <figure>
-            <Image
-                src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
-                width={props.isMobile ? 370 : 800}
-                height={props.isMobile ? 263.2 :533}
-                alt="Picture of the author"
-              />
-              <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
-              </figure>
-              <button onClick={handleIncrement}>&rarr;</button>
-            </div>
+            
+
+            {
+                props.isMobile &&
+                <strong style={{display : "flex", justifyContent : "center", fontSize : "large"}}>
+                    💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
+                    - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
+                </strong>
+              }
+              {
+                showImage
+                ?
+                <div id={stylePC.imageArea}>
+                <button onClick={handleDecrement}> &larr;</button>
+                <figure>
+                <Image
+                    src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
+                    width={props.isMobile ? 370 : 800}
+                    height={props.isMobile ? 263.2 :533}
+                    alt="Picture of the author"
+                  />
+                  <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
+                  </figure>
+                  <button onClick={handleIncrement}>&rarr;</button>
+                </div>
+                :
+                <div>
+                <Map position={[props.propertyAttributes.latitude, props.propertyAttributes.longitude]} zoom={15} isCircle={true}/>
+
+                </div>
+              }
+          
+              <div id={stylePC.imageToggleArea}>
+              <button className="basicButton" onClick={() => setShowImage(!showImage)}>{showImage ? `Show Map` : `Show Images` }</button>
+              </div>
             <div id={style.overview}>
                 <h2>Overview</h2>
             
-            {
-                props.isMobile ? <MobileBubbles propertyAttributes={props.propertyAttributes}/> : <PCBubbles propertyAttributes={props.propertyAttributes}/>
-            }
+            
+                <MobileBubbles propertyAttributes={props.propertyAttributes}/>
+            
 
             <div id={style.description}>
             <p >{props.propertyAttributes.description || "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."}

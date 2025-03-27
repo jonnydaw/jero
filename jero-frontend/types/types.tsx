@@ -94,7 +94,7 @@ export type PropertyAttributeFull = {
     numBedrooms : number;
     numBathrooms : number;
     longitude : number;
-    latitute : number;
+    latitude : number;
     images : string[];
     healthAndSafety: HealthAndSafety;
     kitchen: Kitchen;

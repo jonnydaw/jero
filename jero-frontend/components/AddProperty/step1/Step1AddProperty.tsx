@@ -138,7 +138,7 @@ const Step1AddProperty = () => {
     
     return(
         <div id={style.container}>
-                <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom}/>
+                <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom} isCircle={false}/>
                 <form id={style.formSearch} onSubmit={handleSubmit}>
                     <input onChange={handleChange}type="text" placeholder='Enter property location' value={formData}/>
                     <button>Search</button>

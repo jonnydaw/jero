@@ -83,4 +83,9 @@
    border-top: 0.1em solid black;
 }
 
+#imageToggleArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
