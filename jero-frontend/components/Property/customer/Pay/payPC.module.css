@@ -18,11 +18,19 @@
 #pay > form{
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+}
+
+#pay > form{
+    display: flex;
+    flex-direction: column;
 
 }
 
 #pay > form > label{
     margin: 0.5em;
+    align-self: flex-start;
 }
 
 

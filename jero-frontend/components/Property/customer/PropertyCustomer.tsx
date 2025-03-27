@@ -15,6 +15,7 @@ import MobileBubbles from "./MobileBubbles/MobileBubbles";
 import GeneralBook from "./GeneralBook/GeneralBook";
 import MobileBook from "./MobileBook/MobileBook";
 import dynamic from "next/dynamic";
+import exp from "constants";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -30,6 +31,11 @@ interface Props{
     propertyAttributes : PropertyAttributeFull;
     userDeets : UserDeets;
     isMobile : boolean;
+}
+
+type Expanded = {
+    overviewExpand : boolean;
+    amenitiesExpand : boolean;
 }
 
 const PropertyCustomer = (props : Props) => {
@@ -49,6 +55,23 @@ const PropertyCustomer = (props : Props) => {
     //     disabled.push("petCount")
     //     petCountSp = 0;
     // }
+
+    const [expanded, setExpanded] = useState<Expanded>(
+        {
+            overviewExpand : true,
+            amenitiesExpand : true,
+        }
+    ) 
+
+    const handleToggleSection = (e : any) =>{
+        e.preventDefault();
+        const id = e.target.id as keyof Expanded;
+        console.log(expanded[id])
+        setExpanded({...expanded, [id] : !expanded[id]})
+        console.log("toggle " + JSON.stringify(expanded));
+        console.log(id)
+    }
+
     const [guestCounts, setGuestCounts] = useState<GuestCounts>(
         { 
             adultCount : adultCountSp,
@@ -99,16 +122,14 @@ const PropertyCustomer = (props : Props) => {
         const style = props.isMobile ? mobileStyle : stylePC;
     return( 
         <div id={style.container}>
-            {/* <section>
-                <h3>what is nearby</h3>
-            </section> */}
+
             <section id={style.info}>
             <h1>{props.propertyAttributes.title || "No title provided"}</h1>
             
 
             {
                 props.isMobile &&
-                <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em"}}>
+                <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em", color : "green"}}>
                     💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
                     - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
                 </strong>
@@ -137,39 +158,51 @@ const PropertyCustomer = (props : Props) => {
               }
           
               <div id={stylePC.imageToggleArea}>
-              <button className="basicButton" onClick={() => setShowImage(!showImage)}>{showImage ? `Show Map` : `Show Images` }</button>
+              <button style={{margin : "0.5em", fontSize : "large"}} className="basicButton" onClick={() => setShowImage(!showImage)}>{showImage ? `Show Map` : `Show Images` }</button>
               </div>
+
             <div id={style.overview}>
-                <h2>Overview</h2>
-            
-            
-                <MobileBubbles propertyAttributes={props.propertyAttributes}/>
-            
+                <div className={`${style.toggleTitle} ${!expanded.overviewExpand ? mobileStyle.closed : mobileStyle.open}`}>
+                    <h2>Overview</h2>
+                    <button  className="basicButton"  id='overviewExpand' onClick={handleToggleSection}> {expanded.overviewExpand ? `Collapse`: `Expand`}</button>
+                </div>
+                {
+                    expanded.overviewExpand
+                        &&
+                    <div id={style.overviewArea}>
+                    <MobileBubbles propertyAttributes={props.propertyAttributes}/>
+        
+                        <div id={style.description}>
+                        <p >{props.propertyAttributes.description || "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."}
 
-            <div id={style.description}>
-            <p >{props.propertyAttributes.description || "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."}
-
-            </p>
-            </div>
+                        </p>
+                        </div>
+                    </div>
+                }
             </div>
         <div id={style.amentiesArea}>
-        <h2>Amenities</h2>
-        <Amenities object={props.propertyAttributes.beauty} amenityName={"🪞 beauty"}  />
-        <Amenities object={props.propertyAttributes.climateControl} amenityName={"🪭 climate control"}  />
-        <Amenities object={props.propertyAttributes.entertainment} amenityName={"📺 entertainment"}  />
-        <Amenities object={props.propertyAttributes.healthAndSafety} amenityName={"🩹 healthAndSafety"}  />
-        <Amenities object={props.propertyAttributes.kitchen} amenityName={"🍲 kitchen"}  />
-        <Amenities object={props.propertyAttributes.laundry} amenityName={"🫧 laundry"}  />
-        <Amenities object={props.propertyAttributes.transport} amenityName={"🚗 transport"}  />
-        <Amenities object={props.propertyAttributes.water} amenityName={"🚿 water"}  />
-
-
-
-
-
-
-
+            <div className={`${style.toggleTitle} ${!expanded.amenitiesExpand ? mobileStyle.closed : mobileStyle.open}`}>
+            <h2>Amenities</h2>
+            <button id={'amenitiesExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.amenitiesExpand ? `Collapse`: `Expand`}</button>
+            </div>
+            
+            {
+                expanded.amenitiesExpand
+                    &&
+                <div>
+                    <Amenities object={props.propertyAttributes.beauty} amenityName={"🪞 beauty"}  />
+                    <Amenities object={props.propertyAttributes.climateControl} amenityName={"🪭 climate control"}  />
+                    <Amenities object={props.propertyAttributes.entertainment} amenityName={"📺 entertainment"}  />
+                    <Amenities object={props.propertyAttributes.healthAndSafety} amenityName={"🩹 healthAndSafety"}  />
+                    <Amenities object={props.propertyAttributes.kitchen} amenityName={"🍲 kitchen"}  />
+                    <Amenities object={props.propertyAttributes.laundry} amenityName={"🫧 laundry"}  />
+                    <Amenities object={props.propertyAttributes.transport} amenityName={"🚗 transport"}  />
+                    <Amenities object={props.propertyAttributes.water} amenityName={"🚿 water"}  />
+                </div>
+            }
         </div>
+
+
             </section>
                 {
                     props.isMobile ? 

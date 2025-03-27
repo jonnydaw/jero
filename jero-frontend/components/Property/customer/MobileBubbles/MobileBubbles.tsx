@@ -20,8 +20,8 @@ const MobileBubbles = (props : Props) => {
         <strong className={props.propertyAttributes.numberHammocks > 0 ? style.bubble : ""}>{props.propertyAttributes.numberHammocks > 0 && `Hammocks ${props.propertyAttributes.numberHammocks} `}</strong>
         
         <strong className={props.propertyAttributes.acceptsChildren ? style.bubble : style.bubbleFalse}>{`${props.propertyAttributes.acceptsChildren ? "" : "Not"} Child Friendly`}</strong>
-        <strong className={props.propertyAttributes.acceptsPets ? style.bubble : style.bubbleFalse}> {`${props.propertyAttributes.acceptsPets ? "" : "Not"} Pet Friendly`}</strong>
         <strong className={props.propertyAttributes.disabilityFriendly ? style.bubble : style.bubbleFalse}>{`${props.propertyAttributes.disabilityFriendly ? "" : "Not"} Disability Friendly`}</strong>
+        <strong className={props.propertyAttributes.acceptsPets ? style.bubble : style.bubbleFalse}> {`${props.propertyAttributes.acceptsPets ? "" : "Not"} Pet Friendly`}</strong>
         </div>
     )
 }

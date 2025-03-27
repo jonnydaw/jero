@@ -62,9 +62,9 @@ const GeneralBook = (props : Props) => {
         :
         <form>
         <div>
-        <h4>price</h4>
+        <h4>Price</h4>
         <p>Base rate - £{props.baseCost}</p>
-        <p>Extra costs - £{props.extraCost}
+        <p>Additional guest costs - £{props.extraCost}
         </p>
         <strong>Total - £{props.baseCost + props.extraCost}</strong>
         </div>
@@ -109,7 +109,7 @@ const GeneralBook = (props : Props) => {
             }} setCount={props.setGuestCounts}
             disabled={disabled}/>
             
-            <div onClick={() => setOpenPay(true)}><button>Book</button></div>
+            <div onClick={() => setOpenPay(true)}><button className={`basicButton`}>Book</button></div>
         </form>
 }
     </section>

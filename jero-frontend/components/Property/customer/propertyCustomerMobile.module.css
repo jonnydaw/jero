@@ -8,19 +8,43 @@
     font-weight: 300;
 }
 
-.bubbleArea{
+#overview{
+
+}
+
+#amentiesArea, #overview{
+    margin-bottom: 0.5em;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+
+
+
+.toggleTitle{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    margin: 1em;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid lightgray 0.1em;
+    cursor: pointer;
+    margin-bottom: 0.5em;
+    background-color: #FAF9F6;
 }
 
-.bubble, .bubbleFalse{
-    margin: 0.5em;
+.toggleTitle > button{
+    margin-left: auto ;
+    margin-right: 0.5em ;
+}
+
+.toggleTitle > h2{
     padding: 0.5em;
-    border-radius: 1em;
-    font-size: smaller;
-    white-space: 4ch;
-    background-color: #C1E1C1;
 }
 
+
+.closed{
+    border-bottom: none;
+}
+
+/* .open{
+    background-color: aquamarine;
+} */

@@ -79,13 +79,28 @@
 
 
 
-#amentiesArea{
+/* #amentiesArea{
    border-top: 0.1em solid black;
-}
+} */
 
 #imageToggleArea{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#amentiesArea, #overview{
+    border-bottom: solid 0.1em grey; 
+}
+
+.toggleTitle{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    margin-bottom: 0.5em;
+}
+
+.toggleTitle > button{
+    margin-left: auto;
 }
 

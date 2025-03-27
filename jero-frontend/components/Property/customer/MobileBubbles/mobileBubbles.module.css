@@ -7,15 +7,14 @@
 }
 
 .bubble{
-    border-radius: 1em;
+    border-radius: 0.33rem;
     background-color: #C1E1C1;
     padding: 0.5em;
     margin: 0.5em;
 }
 
 .bubbleFalse{
-    border-radius: 1rem;
-
+    border-radius: 0.33rem;
     background-color: #FF746C;
     padding: 0.5em;
     margin: 0.5em;
