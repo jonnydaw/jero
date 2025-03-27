@@ -9,6 +9,8 @@
 #textAreaContainer label {
     margin: 1em;
     font-size: large;
+    width: 50vw;
+
 }
 
 
@@ -16,9 +18,18 @@
 #textAreaContainer label textarea{
     display: block;  
     font-size: large;  
-    width: 50em;
+    width: 50vw;
+
     resize: none;
     border-radius: 1em;
     padding: 0.5em;
     line-height: 1.5;
 }
+
+@media only screen and (max-width: 2000px) {
+
+    #textAreaContainer label, #textAreaContainer label textarea {
+        width: 80vw;
+
+    }
+  }

@@ -69,6 +69,19 @@ const Step5AddDescription = () => {
                },
                    { withCredentials: true}
                );
+               
+               localStorage.removeItem("addressAndCoordinates")
+               localStorage.removeItem("beauty")
+               localStorage.removeItem("climateControl")
+               localStorage.removeItem("entertainment")
+               localStorage.removeItem("healthAndSafety")
+               localStorage.removeItem("images");
+               localStorage.removeItem("kitchen")
+               localStorage.removeItem("laundry")
+               localStorage.removeItem("overview")
+               localStorage.removeItem("step3")
+                localStorage.removeItem("transport")
+               localStorage.removeItem("water")
                console.log(response.status);
         } catch (error) {
             
