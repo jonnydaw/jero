@@ -6,17 +6,25 @@
 }
 
 .subsection{
+    font-size: large;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     padding: 1em 0;
     text-align: center;
-    border: solid 0.1em black;
-    box-shadow: 0.1em black;
+    border-top: solid 0.1em black;
     min-width: 75%;
     max-width: 75%;
 }
+
+.subsection:last-of-type{
+    border-bottom: solid 0.1em black;
+}
+
+/* .subsection :not(:nth-last-child(1)){
+    border-bottom: none !important;
+} */
 
 .subsectionToggleArea{
     width: 100%;
@@ -60,8 +68,8 @@
 
 .options label{
     background-color: grey;
-    min-width: 20em;
-    min-height: 20em;
+    min-width: 15em;
+    min-height: 15em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,3 +82,10 @@
     position:absolute; 
     bottom:0.5em;
 }
+
+@media only screen and (max-width: 900px) {
+    /* .options label{
+        min-width: 30vw;
+        min-height: 30vw;
+    } */
+  }

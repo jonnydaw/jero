@@ -16,7 +16,7 @@ const AddPropertyBottomNav = (props : Props) => {
             <form 
             id={bottomNavStyle.submitButtonArea} 
             onSubmit={props.handleSubmitFunction}>
-                <button>
+                <button className="basicButton">
                     {props.buttonText}
                 </button>
             </form>
