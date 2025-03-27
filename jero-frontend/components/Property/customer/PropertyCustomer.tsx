@@ -100,8 +100,8 @@ const PropertyCustomer = (props : Props) => {
             <figure>
             <Image
                 src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
-                width={props.isMobile ? 320 : 800}
-                height={props.isMobile ? 213.2 :533}
+                width={props.isMobile ? 370 : 800}
+                height={props.isMobile ? 263.2 :533}
                 alt="Picture of the author"
               />
               <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>

@@ -65,6 +65,8 @@ public class PropertyService implements IPropertyService {
         pm.setNumberHammocks(cph.getStep3Data().getHammocks());
         pm.setNumberSofaBeds(cph.getStep3Data().getSofaBeds());
         pm.setMinGuests(cph.getStep3Data().getMinGuests());
+        pm.setNumBedrooms(cph.getStep3Data().getNumBedrooms());
+        pm.setNumberBathrooms(cph.getStep3Data().getNumBathrooms());
         pm.setMaxGuests(cph.getStep3Data().getMaxGuests());
         pm.setPricePerNight(cph.getStep3Data().getPricePerNight());
         pm.setPriceIncreasePerPerson(cph.getStep3Data().getPriceIncreasePerPerson());

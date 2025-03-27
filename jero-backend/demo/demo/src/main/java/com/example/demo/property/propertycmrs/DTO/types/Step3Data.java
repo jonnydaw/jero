@@ -14,6 +14,8 @@ public class Step3Data {
     private boolean disabilityFriendly;
     private int minGuests;
     private int maxGuests;
+    private int numBedrooms;
+    private int numBathrooms;
     private int doubleBeds;
     private int singleBeds;
     private int hammocks;

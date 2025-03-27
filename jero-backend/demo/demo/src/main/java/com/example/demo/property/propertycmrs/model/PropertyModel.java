@@ -69,6 +69,8 @@ public class PropertyModel {
     private int numberSingleBeds;
     private int numberHammocks;
     private int numberSofaBeds; 
+    private int numBedrooms;
+    private int numberBathrooms;
     private int minGuests;
     private int maxGuests;
     // private EProperty propertyType;

@@ -70,8 +70,8 @@ const Pay = (props : Props) => {
                 <label htmlFor="cvv">cvv</label>
                 <input type="text" name="cvv" id="cvv" />
                 <div>
-                <button onClick={() => props.setOpenPay(false)}>Go Back</button>
-                <button>Confirm and Book</button>
+                <button className="basicButton" onClick={() => props.setOpenPay(false)}>Go Back</button>
+                <button className="basicButton">Confirm and Book</button>
                 </div>
 
             </form>

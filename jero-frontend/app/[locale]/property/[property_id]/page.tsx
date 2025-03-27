@@ -21,11 +21,11 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         const { property_id }: {property_id: string} = await params;
         const queries = await searchParams;
 
-        const startDate = await queries?.startdate || "";
-        const endDate = await queries?.enddate || "";
-        const adultCount = await queries?.numadults
-        const childCount = await queries?.numhildren
-        const petCount = await queries?.numpets
+        const startDate =  queries?.startdate || "";
+        const endDate =  queries?.enddate || "";
+        const adultCount =  queries?.numadults
+        const childCount =  queries?.numhildren
+        const petCount =  queries?.numpets
         const {isMobile} = getSelectorsByUserAgent(
             (await headers()).get("user-agent") ?? ""
         )
@@ -61,6 +61,8 @@ console.log(property_id)
                 numberSingleBeds: property.numberSingleBeds,
                 numberHammocks: property.numberHammocks,
                 numberSofaBeds: property.numberSofaBeds,
+                numBedrooms : property.numBedrooms,
+                numBathrooms : property.numBathrooms,
                 longitude: property.longitude,
                 latitute: property.latitute,
                 images: property.imageUrls,
