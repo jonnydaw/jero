@@ -108,7 +108,7 @@ const PropertyCustomer = (props : Props) => {
 
             {
                 props.isMobile &&
-                <strong style={{display : "flex", justifyContent : "center", fontSize : "large"}}>
+                <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em"}}>
                     💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
                     - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
                 </strong>
@@ -121,8 +121,8 @@ const PropertyCustomer = (props : Props) => {
                 <figure>
                 <Image
                     src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
-                    width={props.isMobile ? 370 : 800}
-                    height={props.isMobile ? 263.2 :533}
+                    width={props.isMobile ? 350 : 800}
+                    height={props.isMobile ? 243.2 :533}
                     alt="Picture of the author"
                   />
                   <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
@@ -155,6 +155,20 @@ const PropertyCustomer = (props : Props) => {
         <div id={style.amentiesArea}>
         <h2>Amenities</h2>
         <Amenities object={props.propertyAttributes.beauty} amenityName={"🪞 beauty"}  />
+        <Amenities object={props.propertyAttributes.climateControl} amenityName={"🪭 climate control"}  />
+        <Amenities object={props.propertyAttributes.entertainment} amenityName={"📺 entertainment"}  />
+        <Amenities object={props.propertyAttributes.healthAndSafety} amenityName={"🩹 healthAndSafety"}  />
+        <Amenities object={props.propertyAttributes.kitchen} amenityName={"🍲 kitchen"}  />
+        <Amenities object={props.propertyAttributes.laundry} amenityName={"🫧 laundry"}  />
+        <Amenities object={props.propertyAttributes.transport} amenityName={"🚗 transport"}  />
+        <Amenities object={props.propertyAttributes.water} amenityName={"🚿 water"}  />
+
+
+
+
+
+
+
         </div>
             </section>
                 {
