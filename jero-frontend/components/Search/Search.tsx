@@ -59,7 +59,7 @@ const Search : React.FC<Props> =  (props : Props) => {
     localStorage.setItem("start",String(formData.start))
     localStorage.setItem("end", formData.end);
     const params = new URLSearchParams();
-    params.set("location", formData.where);
+    params.set("location", formData.where.toLowerCase().trim());
     params.set("startdate",formData.start);
     params.set("enddate",formData.end);
     params.set("numadults",String(formData.count.adultCount));
