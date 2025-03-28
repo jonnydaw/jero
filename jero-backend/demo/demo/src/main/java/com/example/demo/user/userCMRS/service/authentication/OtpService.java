@@ -22,7 +22,7 @@ import com.example.demo.user.userCMRS.repository.UserRepository;
 public class OtpService implements IOtpService {
     @Autowired UserRepository userRepository;
     @Autowired OtpRepository otpRepo;
-    @Autowired UserAuthService userAuthService;
+    @Autowired IUserAuthService userAuthService;
     @Autowired RefreshTokenService refreshTokenService;
     @Autowired private OtpRepository otpRepository;
 

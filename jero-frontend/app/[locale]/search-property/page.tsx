@@ -25,6 +25,7 @@ const Page = async ({searchParams} : any) =>{
     console.log(sp)
     try {
       console.log("ttry")
+      console.log(JSON.stringify(sp));
       const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
       const response = await axios.get(`${base}/property/search-properties`, {
         params : sp
