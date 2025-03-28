@@ -12,19 +12,6 @@ export const AdvancedSearchPC = () => {
             <div>
             <Form action="/search">
             <fieldset className={style.fields}>
-                <div className={style.underlineDiv}>
-                <h3>Type of booking</h3>
-                </div>
-                <select
-          name="options"
-        >
-          <option value="" disabled hidden>
-              Pick an option
-          </option>
-          <option value="accommodation">accommodation</option>
-          <option value="flights">flights</option>
-          <option value="both">both</option>
-        </select>
                 </fieldset>
             <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
@@ -42,6 +29,23 @@ export const AdvancedSearchPC = () => {
                 <h3>Who</h3>
                 </div>
                 <GuestToggler count={count} setCount={setCount} disabled={[]}/>
+                </fieldset>
+                <fieldset  className={style.fields} >
+                <div className={style.underlineDiv}>
+                 <h3>Weather at time of travel</h3>
+                </div>
+                <div className={style.underlineDiv}>
+                 <h3>Daily expenses</h3>
+                </div>
+                <div className={style.underlineDiv}>
+                 <h3>Location type</h3>
+                </div>
+                <div className={style.underlineDiv}>
+                 <h3>Tourism Levels</h3>
+                </div>
+                <div className={style.underlineDiv}>
+                 <h3>Family friendly etc</h3>
+                </div>
                 </fieldset>
             </Form>
             </div>

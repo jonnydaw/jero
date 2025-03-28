@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.GraphLookupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import com.example.demo.locations.locationCMRS.model.LocationModel;
+import com.mongodb.client.AggregateIterable;
 
 
 public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRepository {
@@ -30,7 +34,6 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
         final MatchOperation matchStage = Aggregation.match(new Criteria("_id").is(mostPreciseLocation));
 
         GraphLookupOperation graphLookupOperation = GraphLookupOperation.builder()
-
                 .from("location")
                 .startWith("$parent")
                 .connectFrom("parent")

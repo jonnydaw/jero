@@ -15,7 +15,7 @@ import com.example.demo.user.userCMRS.repository.UserRepository;
 import java.util.ArrayList; 
  import java.util.List; 
  
- 	
+ 	// https://www.geeksforgeeks.org/spring-security-login-page-with-react/
  @Service
  public class ConcUserDetailService implements UserDetailsService { 
  

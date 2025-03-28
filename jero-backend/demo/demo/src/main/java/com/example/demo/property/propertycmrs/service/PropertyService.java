@@ -99,10 +99,27 @@ public class PropertyService implements IPropertyService {
     @Override
     public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
+        //System.out.println("location " + location);
         if(location == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+            List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
+            if(fallbacks == null || fallbacks.size() == 0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+            } else{
+                String longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = "";
+                for(String fallback : fallbacks){
+                    if(fallback.length() > longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy.length()){
+                        longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = fallback;
+                    }
+                }
+                if(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy.equals("")){
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+                }
+                //System.out.println(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy);
+                return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets);
+            }
         }
-
+        // System.out.println("hit");
+        // System.out.println(location);
         String locationType = location.getLocationType();
         List<PropertyModel> pms = new ArrayList<>();
         pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets);

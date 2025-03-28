@@ -20,7 +20,7 @@ import com.example.demo.SecurityConfig.jwt.JwtTokenValidator;
 
 import java.util.Arrays; 
 import java.util.Collections; 
-
+// https://www.geeksforgeeks.org/spring-security-login-page-with-react/
 @Configuration
 public class ApplicationConfig { 
 
