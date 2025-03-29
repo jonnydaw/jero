@@ -9,14 +9,9 @@ const page = async () => {
      )
     return (
         <div>
-            <h1>smart search</h1>
-            <>
-            {isMobile ? (
-             < AdvancedSearchMobile/>
-         ) : (
+
              <AdvancedSearchPC/>
-         )}
-      </>
+
         </div>
     )
 }
