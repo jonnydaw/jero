@@ -29,6 +29,8 @@ interface FormData {
 }
 
 export const AdvancedSearchPC = () => {
+    const currentDate = new Date().toISOString().split('T')[0];
+
     const [minEndDate, setMinEndDate] = useState<string>("");
     const router = useRouter();
     const pathname = usePathname();
@@ -141,10 +143,27 @@ const [maxValue, set_maxValue] = useState(26);
                 <h3>When</h3>
                 </div>
                 <div className={style.inputContainer}>
-                <input id="startDate" type="date" name="startDate"/>
+                
+                <input 
+                    id="startDate" 
+                    type="date" 
+                    name="start" 
+                    value={formData.start}
+                    min={currentDate}
+                    onChange={handleChange}
+                />
                 <label htmlFor="startDate">Start Date</label>
-                <input id="endDate" type="date" name="endDate"/>
+                
+                <input 
+                    id="endDate" 
+                    type="date" 
+                    name="end" 
+                    value={formData.end}
+                    min={minEndDate}
+                    onChange={handleChange}
+                />
                 <label htmlFor="endDate">End Date</label>
+                
                 </div>
                 </fieldset>
                 <fieldset className={style.fields} >

@@ -5,6 +5,7 @@ import SearchResults from "@/components/SearchResults/SearchResults";
 import { getLocale } from "next-intl/server";
 import { headers } from "next/headers"
 import { getSelectorsByUserAgent } from "react-device-detect"
+import Properties from "@/components/SearchResults/Properties";
 
 
 
@@ -56,7 +57,7 @@ const Page = async ({searchParams} : any) =>{
     return (
         <div>
             <h1>Smart search results</h1>
-            <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData} isMobile={isMobile} />
+            <Properties propertyAttributes={dataProperties} locationOverview={overviewData} isMobile={isMobile} />
         </div>
     )
 }

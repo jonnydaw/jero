@@ -29,13 +29,13 @@ const GeneralBook = (props : Props) => {
     const [openPay, setOpenPay] = useState<boolean>(false);
     const disabled: string[] = []
     if(!props.acceptsChildren){
-        props.guestCounts.childCountSp = 0;
+        props.guestCounts.childCount = 0;
         disabled.push("childCount")
     }
 
     if(!props.acceptsPets){
         disabled.push("petCount")
-        props.guestCounts.petCountSp = 0;
+        props.guestCounts.petCount = 0;
     }
 
     // if(openPay){

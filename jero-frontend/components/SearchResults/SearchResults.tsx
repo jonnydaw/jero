@@ -3,6 +3,7 @@ import { PropertyAttribute } from "@/types/types";
 import style from "./searchresults.module.css"
 import mobileStyle from "./searchresultsMobile.module.css"
 import PropertyCard from "../PropertyCard/PropertyCard";
+import Properties from "./Properties";
 
 
 // type PropertyAttribute = {    
@@ -61,15 +62,7 @@ const SearchResults = (props : Props) => {
             </div>
 
           </section>
-          <section id={!props.isMobile ? style.cards : mobileStyle.cards}>
-            {props.propertyAttributes && props.propertyAttributes.map((item, _) => (
-                <div className={!props.isMobile ? style.propertyArea : mobileStyle.propertyArea } key={item.id}>
-                    <PropertyCard propertyAttribute={item}/>
-                </div>
-              ))
-              }
-             
-        </section>
+        <Properties propertyAttributes={props.propertyAttributes} locationOverview={props.locationOverview} isMobile={props.isMobile} />
         </div>
               <div id={style.map}>
 
