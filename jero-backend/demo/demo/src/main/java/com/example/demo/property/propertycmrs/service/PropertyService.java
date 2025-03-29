@@ -227,6 +227,7 @@ public class PropertyService implements IPropertyService {
             // propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
             propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
             propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
+            
             res.add(propertyAttributes);
         }
         return res;

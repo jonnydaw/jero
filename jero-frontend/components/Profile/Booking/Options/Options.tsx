@@ -2,8 +2,10 @@
 
 import { inDevEnvironment } from "@/base";
 import axios from "axios";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
+    propertyId : string;
     accepted : boolean;
     cancelled : boolean;
     bookingId : string;
@@ -13,14 +15,21 @@ interface Props {
 
 const Options = (props : Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-
+    const router = useRouter();
+    const pathname = usePathname();
+    const leaveReviewRedirect = (e : any) => {
+        e.preventDefault();
+        const locale = (pathname.split("/").at(1));
+        router.push(`/${locale}/profile/bookings/review/${props.propertyId}`);
+        
+    }
     if(props.isCustomer){
         //if(!props.accepted) return null;
         if(props.cancelled) return null;
         if(props.timeframe === "past" && props.accepted){
             return (
                 <div>
-                <button style={{backgroundColor : "white", color : "black"}}>Leave a review</button>
+                <button onClick={leaveReviewRedirect} style={{backgroundColor : "white", color : "black"}}>Leave a review</button>
                 </div>
             )
         }else if(props.timeframe === "future"){

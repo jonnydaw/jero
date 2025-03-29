@@ -1,0 +1,52 @@
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#stars{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 4em;
+    width: 50vw;
+    font-size: xx-large;
+}
+
+#textAreaContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+}
+
+#textAreaContainer label {
+    margin: 1em;
+    font-size: large;
+    width: 50vw;
+
+}
+
+
+
+#textAreaContainer label textarea{
+    display: block;  
+    font-size: large;  
+    width: 50vw;
+
+    resize: none;
+    border-radius: 1em;
+    padding: 0.5em;
+    line-height: 1.5;
+}
+
+@media only screen and (max-width: 2000px) {
+
+    #textAreaContainer label, #textAreaContainer label textarea {
+        width: 80vw;
+
+    }
+  }

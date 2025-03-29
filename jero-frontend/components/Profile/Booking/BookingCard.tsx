@@ -15,8 +15,8 @@ const BookingCard = (props : Props) => {
   return (
     <div id={style.container}>
 
-              {props.booking.cancelled && <h1 style={{color : "red"}}>Cancelled</h1>}
-              {!props.booking.cancelled && !props.booking.accepted && <h1 style={{color : "gray"}}>Pending confimation</h1>}
+      {props.booking.cancelled && <h1 style={{color : "red"}}>Cancelled</h1>}
+      {!props.booking.cancelled && !props.booking.accepted && <h1 style={{color : "gray"}}>Pending confimation</h1>}
       <img id={style.image}
         src={props.booking.image}
         alt={props.booking.title}
@@ -40,7 +40,7 @@ const BookingCard = (props : Props) => {
           )}
         </div>
           <div id={style.options}>
-          <Options bookingId={props.booking.bookingId} isCustomer={props.isCustomer} timeframe={props.timeframe} accepted={props.booking.accepted} cancelled={props.booking.cancelled}/>
+          <Options propertyId={props.booking.propertyId} bookingId={props.booking.bookingId} isCustomer={props.isCustomer} timeframe={props.timeframe} accepted={props.booking.accepted} cancelled={props.booking.cancelled}/>
           </div>
 
       </div>

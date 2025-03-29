@@ -1,5 +1,6 @@
 package com.example.demo.property.propertycmrs.model;
 
+import java.time.Instant;
 import java.util.Date;
 
 import lombok.Data;
@@ -10,7 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReviewsType {
-    private Date reviewDate;
+    private Instant reviewDate;
+    private int score;
     private String title;
     private String body;
 }
