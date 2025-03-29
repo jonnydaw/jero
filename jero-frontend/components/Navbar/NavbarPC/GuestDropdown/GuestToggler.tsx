@@ -14,8 +14,8 @@ type Props = {
 const GuestToggler : React.FC<Props> = ({count, setCount, disabled}) => {
   
   const increment = (e: React.MouseEvent,key : string) => {
-    if(count[key] < 256){
-    setCount({...count,[key] : count[key] + 1})
+    if(count[key as keyof GuestCounts] < 256){
+    setCount({...count,[key] : count[key as keyof GuestCounts] + 1})
     }
   }
   
@@ -23,8 +23,8 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled}) => {
     if(key === `adultCount` && count[key] > 1){
       setCount({...count,[key] : count[key] -1})
     }
-    else if (key !== `adultCount` && count[key] > 0) { 
-      setCount({...count,[key] : count[key] -1})
+    else if (key !== `adultCount` && count[key as keyof GuestCounts] > 0) { 
+      setCount({...count,[key] : count[key as keyof GuestCounts] -1})
     }
   };
   const t = useTranslations("DropdownCount");
@@ -38,7 +38,6 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled}) => {
     <>
        {
        Object.entries(count).map(([key, value]) => {
-        console.log(disabled, jsonToText.get(key));
         if(disabled && disabled.includes(key)){
           return null;
         }

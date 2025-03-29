@@ -18,6 +18,19 @@ public interface IPropertyService {
 
     List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets);
 
+    public List<Map<String,String>> getPropertiesBySmart(
+        Instant startDate, 
+        Instant endDate, 
+        int numAdults, 
+        int numChildren, 
+        int numPets,
+        String attractions,
+        String holidayType,
+        String tourismLevels,
+        int minTemp,
+        int maxTemp
+        );
+
     PropertyModel getPropertyById(ObjectId propertyId);
 
     Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings);

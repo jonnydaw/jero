@@ -3,6 +3,7 @@ package com.example.demo.property.propertycmrs.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -124,20 +125,37 @@ public class PropertyService implements IPropertyService {
         List<PropertyModel> pms = new ArrayList<>();
         pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets);
 
-        List<Map<String,String>> res = new ArrayList<>();
-        for(PropertyModel pm : pms){
-            String displayLocation = extracted(pm);
-            Map<String,String> propertyAttributes = new HashMap<>();
-            propertyAttributes.put("id", pm.getId().toHexString());
-            propertyAttributes.put("title", pm.getTitle());
-            propertyAttributes.put("displayLocation",displayLocation);
-            // propertyAttributes.put("townId", pm.getTownId());
-            // propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
-            propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
-            propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
-            res.add(propertyAttributes);
+        return getRes(pms);
+    }
+
+
+
+    @Override 
+    public List<Map<String,String>> getPropertiesBySmart(
+        Instant startDate, 
+        Instant endDate, 
+        int numAdults, 
+        int numChildren, 
+        int numPets,
+        String attractions,
+        String holidayType,
+        String tourismLevels,
+        int minTemp,
+        int maxTemp
+    )
+    {
+        List<String> attractionsClean = new ArrayList<>(); 
+        String[] split1 = attractions.split("&");
+        // not ideal
+        for(String val : split1){
+            String[] split2 = val.split("=");
+            if(split2[1].equals("true")){
+                attractionsClean.add(split2[0]);
+            }
         }
-        return res;
+
+        Set<PropertyModel> properties = propertyRepo.smartFilter(startDate, endDate, numAdults, numChildren, numPets, attractionsClean, holidayType, tourismLevels, minTemp, maxTemp);
+        return getRes(properties);
     }
 
     @Override
@@ -195,6 +213,23 @@ public class PropertyService implements IPropertyService {
             displayLocation = pm.getCityId();
         }
         return displayLocation;
+    }
+
+    private List<Map<String, String>> getRes(Collection<PropertyModel> pms) {
+        List<Map<String,String>> res = new ArrayList<>();
+        for(PropertyModel pm : pms){
+            String displayLocation = extracted(pm);
+            Map<String,String> propertyAttributes = new HashMap<>();
+            propertyAttributes.put("id", pm.getId().toHexString());
+            propertyAttributes.put("title", pm.getTitle());
+            propertyAttributes.put("displayLocation",displayLocation);
+            // propertyAttributes.put("townId", pm.getTownId());
+            // propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
+            propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
+            propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
+            res.add(propertyAttributes);
+        }
+        return res;
     }
 
 

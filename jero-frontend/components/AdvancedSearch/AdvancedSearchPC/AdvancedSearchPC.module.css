@@ -4,6 +4,9 @@
     align-items: center;
 }
 
+#formArea{
+  min-width: 50vw;
+}
 .fields {
     border: 0;
   }
@@ -23,8 +26,10 @@
 
 .items{
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .items > input{
@@ -44,3 +49,17 @@
     box-shadow: none ;
 
   } */
+
+  .selectItem{
+    width: 45%;
+    display: flex;
+
+    align-items: center;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;    
+    padding: 1em;
+    margin: 0.5em !important;
+}
+
+.selectItem > label{
+  margin-left: 1em;
+}

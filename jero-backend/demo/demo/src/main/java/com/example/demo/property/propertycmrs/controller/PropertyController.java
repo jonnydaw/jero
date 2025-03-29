@@ -79,6 +79,42 @@ public class PropertyController {
         return ResponseEntity.ok().body(res);
     }
 
+    @GetMapping("/smart-search-properties")
+    public ResponseEntity<?> getPropertiesFromSmart(@RequestParam("startdate") Optional<String> startDate, 
+                                                       @RequestParam("enddate") Optional<String> endDate,
+                                                       @RequestParam("numadults") Optional<Integer> numAdults,
+                                                       @RequestParam("numchildren") Optional<Integer> numChildren,
+                                                       @RequestParam("numpets") Optional<Integer> numPets,
+                                                       @RequestParam("attractions") Optional<String> attractions,
+                                                       @RequestParam("holidayType") Optional<String> holidayType,
+                                                       @RequestParam("tourismLevels") Optional<String> tourismLevels,
+                                                       @RequestParam("minTemp") Optional<Integer> minTemp,
+                                                       @RequestParam("maxTemp") Optional<Integer> maxTemp
+                                                       ){
+        // Instant start = Instant.parse(startDate.orElse("2025-12-20")+"T00:00:00.000Z");
+        Instant start = Instant.parse(("2025-12-20")+"T00:00:00.000Z");
+
+        // Instant end = Instant.parse(endDate.orElse("2025-12-25")+"T00:00:00.000Z");
+        Instant end = Instant.parse(("2025-12-25")+"T00:00:00.000Z");
+
+        System.out.println(attractions.get());
+        List<Map<String,String>> res = propertyService.getPropertiesBySmart(
+            start, 
+            end, 
+            numAdults.orElse(1), 
+            numChildren.orElse(0), 
+            numPets.orElse(0),
+            attractions.orElse(null),
+            holidayType.orElse(null),
+            tourismLevels.orElse(null),
+            minTemp.orElse(null),
+            maxTemp.orElse(null)
+            );
+        // System.out.println("hit controller");
+        // System.out.println(res.toString());
+        return ResponseEntity.ok().body(res);
+    }
+
 
 
 
