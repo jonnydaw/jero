@@ -92,6 +92,7 @@ public class BookingService implements IBookingService {
         bm.setTotalCost(totalCost);
         bm.setAccepted(false);
         bm.setCancelled(false);
+        bm.setReviewed(false);
         bookingRepo.save(bm);
         sendEmail(pm, ownerEmail);
     }

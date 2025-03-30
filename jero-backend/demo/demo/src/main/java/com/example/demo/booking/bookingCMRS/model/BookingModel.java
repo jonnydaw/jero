@@ -39,4 +39,5 @@ public class BookingModel{
     private double totalCost;
     private boolean accepted;
     private boolean cancelled;
+    private boolean reviewed;
 } 

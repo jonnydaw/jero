@@ -20,7 +20,7 @@ const Options = (props : Props) => {
     const leaveReviewRedirect = (e : any) => {
         e.preventDefault();
         const locale = (pathname.split("/").at(1));
-        router.push(`/${locale}/profile/bookings/review/${props.propertyId}`);
+        router.push(`/${locale}/profile/bookings/review/${props.propertyId}/${props.bookingId}`);
         
     }
     if(props.isCustomer){

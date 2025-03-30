@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.property.propertycmrs.service.IPropertyService;
@@ -113,6 +114,13 @@ public class PropertyController {
         // System.out.println("hit controller");
         // System.out.println(res.toString());
         return ResponseEntity.ok().body(res);
+    }
+
+    @PostMapping("add-review")
+    public ResponseEntity<?> addReview(@CookieValue("JWT") String token, @RequestBody ReviewHandler rh){
+        System.out.println(rh.getPropertyId());
+        propertyService.addReview(token, rh);
+        return ResponseEntity.ok().body("posted");
     }
 
 

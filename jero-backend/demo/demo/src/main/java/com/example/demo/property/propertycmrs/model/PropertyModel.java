@@ -81,7 +81,7 @@ public class PropertyModel {
     
     private List<String> imageUrls;
     // private List<FacilitiesType> facilities;
-    private Map<ObjectId,ReviewsType> userIdToReviews;
+    private List<ReviewsType> reviews;
     private Set<Instant> blockedDates;
 
     private boolean acceptsChildren;

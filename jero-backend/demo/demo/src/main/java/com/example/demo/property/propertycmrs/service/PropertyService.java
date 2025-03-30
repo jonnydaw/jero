@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
@@ -21,12 +22,15 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
+import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
 import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
+import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
@@ -38,6 +42,8 @@ public class PropertyService implements IPropertyService {
     @Autowired private LocationRepository locationRepository;
     @Autowired private ILocationService locationService;
     @Autowired private UserRepository userRepository;
+    @Autowired BookingRepo bookingRepo;
+
 
     @Override
     public void createProperty(String token, CreatePropertyHandler cph) {
@@ -92,6 +98,8 @@ public class PropertyService implements IPropertyService {
         today.add(Instant.now());
         pm.setBlockedDates(today);
         // dates
+        List<ReviewsType> reviews = new ArrayList<>();
+        pm.setReviews(reviews);
         //pm.setAvailableDates(cph.getAvailableDates());
         pm.setStatus(false);
         propertyRepo.save(pm);
@@ -195,6 +203,54 @@ public class PropertyService implements IPropertyService {
         }
         return property;
     }
+
+    @Override
+    public void addReview(String jwt, ReviewHandler rh){
+        String userId = JwtProvider.getIdFromJwtToken(jwt);
+
+        BookingModel booking = bookingRepo.findById(new ObjectId(rh.getBookingId())).get();
+        if(booking == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
+
+        }
+        if(Instant.now().isBefore(booking.getEndDate())){
+            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "REVIEW_NOT_ALLOWED_UNTIL_AFTER");
+        }
+
+        if(booking.isReviewed()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "ALREADY_REVIEWED");
+        }
+
+        if(!booking.isAccepted() || booking.isCancelled()){
+            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "CANT_REVIEW_BOOKING_DID_NOT_HAPPEN");
+        }
+        
+        PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
+        List<ReviewsType> reviews = pm.getReviews();
+        if(reviews == null) reviews = new ArrayList<>();
+        ReviewsType rt = new ReviewsType();
+        rt.setReviewDate(Instant.now());
+        rt.setUserID(userId);
+        rt.setScore(rh.getScore());
+        rt.setTitle(rh.getTitle());
+        rt.setBody(rh.getBody());
+        reviews.add(rt);
+        pm.setReviews(reviews);
+        propertyRepo.save(pm);
+        booking.setReviewed(true);
+        bookingRepo.save(booking);
+        return;
+
+
+        // List<BookingModel> pastBookings = bookings.get("past");
+        // for(BookingModel booking : pastBookings){
+        //     if(booking.getPropertyId().toHexString().equals(rh.getPropertyId()) && booking.isAccepted() && !booking.isCancelled() && !booking.isReviewed()){
+        //         PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
+        //         List<ReviewsType> reviews = pm.getReviews();
+        //         if(reviews == null) reviews = new ArrayList<>();
+
+            
+        }
 
     private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
        // if(locationType.equals("city")){

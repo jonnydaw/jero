@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class ReviewsType {
     private Instant reviewDate;
+    private String userID;
     private int score;
     private String title;
     private String body;

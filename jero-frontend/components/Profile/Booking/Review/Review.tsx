@@ -3,14 +3,27 @@
 import { ChangeEvent, useState } from "react";
 import style from "./review.module.css"
 import { GoStarFill } from "react-icons/go";
+import axios from "axios";
+import { inDevEnvironment } from "@/base";
+import { usePathname } from "next/navigation";
+
+interface Props {
+    propertyId : string;
+    bookingId : string;
+}
 
 type Review = {
+    score : number
     title : string;
     body : string;
 }
 
-const Review = () => {
+const Review = (props : Props) => {
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    // const pathname = usePathname();
+    // const id = (pathname.split("/").at(-1));
     const [review, setReview] = useState<Review>({
+        score : 5,
         title : "",
         body : "",
     })
@@ -25,6 +38,7 @@ const Review = () => {
             }
         }
         setStarRating(cop);
+        setReview({...review, score :  val + 1})
         console.log(val)
     }
 
@@ -33,9 +47,24 @@ const Review = () => {
         setReview({...review, [name] :  value})
     }
 
-    const handleSubmit = (e : any) => {
+    const handleSubmit = async (e : any) => {
         e.preventDefault();
-        console.log(review)
+        console.log(review);
+        try {
+            const response = await axios.post(`${baseApi}/property/add-review`, {
+                score : review.score,
+                title : review.title,
+                body : review.body,
+                propertyId : props.propertyId,
+                bookingId : props.bookingId,
+               },
+                   { withCredentials: true}
+               );
+               console.log(response.status);
+
+        }catch (error){
+            console.error(error);
+        }
     }
 
     return (

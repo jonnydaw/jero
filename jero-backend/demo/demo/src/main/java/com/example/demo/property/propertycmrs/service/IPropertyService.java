@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 
 public interface IPropertyService {
@@ -34,5 +35,7 @@ public interface IPropertyService {
     PropertyModel getPropertyById(ObjectId propertyId);
 
     Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings);
+
+    public void addReview(String jwt, ReviewHandler rh);
     
 }
