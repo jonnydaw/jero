@@ -3,7 +3,9 @@ package com.example.demo.property.propertycmrs.service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +34,8 @@ import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
+import com.example.demo.review.ReviewModel;
+import com.example.demo.review.ReviewRepo;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 
@@ -39,6 +43,7 @@ import com.example.demo.user.userCMRS.repository.UserRepository;
 public class PropertyService implements IPropertyService {
 
     @Autowired private PropertyRepo propertyRepo;
+    @Autowired private ReviewRepo reviewRepo;
     @Autowired private LocationRepository locationRepository;
     @Autowired private ILocationService locationService;
     @Autowired private UserRepository userRepository;
@@ -100,8 +105,12 @@ public class PropertyService implements IPropertyService {
         // dates
         List<ReviewsType> reviews = new ArrayList<>();
         pm.setReviews(reviews);
+        pm.setPercentile(-1);
+        pm.setAvgReviewScore(0);
         //pm.setAvailableDates(cph.getAvailableDates());
         pm.setStatus(false);
+
+
         propertyRepo.save(pm);
     }
 
@@ -228,6 +237,10 @@ public class PropertyService implements IPropertyService {
         PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
         List<ReviewsType> reviews = pm.getReviews();
         if(reviews == null) reviews = new ArrayList<>();
+        double oldAvg = pm.getAvgReviewScore();
+        
+        double newAvg = getNewAvg(reviews, oldAvg, rh.getScore());
+        pm.setAvgReviewScore(newAvg);
         ReviewsType rt = new ReviewsType();
         rt.setReviewDate(Instant.now());
         rt.setUserID(userId);
@@ -235,11 +248,19 @@ public class PropertyService implements IPropertyService {
         rt.setTitle(rh.getTitle());
         rt.setBody(rh.getBody());
         reviews.add(rt);
+
         pm.setReviews(reviews);
+
         propertyRepo.save(pm);
+
+        calcPercentile(newAvg, oldAvg, pm);
+        //pm.setPercentile(newPercentil);
+        //propertyRepo.save(pm);
+
+
+
         booking.setReviewed(true);
         bookingRepo.save(booking);
-        return;
 
 
         // List<BookingModel> pastBookings = bookings.get("past");
@@ -251,6 +272,105 @@ public class PropertyService implements IPropertyService {
 
             
         }
+
+    private void calcPercentile(double newAvg, double oldAvg, PropertyModel pm) {
+        ReviewModel rm = reviewRepo.findById(1).get();
+        List<Double> scores = rm.getScores();
+        if(scores.size() == 0){
+            scores.add(newAvg);
+            rm.setScores(scores);
+            reviewRepo.save(rm);
+
+            pm.setAvgReviewScore(newAvg);
+            pm.setPercentile(1.0);
+            propertyRepo.save(pm);
+            return;
+            //return 1.0;
+        }
+
+        System.out.println(oldAvg);
+        int removeIndex = Collections.binarySearch(scores, (double)oldAvg);
+        System.out.println(removeIndex);
+        if(removeIndex >= 0) scores.remove(removeIndex);
+        
+        System.out.println(scores.toString());
+
+
+        int addIndex = Collections.binarySearch(scores, newAvg);
+        boolean needToIterate = true;
+        if(addIndex < 0){
+            needToIterate = false;
+            addIndex = addIndex * -1;
+            addIndex--;
+        }
+        
+        scores.add(addIndex, newAvg);
+        rm.setScores(scores);
+        reviewRepo.save(rm); 
+        
+        int countLessThan = 0;
+
+        if(needToIterate){
+            for(int i = addIndex; i < scores.size(); i++){
+                if(scores.get(i) != (newAvg)){
+                    countLessThan = i;
+                    break;
+                }
+            }
+        }else{
+            countLessThan = addIndex;
+        }
+        
+
+        System.out.println("countless: " + countLessThan);
+        double percentile = (countLessThan / (double)scores.size()) * 100;
+        System.out.println("percentile: " + percentile);
+        pm.setPercentile(percentile);
+        pm.setAvgReviewScore(newAvg);
+       
+        propertyRepo.save(pm);
+        adjust(pm.getId(), newAvg,percentile,(double)scores.size());
+
+        //return (countLessThan / scores.size() * 1.0) * 100;
+        
+    }
+
+    private double getNewAvg(List<ReviewsType> reviews, double existingAvg, int newScore) {
+        return ((reviews.size() * existingAvg) + newScore) / (reviews.size() + 1);
+    }
+
+    private void adjust(ObjectId newestPropertyToBeReview, double newAvg, double percentileOfNewAvg, double size){
+        List<PropertyModel> properties = propertyRepo.findAll();
+        for(PropertyModel property : properties){
+            if(property.getId().equals(newestPropertyToBeReview)){
+                continue;
+            }
+            if(property.getReviews() == null || property.getReviews().isEmpty()){
+                continue;
+            }
+            System.out.println("hit adjust");
+            double mean = property.getAvgReviewScore();
+            double percentile = property.getPercentile();
+            if(mean == 0 || percentile == -1 ){
+                continue;
+            }
+            if(mean < newAvg){
+                double numLess = ((percentile / 100.0) * (size-1));
+                System.out.println("numless: " + numLess);
+                percentile = (numLess / size) * 100.0;
+            }else if(mean > newAvg){
+                double numLess = ((percentile / 100.0) * (size-1));
+                System.out.println("numless2" + numLess);
+                percentile = ((numLess + 1) / size) * 100.0;
+            }else{
+                percentile = percentileOfNewAvg;
+            }
+            property.setPercentile(percentile);
+            propertyRepo.save(property);
+
+
+        }
+    }
 
     private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
        // if(locationType.equals("city")){

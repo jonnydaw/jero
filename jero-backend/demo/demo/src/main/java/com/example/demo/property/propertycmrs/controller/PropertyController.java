@@ -58,6 +58,9 @@ public class PropertyController {
         property.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
         property.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
 
+        property.setAddress("");
+        
+
         System.out.println(property.toString());
         return ResponseEntity.ok().body(property);
     }
