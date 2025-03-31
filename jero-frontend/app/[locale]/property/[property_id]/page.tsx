@@ -75,7 +75,8 @@ console.log(property_id)
                 beauty: property.beautyData,
                 entertainment: property.entertainmentData,
                 blockedDate: property.blockedDates,
-                // userIdToReviews : property.userIdToReviews,
+                reviews : property.reviews,
+                reviewScore : property.percentile
             }} userDeets={{
                 id: id,
                 startDate: String(startDate),

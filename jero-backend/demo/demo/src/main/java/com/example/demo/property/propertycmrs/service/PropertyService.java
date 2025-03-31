@@ -464,6 +464,9 @@ public class PropertyService implements IPropertyService {
             propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
             propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
             
+
+            propertyAttributes.put("percentile",  String.format("%.2f", pm.getPercentile()));
+            
             res.add(propertyAttributes);
         }
         return res;

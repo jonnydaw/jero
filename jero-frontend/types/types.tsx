@@ -74,6 +74,14 @@ export type PropertyAttribute = {
     pricePerNight : string;
     title : string;
     mainImage : string;
+    percentile : number;
+}
+
+export type ReviewType = {
+    reviewDate : Date,
+    score : number;
+    title : string;
+    body : string;
 }
 
 export type PropertyAttributeFull = {    
@@ -105,6 +113,8 @@ export type PropertyAttributeFull = {
     beauty: Beauty;
     entertainment: Entertainment;
     blockedDate : Date;
+    reviews : ReviewType[];
+    reviewScore : number;
 
 }
 

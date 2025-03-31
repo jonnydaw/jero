@@ -36,6 +36,7 @@ const PropertyCard = (props : Props) => {
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
                 <strong>£{props.propertyAttribute.pricePerNight} nightly - £300 for your stay </strong>
                 <p>{props.propertyAttribute.displayLocation}</p>
+                <p>{props.propertyAttribute.percentile > 0 ? `Rated higher than ${~~props.propertyAttribute.percentile}%` : "No reviews yet" }</p>
         </div>
     )
 }

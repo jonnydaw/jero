@@ -16,6 +16,8 @@ import GeneralBook from "./GeneralBook/GeneralBook";
 import MobileBook from "./MobileBook/MobileBook";
 import dynamic from "next/dynamic";
 import exp from "constants";
+import { json } from "stream/consumers";
+import Reviews from "./Reviews/Review";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -36,6 +38,7 @@ interface Props{
 type Expanded = {
     overviewExpand : boolean;
     amenitiesExpand : boolean;
+    reviewsExpand : boolean;
 }
 
 const PropertyCustomer = (props : Props) => {
@@ -60,6 +63,7 @@ const PropertyCustomer = (props : Props) => {
         {
             overviewExpand : true,
             amenitiesExpand : true,
+            reviewsExpand : false,
         }
     ) 
 
@@ -199,6 +203,33 @@ const PropertyCustomer = (props : Props) => {
                     <Amenities object={props.propertyAttributes.transport} amenityName={"🚗 transport"}  />
                     <Amenities object={props.propertyAttributes.water} amenityName={"🚿 water"}  />
                 </div>
+            }
+        </div>
+
+        <div id={style.reviewArea}>
+            <div className={`${style.toggleTitle} ${!expanded.reviewsExpand ? mobileStyle.closed : mobileStyle.open}`}>
+            
+{                props.propertyAttributes.reviews === null 
+                ?
+                <h2>
+                No reviews yet 
+                </h2>
+                :
+
+                <h2>Reviews</h2>}
+            
+            <button disabled={props.propertyAttributes.reviews === null} id={'reviewsExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.reviewsExpand ? `Collapse`: `Expand`}</button>
+
+            </div>
+            
+            {
+                expanded.reviewsExpand
+                    &&
+                Object.entries(props.propertyAttributes.reviews).map(([key,value]) => (
+                    <div key={key}>
+                    <Reviews reviewDate={(value.reviewDate)} score={value.score} title={value.title} body={value.body}/>
+                    </div>
+                ))
             }
         </div>
 

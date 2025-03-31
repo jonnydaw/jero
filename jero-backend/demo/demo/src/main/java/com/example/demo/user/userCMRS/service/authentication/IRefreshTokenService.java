@@ -20,5 +20,4 @@ public interface IRefreshTokenService {
 
     public Authentication authenticateHelper(final String email);
 
-
 }
