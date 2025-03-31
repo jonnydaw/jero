@@ -282,7 +282,7 @@ public class PropertyService implements IPropertyService {
             reviewRepo.save(rm);
 
             pm.setAvgReviewScore(newAvg);
-            pm.setPercentile(1.0);
+            pm.setPercentile(100);
             propertyRepo.save(pm);
             return;
             //return 1.0;
@@ -291,15 +291,18 @@ public class PropertyService implements IPropertyService {
         System.out.println(oldAvg);
         int removeIndex = Collections.binarySearch(scores, (double)oldAvg);
         System.out.println(removeIndex);
-        if(removeIndex >= 0) scores.remove(removeIndex);
+        
+        if(removeIndex >= 0){
+            scores.remove(removeIndex);
+        }
         
         System.out.println(scores.toString());
 
 
         int addIndex = Collections.binarySearch(scores, newAvg);
-        boolean needToIterate = true;
+        //boolean needToIterate = true;
         if(addIndex < 0){
-            needToIterate = false;
+           // needToIterate = false;
             addIndex = addIndex * -1;
             addIndex--;
         }
@@ -307,29 +310,36 @@ public class PropertyService implements IPropertyService {
         scores.add(addIndex, newAvg);
         rm.setScores(scores);
         reviewRepo.save(rm); 
+        System.out.println("scores: " + scores);
         
         int countLessThan = 0;
 
-        if(needToIterate){
-            for(int i = addIndex; i < scores.size(); i++){
-                if(scores.get(i) != (newAvg)){
-                    countLessThan = i;
-                    break;
-                }
-            }
-        }else{
-            countLessThan = addIndex;
-        }
+        // if(needToIterate){
+        //     for(int i = addIndex; i < scores.size(); i++){
+        //         if(scores.get(i) != (newAvg)){
+        //             countLessThan = i;
+        //             break;
+        //         }
+        //     }
+        // }else{
+        //     countLessThan = addIndex;
+        // }
         
 
         System.out.println("countless: " + countLessThan);
         double percentile = (countLessThan / (double)scores.size()) * 100;
         System.out.println("percentile: " + percentile);
-        pm.setPercentile(percentile);
+        if(scores.size() == 1) {
+            percentile = 100;
+            pm.setPercentile(percentile);
+        }
+        //pm.setPercentile(percentile);
         pm.setAvgReviewScore(newAvg);
        
         propertyRepo.save(pm);
-        adjust(pm.getId(), newAvg,percentile,(double)scores.size());
+        System.out.println("score size: " + scores.size());
+        //adjust(pm.getId(), newAvg,percentile,(double)scores.size(), sizeIncrease);
+        adjust(pm.getId(), scores);
 
         //return (countLessThan / scores.size() * 1.0) * 100;
         
@@ -339,38 +349,88 @@ public class PropertyService implements IPropertyService {
         return ((reviews.size() * existingAvg) + newScore) / (reviews.size() + 1);
     }
 
-    private void adjust(ObjectId newestPropertyToBeReview, double newAvg, double percentileOfNewAvg, double size){
+    private void adjust(ObjectId newestPropertyToBeReview, List<Double> scores){
         List<PropertyModel> properties = propertyRepo.findAll();
-        for(PropertyModel property : properties){
-            if(property.getId().equals(newestPropertyToBeReview)){
-                continue;
+        Map<Double,Double> scoreToPercentile = new HashMap<>();
+        int l = 0;
+        int r = 1;
+        while(r < scores.size()){
+            if(scores.get(r) != scores.get(l)){
+                scoreToPercentile.put(scores.get(l), (r / (double)scores.size()) * 100);
+                l = r;
             }
+
+            r++;
+        }
+        scoreToPercentile.put(scores.getLast(),100.0);
+
+        for(PropertyModel property : properties){
+            // if(property.getId().equals(newestPropertyToBeReview)){
+            //     continue;
+            // }
             if(property.getReviews() == null || property.getReviews().isEmpty()){
                 continue;
             }
-            System.out.println("hit adjust");
             double mean = property.getAvgReviewScore();
-            double percentile = property.getPercentile();
-            if(mean == 0 || percentile == -1 ){
-                continue;
-            }
-            if(mean < newAvg){
-                double numLess = ((percentile / 100.0) * (size-1));
-                System.out.println("numless: " + numLess);
-                percentile = (numLess / size) * 100.0;
-            }else if(mean > newAvg){
-                double numLess = ((percentile / 100.0) * (size-1));
-                System.out.println("numless2" + numLess);
-                percentile = ((numLess + 1) / size) * 100.0;
-            }else{
-                percentile = percentileOfNewAvg;
-            }
-            property.setPercentile(percentile);
+            System.out.println("mean: " +mean);
+            System.out.println("map: " + scoreToPercentile.toString() );
+            double newPercentile = scoreToPercentile.get(mean);
+            property.setPercentile(newPercentile);
             propertyRepo.save(property);
 
 
         }
-    }
+        }   
+        // private void adjust(ObjectId newestPropertyToBeReview, double newAvg, double percentileOfNewAvg, double size,  boolean sizeIncrease){
+
+        // List<PropertyModel> properties = propertyRepo.findAll();
+        // for(PropertyModel property : properties){
+        //     if(property.getId().equals(newestPropertyToBeReview)){
+        //         continue;
+        //     }
+        //     if(property.getReviews() == null || property.getReviews().isEmpty()){
+        //         continue;
+        //     }
+            // System.out.println("hit adjust");
+            // double mean = property.getAvgReviewScore();
+            // double percentile = property.getPercentile();
+            // if(mean == 0 || percentile == -1 ){
+            //     continue;
+            // }
+            // if(mean < newAvg && sizeIncrease){
+            //     double numLess = ((percentile / 100.0) * (size-1.0));
+            //     System.out.println("numless less: " + numLess);
+            //     percentile = (numLess / size) * 100.0;
+            // }else if(mean < newAvg && !sizeIncrease){
+            //     double numLess = ((percentile / 100.0) * (size)) - 1.0;
+            //     System.out.println("numless mean < newAvg && !sizeIncrease : " + numLess);
+            //     // due to floating points
+            //     if(numLess <= 0){
+            //         percentile = 0;
+            //     } else{
+            //         percentile = (numLess / size) * 100.0;
+
+            //     }
+            //     System.out.println("percentile mean < newAvg && !sizeIncrease : " + percentile);
+
+            // }else if(mean > newAvg && sizeIncrease){
+            //     System.out.println("mean: " + mean);
+            //     double numLess = ((percentile / 100.0) * (size-1.0));
+            //     System.out.println("numless greater: " + numLess);
+            //     percentile = ((numLess + 1) / size) * 100.0;
+            // }else if(mean > newAvg && !sizeIncrease){
+            //     double numLess = ((percentile / 100.0) * (size));
+            //     System.out.println("numless greater: " + numLess);
+            //     percentile = ((numLess + 1) / size) * 100.0;
+            // }else{
+            //     percentile = percentileOfNewAvg;
+            // }
+            // property.setPercentile(percentile);
+            // propertyRepo.save(property);
+
+
+    //     }
+    // }
 
     private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
        // if(locationType.equals("city")){
