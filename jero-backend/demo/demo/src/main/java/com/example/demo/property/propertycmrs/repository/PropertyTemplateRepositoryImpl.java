@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -28,10 +30,30 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
     MongoTemplate mongoTemplate;
 
     @Override
-    public List<PropertyModel> basicFilter(String location, Instant startDate, Instant endDate, int numGuests, boolean searchContainsChildren, boolean searchContainsPets){
+    public List<PropertyModel> basicFilter(
+        String location, 
+        Instant startDate, 
+        Instant endDate, 
+        int numGuests, 
+        boolean searchContainsChildren, 
+        boolean searchContainsPets,
+        Optional<String> sort
+        ){
         // https://stackoverflow.com/questions/26176548/spring-data-mongodb-date-range-query
         List<Criteria> criteria = new ArrayList<>();
+  
         Query query = new Query();
+        if(sort.isPresent()){
+            String val = sort.get();
+            if(val.equals("DESC")){
+                query.with(Sort.by(Sort.Direction.DESC,"pricePerNight"));
+            }else if(val.equals("ASC")){
+                query.with(Sort.by(Sort.Direction.ASC,"pricePerNight"));
+            }
+        }
+
+        // //https://stackoverflow.com/questions/18521009/spring-mongodb-query-sorting
+        // query.with(Sort.by(Sort.Direction.DESC,"pricePerNight"));
 
 
         DBObject c1 = new BasicDBObject("blockedDates", null);

@@ -27,6 +27,16 @@
     margin: 0.5em;
 }
 
+#filters{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+
+
 #cards{
     display: flex;
     flex-direction: row;

@@ -1,0 +1,20 @@
+#container{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#otherfilter{
+    align-self: center;
+}
+
+#otherfilter > button{
+    margin-right: 1em;
+}
+
+#rightFilter{
+    margin-left:auto 
+}

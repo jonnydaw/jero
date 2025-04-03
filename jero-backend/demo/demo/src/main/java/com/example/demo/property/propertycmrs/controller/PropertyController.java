@@ -72,12 +72,13 @@ public class PropertyController {
                                                        @RequestParam("enddate") Optional<String> endDate,
                                                        @RequestParam("numadults") Optional<Integer> numAdults,
                                                        @RequestParam("numchildren") Optional<Integer> numChildren,
-                                                       @RequestParam("numpets") Optional<Integer> numPets
+                                                       @RequestParam("numpets") Optional<Integer> numPets,
+                                                       @RequestParam("sort") Optional<String> sort
                                                        ){
         Instant start = Instant.parse(startDate.get()+"T00:00:00.000Z");
         Instant end = Instant.parse(endDate.get()+"T00:00:00.000Z");
 
-        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0));
+        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0),sort);
         System.out.println("hit controller");
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);

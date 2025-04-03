@@ -4,6 +4,7 @@ import style from "./searchresults.module.css"
 import mobileStyle from "./searchresultsMobile.module.css"
 import PropertyCard from "../PropertyCard/PropertyCard";
 import Properties from "./Properties";
+import Filters from "./Filters";
 
 
 // type PropertyAttribute = {    
@@ -61,6 +62,9 @@ const SearchResults = (props : Props) => {
               <p>{props.locationOverview}</p>
             </div>
 
+          </section>
+          <section id={style.filters}>
+            <Filters/>
           </section>
         <Properties propertyAttributes={props.propertyAttributes} locationOverview={props.locationOverview} isMobile={props.isMobile} />
         </div>

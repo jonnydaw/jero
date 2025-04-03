@@ -65,6 +65,7 @@ const Search : React.FC<Props> =  (props : Props) => {
     params.set("numadults",String(formData.count.adultCount));
     params.set("numchildren",String(formData.count.childCount));
     params.set("numpets",String(formData.count.petCount));
+    params.set("sort","none");
 
 
 

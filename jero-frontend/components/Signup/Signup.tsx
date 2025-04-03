@@ -6,8 +6,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios"
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { createPortal } from 'react-dom';
-import Portal from "../Modal/Portal";
+
 import {isFieldMatch, isValidEmail, isValidPassword} from "./SignupErrors"
 import { useRouter } from "next/navigation";
 import { inDevEnvironment } from "@/base";
@@ -314,7 +313,6 @@ const Signup = () => {
                 </option>
                 <option value="customer">{t('userTypes.tourist')}</option>
                 <option value="host">{t('userTypes.host')}</option>
-                <option value="both">{t('userTypes.both')}</option>
             </select>
             {!submissionError ? <br /> : <span>Not allowed</span>}
             <button id={style.button} type="submit">

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 
@@ -17,7 +18,14 @@ public interface IPropertyService {
 
     void createProperty(String jwt, CreatePropertyHandler cph);
 
-    List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets);
+    List<Map<String,String>> getPropertiesByLocation(
+        String queriedLocation, 
+        Instant startDate, 
+        Instant endDate, 
+        int numAdults, 
+        int numChildren, 
+        int numPets,
+        Optional<String> sort);
 
     public List<Map<String,String>> getPropertiesBySmart(
         Instant startDate, 

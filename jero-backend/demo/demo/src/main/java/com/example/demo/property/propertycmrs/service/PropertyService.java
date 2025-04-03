@@ -115,7 +115,7 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
+    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets, Optional<String> sort) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         //System.out.println("location " + location);
         if(location == null){
@@ -133,14 +133,14 @@ public class PropertyService implements IPropertyService {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
                 }
                 //System.out.println(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy);
-                return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets);
+                return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets, sort);
             }
         }
         // System.out.println("hit");
         // System.out.println(location);
         String locationType = location.getLocationType();
         List<PropertyModel> pms = new ArrayList<>();
-        pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets);
+        pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets, sort);
 
         return getRes(pms);
     }
@@ -432,9 +432,18 @@ public class PropertyService implements IPropertyService {
     //     }
     // }
 
-    private List<PropertyModel> extracted2(LocationModel location, String locationType, List<PropertyModel> pms, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets) {
+    private List<PropertyModel> extracted2(LocationModel location, 
+        String locationType, 
+        List<PropertyModel> pms, 
+        Instant startDate, 
+        Instant endDate, 
+        int numAdults, 
+        int numChildren, 
+        int numPets,
+        Optional<String> sort
+    ) {
        // if(locationType.equals("city")){
-            pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0);
+            pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0, sort);
         //}
         return pms;
     }
