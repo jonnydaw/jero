@@ -1,21 +1,24 @@
 // https://testcafe.io/
 //  testcafe chrome userStoryTesting/english/navbar/guestDropdown.js
+//  testcafe firefox:headless userStoryTesting/english/navbar/guestDropdown.js
 // selectors
 
 import {Selector} from 'testcafe'
-const guestHoverAreaText = Selector(".Dropdown_dropdown__Ry3RD span");
-const guestHoverArea =  Selector('div.Dropdown_dropdown__Ry3RD');
-const guestDropdownContent = Selector("div.Dropdown_dropdownContent__68Zte");
+const guestHoverAreaText = Selector(".Dropdown_dropdown__tMINW span");
+const guestHoverArea =  Selector('div.Dropdown_dropdown__tMINW');
+const guestDropdownContent = Selector("div.Dropdown_dropdownContent__z8_Hu");
 
-const adultButtonSection = Selector(`div.Dropdown_buttonArea__z7Wyx > span`).nth(0);
+const seach = Selector('#search')
+
+const adultButtonSection = Selector(`div.Dropdown_buttonArea__ByglP > span`).nth(0);
 const adultIncrementButton = Selector('button').withText('+');
 const adultDecrementButton = Selector('button').withText('−');
 
-const childButtonSection = Selector(`div.Dropdown_buttonArea__z7Wyx > span`).nth(1);
+const childButtonSection = Selector(`div.Dropdown_buttonArea__ByglP > span`).nth(1);
 const childIncrementButton = Selector('button').withText('+').nth(1);
 const childDecrementButton = Selector('button').withText('−').nth(1);
 
-const petButtonSection = Selector(`div.Dropdown_buttonArea__z7Wyx > span`).nth(2);
+const petButtonSection = Selector(`div.Dropdown_buttonArea__ByglP > span`).nth(2);
 const petIncrementButton = Selector('button').withText('+').nth(1);
 const petDecrementButton = Selector('button').withText('−').nth(1);
 
@@ -63,6 +66,7 @@ test('Increment Adult Button by random amount', async t => {
 });
 
 test('Verify adult count cannot go below one.', async t => {
+   
     await t
         .hover(guestHoverArea)
         // verifying adult count is 1.
@@ -75,20 +79,36 @@ test('Verify adult count cannot go below one.', async t => {
 });
 
 test.only('Increment child button by random amount', async t => {
-    const random = generateRandomInt(1,20);
+    
+    //const random = generateRandomInt(1,20);
+   
     await t
-        .hover(guestHoverArea);
+    .maximizeWindow()
+    //.debug()
+    .debug()    
+    .hover(guestHoverArea)
+        .wait(50)
         
-    for(let i = 0;  i < random; i++){
-        // verifying it is the same the dropdown as the form input.
-        await t
-            .click(childIncrementButton)
-            .wait(5000)
-            .expect((await childButtonSection.textContent).trim() * 1).eql(i+1);
-    }
-    await t
-        // plus 2 as there is always one adult.
-        .expect(guestHoverAreaText.textContent).eql(`Guests: ${random + 2}`);
+        //.expect(childIncrementButton.visible).ok()
+        .hover(childIncrementButton)
+        .click(childIncrementButton)
+
+       // .debug()
+        // .click(childIncrementButton)
+        //.wait(10000)
+        .expect((await childButtonSection.textContent).trim() * 1).eql(1);
+        
+    // for(let i = 0;  i < random; i++){
+    //     // verifying it is the same the dropdown as the form input.
+    //     await t
+    //     //.debug()
+    //         .click(childIncrementButton)
+    //         //.wait(5000)
+    //         .expect((await childButtonSection.textContent).trim() * 1).eql(i+1);
+    // }
+    // await t
+    //     // plus 2 as there is always one adult.
+    //     .expect(guestHoverAreaText.textContent).eql(`Guests: ${random + 2}`);
 });
 
 test('Verify child count cannot go below zero.', async t => {

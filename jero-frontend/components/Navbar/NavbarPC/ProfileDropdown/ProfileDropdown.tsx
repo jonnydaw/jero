@@ -1,8 +1,9 @@
+'use client'
 import Link from "next/link";
 import stylePC from "./profiledropdown.module.css"
 import styleMobile from "./mobileProfileDropdown.module.css"
 import buttonStyle from "../NavbarPC.module.css"
-
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { cookies } from "next/headers";
 import axios from "axios";
@@ -24,6 +25,9 @@ const ProfileDropdown = (props : Props) => {
   // const rtValue = cookieStore.get("RT")?.value;
    // const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const locale = "en"
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
   const style = props.isMobile ? styleMobile : stylePC; 
 
@@ -32,6 +36,29 @@ const ProfileDropdown = (props : Props) => {
   //   };
     
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
+    const handleClick = (e : any, value : any) => {
+      e.preventDefault();
+      console.log(value)
+      if(value === "Spanish"){
+        // https://stackoverflow.com/questions/47717424/regex-to-remove-first-part-of-pathname
+        const reged = pathname.replace(/^\/[\w\d]+\//, 'es/');
+        console.log(pathname.split("/"))
+       // console.log(reged)
+        //const newPathName = "es/" + pathname.split("/").slice(1).join("/");
+        // console.log(`${reged}?${searchParams.toString()}`)
+        // console.log(searchParams)
+       if(searchParams.size !== 0){
+        console.log("sps")
+        router.push(`/${reged}?${searchParams.toString()}`)
+       } else if(pathname.split("/").length === 2){
+        console.log(reged)
+          router.push(`/es`)
+       } else if(pathname.split("/").length > 2){
+          router.push(`/${reged}`)
+       }
+      }
+    }
     
       let authMap : Map<string, string> = new Map();
       let profileMap : Map<string, string> = new Map();
@@ -61,6 +88,7 @@ const ProfileDropdown = (props : Props) => {
       const arr : string[] = internationalKeys;
 
       arr.map((i) => {
+        console.log(i)
         internationalMap.set(i,i);
       })
       //const expiry : number = parseJWT(jwtValue).exp;
@@ -113,10 +141,13 @@ const ProfileDropdown = (props : Props) => {
       </div>)
       }
       <div className={style.authDropdown}>
-        <h3>International?</h3>
+        <h3>Languages</h3>
           {
             Object.entries(internationItems).map(([key,value]) => (
-              <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+              // <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+              <span key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,value)}>
+              {key}
+          </span>
             ))
           }
       </div>

@@ -34,7 +34,7 @@
 #     exit 1
 # else
 #     echo "unit tests passed. ༼ つ  ͡° ͜ʖ ͡° ༽つ"
-# fi
+# fi    
 
 
 # echo "Rest assured tests"
