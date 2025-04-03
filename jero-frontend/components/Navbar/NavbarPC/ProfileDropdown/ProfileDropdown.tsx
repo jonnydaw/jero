@@ -40,9 +40,9 @@ const ProfileDropdown = (props : Props) => {
     const handleClick = (e : any, value : any) => {
       e.preventDefault();
       console.log(value)
-      if(value === "Spanish"){
+      // if(value === "Spanish"){
         // https://stackoverflow.com/questions/47717424/regex-to-remove-first-part-of-pathname
-        const reged = pathname.replace(/^\/[\w\d]+\//, 'es/');
+        const reged = pathname.replace(/^\/[\w\d]+\//, `${value}/`);
         console.log(pathname.split("/"))
        // console.log(reged)
         //const newPathName = "es/" + pathname.split("/").slice(1).join("/");
@@ -57,7 +57,7 @@ const ProfileDropdown = (props : Props) => {
        } else if(pathname.split("/").length > 2){
           router.push(`/${reged}`)
        }
-      }
+     // }
     }
     
       let authMap : Map<string, string> = new Map();

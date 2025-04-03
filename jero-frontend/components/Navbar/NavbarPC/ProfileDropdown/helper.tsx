@@ -16,7 +16,7 @@ export const profileKeysHost : string[] = [
 ]
 
 export const internationalKeys : string[] = [
-    "English",
-    "Spanish",
-    "Portuguese"
+    "en",
+    "es",
+    "br"
 ]
