@@ -13,10 +13,7 @@ update password
 add introduction
 delete account
 */
-interface UpdateFieldsWithSecret extends UpdateFields{
-    oldPassword : string;
-    password : string;
-}
+
 
 const ManageProfile = (props : UpdateFields) => {
 
@@ -24,14 +21,12 @@ const ManageProfile = (props : UpdateFields) => {
     
 
 
-    const [updateFields, setUpdateFields] = useState<UpdateFieldsWithSecret>(
+    const [updateFields, setUpdateFields] = useState<UpdateFields>(
         {
             firstName : "",
             lastName : "",
             introduction : "",
             imgLink : "",
-            oldPassword : "",
-            password : ""
         }
     );
 
@@ -50,7 +45,7 @@ const ManageProfile = (props : UpdateFields) => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        const name : keyof UpdateFieldsWithSecret = e.target.name;
+        const name : keyof UpdateFields = e.target.name;
         const endpointFin = e.target.name.toLowerCase();
         console.log(updateFields[name]);
         // const postVal = ;
@@ -88,7 +83,7 @@ const ManageProfile = (props : UpdateFields) => {
                             onChange={handleChange}
                         />
 
-                        <button>Confirm Change</button>
+                        <button className="basicButton">Confirm Change</button>
                     </form>
                 </section>
 
@@ -107,7 +102,7 @@ const ManageProfile = (props : UpdateFields) => {
                             onChange={handleChange}
                             />
 
-                        <button>Confirm Change</button>
+                        <button className="basicButton">Confirm Change</button>
                     </form>
                 </section>
                 
@@ -128,7 +123,7 @@ const ManageProfile = (props : UpdateFields) => {
 
                             />
 
-                        <button>Confirm Change</button>
+                        <button className="basicButton">Confirm Change</button>
                     </form>
                 </section>
                 
@@ -145,40 +140,12 @@ const ManageProfile = (props : UpdateFields) => {
                             onChange={handleChange}
     
                         />
-
-                        <button>Confirm Change</button>
+                        <button className="basicButton">Confirm Change</button>
                     </form>
                 </section>
-
-                <section className={style.updateSection}>
-                    <form
-                                        onSubmit={handleSubmit}
-                                        name="oldpassword">
-                        <label htmlFor="oldpassword"> Old Password
-                        </label>
-                        <input 
-                            type="text" 
-                            id="oldpassword" 
-                            name="oldpassword" 
-                            value={updateFields.oldPassword}
-                            onChange={handleChange}
-                        />
-
-                        <label htmlFor="password"> Change Password
-                        </label>
-                        <input 
-                        type="text" 
-                        id="password" 
-                        name="password"
-                        value={updateFields.password} 
-                        onChange={handleChange}
-                        />
-
-                        <button>Confirm Change</button>
-                    </form>
-                </section>
+                                                                                                                                                                
                 
-                <button id={style.delete}>Delete Account</button>
+                <button className="basicButton" id={style.delete}>Delete Account</button>
 
             </div>
         </div>

@@ -21,8 +21,29 @@ const Options = (props : Props) => {
         e.preventDefault();
         const locale = (pathname.split("/").at(1));
         router.push(`/${locale}/profile/bookings/review/${props.propertyId}/${props.bookingId}`);
-        
     }
+
+    const handleCancel = async (e: any) => {
+        if(confirm("Do you want to cancel this booking")){
+            //alert("booking cancelled")
+        try {
+            const response = await axios.patch(`${baseApi}/booking/cancel-booking`, {
+                    bookingId : props.bookingId
+                },
+                { withCredentials: true}
+            );
+            // router.push("/")
+            alert("Booking cancelled")
+            // location.reload();
+            console.log(response.data);
+        } catch (error : any) {
+            console.log(error.response.data.message)
+            alert(`Login failed:  ${error.response.data.message}`)
+            //console.log('Login failed:', error.response ? error.response.data : error.message);
+        }
+    }else alert("booking not cancelled")
+    }
+
     if(props.isCustomer){
         //if(!props.accepted) return null;
         if(props.cancelled) return null;
@@ -34,7 +55,7 @@ const Options = (props : Props) => {
             )
         }else if(props.timeframe === "future"){
             return(<div>
-            <button className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
+            <button onClick={handleCancel} className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
             </div>)
         } else if(props.timeframe === "present"){
             // return(<div>
@@ -45,12 +66,9 @@ const Options = (props : Props) => {
         console.log("hit")
         if(props.cancelled) return null;
         if(props.timeframe === "past" && props.accepted){
-            return (
-                <div>
-                <button style={{backgroundColor : "white", color : "black"}}>Leave a review</button>
-                </div>
-            )
+            return;
         } else if(props.timeframe === "future" && !props.accepted){
+            
             const handleAccept = async (e: any) => {
                 try {
                     const response = await axios.post(`${baseApi}/booking/accept`, {
@@ -59,20 +77,24 @@ const Options = (props : Props) => {
                         { withCredentials: true}
                     );
                     // router.push("/")
+                    alert("Booking accepted")
                     // location.reload();
                     console.log(response.data);
                 } catch (error : any) {
-                    console.log('Login failed:', error.response ? error.response.data : error.message);
+                    console.log(error.response.data.message)
+                    alert(`Login failed:  ${error.response.data.message}`)
+                    //console.log('Login failed:', error.response ? error.response.data : error.message);
                 }
             }
             return(
             <div>
-            <button onClick={handleAccept} style={{backgroundColor : "green", color : "white"}}>Accept</button>
+            <button onClick={handleAccept} className='basicButton' style={{backgroundColor : "green", color : "white"}}>Accept</button>
             </div>
             )
         } else if(props.timeframe === "future" && props.accepted){
+
             return(<div>
-                <button>Cancel</button>
+                <button onClick={handleCancel} className="basicButton">Cancel</button>
                 </div>)
         }
     }

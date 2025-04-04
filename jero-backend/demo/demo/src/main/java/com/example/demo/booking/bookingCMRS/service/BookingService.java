@@ -141,6 +141,28 @@ public class BookingService implements IBookingService {
     }
 
 
+    @Override
+    public void deleteBooking(String id, String token) {
+        BookingModel bm = bookingRepo.findById(new ObjectId(id)).get();
+        String userId = JwtProvider.getIdFromJwtToken(token);
+        if(!userId.equals(bm.getOwnerId().toHexString()) && !userId.equals(bm.getGuestId().toHexString()) ){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed");
+        }
+
+        PropertyModel pm = propertyRepo.findById(bm.getPropertyId()).get();
+        Set<Instant> toUnblock = populateInstantRange(bm.getStartDate(), bm.getEndDate());
+        System.out.println("to unblock" + toUnblock.toString());
+        Set<Instant> currentBlockedDates = pm.getBlockedDates();
+        System.out.println("before removal : " + currentBlockedDates);
+        currentBlockedDates.removeAll(toUnblock);
+        System.out.println("after removal : " + currentBlockedDates);
+        //pm.setBlockedDates(currentBlockedDates);
+        bm.setCancelled(true);
+        propertyRepo.save(pm);
+        bookingRepo.save(bm);
+    }
+
+
     
 
     private void sendEmail(Optional<PropertyModel> pm, String ownerEmail) {
@@ -170,7 +192,11 @@ public class BookingService implements IBookingService {
         return totalCost;
     }
 
-    public Set<Instant> populateInstantRange(Instant start, Instant end) {
+
+
+
+
+    private Set<Instant> populateInstantRange(Instant start, Instant end) {
         Set<Instant> range = new HashSet<>();
         long days = ChronoUnit.DAYS.between(start, end);
         for(long day = 0; day < days; day++){

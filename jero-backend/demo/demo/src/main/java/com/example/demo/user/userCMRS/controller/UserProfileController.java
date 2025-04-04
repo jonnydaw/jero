@@ -61,6 +61,12 @@ public class UserProfileController {
             return ResponseEntity.ok().body("hi");
 	    }
 
+        @PutMapping("/update-password") 
+	    public ResponseEntity<String> updateProfilePic(@RequestBody , @CookieValue("JWT") String token)  { 
+            updateService.updateImageUrl(newImageUrl.getUpdateVal(), token);
+            return ResponseEntity.ok().body("hi");
+	    }
+
         @GetMapping("/get-update-fields") 
 	    public ResponseEntity<?> getUpdateableFields(@CookieValue("JWT") String token)  { 
             // https://stackoverflow.com/questions/33118342/java-get-cookie-value-by-name-in-spring-mvc
