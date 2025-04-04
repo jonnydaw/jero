@@ -7,13 +7,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { inDevEnvironment } from './base';
 
 const handleI18nRouting = createMiddleware(routing);
-const baseInternal = inDevEnvironment ? "http://localhost:3000" : "https://jero.travel";
+const baseInternal = inDevEnvironment ? "http://localhost:3000" : "https://www.jero.travel";
 const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
 
 //helpers start
 
 const protectedPages : string[] = ["profile"];
+const protectedFromNonHost : string[] = ["add-property"];
 const authIngressPages : string[] = ["login","signup"];
 
 
@@ -35,9 +36,15 @@ export default async function middleware(request: NextRequest) {
     let response = handleI18nRouting(request);
 
     const [, locale, page, ..._] = request.nextUrl.pathname.split('/');
+    
     if (authIngressPages.includes(page)) {
         console.log(await blockAuthIngress(response, locale))
         return await blockAuthIngress(response, locale);
+    }
+
+    if(protectedFromNonHost.includes(page)){
+        console.log("hit protected from non host")
+        return await blockFromNonHost(response, locale);
     }
 
     if(page === "otp"){
@@ -56,11 +63,27 @@ const blockAuthIngress = async (response : NextResponse, locale :string) => {
     const rtValue : string | undefined  = cookieStore.get("RT")?.value;
 
     if(!jwtValue || !rtValue){
+        console.log("hit")
         return response;
     }
 
     return NextResponse.redirect(`${baseInternal}/${locale}`);
 }
+
+const blockFromNonHost = async (response : NextResponse, locale :string) => {
+    const cookieStore = await cookies();
+    const jwtValue : string | undefined = cookieStore.get("JWT")?.value;
+    const rtValue : string | undefined  = cookieStore.get("RT")?.value;
+    console.log("jwt " + jwtValue)
+    console.log("rt " + rtValue)
+
+    if((jwtValue && rtValue) && parseJWT(jwtValue).role === "host"){
+        return response;
+    }
+
+    return NextResponse.redirect(`${baseInternal}/${locale}`);
+}
+
 
 const blockOtpIfNotPending = async (locale : string) => {
     const cookieStore = await cookies();
