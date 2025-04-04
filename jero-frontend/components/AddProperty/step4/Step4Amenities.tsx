@@ -1,5 +1,5 @@
 'use client'
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import BigCheckbox from "../BigCheckbox";
 import style from "./step4.module.css"
 import { useRouter, usePathname } from "next/navigation";
@@ -30,6 +30,90 @@ const Step4Amenities = () => {
     const router = useRouter();
     const pathname = usePathname();
 
+
+    useEffect(() => {
+        const beautyVal = JSON.parse(localStorage.getItem("beauty") || "{}");
+        setBeautyFacilities({
+            hasHairDryer: beautyVal.hasHairDryer || false,
+            hasHairStraightner: beautyVal.hasHairStraightner || false,
+            hasShampoo: beautyVal.hasShampoo || false,
+            hasConditioner: beautyVal.hasConditioner || false,
+            hasBodyWash: beautyVal.hasBodyWash || false,
+        })
+
+        const climateVal = JSON.parse(localStorage.getItem("climateControl") || "{}");
+        setClimateControlFacilities({
+            hasAirCon: climateVal.hasAirCon || false,
+            hasFan: climateVal.hasFan || false,
+            hasHeating: climateVal.hasHeating || false,
+            hasWoodBurningFire: climateVal.hasWoodBurningFire || false,
+        })
+        
+        const entertainmentVal = JSON.parse(localStorage.getItem("entertainment") || "{}");
+        setEntertainmentFacilities({
+            hasWifi: entertainmentVal.hasWifi || false,
+            hasSmartTv: entertainmentVal.hasSmartTv || false,
+            hasGym: entertainmentVal.hasGym || false,
+            hasBooks: entertainmentVal.hasBooks || false,
+            hasBoardGames: entertainmentVal.hasBoardGames || false,
+            hasLocalMuseums: entertainmentVal.hasLocalMuseums || false,
+            hasLocalBars: entertainmentVal.hasLocalBars || false,
+            hasLocalTheatres: entertainmentVal.hasLocalTheatres || false,
+        });
+
+        const healthAndSafetyVal = JSON.parse(localStorage.getItem("healthAndSafety") || "{}");
+        setHealthAndSafety({
+            hasFireAlarm : healthAndSafetyVal.hasFireAlarm || false,
+            hasCarbonMonoxideDetector: healthAndSafetyVal.hasCarbonMonoxideDetector || false,
+            hasFireExtinguisher: healthAndSafetyVal.hasFireExtinguisher || false,
+            hasFirstAidKit: healthAndSafetyVal.hasFirstAidKit || false,
+        });
+
+        const kitchenVal = JSON.parse(localStorage.getItem("kitchen") || "{}");
+        setKitchenFacilities({
+            hasKitchen: kitchenVal.hasKitchen || false,
+            hasDishwasher: kitchenVal.hasDishwasher || false,
+            hasMicrowave: kitchenVal.hasMicrowave || false,
+            hasOven: kitchenVal.hasOven || false,
+            hasHob: kitchenVal.hasHob || false,
+            hasPotsAndPans: kitchenVal.hasPotsAndPans || false,
+            hasCutlery: kitchenVal.hasCutlery || false,
+            hasCrockery: kitchenVal.hasCrockery || false,
+            hasKettle: kitchenVal.hasKettle || false,
+            hasCoffeeMaker: kitchenVal.hasCoffeeMaker || false,
+        });
+
+        const laundryVal = JSON.parse(localStorage.getItem("laundry") || "{}");
+        setLaundryFacilities({
+            hasWashingMachine: laundryVal.hasWashingMachine || false,
+            hasTumbleDryer: laundryVal.hasTumbleDryer || false,
+            hasIron: laundryVal.hasIron || false,
+            hasDryingRack: laundryVal.hasDryingRack || false,
+        });
+
+        const transportVal = JSON.parse(localStorage.getItem("transport") || "{}");
+        setTransportFacilities({
+            hasGarage: transportVal.hasGarage || false,
+            hasOffStreetParking: transportVal.hasOffStreetParking || false,
+            hasOnStreetParking: transportVal.hasOnStreetParking || false,
+            hasReliablePublicTransportNearby: transportVal.hasReliablePublicTransportNearby || false,
+        });
+
+
+        const waterVal = JSON.parse(localStorage.getItem("water") || "{}");
+        setWaterFacilities({
+            hasDrinkingWater: waterVal.hasDrinkingWater || false,
+            hasBath: waterVal.hasBath || false,
+            hasPrivateToilet: waterVal.hasPrivateToilet || false,
+            hasJacuzzi: waterVal.hasJacuzzi || false,
+            hasShower: waterVal.hasShower || false,
+            hasBidet: waterVal.hasBidet || false,
+            hasSwimmingPool: waterVal.hasSwimmingPool || false,
+        });
+
+}, []);
+
+
     const handleSubmit = (e : any) => {
         e.preventDefault();
         // https://stackoverflow.com/questions/3357553/how-do-i-store-an-array-in-localstorage
@@ -45,8 +129,6 @@ const Step4Amenities = () => {
         localStorage.setItem("entertainment", JSON.stringify(entertainmentFacilities));
         const locale = (pathname.split("/").at(1));
         router.push(`/${locale}/add-property/step5`);
-
-        
 
     }
 
@@ -460,7 +542,7 @@ const Step4Amenities = () => {
             <AddPropertyBottomNav
                 handleSubmitFunction={handleSubmit} 
                 buttonText="Save and Continue to the final step."
-                prevSteps={[1,2,3]} />
+                prevSteps={[1,2,3,5]} />
             </div>
         
 

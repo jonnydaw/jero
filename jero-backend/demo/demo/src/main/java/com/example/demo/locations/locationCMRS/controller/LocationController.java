@@ -1,11 +1,15 @@
 package com.example.demo.locations.locationCMRS.controller;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.locations.locationCMRS.service.ILocationService;
-import com.example.demo.locations.locationCMRS.service.LocationService;
 
 @RestController
 @RequestMapping("/location")
@@ -34,12 +37,17 @@ public class LocationController {
         return ResponseEntity.ok().body(granularLocations);
     }
 
-    // @GetMapping("/location-overview")
-    // public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, @RequestParam("locale") String locale){
-    //     System.out.println(locale);
-    //     String res = locationService.getLocationOverview(location, locale);
-    //     return ResponseEntity.ok().body(res);
-    // }
+    @GetMapping("/location-overview")
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, @CookieValue("NEXT_LOCALE") String locale, @RequestParam("start") LocalDate date){
+        System.out.println("hit location overview: " + location);
+        System.out.println("locale " + locale );
+        System.out.println("month " + date.getMonthValue());
+        int month = date.getMonthValue();
+        Map<String,Object> res = locationService.getLocationOverview(location, locale,month);
+        // List<String> res = new ArrayList<>();
+        //res.add("poo");
+        return ResponseEntity.ok().body(res);
+    }
     
 }
 // 

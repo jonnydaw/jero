@@ -46,14 +46,33 @@ public class LocationService implements ILocationService {
         return hierarchy;
     }
 
-    // @Override 
-    // public String getLocationOverview(String queriedLocation, String locale){
-    //     LocationModel location  = locationRepository.findLocationById(queriedLocation);
-    //     if(location == null){
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
-    //     }
-    //     return location.getOverview().get(locale);
-    // }
+    @Override 
+    public Map<String,Object> getLocationOverview(String queriedLocation, String locale,int month){
+        LocationModel location  = locationRepository.findLocationById(queriedLocation);
+        if(location == null){
+            List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
+            if(fallbacks == null || fallbacks.size() == 0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+            } else{
+                String longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = "";
+                for(String fallback : fallbacks){
+                    if(fallback.length() > longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy.length()){
+                        longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = fallback;
+                    }
+                }
+                if(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy.equals("")){
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+                }
+                return getLocationOverview(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, locale, month);
+            }
+        }
+        System.out.println("hit location overview service");
+        System.out.println(location.getOverview().get("en"));
+        int temp = location.getTemperature().get(month - 1);
+        Map<String,Object> res = location.getOverview().get("en");
+        res.put("temp", temp);
+        return res;
+    }
 
 
 

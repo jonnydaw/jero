@@ -17,11 +17,12 @@ import Filters from "./Filters";
   
   interface Props {
     propertyAttributes: PropertyAttribute[];
-    locationOverview : string;
+    locationOverview : any;
     isMobile : boolean;
   }
 
 const SearchResults = (props : Props) => {
+  console.log(props.locationOverview.attractions)
     return (
         <div id ={!props.isMobile ? style.container : mobileStyle.container}>
            <div id={!props.isMobile ? style.searchResultsArea : mobileStyle.searchResultsArea}>
@@ -29,37 +30,45 @@ const SearchResults = (props : Props) => {
           <section id={!props.isMobile ? style.locationOverview : mobileStyle.locationOverview}>
             
             <div className={style.overviewSubsection}>
-              <h3>Overview</h3>
-              <p>{props.locationOverview}</p>
+              <h3>Fun Fact</h3>
+              <p>{props.locationOverview.overview}</p>
             </div>
 
             <div className={style.overviewSubsection}>
-              <h3>Climate</h3>
-              <p>25c</p>
+              <h3>Average Temperature (at time of travel)</h3>
+              <p>{props.locationOverview.temp} &deg;C</p>
             </div>
 
             <div className={style.overviewSubsection}>
-              <h3>Famous Places</h3>
-              <ul><
-                li></li>
-              <li></li>
-              <li></li>
+              <h3>Attractions</h3>
+              <ul id={style.uList}>
+              {props.locationOverview.attractions.map((i: any, index : number) => (
+                <li key={index}>{i}</li> 
+               ))}
               </ul>
             </div>
 
             <div className={style.overviewSubsection}>
               <h3>Crime Level</h3>
-              <p>{props.locationOverview}</p>
+              <p>{props.locationOverview.crime}</p>
             </div>
 
             <div className={style.overviewSubsection}>
-              <h3>Traditional Dish</h3>
-              <p>{props.locationOverview}</p>
+              <h3>Traditional Dishes</h3>
+              <ul>
+              {props.locationOverview.dishes.map((i: any, index : number) => (
+                <li key={index}>{i}</li> 
+               ))}
+              </ul>
             </div>
 
             <div className={style.overviewSubsection}>
-              <h3>Off the beaten track</h3>
-              <p>{props.locationOverview}</p>
+              <h3>Costs</h3>
+              <ul>
+              {props.locationOverview.cost.map((i: any, index : number) => (
+                <li key={index}>{i}</li> 
+               ))}
+              </ul>
             </div>
 
           </section>

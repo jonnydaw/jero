@@ -37,6 +37,7 @@ public class ApplicationConfig {
 						.requestMatchers("/auth/profile").authenticated()
 						//.requestMatchers("/property/add_property").authenticated()
 						.requestMatchers("/signup").permitAll()
+						.requestMatchers("/location").permitAll()
 						.requestMatchers("/auth/refresh").permitAll()
 						.anyRequest().permitAll())
 						.logout((logout) -> logout

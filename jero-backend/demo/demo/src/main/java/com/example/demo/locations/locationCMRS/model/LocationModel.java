@@ -23,7 +23,8 @@ public class LocationModel{
     private String id;
     private String locationType;
     private String parent;
-    // private Map<String,String> overview;
+    private Map<String, Map<String,Object>> overview;
     private List<LocationModel> nParents;
+    private List<Integer> temperature;
 
 }
