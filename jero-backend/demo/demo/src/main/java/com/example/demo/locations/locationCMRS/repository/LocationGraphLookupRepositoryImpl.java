@@ -29,10 +29,10 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
 
     @Override
     public Map<String,String> getLocationHierarchy(String mostPreciseLocation){
-
+        System.out.println(1);
         // https://github.com/kmandalas/spring-mongodb-graphlookup/blob/master/src/main/java/com/github/kmandalas/mongodb/repository/NodeRepositoryImpl.java
         final MatchOperation matchStage = Aggregation.match(new Criteria("_id").is(mostPreciseLocation));
-
+        System.out.println(2);
         GraphLookupOperation graphLookupOperation = GraphLookupOperation.builder()
                 .from("location")
                 .startWith("$parent")
@@ -41,7 +41,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
                 .maxDepth(10)
                 .depthField("order")
                 .as("nParents");
-
+        System.out.println(3);
         // https://stackoverflow.com/questions/63412261/aggregate-sort-by-inner-array-in-spring-data-mongodb
         Aggregation aggregation = Aggregation.newAggregation(
             matchStage, 
@@ -55,7 +55,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
             );
       
 
-
+System.out.println(4);
 
         List<LocationModel> results = mongoTemplate.aggregate(aggregation, "location", LocationModel.class).getMappedResults();
         // List<Document> hi = mongoTemplate.aggregate(aggregation, "location", Document.class).getMappedResults();

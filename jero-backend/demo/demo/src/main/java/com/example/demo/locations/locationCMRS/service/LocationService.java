@@ -41,6 +41,7 @@ public class LocationService implements ILocationService {
 
     @Override
     public Map<String,String> graphLookUpFinder(String mostPreciseLocation) {
+        System.out.println("graphlookupfinderhit");
         Map<String,String> hierarchy = locationRepository.getLocationHierarchy(mostPreciseLocation.toLowerCase());
         System.out.println(hierarchy);
         return hierarchy;
