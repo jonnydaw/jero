@@ -21,6 +21,7 @@ interface Props {
     acceptsPets : boolean;
     isMobile : boolean;
     propertyId : string;
+    allowedToBook : boolean
 }
 
 const GeneralBook = (props : Props) => {
@@ -28,6 +29,7 @@ const GeneralBook = (props : Props) => {
     const style = props.isMobile ? mobileStyle : pcStyle;
     const [openPay, setOpenPay] = useState<boolean>(false);
     const disabled: string[] = []
+    console.log("can book: " + props.allowedToBook)
     if(!props.acceptsChildren){
         props.guestCounts.childCount = 0;
         disabled.push("childCount")
@@ -109,7 +111,7 @@ const GeneralBook = (props : Props) => {
             }} setCount={props.setGuestCounts}
             disabled={disabled}/>
             
-            <div onClick={() => setOpenPay(true)}><button className={`basicButton`}>Book</button></div>
+            <div onClick={() => setOpenPay(true)}><button  disabled={!props.allowedToBook}className={`basicButton`}>{props.allowedToBook ? `Book` : "You must be a registered customer to book"}</button></div>
         </form>
 }
     </section>

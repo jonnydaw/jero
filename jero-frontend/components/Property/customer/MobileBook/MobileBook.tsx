@@ -17,6 +17,7 @@ interface Props {
     acceptsChildren : boolean
     acceptsPets : boolean;
     propertyId : string;
+    allowedToBook : boolean
 }
  const MobileBook = (props : Props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -38,7 +39,9 @@ interface Props {
                     setGuestCounts={props.setGuestCounts}
                     acceptsChildren={props.acceptsChildren}
                     acceptsPets={props.acceptsPets}
-                    isMobile={true} propertyId={props.propertyId}            
+                    isMobile={true} 
+                    propertyId={props.propertyId}
+                    allowedToBook={props.allowedToBook}            
             />
         </div>
 

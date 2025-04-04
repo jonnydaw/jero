@@ -16,6 +16,7 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
             return (JSON.parse(atob(jwtValue.split('.')[1])))
         }
         const id = jwtValue ? parseJWT(jwtValue).id : null;
+        const role = jwtValue ? parseJWT(jwtValue).role : null;
         console.log("id" + id);
         const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
         const { property_id }: {property_id: string} = await params;
@@ -79,6 +80,7 @@ console.log(property_id)
                 reviewScore : property.percentile
             }} userDeets={{
                 id: id,
+                role : role,
                 startDate: String(startDate),
                 endDate: String(endDate),
                 numAdults: Number(adultCount),

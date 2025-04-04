@@ -22,6 +22,7 @@ import Reviews from "./Reviews/Review";
 
 type UserDeets = {
     id : string | null;
+    role : string | null;
     startDate : string;
     endDate : string;
     numAdults : number;
@@ -48,6 +49,12 @@ const PropertyCustomer = (props : Props) => {
     let petCountSp = Number(sp.get("numpets"))
     const startDate = sp.get("startdate") || "";
     const endDate = sp.get("enddate") || "";
+    console.log("userid: " + props.userDeets.id)
+    console.log("userrole: " + props.userDeets.role)
+    let allowedToBook : boolean = false
+    if(props.userDeets.id !== null && props.userDeets.role === 'customer'){
+        allowedToBook = true
+    }
     // const disabled: string[] = []
     // if(!props.propertyAttributes.acceptsChildren){
     //     childCountSp = 0;
@@ -247,21 +254,23 @@ const PropertyCustomer = (props : Props) => {
                     setGuestCounts={setGuestCounts}
                     acceptsChildren={props.propertyAttributes.acceptsChildren}
                     acceptsPets={props.propertyAttributes.acceptsPets} 
-                    propertyId={props.propertyAttributes.id}/> 
+                    propertyId={props.propertyAttributes.id}
+                    allowedToBook={allowedToBook}/> 
                     : 
                         <GeneralBook 
-                            baseCost={baseCost} 
-                            extraCost={extraCost} 
-                            getStartDate={getStartDate} 
-                            setStartDate={setStartDate} 
-                            getEndDate={getEndDate} 
-                            setEndDate={setEndDate} 
-                            guestCounts={guestCounts} 
-                            setGuestCounts={setGuestCounts} 
-                            acceptsChildren={props.propertyAttributes.acceptsChildren} 
-                            acceptsPets={props.propertyAttributes.acceptsPets}
-                            isMobile={false}
-                            propertyId={props.propertyAttributes.id}/>
+                        baseCost={baseCost}
+                        extraCost={extraCost}
+                        getStartDate={getStartDate}
+                        setStartDate={setStartDate}
+                        getEndDate={getEndDate}
+                        setEndDate={setEndDate}
+                        guestCounts={guestCounts}
+                        setGuestCounts={setGuestCounts}
+                        acceptsChildren={props.propertyAttributes.acceptsChildren}
+                        acceptsPets={props.propertyAttributes.acceptsPets}
+                        isMobile={false}
+                        propertyId={props.propertyAttributes.id} 
+                        allowedToBook={allowedToBook}/>
                 }
         </div> 
     )

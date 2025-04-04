@@ -29,17 +29,17 @@ const Options = (props : Props) => {
         if(props.timeframe === "past" && props.accepted){
             return (
                 <div>
-                <button onClick={leaveReviewRedirect} style={{backgroundColor : "white", color : "black"}}>Leave a review</button>
+                <button onClick={leaveReviewRedirect} className="basicButton">Leave a review</button>
                 </div>
             )
         }else if(props.timeframe === "future"){
             return(<div>
-            <button style={{backgroundColor : "red", color : "white"}}>Cancel Booking</button>
+            <button className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
             </div>)
         } else if(props.timeframe === "present"){
-            return(<div>
-                <button>Send Message</button>
-                </div>)
+            // return(<div>
+            //     <button>Send Message</button>
+            //     </div>)
         }
     }else if(!props.isCustomer){
         console.log("hit")

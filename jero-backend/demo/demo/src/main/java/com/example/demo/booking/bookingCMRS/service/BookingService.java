@@ -48,7 +48,9 @@ public class BookingService implements IBookingService {
 
     @Override
     public void addBooking(AddBookingHandler booking, String token) {
-
+        if(!JwtProvider.getRoleFromJwtToken(token).equals("customer")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "DATE CONFLICT");
+        }
         Instant start = Instant.parse(booking.getStart()+"T00:00:00.000Z");
         Instant end = Instant.parse(booking.getEnd()+"T00:00:00.000Z");
 
@@ -69,7 +71,7 @@ public class BookingService implements IBookingService {
         boolean unique = Collections.disjoint(blocked,requestedDays);
         System.out.println("unqiue: " + unique);
          if(!unique){
-             throw new ResponseStatusException(HttpStatus.CONFLICT, "DATE CONFLICT");
+             throw new ResponseStatusException(HttpStatus.CONFLICT, "ONLY_CUSTOMERS");
  
          }
 

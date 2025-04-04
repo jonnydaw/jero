@@ -38,9 +38,9 @@ public class BookingController {
     public ResponseEntity<?> addBooking(@RequestBody AddBookingHandler booking, @CookieValue("JWT") String token){
         // System.out.println("hit");
         // System.out.println(booking.toString());
-        System.out.println("cont");
-        System.out.println(booking.getEnd());
-        System.out.println(booking.getPropertyId());
+        // System.out.println("cont");
+        // System.out.println(booking.getEnd());
+        // System.out.println(booking.getPropertyId());
         bookingService.addBooking(booking, token);
         return ResponseEntity.ok().body("confirmed");
     }
