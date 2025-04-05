@@ -2,11 +2,13 @@ package com.example.demo.property.propertycmrs.controller;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
+import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.property.propertycmrs.service.IPropertyService;
 
@@ -48,21 +52,37 @@ public class PropertyController {
 
 
     @GetMapping("{property_id}")
-    public ResponseEntity<?> getPropertyFromId(@PathVariable("property_id") String propertyId, PropertyModel property ){
+    public ResponseEntity<?> getPropertyFromId(@PathVariable("property_id") String propertyId, PropertyModel property, GetPropertyBasicHandler res){
         System.out.println("hit");
         System.out.println(propertyId);
         property = propertyService.getPropertyById(new ObjectId(propertyId));
         double lat = property.getLatitude();
         double lon = property.getLongitude();
+        // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
+        BeanUtils.copyProperties(property, res);
+        System.out.println("bean " + res.toString());
+        // property.getReviews();
+        List<ReviewsType> reviews = new ArrayList<>();
 
-        property.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
-        property.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
+        List<Map<String,ReviewsType>> propertyReviews = property.getReviews();
+        
+        for(Map<String, ReviewsType> propertyReview : propertyReviews){
+            reviews.addAll(propertyReview.values());
+        }
+        res.setReviews(reviews);
+        //res = property;
+        // res.setId(property.getId());
+        // res.setOwnerId(property.getOwnerId());
+        // res.se
 
-        property.setAddress("");
+        res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
+        res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
+
+        //property.setAddress("");
         
 
         System.out.println(property.toString());
-        return ResponseEntity.ok().body(property);
+        return ResponseEntity.ok().body(res);
     }
     // https://stackoverflow.com/questions/22373696/requestparam-in-spring-mvc-handling-optional-parameters
 

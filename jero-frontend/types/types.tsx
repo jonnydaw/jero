@@ -79,6 +79,7 @@ export type PropertyAttribute = {
 
 export type ReviewType = {
     reviewDate : Date,
+    userName : string,
     score : number;
     title : string;
     body : string;

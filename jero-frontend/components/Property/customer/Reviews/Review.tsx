@@ -5,6 +5,7 @@ import { useState } from "react";
 
 interface Props {
     reviewDate : Date,
+    reviewer : string,
     score : number,
     title : string,
     body : string,
@@ -16,7 +17,7 @@ const Reviews = (props : Props) => {
     return (
         <div id={style.amenitiesList}>
         <div onClick={() => setExpanded(!expanded)} id={style.title}>
-        <h3>{props.title} @ {props.reviewDate.toLocaleString().split("T")[0]}</h3>
+        <h3>{props.title} @ {props.reviewDate.toLocaleString().split("T")[0]} by {props.reviewer}</h3>
         <h4>{props.score} / {10}</h4>
         <button onClick={() => setExpanded(!expanded)} className={`basicButton`}>{expanded ? `Hide` : `show`}</button>
         </div>

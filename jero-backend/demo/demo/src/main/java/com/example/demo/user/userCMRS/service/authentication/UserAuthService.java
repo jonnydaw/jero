@@ -60,6 +60,11 @@ public class UserAuthService implements IUserAuthService {
             createdUser.setInternationalisationPreferences(prefs);
             createdUser.setProfileImgUrl("");
             createdUser.setIntroduction("");
+            Map<String, Boolean> privacy = new HashMap<>();
+            privacy.put("review", false);
+            privacy.put("profile", false);
+            privacy.put("analysis", false);
+            createdUser.setPrivacy(privacy);
             return createdUser;
         }
     

@@ -1,17 +1,12 @@
-package com.example.demo.property.propertycmrs.model;
+package com.example.demo.property.propertycmrs.DTO;
 
-import java.beans.JavaBean;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.demo.property.propertycmrs.DTO.types.BeautyData;
 import com.example.demo.property.propertycmrs.DTO.types.ClimateData;
@@ -21,21 +16,12 @@ import com.example.demo.property.propertycmrs.DTO.types.KitchenData;
 import com.example.demo.property.propertycmrs.DTO.types.LaundryData;
 import com.example.demo.property.propertycmrs.DTO.types.TransportData;
 import com.example.demo.property.propertycmrs.DTO.types.WaterData;
+import com.example.demo.property.propertycmrs.model.ReviewsType;
 
-import jakarta.mail.Transport;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Document(collection = "property")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Setter
-@Getter
-public class PropertyModel {
+public class GetPropertyBasicHandler {
     @Id
     private ObjectId id;
     private ObjectId ownerId;
@@ -46,13 +32,11 @@ public class PropertyModel {
     private String countyId;
     private String stateId;
     private String countryId;
-    private String address;
     private double longitude;
     private double latitude;
 
     private String title;
     private String description;
-    private String guide;
     private String rules;
 
     private ClimateData climateData;
@@ -81,7 +65,7 @@ public class PropertyModel {
     
     private List<String> imageUrls;
     // private List<FacilitiesType> facilities;
-    private List<Map<String,ReviewsType>> reviews;
+    private List<ReviewsType> reviews;
     private Set<Instant> blockedDates;
 
     private boolean acceptsChildren;
@@ -90,5 +74,4 @@ public class PropertyModel {
     private boolean status;
     private double avgReviewScore;
     private double percentile;
-    
 }

@@ -68,6 +68,8 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
             <div id={style.subcontainer}>
 
+
+
                 <section className={style.updateSection}>
                     <form
                     onSubmit={handleSubmit}
@@ -82,7 +84,6 @@ const ManageProfile = (props : UpdateFields) => {
                             value={updateFields.firstName}
                             onChange={handleChange}
                         />
-
                         <button className="basicButton">Confirm Change</button>
                     </form>
                 </section>

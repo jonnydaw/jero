@@ -103,7 +103,8 @@ public class PropertyService implements IPropertyService {
         today.add(Instant.now());
         pm.setBlockedDates(today);
         // dates
-        List<ReviewsType> reviews = new ArrayList<>();
+        //List<ReviewsType> reviews = new ArrayList<>();
+        List<Map<String,ReviewsType>> reviews =  new ArrayList<>();
         pm.setReviews(reviews);
         pm.setPercentile(-1);
         pm.setAvgReviewScore(0);
@@ -214,10 +215,13 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public void addReview(String jwt, ReviewHandler rh){
+    public void addReview(String jwt, ReviewHandler newReview){
         String userId = JwtProvider.getIdFromJwtToken(jwt);
+        UserModel um = userRepository.findById(new ObjectId(userId)).get();
+        String name = um.getPrivacy().get("review") ? um.getFirstName() : "anonymous";
+        System.out.println("name: " + name);
 
-        BookingModel booking = bookingRepo.findById(new ObjectId(rh.getBookingId())).get();
+        BookingModel booking = bookingRepo.findById(new ObjectId(newReview.getBookingId())).get();
         if(booking == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
 
@@ -235,21 +239,33 @@ public class PropertyService implements IPropertyService {
         }
         
         PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
-        List<ReviewsType> reviews = pm.getReviews();
-        if(reviews == null) reviews = new ArrayList<>();
+        
+        List<ReviewsType> reviews = new ArrayList<>();
+
+        List<Map<String,ReviewsType>> propertyReviews = pm.getReviews();
+        
+        for(Map<String, ReviewsType> propertyReview : propertyReviews){
+            reviews.addAll(propertyReview.values());
+        }
+        System.out.println("reviews :" + reviews.toString() );
+        //List<ReviewsType> reviews = pm.getReviews();
+        ///if(reviews == null) reviews = new ArrayList<>();
         double oldAvg = pm.getAvgReviewScore();
         
-        double newAvg = getNewAvg(reviews, oldAvg, rh.getScore());
+        double newAvg = getNewAvg(reviews, oldAvg, newReview.getScore());
         pm.setAvgReviewScore(newAvg);
         ReviewsType rt = new ReviewsType();
         rt.setReviewDate(Instant.now());
-        rt.setUserID(userId);
-        rt.setScore(rh.getScore());
-        rt.setTitle(rh.getTitle());
-        rt.setBody(rh.getBody());
-        reviews.add(rt);
-
-        pm.setReviews(reviews);
+        rt.setUserName(name);
+        rt.setScore(newReview.getScore());
+        rt.setTitle(newReview.getTitle());
+        rt.setBody(newReview.getBody());
+        //reviews.add(rt);
+        Map<String, ReviewsType> newReviewMap = new HashMap<>();
+        newReviewMap.put(userId, rt);
+        propertyReviews.add(newReviewMap);
+        pm.setReviews(propertyReviews);
+        //pm.setReviews(reviews);
 
         propertyRepo.save(pm);
 
@@ -259,8 +275,8 @@ public class PropertyService implements IPropertyService {
 
 
 
-        booking.setReviewed(true);
-        bookingRepo.save(booking);
+        // booking.setReviewed(true);
+        // bookingRepo.save(booking);
 
 
         // List<BookingModel> pastBookings = bookings.get("past");
@@ -268,7 +284,7 @@ public class PropertyService implements IPropertyService {
         //     if(booking.getPropertyId().toHexString().equals(rh.getPropertyId()) && booking.isAccepted() && !booking.isCancelled() && !booking.isReviewed()){
         //         PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
         //         List<ReviewsType> reviews = pm.getReviews();
-        //         if(reviews == null) reviews = new ArrayList<>();
+        //         if(reviews == null) reviews = new ArrayList<>() 
 
             
         }

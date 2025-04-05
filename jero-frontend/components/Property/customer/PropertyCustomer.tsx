@@ -43,6 +43,7 @@ type Expanded = {
 }
 
 const PropertyCustomer = (props : Props) => {
+    console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
     const sp = useSearchParams();
     const adultCountSp = Number(sp.get("numadults"))
     let childCountSp = Number(sp.get("numchildren"))
@@ -234,7 +235,7 @@ const PropertyCustomer = (props : Props) => {
                     &&
                 Object.entries(props.propertyAttributes.reviews).map(([key,value]) => (
                     <div key={key}>
-                    <Reviews reviewDate={(value.reviewDate)} score={value.score} title={value.title} body={value.body}/>
+                    <Reviews reviewDate={(value.reviewDate)} reviewer={value.userName} score={value.score} title={value.title} body={value.body}/>
                     </div>
                 ))
             }

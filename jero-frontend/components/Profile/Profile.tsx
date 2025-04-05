@@ -12,7 +12,7 @@ interface Props {
 
 export const Profile = (props : Props) => {
     let arr : string[] = props.profileKeys;
-    arr.push(...internationalKeys);
+    // arr.push(...internationalKeys);
     
     // const router = useRouter()
     // const customerList : Object = {

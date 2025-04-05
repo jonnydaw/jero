@@ -37,4 +37,5 @@ public class UserModel {
 	private Map<String,String> internationalisationPreferences;
 	private String profileImgUrl;
 	private String introduction;
+	private Map<String, Boolean> privacy;
 } 
