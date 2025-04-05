@@ -85,6 +85,13 @@ export type ReviewType = {
     body : string;
 }
 
+export type  ProfileCardInfo = {
+    fname : string;
+        lname : string;
+        intro : string;
+        img : string;
+}
+
 export type PropertyAttributeFull = {    
     id : string;
     ownerId : string;
@@ -116,6 +123,7 @@ export type PropertyAttributeFull = {
     blockedDate : Date;
     reviews : ReviewType[];
     reviewScore : number;
+    profileInfo : ProfileCardInfo
 
 }
 

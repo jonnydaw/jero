@@ -104,3 +104,8 @@
     margin-left: auto;
 }
 
+#profileCard > div > div{
+    min-width: 75%;
+
+}
+

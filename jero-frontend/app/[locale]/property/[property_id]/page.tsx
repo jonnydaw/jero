@@ -77,7 +77,8 @@ console.log(property_id)
                 entertainment: property.entertainmentData,
                 blockedDate: property.blockedDates,
                 reviews : property.reviews,
-                reviewScore : property.percentile
+                reviewScore : property.percentile,
+                profileInfo : property.profileCardInfo
             }} userDeets={{
                 id: id,
                 role : role,

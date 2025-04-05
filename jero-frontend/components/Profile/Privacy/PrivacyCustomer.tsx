@@ -12,7 +12,7 @@ interface FormData {
 }
 
 
-const Privacy = (props : FormData) => {
+const PrivacyCustomer = (props : FormData) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
     const [formData, setFormData] = useState<FormData>(
@@ -157,4 +157,4 @@ const Privacy = (props : FormData) => {
     )
 }
 
-export default Privacy;
+export default PrivacyCustomer;

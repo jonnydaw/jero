@@ -74,4 +74,10 @@ public class GetPropertyBasicHandler {
     private boolean status;
     private double avgReviewScore;
     private double percentile;
+    private Map<String,String> profileCardInfo;
+    // private String firstName;
+    // private String lastName;
+    // private String imgURL;
+    // private String intro;
+
 }

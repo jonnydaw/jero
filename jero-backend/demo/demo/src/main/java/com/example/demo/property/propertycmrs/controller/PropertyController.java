@@ -56,29 +56,30 @@ public class PropertyController {
         System.out.println("hit");
         System.out.println(propertyId);
         property = propertyService.getPropertyById(new ObjectId(propertyId));
-        double lat = property.getLatitude();
-        double lon = property.getLongitude();
-        // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
-        BeanUtils.copyProperties(property, res);
-        System.out.println("bean " + res.toString());
-        // property.getReviews();
-        List<ReviewsType> reviews = new ArrayList<>();
+        res = propertyService.processProperty(property, res);
+        // double lat = property.getLatitude();
+        // double lon = property.getLongitude();
+        // // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
+        // BeanUtils.copyProperties(property, res);
+        // System.out.println("bean " + res.toString());
+        // // property.getReviews();
+        // List<ReviewsType> reviews = new ArrayList<>();
 
-        Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
+        // Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
         
-        for(List<ReviewsType> propertyReview : propertyReviews.values()){
-            reviews.addAll(propertyReview);
-        }
-        res.setReviews(reviews);
-        //res = property;
-        // res.setId(property.getId());
-        // res.setOwnerId(property.getOwnerId());
-        // res.se
+        // for(List<ReviewsType> propertyReview : propertyReviews.values()){
+        //     reviews.addAll(propertyReview);
+        // }
+        // res.setReviews(reviews);
+        // //res = property;
+        // // res.setId(property.getId());
+        // // res.setOwnerId(property.getOwnerId());
+        // // res.se
 
-        res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
-        res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
+        // res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
+        // res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
 
-        //property.setAddress("");
+        // //property.setAddress("");
         
 
         System.out.println(property.toString());

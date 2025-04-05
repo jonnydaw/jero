@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import exp from "constants";
 import { json } from "stream/consumers";
 import Reviews from "./Reviews/Review";
+import ProfileCard from "@/components/Profile/ManageProfile/ProfileCard";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -191,6 +192,15 @@ const PropertyCustomer = (props : Props) => {
                         </div>
                     </div>
                 }
+                <div id={style.profileCard}>
+                    <h3>Hosted by</h3>
+                <ProfileCard 
+                    firstName={props.propertyAttributes.profileInfo.fname} 
+                    lastName={props.propertyAttributes.profileInfo.lname} 
+                    introduction={props.propertyAttributes.profileInfo.intro} 
+                    imgLink={props.propertyAttributes.profileInfo.img}
+                    />
+                </div>
             </div>
         <div id={style.amentiesArea}>
             <div className={`${style.toggleTitle} ${!expanded.amenitiesExpand ? mobileStyle.closed : mobileStyle.open}`}>

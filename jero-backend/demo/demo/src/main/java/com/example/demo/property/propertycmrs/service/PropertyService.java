@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
+import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
@@ -212,6 +214,48 @@ public class PropertyService implements IPropertyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
         }
         return property;
+    }
+
+    @Override
+    public GetPropertyBasicHandler processProperty(PropertyModel property, GetPropertyBasicHandler res){
+        double lat = property.getLatitude();
+        double lon = property.getLongitude();
+        // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
+        BeanUtils.copyProperties(property, res);
+        System.out.println("bean " + res.toString());
+        // property.getReviews();
+        List<ReviewsType> reviews = new ArrayList<>();
+
+        Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
+        
+        for(List<ReviewsType> propertyReview : propertyReviews.values()){
+            reviews.addAll(propertyReview);
+        }
+        res.setReviews(reviews);
+        Map<String,String> map = new HashMap<>();
+        map.put("fname", "hello");
+        map.put("lname", "last name");
+        map.put("intro", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        map.put("img", "imgulr");
+        res.setProfileCardInfo(map); 
+        // res.setFirstName("hello");
+        // res.setLastName("last name");
+        // res.setIntro("\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n" + //
+        //                 "\n" + //
+        //                 "");
+        // res.setImgURL("null");
+
+        //res = property;
+        // res.setId(property.getId());
+        // res.setOwnerId(property.getOwnerId());
+        // res.se
+
+        res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
+        res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
+
+        //property.setAddress("");
+        
+        return res;
     }
 
     @Override
