@@ -64,10 +64,10 @@ public class PropertyController {
         // property.getReviews();
         List<ReviewsType> reviews = new ArrayList<>();
 
-        List<Map<String,ReviewsType>> propertyReviews = property.getReviews();
+        Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
         
-        for(Map<String, ReviewsType> propertyReview : propertyReviews){
-            reviews.addAll(propertyReview.values());
+        for(List<ReviewsType> propertyReview : propertyReviews.values()){
+            reviews.addAll(propertyReview);
         }
         res.setReviews(reviews);
         //res = property;

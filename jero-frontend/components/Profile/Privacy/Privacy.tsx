@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import style from "./privacy.module.css"
+import { inDevEnvironment } from "@/base";
+import axios from "axios";
 
 interface FormData {
     showNameOnReviews : boolean;
@@ -10,12 +12,14 @@ interface FormData {
 }
 
 
-const Privacy = () => {
+const Privacy = (props : FormData) => {
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
     const [formData, setFormData] = useState<FormData>(
         {
-        showNameOnReviews : false,
-        showProfileAfterBooking : false,
-        allowAnalysisOnBookings : false,
+        showNameOnReviews : props.showNameOnReviews,
+        showProfileAfterBooking : props.showProfileAfterBooking,
+        allowAnalysisOnBookings : props.allowAnalysisOnBookings,
         }
     );  
     const handleChange = (e: any) => {
@@ -24,10 +28,25 @@ const Privacy = () => {
         console.log(formData)
       };
 
-      const handleSubmit = (e: any) => {
+      const handleSubmit = async (e: any) => {
         e.preventDefault();
         console.log(formData)
-      }
+        try {
+            const response = await axios.put(`${baseApi}/profile/update-privacy`, {
+                showNameOnReviews :  formData.showNameOnReviews,
+                showProfileAfterBooking : formData.showProfileAfterBooking,
+                allowAnalysisOnBookings : formData.allowAnalysisOnBookings,
+
+               },
+                   { withCredentials: true}
+               );
+               console.log(response.status);
+               
+        } catch (error) {
+            
+        }
+    }
+
     
     return(
         <div id={style.container}>

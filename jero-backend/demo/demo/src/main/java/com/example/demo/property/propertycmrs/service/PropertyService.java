@@ -104,7 +104,7 @@ public class PropertyService implements IPropertyService {
         pm.setBlockedDates(today);
         // dates
         //List<ReviewsType> reviews = new ArrayList<>();
-        List<Map<String,ReviewsType>> reviews =  new ArrayList<>();
+        Map<String,List<ReviewsType>> reviews =  new HashMap<>();
         pm.setReviews(reviews);
         pm.setPercentile(-1);
         pm.setAvgReviewScore(0);
@@ -219,6 +219,7 @@ public class PropertyService implements IPropertyService {
         String userId = JwtProvider.getIdFromJwtToken(jwt);
         UserModel um = userRepository.findById(new ObjectId(userId)).get();
         String name = um.getPrivacy().get("review") ? um.getFirstName() : "anonymous";
+        System.out.println(um.getPrivacy().get("review"));
         System.out.println("name: " + name);
 
         BookingModel booking = bookingRepo.findById(new ObjectId(newReview.getBookingId())).get();
@@ -242,10 +243,11 @@ public class PropertyService implements IPropertyService {
         
         List<ReviewsType> reviews = new ArrayList<>();
 
-        List<Map<String,ReviewsType>> propertyReviews = pm.getReviews();
+        Map<String,List<ReviewsType>> propertyReviews = pm.getReviews();
+        System.out.println("full reviews: "  +  propertyReviews.toString());
         
-        for(Map<String, ReviewsType> propertyReview : propertyReviews){
-            reviews.addAll(propertyReview.values());
+        for(List<ReviewsType> propertyReview : propertyReviews.values()){
+            reviews.addAll(propertyReview);
         }
         System.out.println("reviews :" + reviews.toString() );
         //List<ReviewsType> reviews = pm.getReviews();
@@ -254,16 +256,29 @@ public class PropertyService implements IPropertyService {
         
         double newAvg = getNewAvg(reviews, oldAvg, newReview.getScore());
         pm.setAvgReviewScore(newAvg);
+        
         ReviewsType rt = new ReviewsType();
         rt.setReviewDate(Instant.now());
         rt.setUserName(name);
         rt.setScore(newReview.getScore());
         rt.setTitle(newReview.getTitle());
         rt.setBody(newReview.getBody());
+
         //reviews.add(rt);
-        Map<String, ReviewsType> newReviewMap = new HashMap<>();
-        newReviewMap.put(userId, rt);
-        propertyReviews.add(newReviewMap);
+        //Map<String, ReviewsType> newReviewMap = new HashMap<>();
+        if(propertyReviews.containsKey(userId)){
+            List<ReviewsType> oldReviews =  propertyReviews.get(userId);
+            oldReviews.add(rt);
+            propertyReviews.put(userId, oldReviews);
+        }else{
+            List<ReviewsType> brandSpankingNew = new ArrayList<>();
+            brandSpankingNew.add(rt);
+            propertyReviews.put(userId,brandSpankingNew);
+        }
+        
+       // newReviewMap.put(userId, rt);
+
+       // propertyReviews.add(newReviewMap);
         pm.setReviews(propertyReviews);
         //pm.setReviews(reviews);
 
@@ -275,8 +290,8 @@ public class PropertyService implements IPropertyService {
 
 
 
-        // booking.setReviewed(true);
-        // bookingRepo.save(booking);
+        booking.setReviewed(true);
+        bookingRepo.save(booking);
 
 
         // List<BookingModel> pastBookings = bookings.get("past");

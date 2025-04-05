@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.user.DTO.UpdateHandler;
+import com.example.demo.user.DTO.UpdatePrivacyHandler;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.update.IUserUpdateService;
@@ -74,5 +75,21 @@ public class UserProfileController {
             return ResponseEntity.ok()
             .body(res);
 	    }
+
+        @GetMapping("/privacy-settings")
+        public ResponseEntity<?> getPrivacySettings(@CookieValue("JWT") String token){
+            Map<String, Boolean> res = updateService.getPrivacySettings(token);
+            return ResponseEntity.ok()
+            .body(res);
+        }
+
+        @PutMapping("/update-privacy")
+        public ResponseEntity<?> getPrivacySettings(@CookieValue("JWT") String token, @RequestBody UpdatePrivacyHandler updatedPrivacySettings){
+           System.out.println("show name " + updatedPrivacySettings.isShowNameOnReviews());
+           updateService.updatePrivacySettings(token, updatedPrivacySettings);
+            return ResponseEntity.ok()
+            .body("hi");
+        }
+
     
 }
