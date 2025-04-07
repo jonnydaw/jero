@@ -23,5 +23,6 @@ public class PropertyBooking {
     private int numPets;
     private double totalCost;
     private boolean accepted;
-    private boolean cancelled;    
+    private boolean cancelled;
+    private OtherPartyinfo otherPartyInfo;  
 }

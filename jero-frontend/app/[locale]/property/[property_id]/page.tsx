@@ -22,8 +22,8 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         const { property_id }: {property_id: string} = await params;
         const queries = await searchParams;
 
-        const startDate =  queries?.startdate || "";
-        const endDate =  queries?.enddate || "";
+        const startDate =  queries?.startdate || new Date().toISOString().split('T')[0];
+        const endDate =  queries?.enddate || new Date().toISOString().split('T')[0];
         const adultCount =  queries?.numadults
         const childCount =  queries?.numhildren
         const petCount =  queries?.numpets
@@ -32,7 +32,9 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         )
 
         const headersList = await headers()
-console.log(property_id)
+        console.log(property_id)
+        console.log("start " +String(startDate))
+        console.log("fake " + String(new Date().toISOString().split('T')[0]))
 
     let property;
     try{

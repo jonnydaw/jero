@@ -61,7 +61,13 @@ public class UserAuthService implements IUserAuthService {
             createdUser.setProfileImgUrl("");
             createdUser.setIntroduction("");
             Map<String, Boolean> privacy = new HashMap<>();
-            privacy.put("review", false);
+            if(user.getRoles().equals("customer")){
+                privacy.put("review", false);
+
+            }else{
+                privacy.put("alwaysShowProfile", false);
+
+            }
             privacy.put("profile", false);
             privacy.put("analysis", false);
             createdUser.setPrivacy(privacy);

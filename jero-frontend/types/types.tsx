@@ -92,7 +92,7 @@ export type  ProfileCardInfo = {
         img : string;
 }
 
-export type PropertyAttributeFull = {    
+export interface PropertyAttributeFull {    
     id : string;
     ownerId : string;
     title : string;
@@ -127,6 +127,11 @@ export type PropertyAttributeFull = {
 
 }
 
+export interface PropertyAttributeFullWithSecrets extends PropertyAttributeFull{
+    guide : string;
+    address: string;
+}
+
 
 
 export interface UpdateFields {
@@ -149,4 +154,5 @@ export type BookingProperty = {
     totalCost: number;
     accepted : boolean;
     cancelled : boolean
+    otherPartyInfo : UpdateFields;
   }

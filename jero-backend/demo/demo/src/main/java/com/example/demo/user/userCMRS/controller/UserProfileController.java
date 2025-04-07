@@ -1,6 +1,7 @@
 package com.example.demo.user.userCMRS.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.user.DTO.UpdateHandler;
+import com.example.demo.user.DTO.UpdateHostPrivacyHandler;
 import com.example.demo.user.DTO.UpdatePrivacyHandler;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
@@ -85,8 +87,22 @@ public class UserProfileController {
 
         @PutMapping("/update-privacy")
         public ResponseEntity<?> getPrivacySettings(@CookieValue("JWT") String token, @RequestBody UpdatePrivacyHandler updatedPrivacySettings){
-           System.out.println("show name " + updatedPrivacySettings.isShowNameOnReviews());
-           updateService.updatePrivacySettings(token, updatedPrivacySettings);
+            //System.out.println(updatedPrivacySettings.isPresent() );
+            if(JwtProvider.getRoleFromJwtToken(token).equals("customer")){
+                System.out.println("show name " + updatedPrivacySettings.isShowNameOnReviews());
+                updateService.updatePrivacySettings(token, updatedPrivacySettings);
+            }
+            return ResponseEntity.ok()
+            .body("hi");
+        }
+
+        @PutMapping("/update-privacy-host")
+        public ResponseEntity<?> updatePrivacySettingsHost(@CookieValue("JWT") String token, @RequestBody UpdateHostPrivacyHandler updatedHostPrivacySettings){
+            System.out.println(updatedHostPrivacySettings.isShowProfileOnPropertyPage());
+            if(JwtProvider.getRoleFromJwtToken(token).equals("host")){
+                System.out.println("hit");
+                updateService.updateHostPrivacySettings(token, updatedHostPrivacySettings);
+            }
             return ResponseEntity.ok()
             .body("hi");
         }

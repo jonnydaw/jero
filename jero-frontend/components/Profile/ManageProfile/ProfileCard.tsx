@@ -5,7 +5,6 @@ interface Props  {
     introduction : string;
     imgLink : string;
 }
-import { DOMAttributes } from "react";
 import style from "./profilecard.module.css"
 
 const ProfileCard = (props : Props) => {

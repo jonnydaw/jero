@@ -51,10 +51,13 @@ public class BookingController {
         System.out.println("cont");
         // System.out.println(booking.getPropertyId());
         //List<BookingModel> bookings = ;
-        // GetAllBookingsHandler gabh = new GetAllBookingsHandler();
+        //GetAllBookingsHandler gabh = new GetAllBookingsHandler();
         // gabh.setBookingData(bookingService.getBookings(token));
-        Map<String, List<PropertyBooking>> hi = propertyService.getPropertiesFromBookings(bookingService.getBookings(token));
-        return ResponseEntity.ok().body(hi);
+        //Map<String, List<BookingModel>> bookings = bookingService.getBookings(token);
+        Map<String, List<PropertyBooking>> propertyBooking = propertyService.getPropertiesFromBookings(bookingService.getBookings(token), token);
+        //Map<String, PropertyBooking>
+        //gabh.setPropertyData(propertyBooking);
+        return ResponseEntity.ok().body(propertyBooking);
     }
 
     @PostMapping("/accept")

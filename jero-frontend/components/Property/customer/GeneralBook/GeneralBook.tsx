@@ -30,6 +30,8 @@ const GeneralBook = (props : Props) => {
     const [openPay, setOpenPay] = useState<boolean>(false);
     const disabled: string[] = []
     console.log("can book: " + props.allowedToBook)
+    console.log("startdate " + props.getStartDate);
+    console.log("enddate " + props.getEndDate)
     if(!props.acceptsChildren){
         props.guestCounts.childCount = 0;
         disabled.push("childCount")
@@ -85,10 +87,11 @@ const GeneralBook = (props : Props) => {
             onChange={handleDateChange}
         /> */}
         <div id={style.dates}>
+       
         <DatePicker
             name="start"
             selected={props.getStartDate}
-            onChange={(date) => props.setStartDate(date || new Date(""))}
+            onChange={(date) => props.setStartDate(date || new Date())}
             className={style.customCalendar}
             enableTabLoop={false}
             calendarClassName={style.customCalendar} 
@@ -96,7 +99,7 @@ const GeneralBook = (props : Props) => {
         <DatePicker
             name="end"
             selected={props.getEndDate}
-            onChange={(date) => props.setEndDate(date || new Date(""))}
+            onChange={(date) => props.setEndDate(date || new Date())}
             className={style.customCalendar}
             //https://stackoverflow.com/questions/73123315/react-datepicker-datepicker-pushing-other-elements-to-the-right-on-toggle-and
             enableTabLoop={false}

@@ -12,6 +12,7 @@ import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
+import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 
@@ -43,11 +44,13 @@ public interface IPropertyService {
 
     PropertyModel getPropertyById(ObjectId propertyId);
 
-    Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings);
+    Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings, String token);
 
     public void addReview(String jwt, ReviewHandler rh);
 
     public GetPropertyBasicHandler processProperty(PropertyModel propertyModel, GetPropertyBasicHandler res);
+
+    public GetPropertyBookedHandler processBookedProperty(PropertyModel property, GetPropertyBookedHandler res);
 
     
 }

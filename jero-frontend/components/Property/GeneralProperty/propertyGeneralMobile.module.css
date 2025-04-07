@@ -1,0 +1,50 @@
+#info{
+    margin: 1em;
+    margin-bottom: 6em !important;
+}
+
+
+#overview{
+    font-weight: 300;
+}
+
+#overview{
+
+}
+
+#amentiesArea, #overview{
+    margin-bottom: 0.5em;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+
+
+
+.toggleTitle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid lightgray 0.1em;
+    cursor: pointer;
+    margin-bottom: 0.5em;
+    background-color: #FAF9F6;
+}
+
+.toggleTitle > button{
+    margin-left: auto ;
+    margin-right: 0.5em ;
+}
+
+.toggleTitle > h2{
+    padding: 0.5em;
+}
+
+
+.closed{
+    border-bottom: none;
+}
+
+/* .open{
+    background-color: aquamarine;
+} */

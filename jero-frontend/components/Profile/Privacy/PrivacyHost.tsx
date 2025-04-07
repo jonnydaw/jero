@@ -17,7 +17,7 @@ const PrivacyHost = (props : FormData) => {
 
     const [formData, setFormData] = useState<FormData>(
         {
-            showProfileOnPropertyPage: props.showProfileOnPropertyPage,
+        showProfileOnPropertyPage: props.showProfileOnPropertyPage,
         showProfileAfterBooking : props.showProfileAfterBooking,
         allowAnalysisOnBookings : props.allowAnalysisOnBookings,
         }
@@ -32,8 +32,8 @@ const PrivacyHost = (props : FormData) => {
         e.preventDefault();
         console.log(formData)
         try {
-            const response = await axios.put(`${baseApi}/profile/update-privacy`, {
-                showNameOnReviews :  formData.showProfileOnPropertyPage,
+            const response = await axios.put(`${baseApi}/profile/update-privacy-host`, {
+                showProfileOnPropertyPage :  formData.showProfileOnPropertyPage,
                 showProfileAfterBooking : formData.showProfileAfterBooking,
                 allowAnalysisOnBookings : formData.allowAnalysisOnBookings,
 

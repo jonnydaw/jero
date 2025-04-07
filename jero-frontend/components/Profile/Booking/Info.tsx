@@ -27,7 +27,8 @@ const Info = (props : Props) => {
                  numPets: val.numPets,
                  totalCost: val.totalCost,
                  accepted : val.accepted,
-                 cancelled : val.cancelled
+                 cancelled : val.cancelled,
+                 otherPartyInfo : val.otherPartyInfo
              }} isCustomer={props.isCustomer} timeframe={props.timeframe}/>
          ))
          }

@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
+import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
@@ -39,6 +41,7 @@ import com.example.demo.property.propertycmrs.service.IPropertyService;
 public class PropertyController {
 
    @Autowired private IPropertyService propertyService;
+   @Autowired private IBookingService bookingService;
 
 
     //@PreAuthorize("hasAuthority('host')")
@@ -146,6 +149,25 @@ public class PropertyController {
         System.out.println(rh.getPropertyId());
         propertyService.addReview(token, rh);
         return ResponseEntity.ok().body("posted");
+    }
+
+    @GetMapping("booked-property/{booking_id}/{property_id}")
+    public ResponseEntity<?> getBookedProperty(@CookieValue("JWT") String token, 
+    @PathVariable("booking_id") String bookingId ,
+    @PathVariable("property_id") String propertyId,
+    PropertyModel property,
+    GetPropertyBookedHandler res
+    ){
+        System.out.println("hit");
+        //List<String> res = new ArrayList<>();
+        //res.add("hi");
+        bookingService.verifyUser(token,bookingId);
+        property = propertyService.getPropertyById(new ObjectId(propertyId)); 
+        propertyService.processBookedProperty(property, res);
+        System.out.println("booking " + bookingId);
+        System.out.println("property " + propertyId);
+        return ResponseEntity.ok().body(res);
+
     }
 
 

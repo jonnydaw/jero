@@ -15,4 +15,6 @@ public interface IBookingService {
     public  Map<String,List<BookingModel>> getBookings(String token);
 
     public void acceptBooking(String id, String token);
+
+    public void verifyUser(String token, String bookingID);
 }

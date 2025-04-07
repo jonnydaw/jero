@@ -9,6 +9,6 @@ import lombok.Data;
 
 @Data
 public class GetAllBookingsHandler {
-    Map<String, List<BookingModel>> bookingData;
-    Map<String, PropertyBooking> propertyData;    
+    OtherPartyinfo otherPartyInfo;
+    Map<String, List<PropertyBooking>> propertyData;    
 }

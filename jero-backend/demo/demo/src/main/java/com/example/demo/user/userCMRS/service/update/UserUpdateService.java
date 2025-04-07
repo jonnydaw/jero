@@ -18,6 +18,7 @@ import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
+import com.example.demo.user.DTO.UpdateHostPrivacyHandler;
 import com.example.demo.user.DTO.UpdatePrivacyHandler;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
@@ -100,6 +101,17 @@ public class UserUpdateService  implements IUserUpdateService{
         user.setPrivacy(newSettingMaps);
         userRepository.save(user);
         
+    }
+
+    @Override
+    public void updateHostPrivacySettings(String token, UpdateHostPrivacyHandler newSettings){
+        UserModel user = getUser(token);
+        Map<String ,Boolean> newSettingMaps = new HashMap<>();
+        newSettingMaps.put("alwaysShowProfile",newSettings.isShowProfileOnPropertyPage());
+        newSettingMaps.put("profile",newSettings.isShowProfileAfterBooking());
+        newSettingMaps.put("analysis",newSettings.isAllowAnalysisOnBookings());
+        user.setPrivacy(newSettingMaps);
+        userRepository.save(user);
     }
             
     private void anonymiseReviews(ObjectId userID) {

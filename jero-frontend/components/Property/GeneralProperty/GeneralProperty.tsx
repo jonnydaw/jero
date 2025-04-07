@@ -1,27 +1,19 @@
+
 'use client'
 import { PropertyAttributeFull} from "@/types/types";
 import Image from 'next/image'
-import stylePC from "./propertycustomer.module.css"
-import mobileStyle from "./propertyCustomerMobile.module.css"
-import GuestToggler from "@/components/Navbar/NavbarPC/GuestDropdown/GuestToggler";
+import stylePC from "./propertyGeneral.module.css"
+import mobileStyle from "./propertyGeneralMobile.module.css"
 import { GuestCounts } from "@/app/types/types";
-import { SetStateAction, useMemo, useState } from "react";
+import {useMemo, useState } from "react";
 import Amenities from "../GeneralProperty/Amenities/Amenities";
 import { useSearchParams } from "next/navigation";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import PCBubbles from "../GeneralProperty/PCBubbles/PCBubbles";
 import MobileBubbles from "../GeneralProperty/MobileBubbles/MobileBubbles";
-import GeneralBook from "./GeneralBook/GeneralBook";
-import MobileBook from "./MobileBook/MobileBook";
 import dynamic from "next/dynamic";
-import exp from "constants";
-import { json } from "stream/consumers";
 import Reviews from "../GeneralProperty/Reviews/Review";
 import ProfileCard from "@/components/Profile/ManageProfile/ProfileCard";
-import GeneralProperty from "../GeneralProperty/GeneralProperty";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
 type UserDeets = {
     id : string | null;
     role : string | null;
@@ -36,6 +28,7 @@ interface Props{
     propertyAttributes : PropertyAttributeFull;
     userDeets : UserDeets;
     isMobile : boolean;
+    isCircle: boolean;
 }
 
 type Expanded = {
@@ -44,20 +37,22 @@ type Expanded = {
     reviewsExpand : boolean;
 }
 
-const PropertyCustomer = (props : Props) => {
-    // console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
+const GeneralProperty = (props : Props) => {
+
+    console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
     const sp = useSearchParams();
     const adultCountSp = Number(sp.get("numadults"))
+    //const adultCountSp = props.userDeets.numAdults
     let childCountSp = Number(sp.get("numchildren"))
     let petCountSp = Number(sp.get("numpets"))
     const startDate = props.userDeets.startDate
 
     const endDate = props.userDeets.endDate
-    // console.log("userid: " + props.userDeets.id)
-    // console.log("userrole: " + props.userDeets.role)
+    console.log("userid: " + props.userDeets.id)
+    console.log("userrole: " + props.userDeets.role)
     let allowedToBook : boolean = false
-    // console.log("start " + startDate)
-    // console.log("image url " + props.propertyAttributes.images)
+    console.log("start " + startDate)
+    console.log("image url " + props.propertyAttributes.images)
     if(props.userDeets.id !== null && props.userDeets.role === 'customer'){
         allowedToBook = true
     }
@@ -72,22 +67,22 @@ const PropertyCustomer = (props : Props) => {
         petCountSp = 0;
     }
 
-    // const [expanded, setExpanded] = useState<Expanded>(
-    //     {
-    //         overviewExpand : true,
-    //         amenitiesExpand : true,
-    //         reviewsExpand : false,
-    //     }
-    // ) 
+    const [expanded, setExpanded] = useState<Expanded>(
+        {
+            overviewExpand : true,
+            amenitiesExpand : true,
+            reviewsExpand : false,
+        }
+    ) 
 
-    // const handleToggleSection = (e : any) =>{
-    //     e.preventDefault();
-    //     const id = e.target.id as keyof Expanded;
-    //     console.log(expanded[id])
-    //     setExpanded({...expanded, [id] : !expanded[id]})
-    //     console.log("toggle " + JSON.stringify(expanded));
-    //     console.log(id)
-    // }
+    const handleToggleSection = (e : any) =>{
+        e.preventDefault();
+        const id = e.target.id as keyof Expanded;
+        console.log(expanded[id])
+        setExpanded({...expanded, [id] : !expanded[id]})
+        console.log("toggle " + JSON.stringify(expanded));
+        console.log(id)
+    }
 
     const [guestCounts, setGuestCounts] = useState<GuestCounts>(
         { 
@@ -95,70 +90,63 @@ const PropertyCustomer = (props : Props) => {
             childCount : childCountSp,
              petCount : petCountSp
         });
-    // const Map = useMemo(() => dynamic(
-    //     () => import('@/components/Map/Map'),
-    //     { 
-    //         loading: () => <p>A map is loading</p>,
-    //         ssr: false,
-    //     }
-    //     ), [])
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/Map/Map'),
+        { 
+            loading: () => <p>A map is loading</p>,
+            ssr: false,
+        }
+        ), [])
+
     const [getStartDate, setStartDate] = useState<Date>(new Date(startDate));
     const [getEndDate, setEndDate] = useState<Date>(new Date(endDate));
 
 
     const bookingLength = ((getEndDate.getTime() - getStartDate.getTime()) / 86_400_000);
 
-    // const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+    const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
 
-    // const [showImage, setShowImage] = useState<boolean>(true);
+    const [showImage, setShowImage] = useState<boolean>(true);
 
 
-    // const handleIncrement = (e : any) => {
-    //     e.preventDefault();
-    //     setCurrentImageIdx(currentImageIdx < props.propertyAttributes.images.length - 1 ? currentImageIdx + 1 : 0);
-    // }
+    const handleIncrement = (e : any) => {
+        e.preventDefault();
+        setCurrentImageIdx(currentImageIdx < props.propertyAttributes.images.length - 1 ? currentImageIdx + 1 : 0);
+    }
 
-    // const handleDecrement = (e : any) => {
-    //     e.preventDefault();
-    //     setCurrentImageIdx(currentImageIdx > 0 ? currentImageIdx - 1 :  props.propertyAttributes.images.length - 1)
-    //     console.log(currentImageIdx)
-    // }
+    const handleDecrement = (e : any) => {
+        e.preventDefault();
+        setCurrentImageIdx(currentImageIdx > 0 ? currentImageIdx - 1 :  props.propertyAttributes.images.length - 1)
+        console.log(currentImageIdx)
+    }
 
 
 
     // console.log(props.userDeets.startDate)
     // console.log(props.propertyAttributes.beauty);
-    const baseCost = bookingLength * Number(props.propertyAttributes.pricePerNight);
-    const extraCost = (Number(props.propertyAttributes.priceIncreasePerPerson) > 0 && (guestCounts.adultCount + guestCounts.childCount) > 1) 
-        ?
-        Number(props.propertyAttributes.priceIncreasePerPerson) * bookingLength * (guestCounts.adultCount + guestCounts.childCount - 1)
-        :
-        0
-        ;
+    // const baseCost = bookingLength * Number(props.propertyAttributes.pricePerNight);
+    // const extraCost = (Number(props.propertyAttributes.priceIncreasePerPerson) > 0 && (guestCounts.adultCount + guestCounts.childCount) > 1) 
+    //     ?
+    //     Number(props.propertyAttributes.priceIncreasePerPerson) * bookingLength * (guestCounts.adultCount + guestCounts.childCount - 1)
+    //     :
+    //     0
+    //     ;
     
-    const style = props.isMobile ? mobileStyle : stylePC;
-    return( 
-        <div id={style.container}>
-                {
-                props.isMobile &&
-                <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em", color : "green"}}>
-                    💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
-                    - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
-                </strong>
-              }
-            <GeneralProperty propertyAttributes={props.propertyAttributes} userDeets={props.userDeets} isMobile={props.isMobile} isCircle={true}/>
+         const style = props.isMobile ? mobileStyle : stylePC;
 
-            {/* <section id={style.info}>
+    return(
+        <>
+               <section id={style.info}>
             <h1>{props.propertyAttributes.title || "No title provided"}</h1>
             
 
-            {
+            {/* {
                 props.isMobile &&
                 <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em", color : "green"}}>
                     💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
                     - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
                 </strong>
-              }
+              } */}
               {
                 showImage
                 ?
@@ -177,7 +165,7 @@ const PropertyCustomer = (props : Props) => {
                 </div>
                 :
                 <div>
-                <Map position={[props.propertyAttributes.latitude, props.propertyAttributes.longitude]} zoom={15} isCircle={true}/>
+                <Map position={[props.propertyAttributes.latitude, props.propertyAttributes.longitude]} zoom={15} isCircle={props.isCircle}/>
 
                 </div>
               }
@@ -265,39 +253,10 @@ const PropertyCustomer = (props : Props) => {
         </div>
 
 
-            </section> */}
-                {
-                    props.isMobile ? 
-                    <MobileBook   baseCost={baseCost}
-                    extraCost={extraCost}
-                    getStartDate={getStartDate}
-                    setStartDate={setStartDate}
-                    getEndDate={getEndDate}
-                    setEndDate={setEndDate}
-                    guestCounts={guestCounts}
-                    setGuestCounts={setGuestCounts}
-                    acceptsChildren={props.propertyAttributes.acceptsChildren}
-                    acceptsPets={props.propertyAttributes.acceptsPets} 
-                    propertyId={props.propertyAttributes.id}
-                    allowedToBook={allowedToBook}/> 
-                    : 
-                        <GeneralBook 
-                        baseCost={baseCost}
-                        extraCost={extraCost}
-                        getStartDate={getStartDate}
-                        setStartDate={setStartDate}
-                        getEndDate={getEndDate}
-                        setEndDate={setEndDate}
-                        guestCounts={guestCounts}
-                        setGuestCounts={setGuestCounts}
-                        acceptsChildren={props.propertyAttributes.acceptsChildren}
-                        acceptsPets={props.propertyAttributes.acceptsPets}
-                        isMobile={false}
-                        propertyId={props.propertyAttributes.id} 
-                        allowedToBook={allowedToBook}/>
-                }
-        </div> 
+            </section>
+        
+        </>
     )
 }
 
-export default PropertyCustomer;
+export default GeneralProperty;

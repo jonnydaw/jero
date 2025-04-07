@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.booking.DTO.OtherPartyinfo;
 import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
@@ -31,6 +32,7 @@ import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
+import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
@@ -179,7 +181,8 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings) {
+    public Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings, String token) {
+        boolean isCustomer = JwtProvider.getRoleFromJwtToken(token).equals("customer");
         Map<String, List<PropertyBooking>>  res = new HashMap<>();
         for(String key : bookings.keySet()){
             List<PropertyBooking> arr = new ArrayList<>();
@@ -199,6 +202,12 @@ public class PropertyService implements IPropertyService {
                 pb.setTotalCost(booking.getTotalCost());
                 pb.setAccepted(booking.isAccepted());
                 pb.setCancelled(booking.isCancelled());
+                if(isCustomer){
+                    pb.setOtherPartyInfo(getOtherPartyProfile(booking.getOwnerId()));
+                } else{
+                    pb.setOtherPartyInfo(getOtherPartyProfile(booking.getGuestId()));
+                }
+                
                 arr.add(pb);
             }
             res.put(key,arr);
@@ -233,29 +242,50 @@ public class PropertyService implements IPropertyService {
         }
         res.setReviews(reviews);
         Map<String,String> map = new HashMap<>();
-        map.put("fname", "hello");
-        map.put("lname", "last name");
-        map.put("intro", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        map.put("img", "imgulr");
+        UserModel user= userRepository.findById(property.getOwnerId()).get();
+        if(user.getPrivacy().get("alwaysShowProfile")){
+            map.put("fname", user.getFirstName());
+            map.put("lname", user.getLastName());
+            map.put("intro",  user.getIntroduction());
+            map.put("img", user.getProfileImgUrl());
+        }else{
+            map.put("fname", "Anonymous");
+            map.put("lname", "Anonymous");
+            map.put("intro",  "Anonymous");
+            map.put("img", "");
+        }
         res.setProfileCardInfo(map); 
-        // res.setFirstName("hello");
-        // res.setLastName("last name");
-        // res.setIntro("\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\n" + //
-        //                 "\n" + //
-        //                 "");
-        // res.setImgURL("null");
-
-        //res = property;
-        // res.setId(property.getId());
-        // res.setOwnerId(property.getOwnerId());
-        // res.se
-
         res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
-        res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
-
-        //property.setAddress("");
-        
+        res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);        
         return res;
+    }
+
+    @Override
+    public GetPropertyBookedHandler processBookedProperty(PropertyModel property, GetPropertyBookedHandler res){
+        BeanUtils.copyProperties(property, res);
+        List<ReviewsType> reviews = new ArrayList<>();
+
+        Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
+        
+        for(List<ReviewsType> propertyReview : propertyReviews.values()){
+            reviews.addAll(propertyReview);
+        }
+        res.setReviews(reviews);
+        Map<String,String> map = new HashMap<>();
+        UserModel user= userRepository.findById(property.getOwnerId()).get();
+        if(user.getPrivacy().get("profile")){
+            map.put("fname", user.getFirstName());
+            map.put("lname", user.getLastName());
+            map.put("intro",  user.getIntroduction());
+            map.put("img", user.getProfileImgUrl());
+        }else{
+            map.put("fname", "Anonymous");
+            map.put("lname", "Anonymous");
+            map.put("intro",  "Anonymous");
+            map.put("img", "");
+        }
+        res.setProfileCardInfo(map); 
+        return null;
     }
 
     @Override
@@ -556,6 +586,18 @@ public class PropertyService implements IPropertyService {
         return res;
     }
 
+    private OtherPartyinfo getOtherPartyProfile(ObjectId userID){
+        UserModel user = userRepository.findById(userID).get();
+        if(!user.getPrivacy().get("profile")){
+            return new OtherPartyinfo();
+        }
+        OtherPartyinfo opi = new OtherPartyinfo();
+        opi.setFirstName(user.getFirstName());
+        opi.setLastName(user.getLastName());
+        opi.setIntro(user.getIntroduction());
+        opi.setImgULR(user.getProfileImgUrl());
+        return opi;
+    }
 
 
 

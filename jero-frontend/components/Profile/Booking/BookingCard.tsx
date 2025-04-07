@@ -29,7 +29,8 @@ const BookingCard = (props : Props) => {
         </strong>
         <br />
         <em>{new Date(props.booking.start).toLocaleDateString()} - {new Date(props.booking.end).toLocaleDateString()} </em>
-
+        <br />
+        <strong>{props.isCustomer ? `Hosted by` : `Booked by`} {props.booking.otherPartyInfo.firstName || "Anon"}</strong>
         <div style={{marginTop:"2.5em"}}>
           <span className={style.span} >Adults: {props.booking.numAdults} </span>
           {props.booking.numChildren > 0 && (

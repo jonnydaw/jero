@@ -1,8 +1,13 @@
 'use client'
+import { Link } from "@/i18n/routing"
 
 import { inDevEnvironment } from "@/base";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
+
+import ProfileCard from "../../ManageProfile/ProfileCard";
+import ModalExample from "../Modal/ModalFunc";
+import ModalFunc from "../Modal/ModalFunc";
 
 interface Props {
     propertyId : string;
@@ -48,25 +53,42 @@ const Options = (props : Props) => {
         //if(!props.accepted) return null;
         if(props.cancelled) return null;
         if(props.timeframe === "past" && props.accepted){
+            console.log("hit bool")
             return (
                 <div>
                 <button onClick={leaveReviewRedirect} className="basicButton">Leave a review</button>
+                <Link href={`/booked/${props.bookingId}/${props.propertyId}`}>View</Link>
                 </div>
             )
+        }else if(props.timeframe === "past" && !props.accepted){
+            return (
+                <div>
+                    <Link href={`/property/${props.propertyId}`}>View</Link>
+                </div>
+            );
         }else if(props.timeframe === "future"){
             return(<div>
             <button onClick={handleCancel} className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
+            <Link href={`/property/${props.propertyId}`}>View</Link>
             </div>)
         } else if(props.timeframe === "present"){
-            // return(<div>
-            //     <button>Send Message</button>
-            //     </div>)
+            return(
+                <Link href={`/booked/${props.bookingId}/${props.propertyId}`}>View</Link>
+            )
         }
     }else if(!props.isCustomer){
-        console.log("hit")
+        //console.log("hit")
         if(props.cancelled) return null;
         if(props.timeframe === "past" && props.accepted){
-            return;
+            return(
+                <div>
+                    <Link href={`/property/${props.propertyId}`}>View</Link>
+                    <ModalFunc/>
+                </div>
+        
+
+
+            )
         } else if(props.timeframe === "future" && !props.accepted){
             
             const handleAccept = async (e: any) => {
@@ -89,12 +111,16 @@ const Options = (props : Props) => {
             return(
             <div>
             <button onClick={handleAccept} className='basicButton' style={{backgroundColor : "green", color : "white"}}>Accept</button>
+            <Link href={`/property/${props.propertyId}`}>View</Link>
+
             </div>
             )
         } else if(props.timeframe === "future" && props.accepted){
 
             return(<div>
                 <button onClick={handleCancel} className="basicButton">Cancel</button>
+                <Link href={`/property/${props.propertyId}`}>View</Link>
+
                 </div>)
         }
     }
