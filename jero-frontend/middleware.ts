@@ -13,7 +13,7 @@ const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.t
 
 //helpers start
 
-const protectedPages : string[] = ["profile"];
+const protectedPages : string[] = ["profile", "booked"];
 const protectedFromNonHost : string[] = ["add-property"];
 const authIngressPages : string[] = ["login","signup"];
 

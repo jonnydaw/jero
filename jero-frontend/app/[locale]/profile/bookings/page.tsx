@@ -44,6 +44,7 @@ const page = async () => {
     console.log(vals)
     // cannot stand js "objects" anymore. 
     const data  : Map<String, BookingProperty[]> = new Map(Object.entries(vals)) 
+    console.log("bookingdata " + JSON.stringify(data))
     return (
 
         <div>

@@ -18,10 +18,17 @@ const customStyles = {
   },
 };
 
+interface Props {
+  firstName : string;
+  lastName : string,
+  profileImg : string,
+  intro : string,
+}
+
 // // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#yourAppElement');
 
-function ModalFunc() {
+function ModalFunc(props : Props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -38,7 +45,7 @@ function ModalFunc() {
 
   return (
     <div>
-      <button className={`basicButton`}onClick={openModal}>Open Modal</button>
+      <button className={`basicButton`}onClick={openModal}>View Profile</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -50,7 +57,7 @@ function ModalFunc() {
       >        
       <div style={{width : "100%", display : 'flex', flexDirection : "column", justifyContent : "center", alignItems : "center", alignSelf : "center"
 }}>
-        <ProfileCard firstName={''} lastName={''} introduction={''} imgLink={''}/>
+        <ProfileCard firstName={props.firstName} lastName={props.lastName} introduction={props.intro} imgLink={props.profileImg}/>
         <button className='basicButton' onClick={closeModal}>close</button>
         </div>
       </Modal>

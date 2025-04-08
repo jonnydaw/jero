@@ -26,14 +26,14 @@ const ManageProfile = (props : UpdateFields) => {
             firstName : "",
             lastName : "",
             introduction : "",
-            imgLink : "",
+            imgULR : "",
         }
     );
 
     const firstNameProp = updateFields.firstName.length > 0 ? updateFields.firstName : props.firstName;
     const lastNameProp = updateFields.lastName.length  > 0 ?  updateFields.lastName :  props.lastName;
     const introductionProp = updateFields.introduction.length > 0 ? updateFields.introduction : props.introduction;
-    const imgLinkProp = updateFields.imgLink.length > 0 ? updateFields.imgLink : props.imgLink;
+    const imgLinkProp = updateFields.imgULR.length > 0 ? updateFields.imgULR : props.imgULR;
 
     
     const handleChange = (e : any) => {
@@ -41,6 +41,19 @@ const ManageProfile = (props : UpdateFields) => {
         setUpdateFields({...updateFields, [name] : value});
         console.log(name)
         console.log(value)
+    }
+
+    const handleDelete = async (e : any) => {
+        e.preventDefault();
+        try {
+            const response = await axios.delete(`${baseApi}/auth/delete`,
+                { withCredentials: true}
+            );
+            console.log("hi" + response.data);
+        } catch (error : any) {
+            console.log(error)
+            //onsole.log('Login failed:', error.response ? error.response.data : error.message);
+        }
     }
 
     const handleSubmit = async (e: any) => {
@@ -137,7 +150,7 @@ const ManageProfile = (props : UpdateFields) => {
                             type="img" 
                             id="imgLink" 
                             name="imgLink" 
-                            value={updateFields.imgLink}
+                            value={updateFields.imgULR}
                             onChange={handleChange}
     
                         />
@@ -146,7 +159,7 @@ const ManageProfile = (props : UpdateFields) => {
                 </section>
                                                                                                                                                                 
                 
-                <button className="basicButton" id={style.delete}>Delete Account</button>
+                <button onClick={handleDelete} className="basicButton" id={style.delete}>Delete Account</button>
 
             </div>
         </div>

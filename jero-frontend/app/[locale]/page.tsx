@@ -7,28 +7,33 @@ import { inDevEnvironment } from '@/base';
 export default function HomePage() {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
-    const handleSubmit = async (e : any) => {
-        e.preventDefault();
-        try {
-            const response = await axios.delete(`${baseApi}/auth/delete`,
-                { withCredentials: true}
-            );
-            console.log("hi" + response.data);
-        } catch (error : any) {
-            console.log(error)
-            //onsole.log('Login failed:', error.response ? error.response.data : error.message);
-        }
-    }
+    // const handleSubmit = async (e : any) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.delete(`${baseApi}/auth/delete`,
+    //             { withCredentials: true}
+    //         );
+    //         console.log("hi" + response.data);
+    //     } catch (error : any) {
+    //         console.log(error)
+    //         //onsole.log('Login failed:', error.response ? error.response.data : error.message);
+    //     }
+    // }
 
     const t = useTranslations('HomePage');
     return (
         <div>
-            <h1>{t('about')}</h1>
-            <form onSubmit={handleSubmit}>
+            <div>
+                <h1>Trending Locations</h1>
+            </div>
+            <div>
+                <h1>Trending Properties</h1>
+            </div>
+            {/* <form onSubmit={handleSubmit}>
                 <button type='submit'>
                     Delete
                     </button>
-            </form>
+            </form> */}
         </div>
     );  
 }

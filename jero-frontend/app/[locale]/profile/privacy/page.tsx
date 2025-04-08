@@ -25,7 +25,7 @@ const page = async () => {
             },       
         });
         settings = (await response.json())
-        console.log(settings);
+        console.log("settings: " + JSON.stringify(settings));
     
         }catch(error : any){
             console.error(error);
@@ -38,7 +38,7 @@ const page = async () => {
                     ?
                     <PrivacyCustomer showNameOnReviews={settings.review} showProfileAfterBooking={settings.profile} allowAnalysisOnBookings={settings.analysis}/>
                     :
-                    <PrivacyHost showProfileOnPropertyPage={settings.review} showProfileAfterBooking={settings.profile} allowAnalysisOnBookings={settings.analysis}/>
+                    <PrivacyHost showProfileOnPropertyPage={settings.alwaysShowProfile} showProfileAfterBooking={settings.profile} allowAnalysisOnBookings={settings.analysis}/>
 
 
                 }

@@ -4,10 +4,11 @@ import { Link } from "@/i18n/routing"
 import { inDevEnvironment } from "@/base";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
-
+import style from "./options.module.css"
 import ProfileCard from "../../ManageProfile/ProfileCard";
 import ModalExample from "../Modal/ModalFunc";
 import ModalFunc from "../Modal/ModalFunc";
+import { styleText } from "util";
 
 interface Props {
     propertyId : string;
@@ -51,27 +52,37 @@ const Options = (props : Props) => {
 
     if(props.isCustomer){
         //if(!props.accepted) return null;
-        if(props.cancelled) return null;
+        if(props.cancelled) return (
+            <div id={style.optionContainer}>
+                <Link href={`/property/${props.propertyId}`}>View</Link>
+
+            </div>
+        );
         if(props.timeframe === "past" && props.accepted){
             console.log("hit bool")
             return (
-                <div>
+                <div id={style.optionContainer}>
                 <button onClick={leaveReviewRedirect} className="basicButton">Leave a review</button>
-                <Link href={`/booked/${props.bookingId}/${props.propertyId}`}>View</Link>
+                <Link href={`/property/${props.propertyId}`}>View</Link>
                 </div>
             )
         }else if(props.timeframe === "past" && !props.accepted){
             return (
-                <div>
+                <div id={style.optionContainer}>
                     <Link href={`/property/${props.propertyId}`}>View</Link>
                 </div>
             );
-        }else if(props.timeframe === "future"){
-            return(<div>
+        }else if(props.timeframe === "future" && !props.accepted){
+            return(<div id={style.optionContainer}>
             <button onClick={handleCancel} className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
             <Link href={`/property/${props.propertyId}`}>View</Link>
             </div>)
-        } else if(props.timeframe === "present"){
+        } else if(props.timeframe === "future" && props.accepted) {
+            return(<div id={style.optionContainer}>
+                <button onClick={handleCancel} className="basicButton" style={{backgroundColor : "#FF746C", color : "black"}}>Cancel Booking</button>
+                <Link href={`/booked/${props.bookingId}/${props.propertyId}`}>View</Link>
+                </div>)
+        }else if(props.timeframe === "present"){
             return(
                 <Link href={`/booked/${props.bookingId}/${props.propertyId}`}>View</Link>
             )
@@ -81,9 +92,8 @@ const Options = (props : Props) => {
         if(props.cancelled) return null;
         if(props.timeframe === "past" && props.accepted){
             return(
-                <div>
+                <div id={style.optionContainer}>
                     <Link href={`/property/${props.propertyId}`}>View</Link>
-                    <ModalFunc/>
                 </div>
         
 
@@ -109,7 +119,7 @@ const Options = (props : Props) => {
                 }
             }
             return(
-            <div>
+            <div id={style.optionContainer}>
             <button onClick={handleAccept} className='basicButton' style={{backgroundColor : "green", color : "white"}}>Accept</button>
             <Link href={`/property/${props.propertyId}`}>View</Link>
 
@@ -117,10 +127,9 @@ const Options = (props : Props) => {
             )
         } else if(props.timeframe === "future" && props.accepted){
 
-            return(<div>
+            return(<div id={style.optionContainer}>
                 <button onClick={handleCancel} className="basicButton">Cancel</button>
                 <Link href={`/property/${props.propertyId}`}>View</Link>
-
                 </div>)
         }
     }
