@@ -2,7 +2,10 @@ package com.example.demo.user.userCMRS.service.authentication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.booking.bookingCMRS.model.BookingModel;
+import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.email.EmailTemplate;
 import com.example.demo.email.IEmailService;
+import com.example.demo.property.propertycmrs.service.IPropertyService;
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
@@ -38,6 +44,8 @@ public class UserAuthService implements IUserAuthService {
         @Autowired EmailMatchValidator emailMatchValidator;
         @Autowired PasswordMatchValidator passwordMatchValidator;
         @Autowired ValidPasswordValidator validPasswordValidator;
+        @Autowired IBookingService bookingService;
+        @Autowired IPropertyService propertyService;
         @Autowired ConcUserDetailService concUserDetailService;
         @Autowired private PasswordEncoder passwordEncoder; 
         @Autowired private UserRepository userRepository;
@@ -81,9 +89,48 @@ public class UserAuthService implements IUserAuthService {
         }
 
         @Override
-        public void deleteUser(String id){
-            userRepository.deleteById(new ObjectId(id));
+        public void deleteUser(String JWT){
+            String role = JwtProvider.getRoleFromJwtToken(JWT);
+            String id = JwtProvider.getIdFromJwtToken(JWT);
+           Map<String, List<BookingModel>> bookings =  bookingService.getBookings(JWT);
+           List<BookingModel> currentBookings = bookings.get("present");
+           if(currentBookings != null && currentBookings.size() > 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ongoing booking" );
+           }
+           List<BookingModel> futureBookings = bookings.get("future");
+           for(BookingModel futureBooking : futureBookings){
+            if(futureBooking.isAccepted() && !futureBooking.isCancelled()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "cancel booking before deletion" );
+            }
+           }
+            
+           List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
+                             .collect(Collectors.toList());
+           bookingService.handleDeletedUserBooking(JWT, combinedBookings);
+           if(role.equals("host")){
+                propertyService.handlePropertyDeletion(id);
+           }else if(role.equals("customer")){
+            propertyService.handleReviewDeletion(combinedBookings, id);
+           }
+
+        //    if(role.equals("host")){
+        //     _deleteHostHelper_(id);
+        //    }else if(role.equals("customer")){
+        //         _deleteCustomerHelper_(id);
+        //    }
+
+
+           // userRepository.deleteById(new ObjectId(id));
         }
+
+        // private void _deleteHostHelper_(String id){
+        //     bookingRepo.
+
+        // }
+
+        // private void _deleteCustomerHelper_(String id){
+
+        // }
 
 
     

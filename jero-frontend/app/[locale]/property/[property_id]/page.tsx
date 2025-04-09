@@ -35,7 +35,13 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         console.log(property_id)
         console.log("start " +String(startDate))
         console.log("fake " + String(new Date().toISOString().split('T')[0]))
-
+        if(property_id === "67f6ae5881ebbd6dc69897e1"){
+            return(
+                <div>
+                    <h1>Sorry this property has been deleted</h1>
+                </div>
+            )
+        }
     let property;
     try{
         const response = await fetch(`${baseApi}/property/${property_id}`, {

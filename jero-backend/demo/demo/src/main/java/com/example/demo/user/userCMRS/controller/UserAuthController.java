@@ -87,17 +87,17 @@ public class UserAuthController {
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteUser(HttpServletRequest req, @CookieValue("JWT") String JWT, @CookieValue("RT") String refresh){
-		try {
-			req.logout();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// 	req.logout();
+		// } catch (ServletException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 		// String email =  JwtProvider.getEmailFromJwtToken(JWT);
 		// UserModel user = userRepository.findByEmail(email);
 		String id = JwtProvider.getIdFromJwtToken(JWT);
 		refreshTokenService.checkRefreshToken(id, refresh);
-		userAuthService.deleteUser(id);
+		userAuthService.deleteUser(JWT);
 		return ResponseEntity.ok().body("Account deleted");
 	}
 

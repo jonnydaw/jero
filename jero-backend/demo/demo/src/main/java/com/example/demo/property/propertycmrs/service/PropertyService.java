@@ -215,6 +215,26 @@ public class PropertyService implements IPropertyService {
             List<PropertyBooking> arr = new ArrayList<>();
             for(BookingModel booking : bookings.get(key)){
                 PropertyBooking pb = new PropertyBooking();
+                if(booking.getPropertyId().toHexString().equals("67f6ae5881ebbd6dc69897e1")){
+                    pb.setPropertyId(booking.getPropertyId().toHexString());
+                    pb.setBookingId(booking.getId().toHexString());
+                    pb.setTitle("DeletedProperty");
+                    pb.setImage("/vercel.svg");
+                    pb.setStart(booking.getStartDate());
+                    pb.setEnd(booking.getEndDate());
+                    pb.setNumAdults(booking.getNumAdults());
+                    pb.setNumChildren(booking.getNumChildren());
+                    pb.setNumPets(booking.getNumPets());
+                    pb.setTotalCost(booking.getTotalCost());
+                    pb.setAccepted(booking.isAccepted());
+                    pb.setCancelled(booking.isCancelled());
+                    OtherPartyinfo opi = new OtherPartyinfo();
+                    opi.setFirstName("delete");
+                    opi.setLastName("deleted");
+                    opi.setIntro("deleted");
+                    opi.setImgULR("/vercel.svg");
+                    pb.setOtherPartyInfo(opi);
+                }else{
                 PropertyModel pm = this.getPropertyById(booking.getPropertyId());
 
                 pb.setPropertyId(booking.getPropertyId().toHexString());
@@ -234,7 +254,7 @@ public class PropertyService implements IPropertyService {
                 } else{
                     pb.setOtherPartyInfo(getOtherPartyProfile(booking.getGuestId()));
                 }
-                
+            }
                 arr.add(pb);
             }
             res.put(key,arr);
@@ -404,6 +424,60 @@ public class PropertyService implements IPropertyService {
 
             
         }
+    
+    @Override
+    public void handleReviewDeletion(List<BookingModel> bookings, String id){
+
+        // https://stackoverflow.com/questions/30611870/how-can-i-get-a-list-from-some-class-properties-with-java-8-stream
+        Set<ObjectId> propertyIds = bookings.stream()
+                  .map(BookingModel::getPropertyId)
+                  .collect(Collectors.toSet());
+        
+        List<PropertyModel> properties = propertyRepo.findAllById(propertyIds);
+        if(properties != null && !properties.isEmpty()){
+        for(PropertyModel propert : properties){
+            Map<String,List<ReviewsType>> allReviews = propert.getReviews();
+            List<ReviewsType> relevantReviews = allReviews.get(id);
+            if(relevantReviews != null && !relevantReviews.isEmpty()){
+                allReviews.remove(id);
+                allReviews.put("67f6b00b81ebbd6dc69897e5", relevantReviews);
+                propert.setReviews(allReviews);
+            }
+            
+        }
+        propertyRepo.saveAll(properties);
+    }
+
+    }
+
+    @Override
+    public void handlePropertyDeletion(String id){
+        List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(id)); 
+
+        if(properties != null && !properties.isEmpty()){
+            Set<Double> reviewScores = properties.stream()
+            .map(PropertyModel::getAvgReviewScore)
+            .collect(Collectors.toSet());
+
+            ReviewModel rm = reviewRepo.findById(1).get();
+            List<Double> scores = rm.getScores();
+
+            for(Double avg : reviewScores){
+                int removeIndex = Collections.binarySearch(scores, avg);
+                if(removeIndex >= 0){
+                    scores.remove(removeIndex);
+                }
+
+            }
+
+            rm.setScores(scores);
+            reviewRepo.save(rm);
+
+
+            propertyRepo.deleteAll(properties);
+        }
+        //System.out.println("account delete " + properties);
+    }
 
     private void calcPercentile(double newAvg, double oldAvg, PropertyModel pm) {
         ReviewModel rm = reviewRepo.findById(1).get();
@@ -482,7 +556,12 @@ public class PropertyService implements IPropertyService {
     }
 
     private void adjust(ObjectId newestPropertyToBeReview, List<Double> scores){
+        System.out.println("hit1");
         List<PropertyModel> properties = propertyRepo.findAll();
+        System.out.println("hit");
+        // https://stackoverflow.com/questions/35701337/java-8-lambda-get-and-remove-element-from-list
+        properties.removeIf(property -> "67f6ae5881ebbd6dc69897e1".equals(property.getId().toHexString()));
+
         Map<Double,Double> scoreToPercentile = new HashMap<>();
         int l = 0;
         int r = 1;
@@ -509,60 +588,9 @@ public class PropertyService implements IPropertyService {
             double newPercentile = scoreToPercentile.get(mean);
             property.setPercentile(newPercentile);
             propertyRepo.save(property);
-
-
         }
         }   
-        // private void adjust(ObjectId newestPropertyToBeReview, double newAvg, double percentileOfNewAvg, double size,  boolean sizeIncrease){
 
-        // List<PropertyModel> properties = propertyRepo.findAll();
-        // for(PropertyModel property : properties){
-        //     if(property.getId().equals(newestPropertyToBeReview)){
-        //         continue;
-        //     }
-        //     if(property.getReviews() == null || property.getReviews().isEmpty()){
-        //         continue;
-        //     }
-            // System.out.println("hit adjust");
-            // double mean = property.getAvgReviewScore();
-            // double percentile = property.getPercentile();
-            // if(mean == 0 || percentile == -1 ){
-            //     continue;
-            // }
-            // if(mean < newAvg && sizeIncrease){
-            //     double numLess = ((percentile / 100.0) * (size-1.0));
-            //     System.out.println("numless less: " + numLess);
-            //     percentile = (numLess / size) * 100.0;
-            // }else if(mean < newAvg && !sizeIncrease){
-            //     double numLess = ((percentile / 100.0) * (size)) - 1.0;
-            //     System.out.println("numless mean < newAvg && !sizeIncrease : " + numLess);
-            //     // due to floating points
-            //     if(numLess <= 0){
-            //         percentile = 0;
-            //     } else{
-            //         percentile = (numLess / size) * 100.0;
-
-            //     }
-            //     System.out.println("percentile mean < newAvg && !sizeIncrease : " + percentile);
-
-            // }else if(mean > newAvg && sizeIncrease){
-            //     System.out.println("mean: " + mean);
-            //     double numLess = ((percentile / 100.0) * (size-1.0));
-            //     System.out.println("numless greater: " + numLess);
-            //     percentile = ((numLess + 1) / size) * 100.0;
-            // }else if(mean > newAvg && !sizeIncrease){
-            //     double numLess = ((percentile / 100.0) * (size));
-            //     System.out.println("numless greater: " + numLess);
-            //     percentile = ((numLess + 1) / size) * 100.0;
-            // }else{
-            //     percentile = percentileOfNewAvg;
-            // }
-            // property.setPercentile(percentile);
-            // propertyRepo.save(property);
-
-
-    //     }
-    // }
 
     private List<PropertyModel> extracted2(LocationModel location, 
         String locationType, 

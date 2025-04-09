@@ -185,7 +185,31 @@ public class BookingService implements IBookingService {
         if(dayAfterBookingEnd.isBefore(now)){
             throw new ResponseStatusException(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS, "booking in the past");
         }
-        
+    }
+
+    @Override 
+    public void handleDeletedUserBooking(String jwt, List<BookingModel> bookings ){
+
+        String role = JwtProvider.getRoleFromJwtToken(jwt);
+        //String id = JwtProvider.getIdFromJwtToken(jwt);
+        // List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
+        //                      .collect(Collectors.toList());
+        //List<BookingModel> full = 
+        if(role.equals("host")){
+            for(BookingModel booking : bookings){
+                booking.setPropertyId(new ObjectId("67f6ae5881ebbd6dc69897e1"));
+                booking.setOwnerId(new ObjectId("67f6b00b81ebbd6dc69897e5"));
+            }
+            bookingRepo.saveAll(bookings);
+
+        } else if (role.equals("customer")){
+            for(BookingModel booking : bookings){
+                booking.setGuestId(new ObjectId("67f6b00b81ebbd6dc69897e5"));
+            }
+            bookingRepo.saveAll(bookings);
+
+        }
+
     }
 
 

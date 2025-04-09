@@ -53,5 +53,9 @@ public interface IPropertyService {
 
     public GetPropertyBookedHandler processBookedProperty(PropertyModel property, GetPropertyBookedHandler res);
 
+    public void handleReviewDeletion( List<BookingModel> bookings,  String id);
+
+    public void handlePropertyDeletion(String id);
+
     
 }
