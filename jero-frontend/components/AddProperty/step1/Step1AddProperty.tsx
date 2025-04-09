@@ -101,7 +101,7 @@ const Step1AddProperty = () => {
                     console.log("query " + query)
 
                     try {
-                        const response = await fetch(`${baseApi}/location/get_location?${query}`);
+                    const response = await fetch(`${baseApi}/location/get_location?${query}`);
                     const data  = await response.json()
                     console.log(data)
                     if(response.status !== 200){

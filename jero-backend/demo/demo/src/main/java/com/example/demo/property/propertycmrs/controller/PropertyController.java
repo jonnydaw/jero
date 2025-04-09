@@ -118,13 +118,15 @@ public class PropertyController {
                                                        @RequestParam("holidayType") Optional<String> holidayType,
                                                        @RequestParam("tourismLevels") Optional<String> tourismLevels,
                                                        @RequestParam("minTemp") Optional<Integer> minTemp,
-                                                       @RequestParam("maxTemp") Optional<Integer> maxTemp
+                                                       @RequestParam("maxTemp") Optional<Integer> maxTemp,
+                                                       @RequestParam("gettingAround") Optional<String> gettingAround
                                                        ){
-        // Instant start = Instant.parse(startDate.orElse("2025-12-20")+"T00:00:00.000Z");
-        Instant start = Instant.parse(("2025-12-20")+"T00:00:00.000Z");
-
-        // Instant end = Instant.parse(endDate.orElse("2025-12-25")+"T00:00:00.000Z");
-        Instant end = Instant.parse(("2025-12-25")+"T00:00:00.000Z");
+        Instant start = Instant.parse(startDate.orElse("2025-12-20")+"T00:00:00.000Z");
+        //Instant start = Instant.parse(("2025-12-20")+"T00:00:00.000Z");
+        
+        //System.out.println("controller ga " + gettingAround.get());
+        Instant end = Instant.parse(endDate.orElse("2025-12-25")+"T00:00:00.000Z");
+        //Instant end = Instant.parse(("2025-12-25")+"T00:00:00.000Z");
 
         System.out.println(attractions.get());
         List<Map<String,String>> res = propertyService.getPropertiesBySmart(
@@ -137,7 +139,8 @@ public class PropertyController {
             holidayType.orElse(null),
             tourismLevels.orElse(null),
             minTemp.orElse(null),
-            maxTemp.orElse(null)
+            maxTemp.orElse(null),
+            gettingAround.orElse(null)
             );
         // System.out.println("hit controller");
         // System.out.println(res.toString());

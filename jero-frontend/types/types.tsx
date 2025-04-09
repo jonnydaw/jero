@@ -75,6 +75,7 @@ export type PropertyAttribute = {
     title : string;
     mainImage : string;
     percentile : number;
+    extraGuestPriceIncrease : string;
 }
 
 export type ReviewType = {

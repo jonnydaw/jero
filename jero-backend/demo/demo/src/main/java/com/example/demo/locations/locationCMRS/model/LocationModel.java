@@ -26,5 +26,8 @@ public class LocationModel{
     private Map<String, Map<String,Object>> overview;
     private List<LocationModel> nParents;
     private List<Integer> temperature;
+    private String tourismLevels;
+    private String locationTypeSS;
+    private List<String> gettingAround;
 
 }

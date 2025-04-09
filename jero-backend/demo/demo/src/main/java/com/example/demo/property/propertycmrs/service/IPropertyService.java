@@ -39,7 +39,8 @@ public interface IPropertyService {
         String holidayType,
         String tourismLevels,
         int minTemp,
-        int maxTemp
+        int maxTemp,
+        String gettingAround
         );
 
     PropertyModel getPropertyById(ObjectId propertyId);

@@ -17,6 +17,14 @@ type Attractions = {
     historical : boolean
 }
 
+interface GettingAround {
+    carFriendly : boolean;
+    disabledFriendly : boolean;
+    walkable : boolean;
+    bicycleFriendly: boolean;
+    goodPublicTransport : boolean;
+}
+
 interface FormData {
     start : string;
     end : string;
@@ -25,7 +33,7 @@ interface FormData {
     holidayType : string;
     tourismLevels : string
     guestTypes : string;
-    gettingAround : string;
+    gettingAround : GettingAround;
 }
 
 export const AdvancedSearchPC = () => {
@@ -44,6 +52,14 @@ export const AdvancedSearchPC = () => {
         historical : false,
     },);
 
+    const [selectedGettingArounds, setSelectedGettingArounds] = useState<GettingAround>({
+        carFriendly : false,
+        disabledFriendly : false,
+        walkable : false,
+        bicycleFriendly: false,
+        goodPublicTransport: false,
+    },);
+
     const [formData, setFormData] = useState<FormData>(
         {
         start: "",
@@ -53,7 +69,7 @@ export const AdvancedSearchPC = () => {
         holidayType : "any",
         tourismLevels : "any",
         guestTypes : "",
-        gettingAround : "",
+        gettingAround : selectedGettingArounds,
     }
 );    
     const locationTypes : string[] = ["any", "beach","city","skiing", "village"] ;
@@ -65,7 +81,15 @@ export const AdvancedSearchPC = () => {
         "biodiversity",
         "cuisine",
         "historical"
-    ]   
+    ];
+
+    const gettingAroundOptions : string[] = [
+        "car friendly",
+        "disabled friendly",
+        "walkable",
+        "bicycle friendly",
+        "good public transport"
+    ]
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -87,6 +111,7 @@ const [maxValue, set_maxValue] = useState(26);
 
     const handleSubmit = (e : any) => {
             e.preventDefault();
+            console.log(formData)
             localStorage.setItem("start",String(formData.start))
             localStorage.setItem("end", formData.end);
             const params = new URLSearchParams();
@@ -95,12 +120,13 @@ const [maxValue, set_maxValue] = useState(26);
             params.set("numadults",String(formData.count.adultCount));
             params.set("numchildren",String(formData.count.childCount));
             params.set("numpets",String(formData.count.petCount));
-            params.set("attractions",Object.entries(formData.attractions).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&')
-        );
+            params.set("attractions",Object.entries(formData.attractions).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&'));
             params.set("holidayType", formData.holidayType);
             params.set("tourismLevels", formData.tourismLevels);
             params.set("minTemp", String(minValue));
             params.set("maxTemp",String(maxValue));
+            params.set("gettingAround",Object.entries(formData.gettingAround).map(([key, val]) => `${key}=${encodeURIComponent(val)}`).join('&'));
+
         
         
         
@@ -257,10 +283,25 @@ const [maxValue, set_maxValue] = useState(26);
                 </div>
                 </div>
                 <div className={style.underlineDiv}>
-                    <h3>Family friendly etc</h3>
-                </div>
-                <div className={style.underlineDiv}>
-                    <h3>Getting around</h3>                
+                    <h3>Getting around</h3>        
+                    <div className={style.items}>
+                    
+                    {
+                        gettingAroundOptions.map((item, idx) => (
+                            <div className={style.selectItem} key={idx}>
+                            <input 
+                                    onChange={() => setSelectedGettingArounds({...selectedGettingArounds, [item as keyof GettingAround] : !selectedGettingArounds[item as keyof GettingAround]})} 
+                                    type='checkbox'  
+                                    id={item} 
+                                    name="gettingAround"
+                                    value={item}
+                            />
+                                <label htmlFor={item}>{item}</label>
+        
+                            </div>
+                        ))
+                    }
+                </div>        
                 </div>
                 </fieldset>
                 <button className='basicButton'>Search</button>

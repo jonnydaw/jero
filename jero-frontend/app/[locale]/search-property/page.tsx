@@ -32,17 +32,26 @@ const Page = async ({searchParams} : any) =>{
         params : sp,
 
       });
-      console.log(response.data)
+      console.log("response: " + JSON.stringify(response.data))
       dataProperties = response.data;
     } catch (error) {
         console.error(error);
         console.log(JSON.stringify(sp));
     }
+    if(!dataProperties){
+      return(
+        <div>
+          <h1>No properties found</h1>
+        </div>
+      )
+    }
 
+    const actualLocation = dataProperties[0].searched;
+    console.log("actual " + actualLocation)
     let overviewData;
     try{
       // https://stackoverflow.com/questions/60168695/how-to-include-cookies-with-fetch-request-in-nextjs
-      const response = await fetch(`${base}/location/location-overview?location=${sp.location}&start=${sp.startdate}`, {
+      const response = await fetch(`${base}/location/location-overview?location=${actualLocation}&start=${sp.startdate}`, {
           method: "GET",
           headers: {
               Cookie: `NEXT_LOCALE=${localeCookie};`
@@ -68,6 +77,7 @@ const Page = async ({searchParams} : any) =>{
     // }
     console.log("overview " + overviewData);
     //overviewData = "hi"
+
 
     return (
         <div>

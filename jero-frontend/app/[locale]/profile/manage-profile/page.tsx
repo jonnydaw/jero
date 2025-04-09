@@ -30,7 +30,7 @@ const page = async () => {
     return (
 
         <div>
-            <ManageProfile firstName={propVals.firstName || "no name"} lastName={propVals.lastName} introduction={propVals.introduction || "Your intro here"} imgLink={propVals.profileImgUrl} />
+            <ManageProfile firstName={propVals.firstName || "no name"} lastName={propVals.lastName} introduction={propVals.introduction || "Your intro here"} imgULR={propVals.profileImgUrl} />
         </div>
     )
 }

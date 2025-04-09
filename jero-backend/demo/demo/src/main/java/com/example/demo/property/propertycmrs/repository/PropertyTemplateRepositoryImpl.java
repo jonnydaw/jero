@@ -2,6 +2,7 @@ package com.example.demo.property.propertycmrs.repository;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -103,36 +104,47 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
 
     @Override
     public Set<PropertyModel> smartFilter(Instant startDate, Instant endDate, int numAdults, int numChildren,
-            int numPets, List<String> attractions, String holidayType, String tourismLevels, int minTemp, int maxTemp) {
+            int numPets, List<String> attractions, String holidayType, String tourismLevels, int minTemp, int maxTemp,
+            List<String> gettingAround) {
         
-        
-        
+        System.out.println("gettingAround " + gettingAround.toString());
+        System.out.println("start " + startDate.toString());
+        //LocalDate localStartDate = LocalDate.from(startDate);
+         LocalDate localDate = LocalDate.ofInstant(startDate, ZoneOffset.UTC);
+        int zeroIndexedmonth = localDate.getMonthValue() - 1;
+
         List<Criteria> locCriteria = new ArrayList<>();
         Query locQuery = new Query();
-
-
+        
+        String temperatureDotMonth = "temperature." + zeroIndexedmonth;
+        //System.out.println("tempmont " + temperatureDotMonth );
         List<Criteria> criteria = new ArrayList<>();
         Query query = new Query();
-
-        DBObject minTempDb = BasicDBObjectBuilder.start().push("temperature.8").
+        System.out.println(startDate.toString());
+        DBObject minTempDb = BasicDBObjectBuilder.start().push(temperatureDotMonth).
         add("$gte", minTemp).get();
-        DBObject maxTempDb = BasicDBObjectBuilder.start().push("temperature.8").
+        DBObject maxTempDb = BasicDBObjectBuilder.start().push(temperatureDotMonth).
                 add("$lte", maxTemp).get();
         System.out.println(minTemp);
         System.out.println(maxTemp);
         Criteria tempCriterion = where("$and").is(Arrays.asList(minTempDb, maxTempDb));
         locCriteria.add(tempCriterion);
-                System.out.println(attractions.toString());
+        
+        System.out.println(attractions.toString());
+
         if(attractions != null && !attractions.isEmpty()){
-                
+            System.out.println("in: " + attractions);
             DBObject attractionsDb = BasicDBObjectBuilder.start().push("attractions").
                 add("$all",attractions).get();
                 Criteria attractionsCriterion = where("$and").is(Arrays.asList(attractionsDb));
                 locCriteria.add(attractionsCriterion);
             }
-            System.out.println(holidayType);
+            
+        
+        System.out.println(holidayType);
+
         if(holidayType != null && !holidayType.equals("any")){
-            DBObject holidayTypeDb = new BasicDBObject("holidayType", holidayType);
+            DBObject holidayTypeDb = new BasicDBObject("locationTypeSS", holidayType);
             Criteria holidayTypeDbCriterion = where("$and").is(Arrays.asList(holidayTypeDb));
             locCriteria.add(holidayTypeDbCriterion);
         }
@@ -141,6 +153,14 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
             DBObject tourismLevelsDb = new BasicDBObject("tourismLevels", tourismLevels);
             Criteria tourismLevelsDbCriterion = where("$and").is(Arrays.asList(tourismLevelsDb));
             locCriteria.add(tourismLevelsDbCriterion);
+        }
+
+        if(gettingAround != null && !gettingAround.isEmpty() ){
+            System.out.println("in: " + attractions);
+            DBObject gettingAroundDb = BasicDBObjectBuilder.start().push("gettingAround").
+                add("$all",gettingAround).get();
+                Criteria attractionsCriterion = where("$and").is(Arrays.asList(gettingAroundDb));
+                locCriteria.add(attractionsCriterion);
         }
         
         

@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
@@ -124,9 +126,20 @@ public class PropertyService implements IPropertyService {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         //System.out.println("location " + location);
         if(location == null){
+           
             List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
+            System.out.println(fallbacks.toString());
             if(fallbacks == null || fallbacks.size() == 0){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+                System.out.println("hello");
+                List<String> locationWithAccent = locationRepository.ignoreAccents(queriedLocation);
+                if(locationWithAccent.size() > 0){
+                    location = locationRepository.findLocationById(locationWithAccent.getFirst());
+                    System.out.println(location);
+                    if(location == null){
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+                    }
+                    return getPropertiesByLocation(locationWithAccent.getFirst(), startDate, endDate, numAdults, numChildren, numPets, sort);
+                }
             } else{
                 String longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = "";
                 for(String fallback : fallbacks){
@@ -137,17 +150,20 @@ public class PropertyService implements IPropertyService {
                 if(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy.equals("")){
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
                 }
-                //System.out.println(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy);
+                System.out.println(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy);
                 return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets, sort);
             }
         }
         // System.out.println("hit");
         // System.out.println(location);
+        if(location == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
+        }
         String locationType = location.getLocationType();
         List<PropertyModel> pms = new ArrayList<>();
         pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets, sort);
 
-        return getRes(pms);
+        return getRes(pms,queriedLocation);
     }
 
 
@@ -163,21 +179,32 @@ public class PropertyService implements IPropertyService {
         String holidayType,
         String tourismLevels,
         int minTemp,
-        int maxTemp
+        int maxTemp,
+        String gettingAround
     )
     {
-        List<String> attractionsClean = new ArrayList<>(); 
-        String[] split1 = attractions.split("&");
+        List<String> attractionsClean = new ArrayList<>();
+        List<String> gettingAroundClean = new ArrayList<>(); 
+        getSplit1(attractions, attractionsClean);
+        getSplit1(gettingAround, gettingAroundClean);
+        //System.out.println("attractions clean " + attractionsClean.toString());
+        Set<PropertyModel> properties = propertyRepo.smartFilter(
+            startDate, endDate, numAdults, numChildren, 
+            numPets, attractionsClean, holidayType, 
+            tourismLevels, minTemp, maxTemp, gettingAroundClean
+        );
+        return getRes(properties,"");
+    }
+
+    private void getSplit1(String param, List<String> res) {
+        String[] split1 = param.split("&");
         // not ideal
         for(String val : split1){
             String[] split2 = val.split("=");
             if(split2[1].equals("true")){
-                attractionsClean.add(split2[0]);
+                res.add(split2[0]);
             }
         }
-
-        Set<PropertyModel> properties = propertyRepo.smartFilter(startDate, endDate, numAdults, numChildren, numPets, attractionsClean, holidayType, tourismLevels, minTemp, maxTemp);
-        return getRes(properties);
     }
 
     @Override
@@ -562,10 +589,32 @@ public class PropertyService implements IPropertyService {
         } else if(pm.getCityId() != null && !pm.getCityId().equals("")){
             displayLocation = pm.getCityId();
         }
-        return displayLocation;
+
+        String[] words = displayLocation.split(" ");
+        // https://stackoverflow.com/questions/2041778/how-to-initialize-hashset-values-by-construction
+        Set<String> skipWords =  Stream.of("of", "de","the", "el")
+         .collect(Collectors.toCollection(HashSet::new));
+        
+         StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < words.length; i++){
+            String current = words[i];
+            if(skipWords.contains(current) || current.length() <= 1){
+                sb.append(current);
+                sb.append(" ");
+                continue;
+            }
+            
+            sb.append(Character.toUpperCase(current.charAt(0)));
+            sb.append(current.substring(1, current.length()));
+            sb.append(" ");
+
+
+        }
+
+        return sb.toString().trim();
     }
 
-    private List<Map<String, String>> getRes(Collection<PropertyModel> pms) {
+    private List<Map<String, String>> getRes(Collection<PropertyModel> pms, String queried) {
         List<Map<String,String>> res = new ArrayList<>();
         for(PropertyModel pm : pms){
             String displayLocation = extracted(pm);
@@ -574,11 +623,10 @@ public class PropertyService implements IPropertyService {
             propertyAttributes.put("title", pm.getTitle());
             propertyAttributes.put("displayLocation",displayLocation);
             // propertyAttributes.put("townId", pm.getTownId());
-            // propertyAttributes.put("cityDistrictId",pm.getCityDistrictId());
+            propertyAttributes.put("searched",queried);
             propertyAttributes.put("pricePerNight", String.valueOf(pm.getPricePerNight()));
             propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
-            
-
+            propertyAttributes.put("extraGuestPriceIncrease", String.valueOf(pm.getPriceIncreasePerPerson()));
             propertyAttributes.put("percentile",  String.format("%.2f", pm.getPercentile()));
             
             res.add(propertyAttributes);

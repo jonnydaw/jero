@@ -96,7 +96,7 @@ const Search : React.FC<Props> =  (props : Props) => {
     <div className={props.isMobileSearch ? styleMobile.searchContainer : style.searchContainer}>
      {!props.isMobileSearch && 
      <div id={style.smartLinkContainer}>
-     <p id={style.smartP}>{t('smartSearch')} <Link id={style.anc} href={`/advanced-search`}> {t('here')}</Link></p>
+     <p id={style.smartP}>{t('smartSearch')} <Link id={style.anc} href={`/smart-search`}> {t('here')}</Link></p>
      </div>
      }
      <form className={props.isMobileSearch ? styleMobile.form : style.form} onSubmit={handleSubmit}>

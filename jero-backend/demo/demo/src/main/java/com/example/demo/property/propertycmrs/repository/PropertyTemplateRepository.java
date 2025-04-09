@@ -27,7 +27,9 @@ public interface PropertyTemplateRepository {
     String holidayType,
     String tourismLevels,
     int minTemp,
-    int maxTemp);
+    int maxTemp,
+    List<String> gettingAround
+    );
 
 
 }

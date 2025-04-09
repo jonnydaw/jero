@@ -16,6 +16,8 @@ public interface LocationRepository extends MongoRepository<LocationModel, Strin
 
 	// https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/repository/Aggregation.html
 	// https://www.mongodb.com/docs/atlas/atlas-search/aggregation-stages/search/
+	// https://www.mongodb.com/docs/atlas/atlas-search/create-index/
+	// https://www.mongodb.com/docs/atlas/atlas-search/text/
 	//https://www.mongodb.com/docs/atlas/atlas-search/tutorial/run-query/
 	@Aggregation(pipeline = { 
 		"{'$search': {'index' : 'default', 'text': {'query' : ?0, 'path':'_id'}}}",
@@ -24,4 +26,14 @@ public interface LocationRepository extends MongoRepository<LocationModel, Strin
 
 	})
     public List<String> findFallbacks(String undeterminedLocation);
+
+	// https://www.mongodb.com/docs/manual/reference/operator/query/text/
+	// https://www.mongodb.com/docs/manual/tutorial/text-search-in-aggregation/
+	@Aggregation(pipeline = {
+		"{ '$match': {'$text' : {'$search' : ?0, '$diacriticSensitive' : false}} }",
+		"{'$project': { '_id': 1 } }",
+		"{ '$limit' : 1 }"
+	})
+	public List<String> ignoreAccents(String undeterminedLocation);
+
 } 

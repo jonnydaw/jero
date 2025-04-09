@@ -18,8 +18,8 @@ const Page = async ({searchParams} : any) =>{
     const {isMobile} = getSelectorsByUserAgent(
       (await headers()).get("user-agent") ?? ""
   )
-    // const fullUrl = heads.get('referer') || "";
-    // console.log(fullUrl)
+
+  
 
 
     let dataProperties;
