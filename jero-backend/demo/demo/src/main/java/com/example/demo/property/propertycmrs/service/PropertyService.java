@@ -479,6 +479,15 @@ public class PropertyService implements IPropertyService {
         //System.out.println("account delete " + properties);
     }
 
+
+    @Override
+    public List<Map<String,String>> getPropertiesByOwnerId( String token){
+        String ownerId = JwtProvider.getIdFromJwtToken(token);
+        List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(ownerId));
+
+        return getRes(properties, "");
+    }
+
     private void calcPercentile(double newAvg, double oldAvg, PropertyModel pm) {
         ReviewModel rm = reviewRepo.findById(1).get();
         List<Double> scores = rm.getScores();

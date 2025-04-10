@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Step3Data {
-    private int pricePerNight;
-    private int priceIncreasePerPerson;
+    private double pricePerNight;
+    private double priceIncreasePerPerson;
     private boolean acceptsChildren;
     private boolean acceptsPets;
     private boolean disabilityFriendly;

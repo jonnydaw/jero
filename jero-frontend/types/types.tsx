@@ -1,3 +1,30 @@
+export type GuestManagement = {
+    pricePerNight : number,
+    priceIncreasePerPerson : number;
+    acceptsChildren: boolean;
+    acceptsPets : boolean;
+    disabilityFriendly : boolean;
+    minGuests : number;
+    maxGuests : number;
+    numBedrooms : number;
+    numBathrooms : number;
+    doubleBeds : number;
+    singleBeds : number;
+    hammocks : number;
+    sofaBeds : number;
+}
+
+export type Amenities = {
+    beautyData: Beauty, 
+    climateData: ClimateControl, 
+    entertainmentData: Entertainment, 
+    healthAndSafetyData: HealthAndSafety, 
+    kitchenData: Kitchen, 
+    laundryData: Laundry, 
+    transportData: Transport, 
+    waterData :Water 
+}
+
 export type HealthAndSafety = {
     hasFireAlarm : boolean;
     hasCarbonMonoxideDetector : boolean;

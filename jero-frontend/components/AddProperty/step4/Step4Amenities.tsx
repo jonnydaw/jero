@@ -21,100 +21,146 @@ type Sections = {
     entertainment : boolean;
 }
 
-import { Beauty, ClimateControl, Entertainment, HealthAndSafety, Kitchen, Laundry, Transport, Water } from "@/types/types";
+import { Amenities, Beauty, ClimateControl, Entertainment, HealthAndSafety, Kitchen, Laundry, Transport, Water } from "@/types/types";
+import axios from "axios";
+import { inDevEnvironment } from "@/base";
 
+interface Props {
+    isUpdate : boolean;
+    data : Amenities;
+    propertyId : string
+}
 
-
-const Step4Amenities = () => {
-
+const Step4Amenities = (props : Props) => {
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const router = useRouter();
     const pathname = usePathname();
 
 
-    useEffect(() => {
-        const beautyVal = JSON.parse(localStorage.getItem("beauty") || "{}");
-        setBeautyFacilities({
-            hasHairDryer: beautyVal.hasHairDryer || false,
-            hasHairStraightner: beautyVal.hasHairStraightner || false,
-            hasShampoo: beautyVal.hasShampoo || false,
-            hasConditioner: beautyVal.hasConditioner || false,
-            hasBodyWash: beautyVal.hasBodyWash || false,
-        })
+    if(!props.isUpdate){
+        useEffect(() => {
+            const beautyVal = JSON.parse(localStorage.getItem("beauty") || "{}");
+            setBeautyFacilities({
+                hasHairDryer: beautyVal.hasHairDryer || false,
+                hasHairStraightner: beautyVal.hasHairStraightner || false,
+                hasShampoo: beautyVal.hasShampoo || false,
+                hasConditioner: beautyVal.hasConditioner || false,
+                hasBodyWash: beautyVal.hasBodyWash || false,
+            })
 
-        const climateVal = JSON.parse(localStorage.getItem("climateControl") || "{}");
-        setClimateControlFacilities({
-            hasAirCon: climateVal.hasAirCon || false,
-            hasFan: climateVal.hasFan || false,
-            hasHeating: climateVal.hasHeating || false,
-            hasWoodBurningFire: climateVal.hasWoodBurningFire || false,
-        })
+            const climateVal = JSON.parse(localStorage.getItem("climateControl") || "{}");
+            setClimateControlFacilities({
+                hasAirCon: climateVal.hasAirCon || false,
+                hasFan: climateVal.hasFan || false,
+                hasHeating: climateVal.hasHeating || false,
+                hasWoodBurningFire: climateVal.hasWoodBurningFire || false,
+            })
+            
+            const entertainmentVal = JSON.parse(localStorage.getItem("entertainment") || "{}");
+            setEntertainmentFacilities({
+                hasWifi: entertainmentVal.hasWifi || false,
+                hasSmartTv: entertainmentVal.hasSmartTv || false,
+                hasGym: entertainmentVal.hasGym || false,
+                hasBooks: entertainmentVal.hasBooks || false,
+                hasBoardGames: entertainmentVal.hasBoardGames || false,
+                hasLocalMuseums: entertainmentVal.hasLocalMuseums || false,
+                hasLocalBars: entertainmentVal.hasLocalBars || false,
+                hasLocalTheatres: entertainmentVal.hasLocalTheatres || false,
+            });
+
+            const healthAndSafetyVal = JSON.parse(localStorage.getItem("healthAndSafety") || "{}");
+            setHealthAndSafety({
+                hasFireAlarm : healthAndSafetyVal.hasFireAlarm || false,
+                hasCarbonMonoxideDetector: healthAndSafetyVal.hasCarbonMonoxideDetector || false,
+                hasFireExtinguisher: healthAndSafetyVal.hasFireExtinguisher || false,
+                hasFirstAidKit: healthAndSafetyVal.hasFirstAidKit || false,
+            });
+
+            const kitchenVal = JSON.parse(localStorage.getItem("kitchen") || "{}");
+            setKitchenFacilities({
+                hasKitchen: kitchenVal.hasKitchen || false,
+                hasDishwasher: kitchenVal.hasDishwasher || false,
+                hasMicrowave: kitchenVal.hasMicrowave || false,
+                hasOven: kitchenVal.hasOven || false,
+                hasHob: kitchenVal.hasHob || false,
+                hasPotsAndPans: kitchenVal.hasPotsAndPans || false,
+                hasCutlery: kitchenVal.hasCutlery || false,
+                hasCrockery: kitchenVal.hasCrockery || false,
+                hasKettle: kitchenVal.hasKettle || false,
+                hasCoffeeMaker: kitchenVal.hasCoffeeMaker || false,
+            });
+
+            const laundryVal = JSON.parse(localStorage.getItem("laundry") || "{}");
+            setLaundryFacilities({
+                hasWashingMachine: laundryVal.hasWashingMachine || false,
+                hasTumbleDryer: laundryVal.hasTumbleDryer || false,
+                hasIron: laundryVal.hasIron || false,
+                hasDryingRack: laundryVal.hasDryingRack || false,
+            });
+
+            const transportVal = JSON.parse(localStorage.getItem("transport") || "{}");
+            setTransportFacilities({
+                hasGarage: transportVal.hasGarage || false,
+                hasOffStreetParking: transportVal.hasOffStreetParking || false,
+                hasOnStreetParking: transportVal.hasOnStreetParking || false,
+                hasReliablePublicTransportNearby: transportVal.hasReliablePublicTransportNearby || false,
+            });
+
+
+            const waterVal = JSON.parse(localStorage.getItem("water") || "{}");
+            setWaterFacilities({
+                hasDrinkingWater: waterVal.hasDrinkingWater || false,
+                hasBath: waterVal.hasBath || false,
+                hasPrivateToilet: waterVal.hasPrivateToilet || false,
+                hasJacuzzi: waterVal.hasJacuzzi || false,
+                hasShower: waterVal.hasShower || false,
+                hasBidet: waterVal.hasBidet || false,
+                hasSwimmingPool: waterVal.hasSwimmingPool || false,
+            });
+
+    }, []);
+    } else{
+        useEffect(() => {
+            //console.log(props.data.beautyData)
+            setBeautyFacilities(props.data.beautyData)
+            setClimateControlFacilities(props.data.climateData)
+            setEntertainmentFacilities(props.data.entertainmentData);
+            setHealthAndSafety(props.data.healthAndSafetyData);
+            setKitchenFacilities(props.data.kitchenData);
+            setLaundryFacilities(props.data.laundryData);
+            setTransportFacilities(props.data.transportData);
+            setWaterFacilities(props.data.waterData);
+
+    }, []);
         
-        const entertainmentVal = JSON.parse(localStorage.getItem("entertainment") || "{}");
-        setEntertainmentFacilities({
-            hasWifi: entertainmentVal.hasWifi || false,
-            hasSmartTv: entertainmentVal.hasSmartTv || false,
-            hasGym: entertainmentVal.hasGym || false,
-            hasBooks: entertainmentVal.hasBooks || false,
-            hasBoardGames: entertainmentVal.hasBoardGames || false,
-            hasLocalMuseums: entertainmentVal.hasLocalMuseums || false,
-            hasLocalBars: entertainmentVal.hasLocalBars || false,
-            hasLocalTheatres: entertainmentVal.hasLocalTheatres || false,
-        });
 
-        const healthAndSafetyVal = JSON.parse(localStorage.getItem("healthAndSafety") || "{}");
-        setHealthAndSafety({
-            hasFireAlarm : healthAndSafetyVal.hasFireAlarm || false,
-            hasCarbonMonoxideDetector: healthAndSafetyVal.hasCarbonMonoxideDetector || false,
-            hasFireExtinguisher: healthAndSafetyVal.hasFireExtinguisher || false,
-            hasFirstAidKit: healthAndSafetyVal.hasFirstAidKit || false,
-        });
+    }   
 
-        const kitchenVal = JSON.parse(localStorage.getItem("kitchen") || "{}");
-        setKitchenFacilities({
-            hasKitchen: kitchenVal.hasKitchen || false,
-            hasDishwasher: kitchenVal.hasDishwasher || false,
-            hasMicrowave: kitchenVal.hasMicrowave || false,
-            hasOven: kitchenVal.hasOven || false,
-            hasHob: kitchenVal.hasHob || false,
-            hasPotsAndPans: kitchenVal.hasPotsAndPans || false,
-            hasCutlery: kitchenVal.hasCutlery || false,
-            hasCrockery: kitchenVal.hasCrockery || false,
-            hasKettle: kitchenVal.hasKettle || false,
-            hasCoffeeMaker: kitchenVal.hasCoffeeMaker || false,
-        });
+    const handleUpdateSubmit = async (e: any) => {
+        e.preventDefault();
+        try {
+            const response = await axios.patch(`${baseApi}/property/update-amenities/${props.propertyId}`, {
+                beautyData: beautyFacilities, 
+                climateData: climateControlFacilities, 
+                entertainmentData: entertainmentFacilities, 
+                healthAndSafetyData: healthAndSafety, 
+                kitchenData: kitchenFacilities, 
+                laundryData: laundryFacilities, 
+                transportData: transportFacilities, 
+                waterData :waterFacilities
 
-        const laundryVal = JSON.parse(localStorage.getItem("laundry") || "{}");
-        setLaundryFacilities({
-            hasWashingMachine: laundryVal.hasWashingMachine || false,
-            hasTumbleDryer: laundryVal.hasTumbleDryer || false,
-            hasIron: laundryVal.hasIron || false,
-            hasDryingRack: laundryVal.hasDryingRack || false,
-        });
-
-        const transportVal = JSON.parse(localStorage.getItem("transport") || "{}");
-        setTransportFacilities({
-            hasGarage: transportVal.hasGarage || false,
-            hasOffStreetParking: transportVal.hasOffStreetParking || false,
-            hasOnStreetParking: transportVal.hasOnStreetParking || false,
-            hasReliablePublicTransportNearby: transportVal.hasReliablePublicTransportNearby || false,
-        });
+               },
+                   { withCredentials: true}
+               );
+               console.log(response.status);
+               
+        } catch (error) {
+            
+        }
+    }
 
 
-        const waterVal = JSON.parse(localStorage.getItem("water") || "{}");
-        setWaterFacilities({
-            hasDrinkingWater: waterVal.hasDrinkingWater || false,
-            hasBath: waterVal.hasBath || false,
-            hasPrivateToilet: waterVal.hasPrivateToilet || false,
-            hasJacuzzi: waterVal.hasJacuzzi || false,
-            hasShower: waterVal.hasShower || false,
-            hasBidet: waterVal.hasBidet || false,
-            hasSwimmingPool: waterVal.hasSwimmingPool || false,
-        });
-
-}, []);
-
-
-    const handleSubmit = (e : any) => {
+    const handleOriginalSubmit = (e : any) => {
         e.preventDefault();
         // https://stackoverflow.com/questions/3357553/how-do-i-store-an-array-in-localstorage
         
@@ -539,10 +585,17 @@ const Step4Amenities = () => {
     
             }
             </div>
-            <AddPropertyBottomNav
-                handleSubmitFunction={handleSubmit} 
+            {
+                props.isUpdate 
+                    ?
+                <button onClick={handleUpdateSubmit} className="basicButton">Save</button>
+                :
+                <AddPropertyBottomNav
+                handleSubmitFunction={handleOriginalSubmit} 
                 buttonText="Save and Continue to the final step."
                 prevSteps={[1,2,3,5]} />
+            }
+
             </div>
         
 

@@ -10,7 +10,7 @@ export const profileKeysHost : string[] = [
     "manage-profile",
     "manage-properties",
     "bookings",
-    "analytic-privacy",
+    "privacy",
 ]
 
 export const internationalKeys : string[] = [

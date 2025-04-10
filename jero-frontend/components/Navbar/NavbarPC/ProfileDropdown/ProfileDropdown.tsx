@@ -72,15 +72,15 @@ const ProfileDropdown = (props : Props) => {
         authMap.set("signup", "Sign up");
       }else {
         if(props.isCustomer){
-          profileMap.set("manage-profile", "Manage Profile");
+          profileMap.set("profile/manage-profile", "Manage Profile");
           profileMap.set("profile/bookings/","Bookings");
-          profileMap.set("analytic-privacy","Analytics and Privacy");
+          profileMap.set("analytic-privacy","Privacy");
           profileMap.set("messages","Messages");
         }else{
-          profileMap.set("manage-profile", "Manage Profile");
-          profileMap.set("manage-properties","Manage Properties");
-          profileMap.set("profile/bookings","Tookings");
-          profileMap.set("analytic-privacy/host","Analytics and Privacy");
+          profileMap.set("profile/manage-profile", "Manage Profile");
+          profileMap.set("profile/manage-properties","Manage Properties");
+          profileMap.set("profile/bookings","Bookings");
+          profileMap.set("profile/privacy","Privacy");
           profileMap.set("messages","Messages");
         }
       }

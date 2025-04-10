@@ -27,8 +27,6 @@ const PropertyCard = (props : Props) => {
 
 
     const handleClick = (e : any) =>{
-
-
         console.log()
         const params = new URLSearchParams();
         params.set("startdate",startDate || "");
@@ -44,7 +42,7 @@ const PropertyCard = (props : Props) => {
             >
                 <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : "No title" }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
-                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night - £{ bookingLength && Number(props.propertyAttribute.pricePerNight) * bookingLength} total</strong>
+                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night  {bookingLength && `- £ ${Number(props.propertyAttribute.pricePerNight) * bookingLength} total`}</strong>
                 <em style={{marginBottom : "0.5em"}}>Extra guest cost per night £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
                 <p style={{margin : "0em"}}>{props.propertyAttribute.displayLocation}</p>
                 <p>{props.propertyAttribute.percentile > 0 ? `Rated higher than ${~~props.propertyAttribute.percentile}%` : "No reviews yet" }</p>

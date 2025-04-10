@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,10 +30,13 @@ import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
+import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
+import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.property.propertycmrs.service.IPropertyService;
+import com.example.demo.property.propertycmrs.service.IUpdatePropertyService;
 
 @RestController
 @RequestMapping("/property")
@@ -42,6 +46,7 @@ public class PropertyController {
 
    @Autowired private IPropertyService propertyService;
    @Autowired private IBookingService bookingService;
+   @Autowired private IUpdatePropertyService updatePropertyService;
 
 
     //@PreAuthorize("hasAuthority('host')")
@@ -170,7 +175,56 @@ public class PropertyController {
         System.out.println("booking " + bookingId);
         System.out.println("property " + propertyId);
         return ResponseEntity.ok().body(res);
+    }
 
+    @GetMapping("/get-owner-properties")
+    public ResponseEntity<?> getPropertiesFromSmart(@CookieValue("JWT") String token){
+        List<Map<String, String>> res = propertyService.getPropertiesByOwnerId(token);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @GetMapping("/get-property-images/{property_id}")
+    public ResponseEntity<?> getPropertyImages(@CookieValue("JWT") String token, @PathVariable("property_id") String propertyId){
+        System.out.println(propertyId);
+        List<String> res = updatePropertyService.getPropertyImages(token, propertyId);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @PatchMapping("/update-property-images/{property_id}")
+    public ResponseEntity<?> updatePropertyImages(@CookieValue("JWT") String token, @RequestBody Map<String, List<String>> newImages, @PathVariable("property_id") String propertyId){
+        System.out.println(newImages);
+        updatePropertyService.updatePropertyImages( token,  propertyId, newImages.get("updatedImages"));
+        return ResponseEntity.ok().body("Hi");
+    }
+
+    @GetMapping("/get-guests-pricing/{property_id}")
+    public ResponseEntity<?> getGuestsAndPricing(@CookieValue("JWT") String token, @PathVariable("property_id") String propertyId){
+        System.out.println(propertyId);
+        Step3Data res = updatePropertyService.getGuestManagement(token, propertyId);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @PatchMapping("/update-guests-pricing/{property_id}")
+    public ResponseEntity<?> updateGuestsAndPricing(@CookieValue("JWT") String token, @RequestBody Map<String, Step3Data> newStep3, @PathVariable("property_id") String propertyId){
+        System.out.println();
+        updatePropertyService.updateStep3Data( token,  propertyId, newStep3.get("updateGuestManagement"));
+        return ResponseEntity.ok().body("Hi");
+    }
+
+
+    @GetMapping("/get-amenities/{property_id}")
+    public ResponseEntity<?> getAmenities(@CookieValue("JWT") String token, @PathVariable("property_id") String propertyId,  AmentiesHandler res){
+        //System.out.println(propertyId);
+        res = updatePropertyService.getAmenties(token, propertyId, res);
+        return ResponseEntity.ok().body(res);
+    }
+
+    
+    @PatchMapping("/update-amenities/{property_id}")
+    public ResponseEntity<?> updateAmenities(@CookieValue("JWT") String token, @RequestBody AmentiesHandler newAmenities, @PathVariable("property_id") String propertyId){
+        System.out.println();
+        updatePropertyService.updateAmenities(token,  propertyId, newAmenities);
+        return ResponseEntity.ok().body("Hi");
     }
 
 

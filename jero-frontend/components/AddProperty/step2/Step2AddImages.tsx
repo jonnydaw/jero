@@ -2,7 +2,7 @@
  
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
-import { useState, useRef } from 'react';
+import { useState, useRef, Dispatch, SetStateAction } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Link } from "@/i18n/routing";
 import style from "./step2AddProperty.module.css"
@@ -13,7 +13,12 @@ import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
 
  // https://vercel.com/docs/storage/vercel-blob/client-upload
-export default function Step2AddImages() {
+ interface Props {
+    isUpdate : boolean;
+    getter : string[] | null;
+    setter: Dispatch<SetStateAction<string[]>> | null;
+ }
+export default function Step2AddImages(props : Props) {
     const inputFileRef = useRef<HTMLInputElement>(null);
     const pathname = usePathname();
     const router = useRouter();
@@ -23,7 +28,7 @@ export default function Step2AddImages() {
         setBlobs(blobs.filter((blob) => blob !== Unwantedblob));
     }
 
-    const handleSubmit = (e : any) => {
+    const handleOriginalSubmit = (e : any) => {
         e.preventDefault()
         const images : string[] = [];
         if (blobs) {
@@ -38,6 +43,26 @@ export default function Step2AddImages() {
         }else{
             alert("No images have been uploaded");
         }
+    }
+
+    const handleUpdateSubmit = (e : any) => {
+        e.preventDefault()
+        if(props.getter && props.setter){
+            const images : string[] = [...props.getter];
+            if (blobs) {
+                blobs.forEach((blob, index) => {
+                if (blob?.url) {
+                    images.push(blob.url); 
+                }   
+                });
+            props.setter(images);
+            console.log("arr " + props.getter)
+            console.log(images)
+            setBlobs([]);
+            }else{
+                alert("No images have been uploaded");
+            }
+    }
     }
     
     const handleInputFileChange = async (e : any) => {
@@ -55,7 +80,7 @@ export default function Step2AddImages() {
 
     return (
         <div id={style.container}>
-        <h1>Step 2: Upload images of your property</h1>
+        <h1>{props.isUpdate ? `Add new images`: `Step 2: Upload images of your property`}</h1>
     
         <div id={style.uploadArea}>
         <form>
@@ -87,14 +112,27 @@ export default function Step2AddImages() {
     ))}
             </div>
         )}
-        <nav id={bottomNavStyle.hi}>
-        <form onSubmit={handleSubmit}>
+        {
+            !props.isUpdate 
+            ?
+(        <nav id={bottomNavStyle.hi}>
+
+        <form onSubmit={handleOriginalSubmit}>
             <button className={style.button} >Save and next</button>
         </form>
-        <div id={bottomNavStyle.links}>
-            <Link href={"/add-property/step1"}>1</Link>
-        </div>
-        </nav>
+
+            <div id={bottomNavStyle.links}>
+                <Link href={"/add-property/step1"}>1</Link>
+            </div>
+        
+
+        </nav>)
+        : (
+            <form onSubmit={handleUpdateSubmit}>
+            <button  className={`basicButton`} >Add New</button>
+        </form>
+        )
+        }
         </div>
     );
 }

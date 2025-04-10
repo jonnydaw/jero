@@ -5,21 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import style from "./step3.module.css"
 import bottomNavStyle from "../AddPropertyNavigation.module.css"
 
-type GuestManagement = {
-    pricePerNight : number,
-    priceIncreasePerPerson : number;
-    acceptsChildren: boolean;
-    acceptsPets : boolean;
-    disabilityFriendly : boolean;
-    minGuests : number;
-    maxGuests : number;
-    numBedrooms : number;
-    numBathrooms : number;
-    doubleBeds : number;
-    singleBeds : number;
-    hammocks : number;
-    sofaBeds : number;
-}
+
 
 type Errors = {
     pricePerNight : string | null,
@@ -37,9 +23,20 @@ import { usePathname, useRouter } from "next/navigation";
 import BigCheckbox from "../BigCheckbox";
 import { Link } from "@/i18n/routing";
 import AddPropertyBottomNav from "../AddPropertyBottomNav";
+import { GuestManagement } from "@/types/types";
+import { propagateServerField } from "next/dist/server/lib/render-server";
+import axios from "axios";
+import { inDevEnvironment } from "@/base";
 
+interface Props {
+    isUpdate : boolean;
+    data : GuestManagement | null;
+    propertyId : string | null;
+}
 
-const Step3GuestManagement = () => {
+const Step3GuestManagement = (props : Props) => {
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
     /*
     
         localStorage.setItem("pricePerNight", String(formData.pricePerNight));
@@ -54,8 +51,29 @@ const Step3GuestManagement = () => {
         // https://stackoverflow.com/questions/76300847/getting-referenceerror-localstorage-is-not-defined-even-after-adding-use-clien
 
         ////wouihfe
-    useEffect(() => {
-            const step3Val = JSON.parse(localStorage.getItem("step3") || "{}");
+    if(!props.isUpdate){
+        useEffect(() => {
+                const step3Val = JSON.parse(localStorage.getItem("step3") || "{}");
+            // console.log(step3Val.pricePerNight)
+            setFormData({
+                pricePerNight: step3Val.pricePerNight || 0,
+                priceIncreasePerPerson: Number(step3Val.priceIncreasePerPerson) || 0,
+                acceptsChildren: step3Val.acceptsChildren || false,
+                acceptsPets: step3Val.acceptsPets || false,
+                disabilityFriendly: step3Val.disabilityFriendly || false,
+                minGuests: Number(step3Val.minGuests) || 0,
+                maxGuests: Number(step3Val.maxGuests) || 0,
+                numBedrooms : Number(step3Val.numBedrooms) || 0,
+                numBathrooms : Number(step3Val.numBathrooms) || 0,
+                doubleBeds : Number(step3Val.doubleBeds) || 0,
+                singleBeds : Number(step3Val.singleBeds) || 0,
+                hammocks : Number(step3Val.hammocks) || 0,
+                sofaBeds : Number(step3Val.sofaBeds) || 0,
+            });
+        }, []);
+    }else if(props.isUpdate && props.data !== null){
+        useEffect(() => {
+            const step3Val = props.data!;
         // console.log(step3Val.pricePerNight)
         setFormData({
             pricePerNight: step3Val.pricePerNight || 0,
@@ -73,6 +91,7 @@ const Step3GuestManagement = () => {
             sofaBeds : Number(step3Val.sofaBeds) || 0,
         });
     }, []);
+    }
 
  
 
@@ -177,7 +196,7 @@ const Step3GuestManagement = () => {
         return flag;
     }
     
-    const handleSubmit = (e :any) => {
+    const handleOriginalSubmit = (e :any) => {
         e.preventDefault(); 
         if(potentialBedProblem()){
             if(!confirm("Bed count seems low. pls check")){
@@ -211,6 +230,35 @@ const Step3GuestManagement = () => {
 
         const locale = (pathname.split("/").at(1));
         router.push(`/${locale}/add-property/step4`);
+    }
+
+    const handleUpdateSubmit = async (e: any) => {
+        e.preventDefault(); 
+        if(potentialBedProblem()){
+            if(!confirm("Bed count seems low. pls check")){
+                return;
+            }
+
+        }
+        const continueWithSubmit = validate();
+        console.log(continueWithSubmit)
+        if(!continueWithSubmit){
+            return;
+        }
+
+        try {
+            const response = await axios.patch(`${baseApi}/property/update-guests-pricing/${props.propertyId}`, {
+                updateGuestManagement :  formData
+
+               },
+                   { withCredentials: true}
+               );
+               console.log(response.status);
+               
+        } catch (error) {
+            
+        }
+
     }
 
     return (
@@ -408,10 +456,17 @@ const Step3GuestManagement = () => {
             </div>
             </div>
             </section>
-            <AddPropertyBottomNav
-                handleSubmitFunction={handleSubmit} 
+            {
+                props.isUpdate
+                ?
+                    <button onClick={handleUpdateSubmit}>Save Changes</button>
+                :
+                <AddPropertyBottomNav
+                handleSubmitFunction={handleOriginalSubmit} 
                 buttonText="Save and Continue to the next step."
                 prevSteps={[1,2]} />
+            }
+            
         </div>
         
 

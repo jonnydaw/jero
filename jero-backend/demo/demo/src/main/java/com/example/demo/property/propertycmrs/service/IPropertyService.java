@@ -57,5 +57,7 @@ public interface IPropertyService {
 
     public void handlePropertyDeletion(String id);
 
+    public List<Map<String,String>> getPropertiesByOwnerId( String token);
+
     
 }
