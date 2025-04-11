@@ -103,6 +103,8 @@ export type PropertyAttribute = {
     mainImage : string;
     percentile : number;
     extraGuestPriceIncrease : string;
+    lat : number;
+    lon : number;
 }
 
 export type ReviewType = {

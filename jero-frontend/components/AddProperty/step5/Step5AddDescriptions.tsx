@@ -114,6 +114,7 @@ const Step5AddDescription = (props: Props) => {
                 localStorage.removeItem("transport")
                localStorage.removeItem("water")
                console.log(response.status);
+               alert("Property added");
         } catch (error) {
             
         }
@@ -125,6 +126,7 @@ const Step5AddDescription = (props: Props) => {
             <div id={style.textAreaContainer}>
             <label htmlFor="propertyTitle"> Property Title
                 <textarea
+                maxLength={30}
                 placeholder="Title of your choice. e.g. Modern, 2 bedroom apartment in a quiet neighbourhood. Perfect for weekend trips, or long stays."
                 name="propertyTitle"
                 rows={3} 

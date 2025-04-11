@@ -678,6 +678,8 @@ public class PropertyService implements IPropertyService {
             propertyAttributes.put("mainImage",pm.getImageUrls().getFirst());
             propertyAttributes.put("extraGuestPriceIncrease", String.valueOf(pm.getPriceIncreasePerPerson()));
             propertyAttributes.put("percentile",  String.format("%.2f", pm.getPercentile()));
+            propertyAttributes.put("lat", String.format("%.2f", pm.getLatitude()));
+            propertyAttributes.put("lon", String.format("%.3f", pm.getLongitude()));
             
             res.add(propertyAttributes);
         }

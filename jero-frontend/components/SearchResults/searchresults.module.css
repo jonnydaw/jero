@@ -72,3 +72,12 @@
     max-width: 33%;
 }
 
+#map{
+    margin: 1.5em;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    min-width: 33%;
+    max-width: 33%;
+}

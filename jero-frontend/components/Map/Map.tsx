@@ -27,11 +27,12 @@ const Map = (props: Props) => {
       ?
         <Circle center={props.position} radius={200}/>
       :
+
         <Marker position={props.position}> 
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
-      </Marker> 
+      </Marker>      
     }
     
 

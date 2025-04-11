@@ -5,6 +5,9 @@ import mobileStyle from "./searchresultsMobile.module.css"
 import PropertyCard from "../PropertyCard/PropertyCard";
 import Properties from "./Properties";
 import Filters from "./Filters";
+import SearchMap from "../Map/SearchMap";
+import SearchResultsMap from "./SearchResultsMap";
+
 
 
 // type PropertyAttribute = {    
@@ -23,6 +26,9 @@ import Filters from "./Filters";
 
 const SearchResults = (props : Props) => {
   console.log(props.locationOverview.attractions)
+
+
+          
     return (
         <div id ={!props.isMobile ? style.container : mobileStyle.container}>
            <div id={!props.isMobile ? style.searchResultsArea : mobileStyle.searchResultsArea}>
@@ -78,7 +84,7 @@ const SearchResults = (props : Props) => {
         <Properties propertyAttributes={props.propertyAttributes} locationOverview={props.locationOverview} isMobile={props.isMobile} />
         </div>
               <div id={style.map}>
-
+              <SearchResultsMap propertyAttributes={props.propertyAttributes} />
               </div>
 
         </div>
