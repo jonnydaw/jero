@@ -2,20 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: larger;
+    margin: 1em;
 }
 
 #formArea{
   min-width: 50vw;
 }
+
 .fields {
     border: 0;
-  }
+}
 
-  .inputContainer{
+/* .inputContainer{
     margin-left: 2em;
-  }
+} */
 
-  .underlineDiv{
+.underlineDiv{
     border-bottom: solid 0.01em black;
     margin-bottom: 1em;
     padding: 0;
@@ -35,6 +38,26 @@
 .items > input{
   padding: 1em;
 }
+
+.dateArea{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.dateInput{
+  display: flex;
+  flex-direction: column;
+  margin: 0 1em;
+}
+
+.dateInput > input[type="date"]{
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+
 #rangeSlider{
   margin: 1em;
 
@@ -62,4 +85,45 @@
 
 .selectItem > label{
   margin-left: 1em;
+}
+
+
+
+@media only screen and (max-width: 960px) {
+
+  .items{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .selectItem{
+    min-width: 95%;
+    display: flex;
+    min-height: 3ch;
+    align-items: center;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;    
+    padding: 1em;
+    margin: 0.5em !important;
+}
+
+.dateArea{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.dateInput{
+  display: flex;
+  flex-direction: column;
+}
+
+.dateInput > input[type="date"]{
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
 }

@@ -168,8 +168,11 @@ const [maxValue, set_maxValue] = useState(26);
                 <div className={style.underlineDiv}>
                 <h3>When</h3>
                 </div>
-                <div className={style.inputContainer}>
                 
+                <div className={`${style.inputContainer} ${style.dateArea}`}>
+                
+                <div className={style.dateInput}>
+                <label htmlFor="startDate">Start Date</label>
                 <input 
                     id="startDate" 
                     type="date" 
@@ -178,8 +181,10 @@ const [maxValue, set_maxValue] = useState(26);
                     min={currentDate}
                     onChange={handleChange}
                 />
-                <label htmlFor="startDate">Start Date</label>
+                </div>
                 
+                <div className={style.dateInput}>
+                <label htmlFor="endDate">End Date</label>
                 <input 
                     id="endDate" 
                     type="date" 
@@ -188,7 +193,7 @@ const [maxValue, set_maxValue] = useState(26);
                     min={minEndDate}
                     onChange={handleChange}
                 />
-                <label htmlFor="endDate">End Date</label>
+                </div>
                 
                 </div>
                 </fieldset>
@@ -274,6 +279,7 @@ const [maxValue, set_maxValue] = useState(26);
                                     id={item} 
                                     name="tourismLevels"
                                     value={item}
+                                    checked={formData.tourismLevels === item}
                             />
                                 <label htmlFor={item}>{item}</label>
         
@@ -304,8 +310,8 @@ const [maxValue, set_maxValue] = useState(26);
                 </div>        
                 </div>
                 </fieldset>
-                <button className='basicButton'>Search</button>
-            </form>
+                <button  style={{display : "flex", justifySelf:"center"}}className='basicButton'>Search</button>
+                </form>
             </div>
         </div>
     )

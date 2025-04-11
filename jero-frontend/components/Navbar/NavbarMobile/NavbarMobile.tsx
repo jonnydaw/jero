@@ -10,7 +10,7 @@ import style from "./NavbarMobile.module.css"
 import DropdownSearchMobile from "./Dropdowns/BasicSearch/DropdownSearchMobile";
 import DropdownAdvancedSearchMobile from "./Dropdowns/DropdownAdvancedSearchMobile/DropdownAdvancedSearchMobile";
 import GenericDropdownSearch from "./Dropdowns/GenericDropdown";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useParams } from "next/navigation";
 // import Navigations from "./Dropdowns/Navigations/Navigations";
 import ProfileDropdown from "../NavbarPC/ProfileDropdown/ProfileDropdown";
 import Navigations from "./Dropdowns/Navigations/Navigations";
@@ -30,12 +30,14 @@ const NavbarMobile = (props: Props) => {
 
 
   const pathname = usePathname();
+  const params = useParams();
+  const router = useRouter();
   
   useEffect(() => {
     setOpenSmartSearch(false);
     setOpenSearch(false);
     setOpenNavigations(false);
-  }, [pathname]);
+  }, [pathname, params]);
 
   const handleSearchOnClick = (e: any) => {
     e.preventDefault();
@@ -48,7 +50,9 @@ const NavbarMobile = (props: Props) => {
     e.preventDefault();
     setOpenSearch(false);
     setOpenNavigations(false);
-    setOpenSmartSearch(!openSmartSearch);
+    const locale = (pathname.split("/").at(1));
+    router.push(`/${locale}/smart-search`);
+    // setOpenSmartSearch(!openSmartSearch);
   }
 
   const handleNavigationsOnClick = (e: any) => {
@@ -70,9 +74,7 @@ const NavbarMobile = (props: Props) => {
             Search
         </button >
         
-        <button onClick={handleSmartSearchOnClick} id={style.smartSearchButton}>
-                Smart Search
-            </button>
+        <button onClick={handleSmartSearchOnClick} id={style.smartSearchButton}>Smart Search</button>
 
 
             </div>
