@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
+import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
@@ -24,21 +25,13 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Override
     public List<String> getPropertyImages(String token, String propertyId) {
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
         return property.getImageUrls();
     }
 
     @Override
     public void updatePropertyImages(String token, String propertyId, List<String> newImgs) {
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
 
         property.setImageUrls(newImgs);
         propertyRepo.save(property);
@@ -46,11 +39,7 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Override
     public Step3Data getGuestManagement(String token, String propertyId){
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
         Step3Data data = new Step3Data();
         System.out.println(property.getPricePerNight());
         BeanUtils.copyProperties(property, data);
@@ -60,11 +49,7 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Override
     public void updateStep3Data( String token, String propertyId, Step3Data newStep3){
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
 
         BeanUtils.copyProperties(newStep3, property);
         propertyRepo.save(property);
@@ -73,11 +58,7 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Override
     public AmentiesHandler getAmenties(String token, String propertyId, AmentiesHandler res){
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
 
         BeanUtils.copyProperties(property, res);
         System.out.println("menties " + res.toString());
@@ -86,17 +67,50 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Override
     public void updateAmenities(String token, String propertyId, AmentiesHandler newAmenities){
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
-        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
-        }
+        PropertyModel property = getProperty(token, propertyId);
 
         BeanUtils.copyProperties(newAmenities, property);
         //property.setBeautyData(null);
         propertyRepo.save(property);
 
     }
+
+
+    @Override
+        public OverviewData getDescriptions(String token, String propertyId,  OverviewData res){
+            PropertyModel property = getProperty(token, propertyId);
+            System.out.println(property.getDescription());
+            res.setPropertyDescription(property.getDescription());
+            res.setPropertyGuide(property.getGuide());
+            res.setPropertyRules(property.getRules());
+            res.setPropertyTitle(property.getTitle());
+            // BeanUtils.copyProperties(property, res);
+            //System.out.println("description " + res.toString());
+            return res;
+        }
+
+
+
+    @Override
+    public void updateDescriptions(String token, String propertyId,  OverviewData res){
+        PropertyModel property = getProperty(token, propertyId);
+        property.setDescription(res.getPropertyDescription());
+        System.out.println("desc " + res.getPropertyDescription());
+        property.setGuide(res.getPropertyGuide());
+        property.setTitle(res.getPropertyTitle());
+        property.setRules(res.getPropertyRules());
+        propertyRepo.save(property);
+    }
+
+    private PropertyModel getProperty(String token, String propertyId) {
+        String ownerId = JwtProvider.getIdFromJwtToken(token);
+        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
+        if(!property.getOwnerId().equals(new ObjectId(ownerId))){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
+        }
+        return property;
+    }
+
 
     
 }

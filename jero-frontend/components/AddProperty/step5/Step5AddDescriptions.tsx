@@ -1,11 +1,16 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./Step5.module.css"
 import AddPropertyBottomNav from "../AddPropertyBottomNav";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 
+interface Props {
+    isUpdate: boolean 
+    data: Overview | null 
+    propertyId : string | null
+}
 
 type Overview = {
     propertyTitle : string;
@@ -15,7 +20,7 @@ type Overview = {
     // propertyCheckInTime : string;
     // propertyCheckoutTime : string;
 }
-const Step5AddDescription = () => {
+const Step5AddDescription = (props: Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const [overview, setOverview] = useState<Overview>({
         propertyTitle : "",
@@ -30,8 +35,34 @@ const Step5AddDescription = () => {
         const {value, name} = e.target;
         setOverview({...overview, [name] :  value})
     }
+
+    if(props.isUpdate){
+        useEffect(() => {
+                if(props.data){
+                    setOverview(props.data);
+                }
     
-    const handleSubmit = async (e : any) => {
+        }, []);
+                
+    }
+
+    const handleUpdateSubmit = async (e: any) => {
+        e.preventDefault();
+        console.log("ov" + JSON.stringify(overview))
+         try {
+            const response = await axios.patch(`${baseApi}/property/update-descriptions/${props.propertyId}`, {
+                newDescriptions : overview
+                },
+                    { withCredentials: true}
+                );
+                console.log(response.status);
+                
+        } catch (error) {
+                    
+        }
+    }
+    
+    const handleOriginalSubmit = async (e : any) => {
         e.preventDefault();
         // done in case the user leaves still
         localStorage.setItem("overview",JSON.stringify(overview));
@@ -134,10 +165,17 @@ const Step5AddDescription = () => {
                 onChange={handleChange} />
             </label>
 
+        {
+            props.isUpdate
+            ?
+            <button onClick={handleUpdateSubmit} className="basicButton">Update</button>
+            :
             <AddPropertyBottomNav
-                handleSubmitFunction={handleSubmit} 
-                buttonText="Thank you for going through all the steps. Click here to add your property."
-                prevSteps={[1,2,3,4]} />
+            handleSubmitFunction={handleOriginalSubmit} 
+            buttonText="Thank you for going through all the steps. Click here to add your property."
+            prevSteps={[1,2,3,4]} />
+        }
+
             </div>
         </div>
     )

@@ -34,8 +34,8 @@ const Page = async ({searchParams} : any) =>{
       });
       console.log("response: " + JSON.stringify(response.data))
       dataProperties = response.data;
-    } catch (error) {
-        console.error(error);
+    } catch (error : any) {
+        console.error(error.message);
         console.log(JSON.stringify(sp));
     }
     if(!dataProperties){

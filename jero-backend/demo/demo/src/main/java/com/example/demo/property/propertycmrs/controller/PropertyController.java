@@ -31,6 +31,7 @@ import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
+import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
@@ -224,6 +225,22 @@ public class PropertyController {
     public ResponseEntity<?> updateAmenities(@CookieValue("JWT") String token, @RequestBody AmentiesHandler newAmenities, @PathVariable("property_id") String propertyId){
         System.out.println();
         updatePropertyService.updateAmenities(token,  propertyId, newAmenities);
+        return ResponseEntity.ok().body("Hi");
+    }
+
+
+    @GetMapping("/get-descriptions/{property_id}")
+    public ResponseEntity<?> getDescriptions(@CookieValue("JWT") String token, @PathVariable("property_id") String propertyId, OverviewData res){
+        //System.out.println(propertyId);
+        res = updatePropertyService.getDescriptions(token, propertyId, res);
+        return ResponseEntity.ok().body(res);
+    }
+
+    @PatchMapping("/update-descriptions/{property_id}")
+    public ResponseEntity<?> updateDescriptions(@CookieValue("JWT") String token, @RequestBody Map<String, OverviewData> newDescriptions, @PathVariable("property_id") String propertyId){
+        System.out.println();
+        // System.out.println("nd " + newDescriptions.toString());
+        updatePropertyService.updateDescriptions(token,  propertyId, newDescriptions.get("newDescriptions"));
         return ResponseEntity.ok().body("Hi");
     }
 
