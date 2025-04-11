@@ -27,7 +27,7 @@ import { inDevEnvironment } from "@/base";
 
 interface Props {
     isUpdate : boolean;
-    data : Amenities;
+    data : Amenities | null;
     propertyId : string
 }
 
@@ -122,14 +122,16 @@ const Step4Amenities = (props : Props) => {
     } else{
         useEffect(() => {
             //console.log(props.data.beautyData)
-            setBeautyFacilities(props.data.beautyData)
-            setClimateControlFacilities(props.data.climateData)
-            setEntertainmentFacilities(props.data.entertainmentData);
-            setHealthAndSafety(props.data.healthAndSafetyData);
-            setKitchenFacilities(props.data.kitchenData);
-            setLaundryFacilities(props.data.laundryData);
-            setTransportFacilities(props.data.transportData);
-            setWaterFacilities(props.data.waterData);
+            if(props.data){
+                setBeautyFacilities(props.data.beautyData)
+                setClimateControlFacilities(props.data.climateData)
+                setEntertainmentFacilities(props.data.entertainmentData);
+                setHealthAndSafety(props.data.healthAndSafetyData);
+                setKitchenFacilities(props.data.kitchenData);
+                setLaundryFacilities(props.data.laundryData);
+                setTransportFacilities(props.data.transportData);
+                setWaterFacilities(props.data.waterData);
+            }
 
     }, []);
         
