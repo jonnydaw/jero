@@ -4,7 +4,7 @@ import { Link } from "@/i18n/routing";
 const page = () => {
     return(
         <div>
-                <Step3GuestManagement/>
+                <Step3GuestManagement isUpdate={false} data={null} propertyId={null}/>
         </div>        
     )
 }
