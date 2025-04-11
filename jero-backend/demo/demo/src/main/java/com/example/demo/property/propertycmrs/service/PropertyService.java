@@ -451,9 +451,23 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public void handlePropertyDeletion(String id){
+    public void handlePropertiesUserDeletion(String id){
         List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(id)); 
 
+        deletePropertyHelper(properties);
+        //System.out.println("account delete " + properties);
+    }
+
+    @Override
+    public void handlePropertiesDeletion(PropertyModel property){
+        List<PropertyModel> properties = new ArrayList<>();
+        properties.add(property);
+
+        deletePropertyHelper(properties);
+        //System.out.println("account delete " + properties);
+    }
+
+    private void deletePropertyHelper(List<PropertyModel> properties) {
         if(properties != null && !properties.isEmpty()){
             Set<Double> reviewScores = properties.stream()
             .map(PropertyModel::getAvgReviewScore)
@@ -476,7 +490,6 @@ public class PropertyService implements IPropertyService {
 
             propertyRepo.deleteAll(properties);
         }
-        //System.out.println("account delete " + properties);
     }
 
 

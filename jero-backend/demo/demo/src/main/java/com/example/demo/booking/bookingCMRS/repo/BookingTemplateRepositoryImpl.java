@@ -39,10 +39,17 @@ public class BookingTemplateRepositoryImpl implements BookingTemplateRepository 
         res.put("past", getPastBookings(userTypeFieldName, id));
         res.put("present", getCurrentBookings(userTypeFieldName, id));
         res.put("future", getFutureBookings(userTypeFieldName, id));
-
-
         return res;
     }
+
+    @Override
+    public Map<String, List<BookingModel>>  getBookingsFromPropertyId(String propertyId){
+        Map<String, List<BookingModel>> res = new HashMap<>();
+        res.put("past", getPastBookings("propertyId", propertyId));
+        res.put("present", getCurrentBookings("propertyId", propertyId));
+        res.put("future", getFutureBookings("propertyId", propertyId));
+        return res;
+    } 
 
     private List<BookingModel> getPastBookings(String keyFieldName, String id) {
         List<Criteria> criteria = new ArrayList<>();

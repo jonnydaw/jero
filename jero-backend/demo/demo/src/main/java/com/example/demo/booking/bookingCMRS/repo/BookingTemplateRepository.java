@@ -10,5 +10,7 @@ import com.example.demo.booking.bookingCMRS.model.BookingModel;
 public interface BookingTemplateRepository {
 
     Map<String, List<BookingModel>>  getBookings(String token);
+    public Map<String, List<BookingModel>> getBookingsFromPropertyId(String propertyId);
+
     
 }

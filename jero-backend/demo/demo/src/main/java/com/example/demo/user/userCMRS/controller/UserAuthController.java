@@ -97,7 +97,7 @@ public class UserAuthController {
 		// UserModel user = userRepository.findByEmail(email);
 		String id = JwtProvider.getIdFromJwtToken(JWT);
 		refreshTokenService.checkRefreshToken(id, refresh);
-		userAuthService.deleteUser(JWT);
+		userAuthService.deleteUserPrecursor(JWT);
 		return ResponseEntity.ok().body("Account deleted");
 	}
 

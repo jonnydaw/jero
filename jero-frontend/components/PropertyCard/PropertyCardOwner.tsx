@@ -1,15 +1,34 @@
+'use client'
 import { PropertyAttribute } from "@/types/types";
 import style from "./propertcard.module.css"
 import { Link } from "@/i18n/routing";
 import ModalUpdate from "@/components/Profile/ManageProperties/ModalUpdate/ModalUpdate"
+import axios from "axios";
+import { inDevEnvironment } from "@/base";
 interface Props {
     propertyAttribute : PropertyAttribute;
 }
 const PropertyCardOwner = (props : Props) => {
+        const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+
+     const handleDelete = async (e : any) => {
+            e.preventDefault();
+            try {
+                const response = await axios.delete(`${baseApi}/property/delete-property/${props.propertyAttribute.id}`,
+                    { withCredentials: true}
+                );
+                console.log("hi" + response.data);
+                alert("property deleted")
+                location.reload();
+
+            } catch (error : any) {
+                console.log(error)
+                //onsole.log('Login failed:', error.response ? error.response.data : error.message);
+            }
+        }
     return(
         <div 
             className={style.card}>
-                
 
                 <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : "No title" }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
@@ -18,7 +37,7 @@ const PropertyCardOwner = (props : Props) => {
                 <p style={{margin : "0em"}}>{props.propertyAttribute.displayLocation}</p>
                 <p>{props.propertyAttribute.percentile > 0 ? `Rated higher than ${~~props.propertyAttribute.percentile}%` : "No reviews yet" }</p>
                 <div style={{display : "flex", justifyContent : "center", alignItems: "center"}}>
-                <button className="basicButton" style={{backgroundColor : "#FF746C", marginRight: "0.5em"}}>Delete</button>
+                <button onClick={handleDelete} className="basicButton" style={{backgroundColor : "#FF746C", marginRight: "0.5em"}}>Delete</button>
                 {/* <button style={{marginLeft: "0.5em"}} className="basicButton">Update</button> */}
                 <ModalUpdate propertyId={props.propertyAttribute.id}/>
 

@@ -89,7 +89,7 @@ public class UserAuthService implements IUserAuthService {
         }
 
         @Override
-        public void deleteUser(String JWT){
+        public void deleteUserPrecursor(String JWT){
             String role = JwtProvider.getRoleFromJwtToken(JWT);
             String id = JwtProvider.getIdFromJwtToken(JWT);
            Map<String, List<BookingModel>> bookings =  bookingService.getBookings(JWT);
@@ -106,9 +106,10 @@ public class UserAuthService implements IUserAuthService {
             
            List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
                              .collect(Collectors.toList());
+          
            bookingService.handleDeletedUserBooking(JWT, combinedBookings);
            if(role.equals("host")){
-                propertyService.handlePropertyDeletion(id);
+                propertyService.handlePropertiesUserDeletion(id);
            }else if(role.equals("customer")){
             propertyService.handleReviewDeletion(combinedBookings, id);
            }

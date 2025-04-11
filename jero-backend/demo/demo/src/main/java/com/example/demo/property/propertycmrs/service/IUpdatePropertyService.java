@@ -16,6 +16,8 @@ public interface IUpdatePropertyService {
     public void updateAmenities(String token, String propertyId, AmentiesHandler newAmenities);
     public OverviewData getDescriptions(String token, String propertyId,  OverviewData res);
     public void updateDescriptions(String token, String propertyId,  OverviewData res);
+    public void deleteProperty(String token, String propertyId);
+
 
 
 

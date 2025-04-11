@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -242,6 +243,13 @@ public class PropertyController {
         // System.out.println("nd " + newDescriptions.toString());
         updatePropertyService.updateDescriptions(token,  propertyId, newDescriptions.get("newDescriptions"));
         return ResponseEntity.ok().body("Hi");
+    }
+
+    @DeleteMapping("/delete-property/{property_id}")
+    public ResponseEntity<?> deleteProperty(@CookieValue("JWT") String token, @PathVariable("property_id") String propertyId){
+        updatePropertyService.deleteProperty(token, propertyId);
+        return ResponseEntity.ok().body("Hi");
+
     }
 
 

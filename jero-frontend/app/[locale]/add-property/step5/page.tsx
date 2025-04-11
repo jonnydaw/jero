@@ -3,7 +3,7 @@ import Step5AddDescription from "@/components/AddProperty/step5/Step5AddDescript
 const page = () => {
     return(
         <div>
-            <Step5AddDescription/>
+            <Step5AddDescription isUpdate={false} data={null} propertyId={null}/>
         </div>        
     )
 }

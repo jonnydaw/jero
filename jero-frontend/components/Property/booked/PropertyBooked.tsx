@@ -30,7 +30,6 @@ const PropertyBooked = (props : Props) => {
             <GeneralProperty propertyAttributes={props.propertyAttributes} userDeets={props.userDeets} isMobile={props.isMobile} isCircle={false}/>
             <section id={customStyle.toKnow}>
                 <div>
-                    <h1>To Know</h1>
                     <h2>Address</h2>
                     <p>{props.propertyAttributes.address}</p>
                     <h2>Host's Guide</h2>

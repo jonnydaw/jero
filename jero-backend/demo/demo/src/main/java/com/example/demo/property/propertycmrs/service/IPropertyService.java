@@ -55,7 +55,9 @@ public interface IPropertyService {
 
     public void handleReviewDeletion( List<BookingModel> bookings,  String id);
 
-    public void handlePropertyDeletion(String id);
+    public void handlePropertiesUserDeletion(String id);
+
+    public void handlePropertiesDeletion(PropertyModel property);
 
     public List<Map<String,String>> getPropertiesByOwnerId( String token);
 

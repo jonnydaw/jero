@@ -1,6 +1,9 @@
 package com.example.demo.property.propertycmrs.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
@@ -11,17 +14,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.booking.bookingCMRS.model.BookingModel;
+import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
+import com.example.demo.booking.bookingCMRS.service.BookingService;
+import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
 import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
+import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 
 
 @Service
 public class UpdatePropertyService implements IUpdatePropertyService{
 
     @Autowired private PropertyRepo propertyRepo;
+    @Autowired private IBookingService bookingService;
+    @Autowired private IPropertyService propertyService;
+    @Autowired private BookingRepo bookingRepo;
 
     @Override
     public List<String> getPropertyImages(String token, String propertyId) {
@@ -100,6 +111,31 @@ public class UpdatePropertyService implements IUpdatePropertyService{
         property.setTitle(res.getPropertyTitle());
         property.setRules(res.getPropertyRules());
         propertyRepo.save(property);
+    }
+
+    @Override
+    public void deleteProperty(String token, String propertyId){
+        PropertyModel property = getProperty(token, propertyId);
+        Map<String,List<BookingModel>> bookings = bookingRepo.getBookingsFromPropertyId(propertyId);
+        List<BookingModel> currentBookings = bookings.get("present");
+        if(currentBookings != null && currentBookings.size() > 0){
+         throw new ResponseStatusException(HttpStatus.CONFLICT, "ongoing booking" );
+        }
+        List<BookingModel> futureBookings = bookings.get("future");
+        for(BookingModel futureBooking : futureBookings){
+         if(futureBooking.isAccepted() && !futureBooking.isCancelled()){
+             throw new ResponseStatusException(HttpStatus.CONFLICT, "cancel booking before deletion" );
+         }
+        }
+
+        List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
+        .collect(Collectors.toList());
+
+        bookingService.handleDeletedUserBooking(token, combinedBookings);
+        propertyService.handlePropertiesDeletion(property);
+          
+
+
     }
 
     private PropertyModel getProperty(String token, String propertyId) {

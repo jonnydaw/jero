@@ -10,6 +10,8 @@
     padding-top: 5%;
 }
 
+
+
 #toKnow > div{
     max-width: 75%;
     min-width: 75%;
@@ -19,4 +21,5 @@
     border: 0.01em solid lightgray;
     border-radius: 1em;
     box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+    font-size: large;
 }

@@ -15,7 +15,7 @@ public interface IUserAuthService {
 
 	public void saveUser(UserModel createdUser);
 
-	public void deleteUser(String id);
+	public void deleteUserPrecursor(String id);
 
 
 	public boolean isEmailInUse(String email);
