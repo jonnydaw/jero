@@ -45,13 +45,14 @@ const Page = async ({searchParams} : any) =>{
               )
         }
     }
-    // if(!dataProperties){
-    //   return(
-    //     <div>
-    //       <h1>No properties found</h1>
-    //     </div>
-    //   )
-    // }
+    
+    if(!dataProperties){
+      return(
+        <div>
+          <h1>No properties found</h1>
+        </div>
+      )
+    }
 
     const actualLocation = dataProperties[0].searched;
     console.log("actual " + actualLocation)

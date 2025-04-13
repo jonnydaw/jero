@@ -57,7 +57,7 @@ const Search : React.FC<Props> =  (props : Props) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if(formData.start === "" || formData.end === ""){
-      alert("pls enter dates")
+      //alert("pls enter dates")
     }else{
       localStorage.setItem("start",String(formData.start))
       localStorage.setItem("end", formData.end);
@@ -121,6 +121,12 @@ const Search : React.FC<Props> =  (props : Props) => {
           type="date"
           name="start"
           id="start"
+          required={true}
+          onInvalid={(e) =>
+            // https://stackoverflow.com/questions/52123151/change-required-input-message-in-react
+            e.currentTarget.setCustomValidity('CUSTOM MESSAGE')
+          }
+          
           value={formData.start}
           min={currentDate}
           onChange={handleChange}
@@ -131,6 +137,8 @@ const Search : React.FC<Props> =  (props : Props) => {
           type="date"
           name="end"
           id="end"
+          required={true}
+
           value={formData.end}
           min={minEndDate}
           onChange={handleChange}

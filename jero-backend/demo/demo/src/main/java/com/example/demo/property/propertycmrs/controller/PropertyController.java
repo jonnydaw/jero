@@ -40,6 +40,9 @@ import com.example.demo.property.propertycmrs.repository.PropertyRepo;
 import com.example.demo.property.propertycmrs.service.IPropertyService;
 import com.example.demo.property.propertycmrs.service.IUpdatePropertyService;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/property")
 
@@ -98,7 +101,7 @@ public class PropertyController {
     // https://stackoverflow.com/questions/22373696/requestparam-in-spring-mvc-handling-optional-parameters
 
     @GetMapping("/search-properties")
-    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") String location, 
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location, required = true") @NotEmpty String location, 
                                                        @RequestParam("startdate") Optional<String> startDate, 
                                                        @RequestParam("enddate") Optional<String> endDate,
                                                        @RequestParam("numadults") Optional<Integer> numAdults,
