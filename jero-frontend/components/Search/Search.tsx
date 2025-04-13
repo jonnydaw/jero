@@ -109,6 +109,8 @@ const Search : React.FC<Props> =  (props : Props) => {
           type="text"
           name="where"
           id="where"
+          required={true}
+          // https://stackoverflow.com/questions/69633526/oninvalid-attribute-not-rendering-in-react-js
           value={formData.where}
           onChange={handleChange}
           placeholder={t('where')}

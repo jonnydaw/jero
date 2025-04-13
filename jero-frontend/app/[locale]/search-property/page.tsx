@@ -35,16 +35,23 @@ const Page = async ({searchParams} : any) =>{
       console.log("response: " + JSON.stringify(response.data))
       dataProperties = response.data;
     } catch (error : any) {
-        console.error(error.message);
-        console.log(JSON.stringify(sp));
+        // console.error(error.status);
+        // console.log(JSON.stringify(sp));
+        if(error.status === 404){
+          return(
+                <div>
+                  <h1 style={{textAlign: "center", "padding" : "1em"}}>Sorry This Location Is Not supported</h1>
+                </div>
+              )
+        }
     }
-    if(!dataProperties){
-      return(
-        <div>
-          <h1>No properties found</h1>
-        </div>
-      )
-    }
+    // if(!dataProperties){
+    //   return(
+    //     <div>
+    //       <h1>No properties found</h1>
+    //     </div>
+    //   )
+    // }
 
     const actualLocation = dataProperties[0].searched;
     console.log("actual " + actualLocation)
