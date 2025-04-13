@@ -17,7 +17,7 @@ export const DropdownSearch = (props : Props) => {
     return(
         <div id={styleContainer.container}>
         <div id={style.buttonContainer}>
-            <button id={style.close}onClick={handleClose}>X</button>    
+            <button id={style.close}onClick={handleClose}>Close</button>    
         </div>            
             {props.isAdvanced ? <AdvancedSearchMobile/> :<Search isMobileSearch={true}/>}
         </div>
