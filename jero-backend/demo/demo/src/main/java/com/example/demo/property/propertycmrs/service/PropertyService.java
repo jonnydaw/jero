@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,12 +30,10 @@ import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
 import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.locations.locationCMRS.repository.LocationRepository;
-import com.example.demo.locations.locationCMRS.service.ILocationService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
-import com.example.demo.property.propertycmrs.model.EProperty;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
@@ -51,7 +48,6 @@ public class PropertyService implements IPropertyService {
     @Autowired private PropertyRepo propertyRepo;
     @Autowired private ReviewRepo reviewRepo;
     @Autowired private LocationRepository locationRepository;
-    @Autowired private ILocationService locationService;
     @Autowired private UserRepository userRepository;
     @Autowired BookingRepo bookingRepo;
 
@@ -60,7 +56,6 @@ public class PropertyService implements IPropertyService {
     public void createProperty(String token, CreatePropertyHandler cph) {
         String userID =  JwtProvider.getIdFromJwtToken(token);
         System.out.println(userID);
-		//UserModel user = userRepository.findByEmail(email);
         PropertyModel pm = new PropertyModel();
         pm.setOwnerId(new ObjectId(userID));
         System.out.println("hitwio");

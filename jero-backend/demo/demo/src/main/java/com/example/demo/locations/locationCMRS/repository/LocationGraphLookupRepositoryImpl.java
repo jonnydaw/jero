@@ -1,6 +1,5 @@
 package com.example.demo.locations.locationCMRS.repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,16 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.GraphLookupOperation;
 import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 
-import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 
 import com.example.demo.locations.locationCMRS.model.LocationModel;
-import com.mongodb.client.AggregateIterable;
 
+// https://stackoverflow.com/questions/38288258/spring-boot-with-mongotemplate
+// https://www.mongodb.com/docs/manual/reference/operator/aggregation/graphLookup/  
+// https://github.com/kmandalas/spring-mongodb-graphlookup/blob/master/src/main/java/com/github/kmandalas/mongodb/repository/NodeRepositoryImpl.java
+// https://stackoverflow.com/questions/50057396/spring-data-mongodb-graphlookup-query-does-not-contain-as-field
+// https://stackoverflow.com/questions/40989763/mongodb-graphlookup
+// https://www.mongodb.com/docs/manual/reference/operator/aggregation/graphLookup/
+// https://github.com/spring-projects/spring-data-mongodb/blob/main/spring-data-mongodb/src/main/java/org/springframework/data/mongodb/core/aggregation/GraphLookupOperation.java
+// https://docs.spring.io/spring-data/mongodb/docs/2.1.0.RELEASE/api/index.html?org/springframework/data/mongodb/core/aggregation/GraphLookupOperation.FromBuilder.html
+// https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/core/aggregation/GraphLookupOperation.html
+// https://www.oodlestechnologies.com/blogs/How-To-Use-GraphLookup-In-Mongodb/
+// https://stackoverflow.com/questions/47764704/mongodb-graphlookup-in-java-spring-data
+// https://www.mongodb.com/community/forums/t/problem-with-a-graphlookup/301555
+// https://stackoverflow.com/questions/67170965/mongodb-recursive-query-not-working-as-expected-with-graphlookup
+// https://stackoverflow.com/questions/61988004/aggregation-graphlookup-retrieving-results-in-different-order-every-time-the-qu
+// https://stackoverflow.com/questions/63150091/mongodb-graphlookup-aggregation-inconsistent-ouput-order-and-sorting
+// https://www.mongodb.com/community/forums/t/graphlookup-does-not-return-documents-in-order/10426
 
 public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRepository {
 
@@ -30,9 +42,8 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
     @Override
     public Map<String,String> getLocationHierarchy(String mostPreciseLocation){
         System.out.println(1);
-        // https://github.com/kmandalas/spring-mongodb-graphlookup/blob/master/src/main/java/com/github/kmandalas/mongodb/repository/NodeRepositoryImpl.java
+
         final MatchOperation matchStage = Aggregation.match(new Criteria("_id").is(mostPreciseLocation));
-        System.out.println(2);
         GraphLookupOperation graphLookupOperation = GraphLookupOperation.builder()
                 .from("location")
                 .startWith("$parent")
@@ -41,7 +52,6 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
                 .maxDepth(10)
                 .depthField("order")
                 .as("nParents");
-        System.out.println(3);
         // https://stackoverflow.com/questions/63412261/aggregate-sort-by-inner-array-in-spring-data-mongodb
         Aggregation aggregation = Aggregation.newAggregation(
             matchStage, 
@@ -54,12 +64,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
                 .push("nParents").as("nParents")
             );
       
-
-System.out.println(4);
-
         List<LocationModel> results = mongoTemplate.aggregate(aggregation, "location", LocationModel.class).getMappedResults();
-        // List<Document> hi = mongoTemplate.aggregate(aggregation, "location", Document.class).getMappedResults();
-        // System.out.println("first " + hi);
         System.out.println("*****************");
 
         List<LocationModel> subList = results.getFirst().getNParents();
@@ -77,16 +82,11 @@ System.out.println(4);
         }
 
         map.put(results.getFirst().getLocationType(), results.getFirst().getId());
-        //arr.add(mostPreciseLocation);
         for(LocationModel he : subList){
-            // Object x = he.get("id");
-            // System.out.println(x.toString());
             map.put(he.getLocationType(), he.getId());
-            // System.out.println(he.getId());
-            // System.out.println();
+
         }
         System.out.println("****************");
-        //System.out.println(results.get(0).getNParents());
         System.out.println("results" + results);
 
         return map;

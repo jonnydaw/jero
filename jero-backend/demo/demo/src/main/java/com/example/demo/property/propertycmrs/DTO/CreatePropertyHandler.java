@@ -1,8 +1,6 @@
 package com.example.demo.property.propertycmrs.DTO;
 
-import java.util.Date;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 import com.example.demo.property.propertycmrs.DTO.types.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

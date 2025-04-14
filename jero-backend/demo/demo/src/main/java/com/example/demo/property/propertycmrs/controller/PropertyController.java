@@ -1,20 +1,15 @@
 package com.example.demo.property.propertycmrs.controller;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
-import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
@@ -35,13 +29,11 @@ import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
 import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
-import com.example.demo.property.propertycmrs.model.ReviewsType;
-import com.example.demo.property.propertycmrs.repository.PropertyRepo;
+
 import com.example.demo.property.propertycmrs.service.IPropertyService;
 import com.example.demo.property.propertycmrs.service.IUpdatePropertyService;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/property")

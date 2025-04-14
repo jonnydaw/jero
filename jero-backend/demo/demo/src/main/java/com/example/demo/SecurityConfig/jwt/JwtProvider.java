@@ -46,6 +46,9 @@ public class JwtProvider {
 	} 
 
 
+
+
+	// https://stackoverflow.com/questions/73486900/how-to-fix-parser-is-deprecated-and-setsigningkeyjava-security-key-is-deprec
 	public static String getEmailFromJwtToken(String jwt) { 
 		try { 
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody(); 

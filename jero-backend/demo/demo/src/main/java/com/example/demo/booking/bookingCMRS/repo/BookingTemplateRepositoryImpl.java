@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
@@ -18,7 +17,6 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
-import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;

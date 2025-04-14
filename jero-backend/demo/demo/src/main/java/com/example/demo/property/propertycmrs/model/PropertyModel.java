@@ -1,15 +1,11 @@
 package com.example.demo.property.propertycmrs.model;
 
-import java.beans.JavaBean;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +18,6 @@ import com.example.demo.property.propertycmrs.DTO.types.LaundryData;
 import com.example.demo.property.propertycmrs.DTO.types.TransportData;
 import com.example.demo.property.propertycmrs.DTO.types.WaterData;
 
-import jakarta.mail.Transport;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

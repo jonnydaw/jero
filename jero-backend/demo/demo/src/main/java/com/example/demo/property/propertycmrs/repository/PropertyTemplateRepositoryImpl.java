@@ -13,7 +13,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import org.springframework.data.mongodb.core.query.Query;
@@ -22,7 +21,6 @@ import com.example.demo.locations.locationCMRS.model.LocationModel;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepository {
@@ -40,7 +38,6 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
         boolean searchContainsPets,
         Optional<String> sort
         ){
-        // https://stackoverflow.com/questions/26176548/spring-data-mongodb-date-range-query
         List<Criteria> criteria = new ArrayList<>();
   
         Query query = new Query();
@@ -56,6 +53,7 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
         // //https://stackoverflow.com/questions/18521009/spring-mongodb-query-sorting
         // query.with(Sort.by(Sort.Direction.DESC,"pricePerNight"));
 
+        // https://stackoverflow.com/questions/26176548/spring-data-mongodb-date-range-query
 
         DBObject c1 = new BasicDBObject("blockedDates", null);
         DBObject c2 = BasicDBObjectBuilder.start().push("blockedDates").push("$not").

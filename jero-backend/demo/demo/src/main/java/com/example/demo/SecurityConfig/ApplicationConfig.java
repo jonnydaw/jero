@@ -28,9 +28,10 @@ import java.util.Collections;
 public class ApplicationConfig { 
 
 
+// https://stackoverflow.com/questions/74609057/how-to-fix-spring-authorizerequests-is-deprecated
+// https://stackoverflow.com/questions/74683225/updating-to-spring-security-6-0-replacing-removed-and-deprecated-functionality
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-		System.out.println("Security Config is Active");
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
 		.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -50,24 +51,7 @@ public class ApplicationConfig {
 
 								
 								// https://stackoverflow.com/questions/9821919/delete-cookie-from-a-servlet-response
-								// Cookie nullJWTCookie = new Cookie("JWT", null);
-								// nullJWTCookie.setPath("/");
-								// nullJWTCookie.setHttpOnly(true);
-								// nullJWTCookie.setMaxAge(3600);
-								// nullJWTCookie.setSecure(true);
-								// nullJWTCookie.setDomain(".jero.travel");
 
-								
-
-								// Cookie nullRTCookie = new Cookie("RT", null);
-								// nullRTCookie.setPath("/");
-								// nullRTCookie.setHttpOnly(true);
-								// nullRTCookie.setMaxAge(3600);
-								// nullRTCookie.setSecure(true);
-								// nullRTCookie.setDomain(".jero.travel");
-								
-								// response.addCookie(nullJWTCookie);
-								// response.addCookie(nullRTCookie);
 
 								ResponseCookie nullJWTCookie = ResponseCookie.from("JWT", null)
 									.httpOnly(true)

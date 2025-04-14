@@ -1,6 +1,5 @@
 package com.example.demo.property.propertycmrs.DTO.types;
 
-import java.util.List;
 
 import lombok.Data;
 

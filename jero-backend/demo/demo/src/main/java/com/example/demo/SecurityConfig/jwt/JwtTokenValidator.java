@@ -10,6 +10,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,6 +44,8 @@ public class JwtTokenValidator extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+
+
     private String extractToken(HttpServletRequest request) {
         String token = request.getHeader(JwtConstant.JWT_HEADER);
         if (token == null && request.getCookies() != null) {
@@ -53,7 +57,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 }
             }
         }
-        
         return token;
     }
 
@@ -74,6 +77,5 @@ public class JwtTokenValidator extends OncePerRequestFilter {
         List<GrantedAuthority> auth = AuthorityUtils.createAuthorityList(role,status);
         Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        
     }
 }

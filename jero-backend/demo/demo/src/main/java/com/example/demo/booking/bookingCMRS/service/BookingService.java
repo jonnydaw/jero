@@ -1,28 +1,21 @@
 package com.example.demo.booking.bookingCMRS.service;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
+
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
+
 import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -71,7 +64,7 @@ public class BookingService implements IBookingService {
         boolean unique = Collections.disjoint(blocked,requestedDays);
         System.out.println("unqiue: " + unique);
          if(!unique){
-             throw new ResponseStatusException(HttpStatus.CONFLICT, "ONLY_CUSTOMERS");
+             throw new ResponseStatusException(HttpStatus.CONFLICT, "BOOKING_CONFLICT");
  
          }
 
@@ -102,9 +95,6 @@ public class BookingService implements IBookingService {
 
     @Override
     public Map<String,List<BookingModel>> getBookings(String token) {
-        //String id = JwtProvider.getIdFromJwtToken(token);
-        
-       //List<BookingModel> bms = bookingRepo.findBookingByGuestId(new ObjectId(id));
        return bookingRepo.getBookings(token);
     }
 
@@ -122,7 +112,7 @@ public class BookingService implements IBookingService {
         Set<Instant> currentBlockedDates = pm.getBlockedDates();
         System.out.println("current " + currentBlockedDates);
         
-        // https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html
+// https://stackoverflow.com/questions/8708542/something-like-contains-any-for-java-set
        boolean unique = Collections.disjoint(currentBlockedDates,toBlock);
        System.out.println("unqiue: " + unique);
         if(!unique){
@@ -191,10 +181,7 @@ public class BookingService implements IBookingService {
     public void handleDeletedUserBooking(String jwt, List<BookingModel> bookings ){
 
         String role = JwtProvider.getRoleFromJwtToken(jwt);
-        //String id = JwtProvider.getIdFromJwtToken(jwt);
-        // List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
-        //                      .collect(Collectors.toList());
-        //List<BookingModel> full = 
+
         if(role.equals("host")){
             for(BookingModel booking : bookings){
                 booking.setPropertyId(new ObjectId("67f6ae5881ebbd6dc69897e1"));

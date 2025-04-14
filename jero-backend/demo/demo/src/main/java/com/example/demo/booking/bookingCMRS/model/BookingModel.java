@@ -1,17 +1,12 @@
 package com.example.demo.booking.bookingCMRS.model;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.FieldType;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
