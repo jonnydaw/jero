@@ -12,7 +12,7 @@ interface Props {
 
 const Properties = (props : Props) => {
     return (
-        <section id={!props.isMobile ? style.cards : mobileStyle.cards}>
+        <section id={!props.isMobile ? style.cards : mobileStyle.cards} >
         {props.propertyAttributes && props.propertyAttributes.map((item, _) => (
             <div className={!props.isMobile ? style.propertyArea : mobileStyle.propertyArea } key={item.id}>
                 <PropertyCard propertyAttribute={item}/>

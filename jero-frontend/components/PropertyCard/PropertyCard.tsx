@@ -2,6 +2,7 @@
 import { PropertyAttribute } from "@/types/types";
 import style from "./propertcard.module.css"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { KeyboardEventHandler, MouseEventHandler } from "react";
 interface Props {
     propertyAttribute : PropertyAttribute;
 }
@@ -26,19 +27,35 @@ const PropertyCard = (props : Props) => {
     //const 
 
 
-    const handleClick = (e : any) =>{
-        console.log()
+    const handleClick = () =>{
         const params = new URLSearchParams();
         params.set("startdate",startDate || "");
         params.set("enddate", endDate || "");
         params.set("numadults", adultCount|| "");
         params.set("numchildren",childCount|| "");
         params.set("numpets", petCount|| "");
-        router.push(`/${locale}/property/${props.propertyAttribute.id}?${params.toString()}`);    }
+        router.push(`/${locale}/property/${props.propertyAttribute.id}?${params.toString()}`);    
+    }
+
+    const handleEnter = (e : any) => {
+        if(e.key === "Enter"){
+            const params = new URLSearchParams();
+            params.set("startdate",startDate || "");
+            params.set("enddate", endDate || "");
+            params.set("numadults", adultCount|| "");
+            params.set("numchildren",childCount|| "");
+            params.set("numpets", petCount|| "");
+            router.push(`/${locale}/property/${props.propertyAttribute.id}?${params.toString()}`);
+        }
+
+    }
+
     return(
         <div 
+            tabIndex={0}
             className={style.card}
             onClick={handleClick}
+            onKeyDown={handleEnter}
             >
                 <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : "No title" }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />

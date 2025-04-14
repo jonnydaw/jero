@@ -13,3 +13,8 @@
     cursor: pointer;
     transform: scale(1.01);
 }
+
+.card:focus{
+    transform: scale(1.01);
+
+}

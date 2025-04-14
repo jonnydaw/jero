@@ -31,3 +31,8 @@
     transform: scale(1.03);
     cursor: pointer;
 }
+
+.card:focus{
+    transform: scale(1.03);
+    background-color: azure;
+}

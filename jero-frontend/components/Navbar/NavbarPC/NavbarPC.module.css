@@ -63,30 +63,7 @@
   position: sticky;
 }
 
-/* .groupedLinks{
-  margin-right:0 !important;
-  padding-right: 0 !important;
-} */
 
-/*
-https://www.w3schools.com/howto/howto_css_dropdown.asp
-*/
-/* .dropdownContent {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 10em;
-  box-shadow: 0 0.5em 1em 0 rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-
-
-.dropdownContent p:hover {background-color: #ddd;}
-
-.dropdown:hover .dropdownContent {
-  display: block;
-} */
 
 @media only screen and (max-width: 2000px) {
   .searchBar{

@@ -17,11 +17,11 @@
     min-height: 5ch;
 }
 
-.dropdown:hover{
+.dropdown:hover, .dropdown:focus{
   transform: scale(1.05);
 }
 .dropdownContent {
-    display: none;
+    visibility: hidden;
     position: absolute;
     margin-top: 1.5em;
     border: 0.1em solid black;
@@ -36,7 +36,8 @@
     
   }
 
-.dropdown:hover .dropdownContent {
+.dropdown:hover .dropdownContent, .dropdown:focus .dropdownContent, .dropdown:focus-visible .dropdownContent, .dropdown:focus-within .dropdownContent {
+  visibility: visible;
   display: block;
   flex-direction: column;
 }
@@ -69,6 +70,10 @@ div .toggles:not(:last-child){
   background-color: black;
   margin: 0 0.35em;
   color: white;
+}
+
+.toggleButton:focus-visible{
+  background-color: rgb(55, 52, 230)
 }
 
 @media screen and (max-width: 1000px) {

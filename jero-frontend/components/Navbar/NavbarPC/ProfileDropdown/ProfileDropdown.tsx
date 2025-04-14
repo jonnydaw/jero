@@ -75,13 +75,11 @@ const ProfileDropdown = (props : Props) => {
           profileMap.set("profile/manage-profile", "Manage Profile");
           profileMap.set("profile/bookings/","Bookings");
           profileMap.set("analytic-privacy","Privacy");
-          profileMap.set("messages","Messages");
         }else{
           profileMap.set("profile/manage-profile", "Manage Profile");
           profileMap.set("profile/manage-properties","Manage Properties");
           profileMap.set("profile/bookings","Bookings");
           profileMap.set("profile/privacy","Privacy");
-          profileMap.set("messages","Messages");
         }
       }
 
@@ -98,7 +96,7 @@ const ProfileDropdown = (props : Props) => {
 
 
     return (
-        <div className={style.dropdown}>
+        <div className={style.dropdown} tabIndex={0}>
           {
             !props.isMobile 
               &&
@@ -140,14 +138,14 @@ const ProfileDropdown = (props : Props) => {
           
       </div>)
       }
-      <div className={style.authDropdown}>
+      <div className={style.authDropdown} >
         <h3>Languages</h3>
           {
             Object.entries(internationItems).map(([key,value]) => (
               // <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
-              <span key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,value)}>
+              <button tabIndex={0} key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,value)}>
               {key}
-          </span>
+          </button>
             ))
           }
       </div>

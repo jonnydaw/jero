@@ -14,10 +14,10 @@ const Dropdown : React.FC<Props> = ({count, setCount}) => {
 
   const t = useTranslations('SearchBar');
   return (
-    <div className={style.dropdown}>
+    <div className={style.dropdown} tabIndex={0}>
       {/* https://stackoverflow.com/questions/16449295/how-to-sum-the-values-of-a-javascript-object*/}
      <span className={style.dropdownText}>{t('guests')}: {Object.values(count).reduce((a,b) => a+b,0)}</span>
-    <div className={style.dropdownContent}>
+    <div className={style.dropdownContent} tabIndex={0}>
 
     <GuestToggler
         count = {count}

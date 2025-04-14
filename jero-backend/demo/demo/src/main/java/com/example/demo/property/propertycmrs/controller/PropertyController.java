@@ -93,7 +93,7 @@ public class PropertyController {
     // https://stackoverflow.com/questions/22373696/requestparam-in-spring-mvc-handling-optional-parameters
 
     @GetMapping("/search-properties")
-    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location, required = true") @NotEmpty String location, 
+    public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") @NotEmpty String location, 
                                                        @RequestParam("startdate") Optional<String> startDate, 
                                                        @RequestParam("enddate") Optional<String> endDate,
                                                        @RequestParam("numadults") Optional<Integer> numAdults,

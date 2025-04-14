@@ -145,7 +145,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           
         />
         
-      <Dropdown 
+      <Dropdown
         count={count} 
         setCount={setCount}
       />

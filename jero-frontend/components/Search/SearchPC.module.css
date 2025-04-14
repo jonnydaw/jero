@@ -44,7 +44,7 @@
 }
 
 
-.inputs:hover{
+.inputs:hover, .inputs:focus{
     transform: scale(1.05);
 }
 
