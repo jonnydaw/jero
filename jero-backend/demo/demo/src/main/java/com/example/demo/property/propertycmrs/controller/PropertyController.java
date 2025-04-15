@@ -34,6 +34,7 @@ import com.example.demo.property.propertycmrs.service.IPropertyService;
 import com.example.demo.property.propertycmrs.service.IUpdatePropertyService;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/property")
@@ -94,17 +95,17 @@ public class PropertyController {
 
     @GetMapping("/search-properties")
     public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") @NotEmpty String location, 
-                                                       @RequestParam("startdate") Optional<String> startDate, 
-                                                       @RequestParam("enddate") Optional<String> endDate,
-                                                       @RequestParam("numadults") Optional<Integer> numAdults,
-                                                       @RequestParam("numchildren") Optional<Integer> numChildren,
-                                                       @RequestParam("numpets") Optional<Integer> numPets,
+                                                       @RequestParam("startdate") @NotEmpty String startDate, 
+                                                       @RequestParam("enddate") @NotEmpty String endDate,
+                                                       @RequestParam("numadults") @NotNull Integer numAdults,
+                                                       @RequestParam("numchildren") @NotNull Integer numChildren,
+                                                       @RequestParam("numpets") @NotNull Integer numPets,
                                                        @RequestParam("sort") Optional<String> sort
                                                        
-                                                       ){
-        Instant start = Instant.parse(startDate.get()+"T00:00:00.000Z");
-        Instant end = Instant.parse(endDate.get()+"T00:00:00.000Z");
-        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults.orElse(1), numChildren.orElse(0), numPets.orElse(0),sort);
+                                                       ){ 
+        Instant start = Instant.parse(startDate +"T00:00:00.000Z");
+        Instant end = Instant.parse(endDate+"T00:00:00.000Z");
+        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults, numChildren, numPets ,sort);
         System.out.println("hit controller");
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);

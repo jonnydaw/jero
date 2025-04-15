@@ -109,13 +109,9 @@ const Step1AddProperty = () => {
                     }else{
                     
                     const combo = {...chosen, "hierarchy":data}
-                    //const addressAndCoordinates : string[] = [chosen?.locationName, String(chosen.lat), String(chosen.lon), data]
                     localStorage.setItem("addressAndCoordinates", JSON.stringify(combo));
                     localStorage.set
                     alert("Your property will be tagged under :" + JSON.stringify(data))
-                    // localStorage.setItem("address", chosen?.locationName);
-                    // localStorage.setItem("lat", String(chosen.lat));
-                    // localStorage.setItem("lon", String(chosen.lon)); 
                     const locale = (pathname.split("/").at(1));
                     router.push(`/${locale}/add-property/step2`);
                     }

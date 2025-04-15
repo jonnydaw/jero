@@ -42,6 +42,7 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
                 </div>
             )
         }
+    
     let property;
     try{
         const response = await fetch(`${baseApi}/property/${property_id}`, {
@@ -52,6 +53,14 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         }catch(error : any){
             console.error(error);
         }
+    
+    if(!property){
+        return(
+            <div>
+              <h1 style={{textAlign: "center", "padding" : "1em"}}>Sorry we cannot display this property right now</h1>
+            </div>
+        )
+    }    
     return (
         <div>
             {/* <p>ID: {JSON.stringify(property)}</p> */}
