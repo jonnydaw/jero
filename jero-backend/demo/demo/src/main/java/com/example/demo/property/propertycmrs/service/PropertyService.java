@@ -20,6 +20,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -111,8 +112,6 @@ public class PropertyService implements IPropertyService {
         pm.setAvgReviewScore(0);
         //pm.setAvailableDates(cph.getAvailableDates());
         pm.setStatus(false);
-
-
         propertyRepo.save(pm);
     }
 
@@ -123,11 +122,11 @@ public class PropertyService implements IPropertyService {
         if(location == null){
            
             List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
-            System.out.println(fallbacks.toString());
+            // System.out.println(fallbacks.toString());
             if(fallbacks == null || fallbacks.size() == 0){
                 System.out.println("hello");
                 List<String> locationWithAccent = locationRepository.ignoreAccents(queriedLocation);
-                if(locationWithAccent.size() > 0){
+                if(locationWithAccent != null && locationWithAccent.size() > 0){
                     location = locationRepository.findLocationById(locationWithAccent.getFirst());
                     System.out.println(location);
                     if(location == null){
@@ -253,18 +252,17 @@ public class PropertyService implements IPropertyService {
                 arr.add(pb);
             }
             res.put(key,arr);
-            System.out.println("*********************8");
         }
         return res;
     }
 
     @Override
     public PropertyModel getPropertyById(ObjectId propertyId) {
-        PropertyModel property = propertyRepo.findById(propertyId).get();
-        if(property == null){
+        Optional<PropertyModel> optionalProperty = propertyRepo.findById(propertyId);
+        if(optionalProperty == null || optionalProperty.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
         }
-        return property;
+        return optionalProperty.get();
     }
 
     @Override
@@ -335,14 +333,16 @@ public class PropertyService implements IPropertyService {
         String userId = JwtProvider.getIdFromJwtToken(jwt);
         UserModel um = userRepository.findById(new ObjectId(userId)).get();
         String name = um.getPrivacy().get("review") ? um.getFirstName() : "anonymous";
-        System.out.println(um.getPrivacy().get("review"));
-        System.out.println("name: " + name);
+        // System.out.println(um.getPrivacy().get("review"));
+        // System.out.println("name: " + name);
 
-        BookingModel booking = bookingRepo.findById(new ObjectId(newReview.getBookingId())).get();
-        if(booking == null){
+        Optional<BookingModel> optionalBooking = bookingRepo.findById(new ObjectId(newReview.getBookingId()));
+        if(optionalBooking == null || !optionalBooking.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
 
         }
+
+        BookingModel booking = optionalBooking.get();
         if(Instant.now().isBefore(booking.getEndDate())){
             throw new ResponseStatusException(HttpStatus.TOO_EARLY, "REVIEW_NOT_ALLOWED_UNTIL_AFTER");
         }
@@ -355,7 +355,14 @@ public class PropertyService implements IPropertyService {
             throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "CANT_REVIEW_BOOKING_DID_NOT_HAPPEN");
         }
         
-        PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
+        Optional<PropertyModel> optionalPm = propertyRepo.findById(booking.getPropertyId());
+
+        if(optionalPm == null || optionalPm.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+
+        }
+
+        PropertyModel pm = optionalPm.get();
         
         List<ReviewsType> reviews = new ArrayList<>();
 
@@ -682,7 +689,13 @@ public class PropertyService implements IPropertyService {
     }
 
     private OtherPartyinfo getOtherPartyProfile(ObjectId userID){
-        UserModel user = userRepository.findById(userID).get();
+        Optional<UserModel> optionalUser = userRepository.findById(userID);
+        if(optionalUser.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "usernotfound");
+        }
+
+        UserModel user = optionalUser.get();
+
         if(!user.getPrivacy().get("profile")){
             return new OtherPartyinfo();
         }

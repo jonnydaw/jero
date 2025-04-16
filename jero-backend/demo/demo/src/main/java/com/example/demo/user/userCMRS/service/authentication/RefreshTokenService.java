@@ -60,11 +60,11 @@ public class RefreshTokenService implements IRefreshTokenService {
     public void checkRefreshToken(String id, String messageRefreshToken) {
        RefreshModel rm =  refreshRepository.findRefreshById(new ObjectId(id));
        if(rm == null){
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "refresh token not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "refresh token not found");
 
        }
-       System.out.println("db:" +rm.getRefreshToken());
-        System.out.println("Message: " + messageRefreshToken);
+    //    System.out.println("db:" +rm.getRefreshToken());
+    //     System.out.println("Message: " + messageRefreshToken);
        if(messageRefreshToken.equals(rm.getRefreshToken())){
         System.out.println("matching rts");
        }else{

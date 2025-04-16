@@ -59,7 +59,7 @@ public class BuildCookieUnitTest {
 
 
         String cookie = mockUserAuthService.buildCookie(VAL, COOKIE_NAME, AGE);
-        String expected = String.format("%s=%s; Path=/; Max-Age=%d; Expires=%s; HttpOnly; SameSite=Lax", COOKIE_NAME, VAL, AGE, expiry);
+        String expected = String.format("%s=%s; Path=/; Domain=.jero.travel; Max-Age=%d; Expires=%s; Secure; HttpOnly; SameSite=none", COOKIE_NAME, VAL, AGE, expiry);
 
         assertEquals(expected, cookie);
     }

@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
-
+// https://www.youtube.com/watch?v=4l3EFprMqpU&ab_channel=TeddySmith
 @ExtendWith(MockitoExtension.class)
 public class AuthenticateUnitTests {
 
@@ -53,6 +53,8 @@ public class AuthenticateUnitTests {
         Throwable exception = assertThrows(BadCredentialsException.class, 
         () -> mockUserAuthService.authenticate(ul));
         assertEquals("Invalid username and password", exception.getMessage());
+
+        
     }
 
     @Test

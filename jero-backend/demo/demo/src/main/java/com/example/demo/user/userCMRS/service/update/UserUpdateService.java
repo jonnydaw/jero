@@ -74,18 +74,12 @@ public class UserUpdateService  implements IUserUpdateService{
         fieldsToVal.put("introduction",user.getIntroduction());
         fieldsToVal.put("profileImgUrl",user.getProfileImgUrl());
         return fieldsToVal;
-        // user.getFirstName();
-        // user.getLastName();
-        // user.getIntroduction();
-        // user.getProfileImgUrl();
-
     }
 
     @Override
     public Map<String, Boolean> getPrivacySettings(String token) {
         UserModel user = getUser(token);
         return user.getPrivacy();
-        //return user.getPrivacy();
     }
 
     @Override
@@ -100,7 +94,6 @@ public class UserUpdateService  implements IUserUpdateService{
         newSettingMaps.put("analysis",newSettings.isAllowAnalysisOnBookings());
         user.setPrivacy(newSettingMaps);
         userRepository.save(user);
-        
     }
 
     @Override
@@ -116,9 +109,7 @@ public class UserUpdateService  implements IUserUpdateService{
             
     private void anonymiseReviews(ObjectId userID) {
         List<BookingModel> bookings = bookingRepo.findBookingByGuestId(userID);
-        // System.out.println("bookings: " + bookings.size());
-        //Set<PropertyModel> propertiesGuestHasReviewed = new HashSet<>();
-        //  = new ArrayList<>();
+
         Set<ObjectId> uniqueProperties = new HashSet<>();
         for(BookingModel booking : bookings){
             if(booking.isReviewed()){
@@ -141,15 +132,9 @@ public class UserUpdateService  implements IUserUpdateService{
                     propertyRepo.save(propertyRealised);
 
                 }
-                //propertiesGuestHasReviewed.add()
             }
         }
-        // if(!reviews.isEmpty() && property.isPresent()){
-        //     PropertyModel prop = property.get();
 
-        //     propertyRepo.save(property.get());
-
-        // }
     }
 
 
