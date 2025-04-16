@@ -17,11 +17,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin: 1em;
-    border: black 0.1em solid;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    align-items: center;
+    justify-content: center;
+    /* border: black 0.1em solid;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px; */
 }
 
-.overviewSubsection{
+/* .overviewSubsection{
     display: flex;
     flex-direction: column;
     min-width: 30%;
@@ -48,7 +50,7 @@
 }
 .overviewSubsection > ul > li{
     padding: 1ch;
-}
+} */
 
 #filters{
     display: flex;

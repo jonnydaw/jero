@@ -91,8 +91,8 @@ const Page = async ({searchParams} : any) =>{
 
 
     return (
-        <div>
-            <h1>Search For {sp.location}</h1>
+        <div style={{paddingTop : "1vh"}}>
+            <h1 style={{paddingLeft : "1em"}}>Showing Search Results For {sp.location}</h1>
             <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData} isMobile={isMobile} />
         </div>
     )

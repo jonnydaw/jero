@@ -2,6 +2,7 @@
 
 import { inDevEnvironment } from "@/base";
 import PropertyCustomer from "@/components/Property/customer/PropertyCustomer";
+import { DateTime } from "luxon";
 import { cookies, headers } from 'next/headers'
 import { getSelectorsByUserAgent } from "react-device-detect"
 
@@ -22,8 +23,8 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
         const { property_id }: {property_id: string} = await params;
         const queries = await searchParams;
 
-        const startDate =  queries?.startdate || new Date().toISOString().split('T')[0];
-        const endDate =  queries?.enddate || new Date().toISOString().split('T')[0];
+        const startDate =  queries?.startdate || DateTime.now().plus({days: 30})
+        const endDate =  queries?.enddate || DateTime.now().plus({days: 35})
         const adultCount =  queries?.numadults
         const childCount =  queries?.numhildren
         const petCount =  queries?.numpets

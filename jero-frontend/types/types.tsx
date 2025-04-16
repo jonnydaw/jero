@@ -150,7 +150,7 @@ export interface PropertyAttributeFull {
     water: Water;
     beauty: Beauty;
     entertainment: Entertainment;
-    blockedDate : Date;
+    blockedDate : Date[];
     reviews : ReviewType[];
     reviewScore : number;
     profileInfo : ProfileCardInfo

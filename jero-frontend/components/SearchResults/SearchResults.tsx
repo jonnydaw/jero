@@ -7,6 +7,7 @@ import Properties from "./Properties";
 import Filters from "./Filters";
 import SearchMap from "../Map/SearchMap";
 import SearchResultsMap from "./SearchResultsMap";
+import Overview from "./Overview/Overview";
 
 
 
@@ -34,8 +35,10 @@ const SearchResults = (props : Props) => {
            <div id={!props.isMobile ? style.searchResultsArea : mobileStyle.searchResultsArea}>
 
           <section id={!props.isMobile ? style.locationOverview : mobileStyle.locationOverview}>
+
+            <Overview locationOverview={props.locationOverview}/>
             
-            <div className={style.overviewSubsection}>
+            {/* <div className={style.overviewSubsection}>
               <h3>Fun Fact</h3>
               <p>{props.locationOverview.overview}</p>
             </div>
@@ -75,7 +78,7 @@ const SearchResults = (props : Props) => {
                 <li key={index}>{i}</li> 
                ))}
               </ul>
-            </div>
+            </div> */}
 
           </section>
           <section id={style.filters}>

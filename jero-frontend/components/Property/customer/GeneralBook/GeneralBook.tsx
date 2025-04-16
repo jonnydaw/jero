@@ -7,6 +7,7 @@ import pcStyle from "./generalBooking.module.css"
 import mobileStyle from "./mobileGeneralBooking.module.css"
 import "react-datepicker/dist/react-datepicker.css";
 import Pay from "../Pay/Pay";
+import { DateTime } from "luxon";
 
 interface Props {
     baseCost : number;
@@ -22,6 +23,7 @@ interface Props {
     isMobile : boolean;
     propertyId : string;
     allowedToBook : boolean
+    blockedDates : Date[]
 }
 
 const GeneralBook = (props : Props) => {
@@ -42,10 +44,9 @@ const GeneralBook = (props : Props) => {
         props.guestCounts.petCount = 0;
     }
 
-    // if(openPay){
-    //     return
+    // ???????????????????????????????????????????????????????????????????     blockedDates : Date[] give me an error if something is wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    // }else{
+    const blockedDates: Date[] = props.blockedDates.map(date => new Date(date));
 
     return (
     <section id={style.book}>
@@ -72,38 +73,29 @@ const GeneralBook = (props : Props) => {
         </p>
         <strong>Total - £{props.baseCost + props.extraCost}</strong>
         </div>
-        {/* <input 
-            type="date" 
-            name="pop" 
-            id="pop" 
-            value={dates.start} 
-            onChange={handleDateChange}
-        />
-        <input
-            type="date" 
-            name="end" 
-            id="end" 
-            value={dates.end}
-            onChange={handleDateChange}
-        /> */}
+
         <div id={style.dates}>
        
         <DatePicker
             name="start"
+            minDate={DateTime.now().plus({days : 1}).toJSDate()}
             selected={props.getStartDate}
             onChange={(date) => props.setStartDate(date || new Date())}
             className={style.customCalendar}
             enableTabLoop={false}
             calendarClassName={style.customCalendar} 
+            excludeDates={blockedDates}
             />
+
         <DatePicker
             name="end"
             selected={props.getEndDate}
+            minDate={DateTime.fromISO(props.getStartDate.toISOString()).plus({days : 1}).toJSDate()}
             onChange={(date) => props.setEndDate(date || new Date())}
             className={style.customCalendar}
             //https://stackoverflow.com/questions/73123315/react-datepicker-datepicker-pushing-other-elements-to-the-right-on-toggle-and
             enableTabLoop={false}
-
+            excludeDates={blockedDates}
             calendarClassName={style.customCalendar} 
             />
         </div>

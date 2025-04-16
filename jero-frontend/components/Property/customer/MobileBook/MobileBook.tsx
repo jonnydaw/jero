@@ -18,8 +18,10 @@ interface Props {
     acceptsPets : boolean;
     propertyId : string;
     allowedToBook : boolean
+    blockedDates: Date[]
 }
  const MobileBook = (props : Props) => {
+
     const [isOpen, setIsOpen] = useState<boolean>(false);
     return(
         <div>
@@ -41,7 +43,8 @@ interface Props {
                     acceptsPets={props.acceptsPets}
                     isMobile={true} 
                     propertyId={props.propertyId}
-                    allowedToBook={props.allowedToBook}            
+                    allowedToBook={props.allowedToBook} 
+                    blockedDates={props.blockedDates}           
             />
         </div>
 
