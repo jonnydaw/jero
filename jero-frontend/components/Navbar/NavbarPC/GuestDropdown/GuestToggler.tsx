@@ -7,25 +7,33 @@ type Props = {
   count : GuestCounts
   setCount : Dispatch<SetStateAction<GuestCounts>>
   disabled: string[];
+  max : number;
+  min : number;
 }
 
 
 
-const GuestToggler : React.FC<Props> = ({count, setCount, disabled}) => {
+const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) => {
   
   const increment = (e: React.MouseEvent,key : string) => {
-    if(count[key as keyof GuestCounts] < 256){
+    if(Object.values(count).reduce((a,b) => a+b,0) >= max){
+
+    }else if(count[key as keyof GuestCounts] < 256){
     setCount({...count,[key] : count[key as keyof GuestCounts] + 1})
     }
   }
   
   const decrement = (e: React.MouseEvent,key:string) => {
+    if(Object.values(count).reduce((a,b) => a+b,0) <= min){
+
+    }else{
     if(key === `adultCount` && count[key] > 1){
       setCount({...count,[key] : count[key] -1})
     }
     else if (key !== `adultCount` && count[key as keyof GuestCounts] > 0) { 
       setCount({...count,[key] : count[key as keyof GuestCounts] -1})
     }
+  }
   };
   const t = useTranslations("DropdownCount");
   const jsonToText : Map<string, string> = new Map([

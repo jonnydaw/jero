@@ -164,9 +164,10 @@ public class PropertyController {
     PropertyModel property,
     GetPropertyBookedHandler res
     ){
-        System.out.println("hit");
+        System.out.println("hit this controller");
         //List<String> res = new ArrayList<>();
         //res.add("hi");
+
         bookingService.verifyUser(token,bookingId);
         property = propertyService.getPropertyById(new ObjectId(propertyId)); 
         propertyService.processBookedProperty(property, res);

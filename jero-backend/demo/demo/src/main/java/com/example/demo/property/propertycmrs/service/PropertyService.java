@@ -1,12 +1,9 @@
 package com.example.demo.property.propertycmrs.service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +17,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -72,8 +68,6 @@ public class PropertyService implements IPropertyService {
         pm.setAddress(cph.getAddressData().getLocationName());
         pm.setLongitude(cph.getAddressData().getLon());
         pm.setLatitude(cph.getAddressData().getLat());
-        // pm.setNumberBedrooms(cph.getNumberBedrooms());
-        // pm.setNumberBathrooms(cph.getNumberBathrooms());
         pm.setNumberDoubleBeds(cph.getStep3Data().getDoubleBeds());
         pm.setNumberSingleBeds(cph.getStep3Data().getSingleBeds());
         pm.setNumberHammocks(cph.getStep3Data().getHammocks());
@@ -99,18 +93,14 @@ public class PropertyService implements IPropertyService {
         pm.setLaundryData(cph.getLaundryData());
         pm.setTransportData(cph.getTransportData());
         pm.setWaterData(cph.getWaterData());
-        // pm.setPropertyType(EProperty.APARTMENT);
         pm.setImageUrls(cph.getImagesData());
         Set<Instant> today = new HashSet<>();
         today.add(Instant.now());
         pm.setBlockedDates(today);
-        // dates
-        //List<ReviewsType> reviews = new ArrayList<>();
         Map<String,List<ReviewsType>> reviews =  new HashMap<>();
         pm.setReviews(reviews);
         pm.setPercentile(-1);
         pm.setAvgReviewScore(0);
-        //pm.setAvailableDates(cph.getAvailableDates());
         pm.setStatus(false);
         propertyRepo.save(pm);
     }
@@ -190,16 +180,7 @@ public class PropertyService implements IPropertyService {
         return getRes(properties,"");
     }
 
-    private void getSplit1(String param, List<String> res) {
-        String[] split1 = param.split("&");
-        // not ideal
-        for(String val : split1){
-            String[] split2 = val.split("=");
-            if(split2[1].equals("true")){
-                res.add(split2[0]);
-            }
-        }
-    }
+
 
     @Override
     public Map<String, List<PropertyBooking>> getPropertiesFromBookings(Map<String, List<BookingModel>> bookings, String token) {
@@ -269,10 +250,10 @@ public class PropertyService implements IPropertyService {
     public GetPropertyBasicHandler processProperty(PropertyModel property, GetPropertyBasicHandler res){
         double lat = property.getLatitude();
         double lon = property.getLongitude();
-        // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
+
+        // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects        
         BeanUtils.copyProperties(property, res);
-        System.out.println("bean " + res.toString());
-        // property.getReviews();
+
         List<ReviewsType> reviews = new ArrayList<>();
 
         Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
@@ -281,8 +262,19 @@ public class PropertyService implements IPropertyService {
             reviews.addAll(propertyReview);
         }
         res.setReviews(reviews);
+
         Map<String,String> map = new HashMap<>();
-        UserModel user= userRepository.findById(property.getOwnerId()).get();
+        Optional<UserModel> optionalUser= userRepository.findById(property.getOwnerId());
+
+        if(optionalUser == null || optionalUser.isEmpty()){
+            map.put("fname", "Anonymous");
+            map.put("lname", "Anonymous");
+            map.put("intro",  "Anonymous");
+            map.put("img", "");
+        }
+
+        UserModel user = optionalUser.get();
+
         if(user.getPrivacy().get("alwaysShowProfile")){
             map.put("fname", user.getFirstName());
             map.put("lname", user.getLastName());
@@ -372,9 +364,7 @@ public class PropertyService implements IPropertyService {
         for(List<ReviewsType> propertyReview : propertyReviews.values()){
             reviews.addAll(propertyReview);
         }
-        System.out.println("reviews :" + reviews.toString() );
-        //List<ReviewsType> reviews = pm.getReviews();
-        ///if(reviews == null) reviews = new ArrayList<>();
+        //System.out.println("reviews :" + reviews.toString() );
         double oldAvg = pm.getAvgReviewScore();
         
         double newAvg = getNewAvg(reviews, oldAvg, newReview.getScore());
@@ -387,8 +377,6 @@ public class PropertyService implements IPropertyService {
         rt.setTitle(newReview.getTitle());
         rt.setBody(newReview.getBody());
 
-        //reviews.add(rt);
-        //Map<String, ReviewsType> newReviewMap = new HashMap<>();
         if(propertyReviews.containsKey(userId)){
             List<ReviewsType> oldReviews =  propertyReviews.get(userId);
             oldReviews.add(rt);
@@ -399,34 +387,20 @@ public class PropertyService implements IPropertyService {
             propertyReviews.put(userId,brandSpankingNew);
         }
         
-       // newReviewMap.put(userId, rt);
 
-       // propertyReviews.add(newReviewMap);
         pm.setReviews(propertyReviews);
-        //pm.setReviews(reviews);
 
         propertyRepo.save(pm);
 
         calcPercentile(newAvg, oldAvg, pm);
-        //pm.setPercentile(newPercentil);
-        //propertyRepo.save(pm);
-
-
 
         booking.setReviewed(true);
         bookingRepo.save(booking);
-
-
-        // List<BookingModel> pastBookings = bookings.get("past");
-        // for(BookingModel booking : pastBookings){
-        //     if(booking.getPropertyId().toHexString().equals(rh.getPropertyId()) && booking.isAccepted() && !booking.isCancelled() && !booking.isReviewed()){
-        //         PropertyModel pm = propertyRepo.findById(booking.getPropertyId()).get();
-        //         List<ReviewsType> reviews = pm.getReviews();
-        //         if(reviews == null) reviews = new ArrayList<>() 
-
             
         }
     
+        // POOR NAME. THE REVIEW IS NOT ACTUALLY DELETED
+        // THIS IS ADJUSTING FOR A USER BEING DELETED
     @Override
     public void handleReviewDeletion(List<BookingModel> bookings, String id){
 
@@ -437,16 +411,17 @@ public class PropertyService implements IPropertyService {
         
         List<PropertyModel> properties = propertyRepo.findAllById(propertyIds);
         if(properties != null && !properties.isEmpty()){
-        for(PropertyModel propert : properties){
-            Map<String,List<ReviewsType>> allReviews = propert.getReviews();
-            List<ReviewsType> relevantReviews = allReviews.get(id);
-            if(relevantReviews != null && !relevantReviews.isEmpty()){
-                allReviews.remove(id);
-                allReviews.put("67f6b00b81ebbd6dc69897e5", relevantReviews);
-                propert.setReviews(allReviews);
+                
+            for(PropertyModel propert : properties){
+                Map<String,List<ReviewsType>> allReviews = propert.getReviews();
+                List<ReviewsType> relevantReviews = allReviews.get(id);
+                if(relevantReviews != null && !relevantReviews.isEmpty()){
+                    allReviews.remove(id);
+                    allReviews.put("67f6b00b81ebbd6dc69897e5", relevantReviews);
+                    propert.setReviews(allReviews);
+                }
+                
             }
-            
-        }
         propertyRepo.saveAll(properties);
     }
 
@@ -455,18 +430,34 @@ public class PropertyService implements IPropertyService {
     @Override
     public void handlePropertiesUserDeletion(String id){
         List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(id)); 
-
         deletePropertyHelper(properties);
-        //System.out.println("account delete " + properties);
     }
 
     @Override
     public void handlePropertiesDeletion(PropertyModel property){
         List<PropertyModel> properties = new ArrayList<>();
         properties.add(property);
-
         deletePropertyHelper(properties);
-        //System.out.println("account delete " + properties);
+    }
+
+
+
+    @Override
+    public List<Map<String,String>> getPropertiesByOwnerId( String token){
+        String ownerId = JwtProvider.getIdFromJwtToken(token);
+        List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(ownerId));
+        return getRes(properties, "");
+    }
+
+    private void getSplit1(String param, List<String> res) {
+        String[] split1 = param.split("&");
+        // not ideal
+        for(String val : split1){
+            String[] split2 = val.split("=");
+            if(split2[1].equals("true")){
+                res.add(split2[0]);
+            }
+        }
     }
 
     private void deletePropertyHelper(List<PropertyModel> properties) {
@@ -492,15 +483,6 @@ public class PropertyService implements IPropertyService {
 
             propertyRepo.deleteAll(properties);
         }
-    }
-
-
-    @Override
-    public List<Map<String,String>> getPropertiesByOwnerId( String token){
-        String ownerId = JwtProvider.getIdFromJwtToken(token);
-        List<PropertyModel> properties = propertyRepo.findAllByOwnerId(new ObjectId(ownerId));
-
-        return getRes(properties, "");
     }
 
     private void calcPercentile(double newAvg, double oldAvg, PropertyModel pm) {
@@ -544,16 +526,6 @@ public class PropertyService implements IPropertyService {
         
         int countLessThan = 0;
 
-        // if(needToIterate){
-        //     for(int i = addIndex; i < scores.size(); i++){
-        //         if(scores.get(i) != (newAvg)){
-        //             countLessThan = i;
-        //             break;
-        //         }
-        //     }
-        // }else{
-        //     countLessThan = addIndex;
-        // }
         
 
         System.out.println("countless: " + countLessThan);
@@ -563,15 +535,12 @@ public class PropertyService implements IPropertyService {
             percentile = 100;
             pm.setPercentile(percentile);
         }
-        //pm.setPercentile(percentile);
         pm.setAvgReviewScore(newAvg);
        
         propertyRepo.save(pm);
         System.out.println("score size: " + scores.size());
-        //adjust(pm.getId(), newAvg,percentile,(double)scores.size(), sizeIncrease);
         adjust(pm.getId(), scores);
 
-        //return (countLessThan / scores.size() * 1.0) * 100;
         
     }
 
@@ -600,9 +569,7 @@ public class PropertyService implements IPropertyService {
         scoreToPercentile.put(scores.getLast(),100.0);
 
         for(PropertyModel property : properties){
-            // if(property.getId().equals(newestPropertyToBeReview)){
-            //     continue;
-            // }
+
             if(property.getReviews() == null || property.getReviews().isEmpty()){
                 continue;
             }
@@ -626,9 +593,8 @@ public class PropertyService implements IPropertyService {
         int numPets,
         Optional<String> sort
     ) {
-       // if(locationType.equals("city")){
             pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0, sort);
-        //}
+
         return pms;
     }
 

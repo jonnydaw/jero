@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
-// https://www.youtube.com/watch?v=4l3EFprMqpU&ab_channel=TeddySmith
+
 @ExtendWith(MockitoExtension.class)
 public class AuthenticateUnitTests {
 

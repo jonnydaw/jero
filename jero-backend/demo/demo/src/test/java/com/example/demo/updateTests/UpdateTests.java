@@ -45,7 +45,7 @@ public class UpdateTests {
         user.setIntroduction("hu");
         user.setProfileImgUrl("image");
         
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -78,7 +78,7 @@ public class UpdateTests {
         uph.setShowProfileAfterBooking(true);
         uph.setAllowAnalysisOnBookings(true);
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -113,7 +113,7 @@ public class UpdateTests {
         uph.setShowProfileAfterBooking(true);
         uph.setAllowAnalysisOnBookings(true);
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -133,7 +133,7 @@ public class UpdateTests {
         UserModel user = new UserModel();
         user.setFirstName("mr");
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -153,7 +153,7 @@ public class UpdateTests {
         UserModel user = new UserModel();
         user.setLastName("mr");
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -173,7 +173,7 @@ public class UpdateTests {
         UserModel user = new UserModel();
         user.setIntroduction("hi");
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -192,7 +192,7 @@ public class UpdateTests {
         UserModel user = new UserModel();
         user.setProfileImgUrl("oldimg");
 
-        try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));

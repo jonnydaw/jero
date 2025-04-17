@@ -120,7 +120,9 @@ const PropertyCustomer = (props : Props) => {
                     acceptsPets={props.propertyAttributes.acceptsPets} 
                     propertyId={props.propertyAttributes.id}
                     allowedToBook={allowedToBook}
-                    blockedDates={props.propertyAttributes.blockedDate}/> 
+                    blockedDates={props.propertyAttributes.blockedDate}
+                    maxGuests={props.propertyAttributes.maxGuests}
+                    minGuests={props.propertyAttributes.minGuests}/> 
                     : 
                         <GeneralBook 
                         baseCost={baseCost}
@@ -136,7 +138,10 @@ const PropertyCustomer = (props : Props) => {
                         isMobile={false}
                         propertyId={props.propertyAttributes.id} 
                         allowedToBook={allowedToBook}
-                        blockedDates={props.propertyAttributes.blockedDate}/>
+                        blockedDates={props.propertyAttributes.blockedDate}
+                        max={props.propertyAttributes.maxGuests}
+                        min={props.propertyAttributes.minGuests}
+                        />
                 }
         </div> 
     )

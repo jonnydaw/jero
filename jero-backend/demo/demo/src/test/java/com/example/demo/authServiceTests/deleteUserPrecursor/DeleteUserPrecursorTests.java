@@ -45,7 +45,7 @@ public class DeleteUserPrecursorTests {
     @Test
     void testDeleteUserPrecursor_Customer_ExpectFailOnCurrentBookings(){
         // https://www.baeldung.com/mockito-mock-static-methods
-    try (MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
+    try(MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
         jwtProvider.when(() -> JwtProvider.getRoleFromJwtToken("jwt"))
           .thenReturn("customer");
           jwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt"))
@@ -71,7 +71,7 @@ public class DeleteUserPrecursorTests {
     @Test
     void testDeleteUserPrecursor_Host_ExpectFailOnCurrentBookings(){
         // https://www.baeldung.com/mockito-mock-static-methods
-    try (MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
+    try(MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
         jwtProvider.when(() -> JwtProvider.getRoleFromJwtToken("jwt"))
           .thenReturn("host");
           jwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt"))
@@ -96,7 +96,7 @@ public class DeleteUserPrecursorTests {
     @Test
     void testDeleteUserPrecursor_Customer_ExpectFailOnFutureBookings(){
         // https://www.baeldung.com/mockito-mock-static-methods
-    try (MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
+    try(MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
         jwtProvider.when(() -> JwtProvider.getRoleFromJwtToken("jwt"))
           .thenReturn("customer");
           jwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt"))
@@ -124,7 +124,7 @@ public class DeleteUserPrecursorTests {
     @Test
     void testDeleteUserPrecursor_Host_ExpectFailOnFutureBookings(){
         // https://www.baeldung.com/mockito-mock-static-methods
-    try (MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
+    try(MockedStatic<JwtProvider> jwtProvider = Mockito.mockStatic(JwtProvider.class)) {
         jwtProvider.when(() -> JwtProvider.getRoleFromJwtToken("jwt"))
           .thenReturn("host");
           jwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt"))

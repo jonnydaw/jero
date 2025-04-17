@@ -153,7 +153,9 @@ export interface PropertyAttributeFull {
     blockedDate : Date[];
     reviews : ReviewType[];
     reviewScore : number;
-    profileInfo : ProfileCardInfo
+    profileInfo : ProfileCardInfo;
+    maxGuests: number;
+    minGuests: number;
 
 }
 

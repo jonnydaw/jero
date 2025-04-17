@@ -96,7 +96,9 @@ const page = async ({params, searchParams}: {params: Promise<{ property_id : str
                 blockedDate: property.blockedDates,
                 reviews : property.reviews,
                 reviewScore : property.percentile,
-                profileInfo : property.profileCardInfo
+                profileInfo : property.profileCardInfo,
+                maxGuests: property.maxGuests,
+                minGuests: property.minGuests
             }} userDeets={{
                 id: id,
                 role : role,

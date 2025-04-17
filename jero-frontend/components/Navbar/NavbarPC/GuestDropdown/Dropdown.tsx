@@ -23,6 +23,8 @@ const Dropdown : React.FC<Props> = ({count, setCount}) => {
         count = {count}
         setCount={setCount}
         disabled={[]}
+        max={999999999}
+        min={1}
       />
   </div>
 </div>

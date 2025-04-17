@@ -83,7 +83,7 @@ public class PropertyReviewsTests {
 
         newReview.setBookingId("67b85d62e8ddf130ce699241");
 
-         try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+         try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -111,7 +111,7 @@ public class PropertyReviewsTests {
 
         newReview.setBookingId("67b85d62e8ddf130ce699241");
 
-         try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+         try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -140,7 +140,7 @@ public class PropertyReviewsTests {
 
         newReview.setBookingId("67b85d62e8ddf130ce699241");
 
-         try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+         try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -171,7 +171,7 @@ public class PropertyReviewsTests {
 
         newReview.setBookingId("67b85d62e8ddf130ce699241");
 
-         try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+         try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
@@ -215,7 +215,7 @@ public class PropertyReviewsTests {
         newReview.setBookingId("67b85d62e8ddf130ce699241");
         newReview.setBody("hi");
 
-         try (MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+         try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
             mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
             
             when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));

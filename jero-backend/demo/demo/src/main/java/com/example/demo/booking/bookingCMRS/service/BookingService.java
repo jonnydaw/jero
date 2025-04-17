@@ -42,25 +42,51 @@ public class BookingService implements IBookingService {
     @Override
     public void addBooking(AddBookingHandler booking, String token) {
         if(!JwtProvider.getRoleFromJwtToken(token).equals("customer")){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "DATE CONFLICT");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "HOSTS_CANNOT_BOOK");
         }
         Instant start = Instant.parse(booking.getStart()+"T00:00:00.000Z");
         Instant end = Instant.parse(booking.getEnd()+"T00:00:00.000Z");
 
+        Instant tomorrow = Instant.parse(Instant.now().plus(1, ChronoUnit.DAYS).toString().split("T")[0]+"T00:00:00.000Z");
+        //Instant overmorrow = Instant.parse(Instant.now().plus(2, ChronoUnit.DAYS).toString().split("T")[0]+"T00:00:00.000Z");
+
+        if(start.isBefore(tomorrow)){
+            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "START_DATE_IS_IN_PAST");
+        }
+
+        if(end.isBefore(start)){
+            throw new ResponseStatusException(HttpStatus.TOO_EARLY, "END_DATE_IS_BEFORE_START");
+
+        }
 
         BookingModel bm = new BookingModel();
-        System.out.println("id test" + bm.getId());
+      //  System.out.println("id test" + bm.getId());
         String userId = JwtProvider.getIdFromJwtToken(token);
-        System.out.println("hi");
-        Optional<PropertyModel> pm = propertyRepo.findById(new ObjectId(booking.getPropertyId()));
+        //System.out.println("hi");
+        Optional<PropertyModel> optionalProperty = propertyRepo.findById(new ObjectId(booking.getPropertyId()));
 
-        System.out.println("property id" + booking.getPropertyId());
-        System.out.println(pm.get().toString());
+        if(optionalProperty.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+        }
+        PropertyModel property = optionalProperty.get();
+        int totalGuests = booking.getGuests().get("adultCount") + booking.getGuests().get("childCount");
+        if(totalGuests < property.getMinGuests()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "TOO_FEW");
+        }
+
+        if(totalGuests > property.getMaxGuests()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "TOO_MANY");
+        }
+
+        double totalCost = getAdditionalGuests(booking, property);
+        if(totalCost != booking.getFrontendPrice()){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "PRICE_MISMATCH");
+        }
         
-        Set<Instant> blocked = pm.get().getBlockedDates();
+        
+        Set<Instant> blocked = property.getBlockedDates();
         Set<Instant> requestedDays = populateInstantRange(start, end);
-        System.out.println("blocked: " + blocked);
-        System.out.println("request: " + requestedDays);
+
         boolean unique = Collections.disjoint(blocked,requestedDays);
         System.out.println("unqiue: " + unique);
          if(!unique){
@@ -68,18 +94,22 @@ public class BookingService implements IBookingService {
  
          }
 
-        ObjectId ownerId = pm.get().getOwnerId();
-        UserModel um = userRepository.findById(ownerId).get();
-        String ownerEmail = um.getEmail();
+        ObjectId ownerId = property.getOwnerId();
+        Optional<UserModel> optionalUser = userRepository.findById(ownerId);
+        if(optionalUser.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED);
+        }
+        UserModel user = optionalUser.get();
+        String ownerEmail = user.getEmail();
         //https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
-        double totalCost = getAdditionalGuests(booking, pm);
+
+
 
         bm.setPropertyId(new ObjectId(booking.getPropertyId()));
         bm.setGuestId(new ObjectId(userId));
         bm.setOwnerId(ownerId);
         bm.setStartDate(start);
-        System.out.println("Booking end: " + end);
-        System.out.println("Booking end 2: " + end.toString());
+
         bm.setEndDate(end);
         bm.setNumChildren(booking.getGuests().get("childCount"));
         bm.setNumAdults(booking.getGuests().get("adultCount"));
@@ -89,7 +119,7 @@ public class BookingService implements IBookingService {
         bm.setCancelled(false);
         bm.setReviewed(false);
         bookingRepo.save(bm);
-        sendEmail(pm, ownerEmail);
+        sendEmail(property, ownerEmail);
     }
 
 
@@ -100,53 +130,78 @@ public class BookingService implements IBookingService {
 
     @Override
     public void acceptBooking(String id, String token){
-        BookingModel bm = bookingRepo.findById(new ObjectId(id)).get();
+        Optional<BookingModel> optionalBooking = bookingRepo.findById(new ObjectId(id));
+        
+        if(optionalBooking.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
+        }
+        
+        BookingModel booking = optionalBooking.get();
         String userId = JwtProvider.getIdFromJwtToken(token);
-        if(!userId.equals(bm.getOwnerId().toHexString())){
+
+        if(!userId.equals(booking.getOwnerId().toHexString())){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed");
         }
-        PropertyModel pm = propertyRepo.findById(bm.getPropertyId()).get();
-        Set<Instant> toBlock = populateInstantRange(bm.getStartDate(), bm.getEndDate());
-        // System.out.println("End: " + bm.getEndDate().toInstant());
-        System.out.println("new " + toBlock.toString());
+
+        Optional<PropertyModel> optionalProperty = propertyRepo.findById(booking.getPropertyId());
+
+        if(optionalProperty.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+        }
+        PropertyModel pm = optionalProperty.get();
+
+        Set<Instant> toBlock = populateInstantRange(booking.getStartDate(), booking.getEndDate());
+
         Set<Instant> currentBlockedDates = pm.getBlockedDates();
-        System.out.println("current " + currentBlockedDates);
         
-// https://stackoverflow.com/questions/8708542/something-like-contains-any-for-java-set
+        // https://stackoverflow.com/questions/8708542/something-like-contains-any-for-java-set
        boolean unique = Collections.disjoint(currentBlockedDates,toBlock);
-       System.out.println("unqiue: " + unique);
         if(!unique){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "DATE CONFLICT");
 
         }
-        bm.setAccepted(true);
+        booking.setAccepted(true);
+
         // https://stackoverflow.com/questions/9062574/is-there-a-better-way-to-combine-two-string-sets-in-java
         Set<Instant> updatedBlockedDates = Stream.concat(currentBlockedDates.stream(), toBlock.stream())
         .collect(Collectors.toSet());
-        System.out.println("new");
-        System.out.println(updatedBlockedDates.toString());
+
         pm.setBlockedDates(updatedBlockedDates);
         propertyRepo.save(pm);
-        bookingRepo.save(bm);
+        bookingRepo.save(booking);
     }
 
 
     @Override
     public void deleteBooking(String id, String token) {
-        BookingModel bm = bookingRepo.findById(new ObjectId(id)).get();
+        Optional<BookingModel> optionalBooking = bookingRepo.findById(new ObjectId(id));
+
+        if(optionalBooking.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
+        }
+
+        BookingModel bm = optionalBooking.get();
+
         String userId = JwtProvider.getIdFromJwtToken(token);
-        if(!userId.equals(bm.getOwnerId().toHexString()) && !userId.equals(bm.getGuestId().toHexString()) ){
+
+        if((bm.getOwnerId() == null || !userId.equals(bm.getOwnerId().toHexString())) && 
+        (bm.getGuestId() == null || !userId.equals(bm.getGuestId().toHexString()) )){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed");
         }
 
-        PropertyModel pm = propertyRepo.findById(bm.getPropertyId()).get();
+        Optional<PropertyModel> optionalProperty = propertyRepo.findById(bm.getPropertyId());
+
+        if(optionalProperty.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+        }
+
+        PropertyModel pm = optionalProperty.get();
+
         Set<Instant> toUnblock = populateInstantRange(bm.getStartDate(), bm.getEndDate());
-        System.out.println("to unblock" + toUnblock.toString());
+       
         Set<Instant> currentBlockedDates = pm.getBlockedDates();
-        System.out.println("before removal : " + currentBlockedDates);
         currentBlockedDates.removeAll(toUnblock);
-        System.out.println("after removal : " + currentBlockedDates);
-        //pm.setBlockedDates(currentBlockedDates);
+       // pm.setBlockedDates(currentBlockedDates);
         bm.setCancelled(true);
         propertyRepo.save(pm);
         bookingRepo.save(bm);
@@ -202,27 +257,24 @@ public class BookingService implements IBookingService {
 
     
 
-    private void sendEmail(Optional<PropertyModel> pm, String ownerEmail) {
+    private void sendEmail(PropertyModel pm, String ownerEmail) {
         EmailTemplate et = new EmailTemplate();
-        et.setMsgBody("New booking request for property\n" + pm.get().getTitle());
+        et.setMsgBody("New booking request for property\n" + pm.getTitle());
         et.setRecipient(ownerEmail);
         et.setSubject("new booking request");
         emailService.sendSimpleMail(et);
     }
 
-    private double getAdditionalGuests(AddBookingHandler booking, Optional<PropertyModel> pm) {
+    private double getAdditionalGuests(AddBookingHandler booking, PropertyModel property) {
         Instant start = Instant.parse(booking.getStart()+"T00:00:00.000Z");
         Instant end = Instant.parse(booking.getEnd()+"T00:00:00.000Z");
         long daysBetween = ChronoUnit.DAYS.between(start, end);
-        // long diff = end.getTime() - start.getTime();
-        // long daysBetween = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        double pricePerNight = pm.get().getPricePerNight();
-        double priceIncrese = pm.get().getPriceIncreasePerPerson();
+        double pricePerNight = property.getPricePerNight();
+        double priceIncrese = property.getPriceIncreasePerPerson();
         double totalCost = daysBetween * pricePerNight;
-        int additionalGuests = -1;
-        for(int val : booking.getGuests().values()){
-            additionalGuests += val;
-        }
+        int additionalGuests = -1 + booking.getGuests().get("adultCount") + 
+        booking.getGuests().get("childCount");
+        System.out.println("additional " + additionalGuests);
         if(pricePerNight > 0 && additionalGuests > 0){
             totalCost += additionalGuests * priceIncrese * daysBetween;
         }

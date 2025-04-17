@@ -22,6 +22,8 @@ interface Props {
     acceptsPets : boolean;
     isMobile : boolean;
     propertyId : string;
+    min : number;
+    max : number
     allowedToBook : boolean
     blockedDates : Date[]
 }
@@ -46,7 +48,7 @@ const GeneralBook = (props : Props) => {
 
     // ???????????????????????????????????????????????????????????????????     blockedDates : Date[] give me an error if something is wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    const blockedDates: Date[] = props.blockedDates.map(date => new Date(date));
+    const blockedDates: Date[] = props.blockedDates !== null ? props.blockedDates.map(date => new Date(date)) : [];
 
     return (
     <section id={style.book}>
@@ -104,7 +106,9 @@ const GeneralBook = (props : Props) => {
                 childCount: props.guestCounts.childCount,
                 petCount: props.guestCounts.petCount
             }} setCount={props.setGuestCounts}
-            disabled={disabled}/>
+            disabled={disabled}
+            max={props.max}
+            min={props.min}/>
             
             <div onClick={() => setOpenPay(true)}><button  disabled={!props.allowedToBook}className={`basicButton`}>{props.allowedToBook ? `Book` : "You must be a registered customer to book"}</button></div>
         </form>

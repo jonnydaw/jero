@@ -26,6 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 // https://stackoverflow.com/questions/75482134/generating-unit-tests-for-my-service-implementations-on-the-spring-boot-applicat
+// // https://www.youtube.com/watch?v=4l3EFprMqpU&ab_channel=TeddySmith
 @ExtendWith(MockitoExtension.class)
 class MockUserAuthServiceTests {
     private final String FIRST_NAME = "fname";

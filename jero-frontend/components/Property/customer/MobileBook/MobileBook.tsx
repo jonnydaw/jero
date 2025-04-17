@@ -19,6 +19,8 @@ interface Props {
     propertyId : string;
     allowedToBook : boolean
     blockedDates: Date[]
+    maxGuests: number
+    minGuests: number
 }
  const MobileBook = (props : Props) => {
 
@@ -44,7 +46,9 @@ interface Props {
                     isMobile={true} 
                     propertyId={props.propertyId}
                     allowedToBook={props.allowedToBook} 
-                    blockedDates={props.blockedDates}           
+                    blockedDates={props.blockedDates} 
+                    max={props.maxGuests}
+                    min={props.minGuests}          
             />
         </div>
 
