@@ -52,7 +52,7 @@ public class PropertyService implements IPropertyService {
     @Override
     public void createProperty(String token, CreatePropertyHandler cph, PropertyModel pm) {
         String userID =  JwtProvider.getIdFromJwtToken(token);
-        System.out.println(userID);
+        //System.out.println(userID);
        // PropertyModel pm = new PropertyModel();
         pm.setOwnerId(new ObjectId(userID));
         //System.out.println("hitwio");
@@ -164,11 +164,14 @@ public class PropertyService implements IPropertyService {
         String tourismLevels,
         int minTemp,
         int maxTemp,
-        String gettingAround
+        String gettingAround,
+        List<String> attractionsClean,
+        List<String> gettingAroundClean
+
     )
     {
-        List<String> attractionsClean = new ArrayList<>();
-        List<String> gettingAroundClean = new ArrayList<>(); 
+        //List<String> attractionsClean = new ArrayList<>();
+        //List<String> gettingAroundClean = new ArrayList<>(); 
         getSplit1(attractions, attractionsClean);
         getSplit1(gettingAround, gettingAroundClean);
         //System.out.println("attractions clean " + attractionsClean.toString());
@@ -450,6 +453,7 @@ public class PropertyService implements IPropertyService {
     }
 
     private void getSplit1(String param, List<String> res) {
+        System.out.println("hit split");
         String[] split1 = param.split("&");
         // not ideal
         for(String val : split1){

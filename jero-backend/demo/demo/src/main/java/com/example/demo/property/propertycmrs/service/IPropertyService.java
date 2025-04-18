@@ -39,7 +39,9 @@ public interface IPropertyService {
         String tourismLevels,
         int minTemp,
         int maxTemp,
-        String gettingAround
+        String gettingAround,
+        List<String> attractionsClean,
+        List<String> gettingAroundClean
         );
 
     PropertyModel getPropertyById(ObjectId propertyId);

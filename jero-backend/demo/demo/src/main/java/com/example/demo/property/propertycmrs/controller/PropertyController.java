@@ -1,7 +1,7 @@
 package com.example.demo.property.propertycmrs.controller;
 
 import java.time.Instant;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -122,7 +122,9 @@ public class PropertyController {
             tourismLevels.orElse(null),
             minTemp.orElse(null),
             maxTemp.orElse(null),
-            gettingAround.orElse(null)
+            gettingAround.orElse(null),
+            new ArrayList<>(),
+            new ArrayList<>()
             );
         // System.out.println("hit controller");
         // System.out.println(res.toString());
