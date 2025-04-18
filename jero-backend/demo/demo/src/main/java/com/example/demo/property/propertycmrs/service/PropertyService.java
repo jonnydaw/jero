@@ -50,15 +50,15 @@ public class PropertyService implements IPropertyService {
 
 
     @Override
-    public void createProperty(String token, CreatePropertyHandler cph) {
+    public void createProperty(String token, CreatePropertyHandler cph, PropertyModel pm) {
         String userID =  JwtProvider.getIdFromJwtToken(token);
         System.out.println(userID);
-        PropertyModel pm = new PropertyModel();
+       // PropertyModel pm = new PropertyModel();
         pm.setOwnerId(new ObjectId(userID));
-        System.out.println("hitwio");
+        //System.out.println("hitwio");
         Map<String,String> hierarchy = cph.getAddressData().getHierarchy();
-        System.out.println("hi:" + hierarchy.get("city_district"));
-        System.out.println(hierarchy.get("town"));
+        //System.out.println("hi:" + hierarchy.get("city_district"));
+        //System.out.println(hierarchy.get("town"));
         pm.setTownId((hierarchy.get("town")));
         pm.setCityDistrictId((hierarchy.get("city_district")));
         pm.setCityId((hierarchy.get("city")));

@@ -3,6 +3,7 @@ package com.example.demo.user.userCMRS.service.authentication;
 
 import org.springframework.security.core.Authentication;
 
+import com.example.demo.email.EmailTemplate;
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
@@ -20,7 +21,7 @@ public interface IUserAuthService {
 
 	public boolean isEmailInUse(String email);
 
-	public void sendRegisterEmail(String email, String locale);
+	public void sendRegisterEmail(String email, String locale,  EmailTemplate emailTemplate);
 
 	public void validate(UserSignupHandler user) throws Exception;
 
@@ -30,7 +31,7 @@ public interface IUserAuthService {
 
 	public String provideJWTCookie(Authentication auth, String id);
 
-	public AuthResponse buildAuthResponse(String token, String message);
+	public AuthResponse buildAuthResponse(String token, String message, AuthResponse authResponse) ;
 
 	public String buildCookie(String value, String cookieName, int age );
 	//public void saveOTP(UserModel createdUser);

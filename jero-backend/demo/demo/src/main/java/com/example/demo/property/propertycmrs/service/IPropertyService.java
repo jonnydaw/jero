@@ -17,7 +17,7 @@ import com.example.demo.property.propertycmrs.model.PropertyModel;
 
 public interface IPropertyService {
 
-    void createProperty(String jwt, CreatePropertyHandler cph);
+    void createProperty(String jwt, CreatePropertyHandler cph, PropertyModel pm);
 
     List<Map<String,String>> getPropertiesByLocation(
         String queriedLocation, 

@@ -5,11 +5,13 @@ package com.example.demo.user.userCMRS.controller;
 
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
+import com.example.demo.email.EmailTemplate;
 import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.OtpHandler;
 import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
-
+import com.example.demo.user.userCMRS.model.OtpModel;
+import com.example.demo.user.userCMRS.model.RefreshModel;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.authentication.IOtpService;
@@ -59,34 +61,34 @@ public class UserAuthController {
 
 
 	@PostMapping("/signup") 
-	public ResponseEntity<AuthResponse> signup(@Valid @RequestBody UserSignupHandler user) throws Exception { 
+	public ResponseEntity<AuthResponse> signup(@Valid @RequestBody UserSignupHandler user, EmailTemplate emailTemplate, RefreshModel rm, AuthResponse authResponse, OtpModel otpModel) throws Exception{ 
 		boolean isEmailInUse = userAuthService.isEmailInUse(user.getEmail());
 		if(isEmailInUse) throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already in use");
 		userAuthService.validate(user);
 		UserModel createdUser = userAuthService.createUser(user);
 		userAuthService.saveUser(createdUser); 
 
-		otpService.saveOTPOnCreation(createdUser);
+		otpService.saveOTPOnCreation(createdUser, otpModel);
 
 		
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
 		String token = userAuthService.provideJWTCookie(authentication, createdUser.getId().toHexString()); 
-		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "signup success");
+		authResponse = userAuthService.buildAuthResponse(token, "signup success", authResponse);
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 
 		String rt = refreshTokenService.createRefreshToken();
-		refreshTokenService.saveRefreshToken(user, rt);
+		refreshTokenService.saveRefreshToken(user, rt,rm);
 		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
 
-		userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale());
+		userAuthService.sendRegisterEmail(user.getEmail(), user.getLocale(), emailTemplate);
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
 			.body(authResponse);
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteUser(HttpServletRequest req, @CookieValue("JWT") String JWT, @CookieValue("RT") String refresh){
+	public ResponseEntity<?> deleteUser(HttpServletRequest req, @CookieValue("JWT") String JWT, @CookieValue("RT") String refresh, RefreshModel rm){
 		// try {
 		// 	req.logout();
 		// } catch (ServletException e) {
@@ -96,18 +98,18 @@ public class UserAuthController {
 		// String email =  JwtProvider.getEmailFromJwtToken(JWT);
 		// UserModel user = userRepository.findByEmail(email);
 		String id = JwtProvider.getIdFromJwtToken(JWT);
-		refreshTokenService.checkRefreshToken(id, refresh);
+		refreshTokenService.checkRefreshToken(id, refresh, rm);
 		userAuthService.deleteUserPrecursor(JWT);
 		return ResponseEntity.ok().body("Account deleted");
 	}
 
 	@PostMapping("/verify_otp")
-	public ResponseEntity<?> verifyOtp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp){
+	public ResponseEntity<?> verifyOtp(@CookieValue("JWT") String token, @RequestBody OtpHandler otp, AuthResponse authResponse){
 		System.out.println("hit otp");
 
 		otpService.checkOTP(token, otp);
 		String newToken = otpService.reissue(token, otp);
-		AuthResponse authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified");
+		authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified",authResponse);
 		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
@@ -115,8 +117,8 @@ public class UserAuthController {
 	}
 
 	@PostMapping("/regenerate_otp")
-	public ResponseEntity<?> regenerateOtp(@CookieValue("JWT") String token){
-		otpService.saveOTPOnRegen(token);
+	public ResponseEntity<?> regenerateOtp(@CookieValue("JWT") String token, OtpModel otpModel){
+		otpService.saveOTPOnRegen(token, otpModel);
 		return ResponseEntity.ok().body("OTP Regenerated");
 	}
 
@@ -124,17 +126,17 @@ public class UserAuthController {
 
 
 	@PostMapping("/signin") 
-	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user) { 
+	public ResponseEntity<AuthResponse> signin(@Valid @RequestBody UserLoginHandler user, RefreshModel rm, AuthResponse authResponse) { 
 		Authentication authentication = userAuthService.authenticate(user); 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		// not great
 		UserModel um = userRepository.findByEmail(user.getUsername());
 		String token = userAuthService.provideJWTCookie(authentication, um.getId().toHexString()); 
-		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Login success");
+		authResponse = userAuthService.buildAuthResponse(token, "Login success", authResponse);
 		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600);
 		
 		String rt = refreshTokenService.createRefreshToken();
-		refreshTokenService.saveRefreshToken(user, rt);
+		refreshTokenService.saveRefreshToken(user, rt, rm);
 		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
 		//refreshTokenService.saveRefreshToken(user, token);
 
@@ -144,17 +146,17 @@ public class UserAuthController {
 	}
 
 	@GetMapping("/refresh") 
-	public ResponseEntity<AuthResponse> refresh(@CookieValue("JWT") String expiredJWT, @CookieValue("RT") String rt) { 
+	public ResponseEntity<AuthResponse> refresh(@CookieValue("JWT") String expiredJWT, @CookieValue("RT") String rt, RefreshModel rm, AuthResponse authResponse) { 
 		String email =  JwtProvider.getEmailFromJwtToken(expiredJWT);
 		String id =  JwtProvider.getIdFromJwtToken(expiredJWT);
 
 		// getId from token
 		// remove
 		//UserModel user = userRepository.findByEmail(email);
-		refreshTokenService.checkRefreshToken(id,rt);
+		refreshTokenService.checkRefreshToken(id,rt, rm);
 		Authentication auth = refreshTokenService.authenticateHelper(email);
 		String token = userAuthService.provideJWTCookie(auth, id);
-		AuthResponse authResponse = userAuthService.buildAuthResponse(token, "Refresh success"); 
+		authResponse = userAuthService.buildAuthResponse(token, "Refresh success", authResponse); 
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
 		return ResponseEntity.ok()
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)

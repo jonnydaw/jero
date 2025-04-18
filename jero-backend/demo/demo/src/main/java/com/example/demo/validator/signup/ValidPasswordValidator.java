@@ -16,7 +16,7 @@ import com.example.demo.user.enumeration.user.SignupErrorMessages;
 public class ValidPasswordValidator extends AbstractSignupValidator {
 
     @Override
-    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) throws Exception {
+    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) {
         String password = user.getPassword();
         Pattern letter = Pattern.compile("[a-zA-z]");
         Pattern digit = Pattern.compile("[0-9]");

@@ -114,7 +114,7 @@ public class UserUpdateService  implements IUserUpdateService{
         for(BookingModel booking : bookings){
             if(booking.isReviewed()){
                 ObjectId propertyID = booking.getPropertyId();
-               Optional<PropertyModel> property = propertyRepo.findById(propertyID);
+                Optional<PropertyModel> property = propertyRepo.findById(propertyID);
                 // System.out.println("hit1");
                 if(!property.isPresent()){
                     continue;

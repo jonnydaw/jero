@@ -20,13 +20,13 @@ public abstract class AbstractSignupValidator {
         return first;
     }
 
-    public abstract ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors) throws Exception ;
+    public abstract ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors) ;
 
     /**
      * Runs check on the next object in chain or ends traversing if we're in
      * last object in chain.
      */
-    protected ArrayList<SignupErrorMessages> validateNextRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors) throws Exception  {
+    protected ArrayList<SignupErrorMessages> validateNextRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> accumulatedErrors)  {
         if (next == null) {
             return accumulatedErrors;
         }

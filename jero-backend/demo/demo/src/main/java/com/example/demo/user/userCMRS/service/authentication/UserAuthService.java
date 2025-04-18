@@ -121,8 +121,8 @@ public class UserAuthService implements IUserAuthService {
 
     
         @Override
-        public void sendRegisterEmail(String email, String locale){
-            System.out.println(locale);
+        public void sendRegisterEmail(String email, String locale, EmailTemplate emailTemplate){
+           // System.out.println(locale);
             String[] split = locale.split("/");
             String subject = "";
             Map<String,String> localeToWelcome = new HashMap<>();
@@ -134,7 +134,7 @@ public class UserAuthService implements IUserAuthService {
                     subject = localeToWelcome.get(chop);
                 }
             }
-            EmailTemplate emailTemplate = new EmailTemplate();
+          //  EmailTemplate emailTemplate = new EmailTemplate();
             emailTemplate.setMsgBody("12345");
             emailTemplate.setSubject(subject.length() > 0 ? subject : "Welcome");
             emailTemplate.setRecipient(email);
@@ -148,10 +148,11 @@ public class UserAuthService implements IUserAuthService {
         }
     
         @Override
-        public void validate(UserSignupHandler user) throws Exception {
+        public void validate(UserSignupHandler user) {
             signupValidator.link(emailMatchValidator, passwordMatchValidator,validPasswordValidator);
             ArrayList<SignupErrorMessages> arr = new ArrayList<>();
             ArrayList<SignupErrorMessages> res = signupValidator.validateRequest(user, arr);
+            //System.out.println("right here " + res.toString());
             if(res.size() > 0){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, res.toString() );
             }
@@ -173,12 +174,28 @@ public class UserAuthService implements IUserAuthService {
         }
 
         @Override
-        public AuthResponse buildAuthResponse(String token, String message){
-            AuthResponse authResponse = new AuthResponse(); 
+        public AuthResponse buildAuthResponse(String token, String message, AuthResponse authResponse){
+            //AuthResponse authResponse = new AuthResponse(); 
             authResponse.setMessage(message); 
             authResponse.setJwt(token);
             authResponse.setStatus(true); 
             return authResponse;
+        }
+
+        @Override
+        public String buildCookie(String value, String cookieName, int age ){
+            // if local do secure false, comment out domain, sameSite Lax.
+            // if deploing secure true domain("".jero.travel") same site none
+            ResponseCookie cookie = ResponseCookie.from(cookieName, value)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(age) 
+                .sameSite("none")
+                //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
+                .domain(".jero.travel")
+                .build();
+                return cookie.toString();
         }
 
         // @Override
@@ -187,31 +204,15 @@ public class UserAuthService implements IUserAuthService {
         //     // if deploing secure true domain("".jero.travel") same site none
         //     ResponseCookie cookie = ResponseCookie.from(cookieName, value)
         //         .httpOnly(true)
-        //         .secure(true)
+        //         .secure(false)
         //         .path("/")
         //         .maxAge(age) 
-        //         .sameSite("none")
+        //         .sameSite("Lax")
         //         //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
-        //         .domain(".jero.travel")
+        //         //.domain(".jero.travel")
         //         .build();
         //         return cookie.toString();
         // }
-
-        @Override
-        public String buildCookie(String value, String cookieName, int age ){
-            // if local do secure false, comment out domain, sameSite Lax.
-            // if deploing secure true domain("".jero.travel") same site none
-            ResponseCookie cookie = ResponseCookie.from(cookieName, value)
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .maxAge(age) 
-                .sameSite("Lax")
-                //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
-                //.domain(".jero.travel")
-                .build();
-                return cookie.toString();
-        }
         
 // https://www.geeksforgeeks.org/spring-security-login-page-with-react/
         @Override

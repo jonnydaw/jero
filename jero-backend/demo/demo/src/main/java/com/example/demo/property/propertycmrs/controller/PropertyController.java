@@ -49,10 +49,10 @@ public class PropertyController {
 
     //@PreAuthorize("hasAuthority('host')")
     @PostMapping("/add_property")
-    public ResponseEntity<?> addProperty(@CookieValue("JWT") String token, @RequestBody CreatePropertyHandler cph){
+    public ResponseEntity<?> addProperty(@CookieValue("JWT") String token, @RequestBody CreatePropertyHandler cph, PropertyModel pm){
        
        //System.out.println(cph.getStep3Data().getDoubleBeds());
-        propertyService.createProperty(token, cph);
+        propertyService.createProperty(token, cph, pm);
         return ResponseEntity.ok().body("hi");
     }
 
@@ -63,30 +63,10 @@ public class PropertyController {
         System.out.println(propertyId);
         property = propertyService.getPropertyById(new ObjectId(propertyId));
         res = propertyService.processProperty(property, res);
-        // double lat = property.getLatitude();
-        // double lon = property.getLongitude();
+
         // // https://stackoverflow.com/questions/15117403/dto-pattern-best-way-to-copy-properties-between-two-objects
         // BeanUtils.copyProperties(property, res);
-        // System.out.println("bean " + res.toString());
-        // // property.getReviews();
-        // List<ReviewsType> reviews = new ArrayList<>();
-
-        // Map<String, List<ReviewsType>> propertyReviews = property.getReviews();
-        
-        // for(List<ReviewsType> propertyReview : propertyReviews.values()){
-        //     reviews.addAll(propertyReview);
-        // }
-        // res.setReviews(reviews);
-        // //res = property;
-        // // res.setId(property.getId());
-        // // res.setOwnerId(property.getOwnerId());
-        // // res.se
-
-        // res.setLatitude(((double)((int)(lat *1000.0)))/1000.0);
-        // res.setLongitude(((double)((int)(lon*1000.0)))/1000.0);
-
-        // //property.setAddress("");
-        
+ 
 
         System.out.println(property.toString());
         return ResponseEntity.ok().body(res);
@@ -95,14 +75,13 @@ public class PropertyController {
 
     @GetMapping("/search-properties")
     public ResponseEntity<?> getPropertiesFromLocation(@RequestParam("location") @NotEmpty String location, 
-                                                       @RequestParam("startdate") @NotEmpty String startDate, 
-                                                       @RequestParam("enddate") @NotEmpty String endDate,
-                                                       @RequestParam("numadults") @NotNull Integer numAdults,
-                                                       @RequestParam("numchildren") @NotNull Integer numChildren,
-                                                       @RequestParam("numpets") @NotNull Integer numPets,
-                                                       @RequestParam("sort") Optional<String> sort
-                                                       
-                                                       ){ 
+        @RequestParam("startdate") @NotEmpty String startDate, 
+        @RequestParam("enddate") @NotEmpty String endDate,
+        @RequestParam("numadults") @NotNull Integer numAdults,
+        @RequestParam("numchildren") @NotNull Integer numChildren,
+        @RequestParam("numpets") @NotNull Integer numPets,
+        @RequestParam("sort") Optional<String> sort                               
+        ){ 
         Instant start = Instant.parse(startDate +"T00:00:00.000Z");
         Instant end = Instant.parse(endDate+"T00:00:00.000Z");
         List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults, numChildren, numPets ,sort);
@@ -113,17 +92,17 @@ public class PropertyController {
 
     @GetMapping("/smart-search-properties")
     public ResponseEntity<?> getPropertiesFromSmart(@RequestParam("startdate") Optional<String> startDate, 
-                                                       @RequestParam("enddate") Optional<String> endDate,
-                                                       @RequestParam("numadults") Optional<Integer> numAdults,
-                                                       @RequestParam("numchildren") Optional<Integer> numChildren,
-                                                       @RequestParam("numpets") Optional<Integer> numPets,
-                                                       @RequestParam("attractions") Optional<String> attractions,
-                                                       @RequestParam("holidayType") Optional<String> holidayType,
-                                                       @RequestParam("tourismLevels") Optional<String> tourismLevels,
-                                                       @RequestParam("minTemp") Optional<Integer> minTemp,
-                                                       @RequestParam("maxTemp") Optional<Integer> maxTemp,
-                                                       @RequestParam("gettingAround") Optional<String> gettingAround
-                                                       ){
+        @RequestParam("enddate") Optional<String> endDate,
+        @RequestParam("numadults") Optional<Integer> numAdults,
+        @RequestParam("numchildren") Optional<Integer> numChildren,
+        @RequestParam("numpets") Optional<Integer> numPets,
+        @RequestParam("attractions") Optional<String> attractions,
+        @RequestParam("holidayType") Optional<String> holidayType,
+        @RequestParam("tourismLevels") Optional<String> tourismLevels,
+        @RequestParam("minTemp") Optional<Integer> minTemp,
+        @RequestParam("maxTemp") Optional<Integer> maxTemp,
+        @RequestParam("gettingAround") Optional<String> gettingAround
+        ){
         Instant start = Instant.parse(startDate.orElse("2025-12-20")+"T00:00:00.000Z");
         //Instant start = Instant.parse(("2025-12-20")+"T00:00:00.000Z");
         

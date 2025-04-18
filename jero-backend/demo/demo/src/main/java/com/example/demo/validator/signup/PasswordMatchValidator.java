@@ -10,7 +10,7 @@ import com.example.demo.user.enumeration.user.SignupErrorMessages;
 public class PasswordMatchValidator extends AbstractSignupValidator {
 
     @Override
-    public ArrayList<SignupErrorMessages>  validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> errors) throws Exception {
+    public ArrayList<SignupErrorMessages>  validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> errors) {
         boolean isMatch = user.getPassword().equals(user.getConfirmPassword());
         if(!isMatch){
             errors.add(SignupErrorMessages.PASSWORD_ERROR_MISMATCH);

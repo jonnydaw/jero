@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.demo.response.AuthResponse;
 import com.example.demo.user.DTO.UserLoginHandler;
 
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
@@ -99,6 +100,19 @@ public class AuthenticateUnitTests {
         when(mockPasswordEncoder.matches(PASSWORD,ud.getPassword())).thenReturn(true);
         assertEquals(mockUserAuthService.authenticate(ul), new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities()));
 
+    }
+
+    @Test
+    void authResponse(){
+        String token = "JWT";
+        String message = "message";
+        AuthResponse authResponse = new AuthResponse();
+
+        mockUserAuthService.buildAuthResponse(token, message, authResponse);
+
+        assertEquals(authResponse.getMessage(), message);
+        assertEquals(authResponse.getJwt(), token);
+        assertEquals(authResponse.getStatus(), true);
     }
     
 }

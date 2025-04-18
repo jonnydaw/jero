@@ -96,24 +96,23 @@ const Step1AddProperty = () => {
                     //console.log(await newResponse.json())
                     const data = await newResponse.json();
                     const addressData = data[0].address;
-                    console.log("madres" + chosen.locationName);
+                  //  console.log("madres" + chosen.locationName);
                     const query = new URLSearchParams(addressData).toString();
                     console.log("query " + query)
 
                     try {
-                    const response = await fetch(`${baseApi}/location/get_location?${query}`);
-                    const data  = await response.json()
-                    console.log(data)
-                    if(response.status !== 200){
-                        alert("Sorry we are not supporting that location yet.")
-                    }else{
-                    
-                    const combo = {...chosen, "hierarchy":data}
-                    localStorage.setItem("addressAndCoordinates", JSON.stringify(combo));
-                    localStorage.set
-                    alert("Your property will be tagged under :" + JSON.stringify(data))
-                    const locale = (pathname.split("/").at(1));
-                    router.push(`/${locale}/add-property/step2`);
+                        const response = await fetch(`${baseApi}/location/get_location?${query}`);
+                        const data  = await response.json()
+                        console.log(data)
+                        if(response.status !== 200){
+                            alert("Sorry we are not supporting that location yet.")
+                        }else{
+                            const combo = {...chosen, "hierarchy":data}
+                            localStorage.setItem("addressAndCoordinates", JSON.stringify(combo));
+                            localStorage.set
+                            alert("Your property will be tagged under :" + JSON.stringify(data))
+                            const locale = (pathname.split("/").at(1));
+                            router.push(`/${locale}/add-property/step2`);
                     }
 
                 //}

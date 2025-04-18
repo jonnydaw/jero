@@ -36,9 +36,11 @@ public class RefreshTokenService implements IRefreshTokenService {
     }
 
     @Override
-    public void saveRefreshToken(UserLoginHandler user, String refreshToken) {
+    public void saveRefreshToken(UserLoginHandler user, String refreshToken,  RefreshModel rm ) {
         UserModel loadedUser = userRepo.findByEmail(user.getUsername());
-        RefreshModel rm = new RefreshModel();
+        if(loadedUser == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "USER_NOT_FOUND");
+        }
         rm.setId(loadedUser.getId());
         rm.setRefreshToken(refreshToken);
         rm.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -46,9 +48,12 @@ public class RefreshTokenService implements IRefreshTokenService {
     }
 
     @Override
-    public void saveRefreshToken(UserSignupHandler user, String refreshToken){
+    public void saveRefreshToken(UserSignupHandler user, String refreshToken,  RefreshModel rm ){
         UserModel loadedUser = userRepo.findByEmail(user.getEmail());
-        RefreshModel rm = new RefreshModel();
+        if(loadedUser == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "USER_NOT_FOUND");
+        }
+      //  RefreshModel rm = new RefreshModel();
         rm.setId(loadedUser.getId());
         rm.setRefreshToken(refreshToken);
         rm.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -57,11 +62,10 @@ public class RefreshTokenService implements IRefreshTokenService {
 
 
     @Override
-    public void checkRefreshToken(String id, String messageRefreshToken) {
-       RefreshModel rm =  refreshRepository.findRefreshById(new ObjectId(id));
-       if(rm == null){
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "refresh token not found");
-
+    public void checkRefreshToken(String id, String messageRefreshToken,  RefreshModel rm ) {
+        rm =  refreshRepository.findRefreshById(new ObjectId(id));
+        if(rm == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "refresh token not found");
        }
     //    System.out.println("db:" +rm.getRefreshToken());
     //     System.out.println("Message: " + messageRefreshToken);
@@ -87,11 +91,11 @@ public class RefreshTokenService implements IRefreshTokenService {
             return new UsernamePasswordAuthenticationToken(ud,null,ud.getAuthorities());
         }
 
-    @Override
-    public void deleteRefreshToken(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteRefreshToken'");
-    }
+    // @Override
+    // public void deleteRefreshToken(String id) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'deleteRefreshToken'");
+    // }
 
     // @Override
     // public void deleteRefreshToken(String id) {

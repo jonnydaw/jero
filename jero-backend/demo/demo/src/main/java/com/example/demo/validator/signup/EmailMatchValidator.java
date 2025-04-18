@@ -18,7 +18,7 @@ import com.example.demo.user.enumeration.user.SignupErrorMessages;
 public class EmailMatchValidator extends AbstractSignupValidator {
 
     @Override
-    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) throws Exception {
+    public ArrayList<SignupErrorMessages> validateRequest(UserSignupHandler user, ArrayList<SignupErrorMessages> list) {
         boolean isMatch = user.getEmail().equals(user.getConfirmEmail());
         if(!isMatch){
             list.add(SignupErrorMessages.EMAIL_ERROR_MISMATCH);

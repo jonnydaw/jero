@@ -205,4 +205,54 @@ public class UpdateTests {
 
         }
     }
+
+    @Test
+    void getPrivacy(){
+        UserModel user = new UserModel();
+        Map<String, Boolean> privacy = new HashMap<>();
+        privacy.put("profile",false);
+        privacy.put("alwaysShowProfile",false);
+        privacy.put("analysis",false);
+        user.setPrivacy(privacy);
+
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+            mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
+            
+            when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
+            
+            Map<String, Boolean> settings = userUpdateService.getPrivacySettings("jwt");
+            
+           // when(userRepository.save(user)).thenReturn(user);
+
+            assertEquals(settings.get("analysis"), false);
+            assertEquals(settings.get("alwaysShowProfile"), false);
+            assertEquals(settings.get("profile"), false);
+
+        }
+    }
+
+    @Test
+    void getPrivacy_OTHER(){
+        UserModel user = new UserModel();
+        Map<String, Boolean> privacy = new HashMap<>();
+        privacy.put("profile",false);
+        privacy.put("review",false);
+        privacy.put("analysis",false);
+        user.setPrivacy(privacy);
+
+        try(MockedStatic<JwtProvider> mockJwtProvider = mockStatic(JwtProvider.class)) {
+            mockJwtProvider.when(() -> JwtProvider.getIdFromJwtToken("jwt")).thenReturn("67b85d62e8ddf130ce699241");
+            
+            when(userRepository.findById(new ObjectId("67b85d62e8ddf130ce699241"))).thenReturn(Optional.ofNullable(user));
+            
+            Map<String, Boolean> settings = userUpdateService.getPrivacySettings("jwt");
+            
+           // when(userRepository.save(user)).thenReturn(user);
+
+            assertEquals(settings.get("analysis"), false);
+            assertEquals(settings.get("review"), false);
+            assertEquals(settings.get("profile"), false);
+
+        }
+    }
 }

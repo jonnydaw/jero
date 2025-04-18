@@ -72,8 +72,8 @@ public class OtpService implements IOtpService {
     }
 
     @Override
-    public void saveOTPOnCreation(UserModel user) {
-            OtpModel otpModel = new OtpModel();
+    public void saveOTPOnCreation(UserModel user, OtpModel otpModel) {
+            // OtpModel otpModel = new OtpModel();
             otpModel.setId(user.getId());
             otpModel.setOtp(12345);
             otpModel.setCreatedAt(new Date(System.currentTimeMillis()));
@@ -81,8 +81,8 @@ public class OtpService implements IOtpService {
     }
 
     @Override
-    public void saveOTPOnRegen(String token) {
-            OtpModel otpModel = new OtpModel();
+    public void saveOTPOnRegen(String token, OtpModel otpModel ) {
+            //OtpModel otpModel = new OtpModel();
             UserModel tardyUser = getUserFromToken(token);
             otpModel.setId(tardyUser.getId());
             otpModel.setOtp(54321);
