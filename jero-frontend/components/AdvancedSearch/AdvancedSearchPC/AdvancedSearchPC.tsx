@@ -201,7 +201,7 @@ const [maxValue, set_maxValue] = useState(26);
                 <div className={style.underlineDiv}>
                 <h3>Who</h3>
                 </div>
-                <GuestToggler count={chosenCount} setCount={setChosenCount} disabled={[]}/>
+                <GuestToggler count={chosenCount} setCount={setChosenCount} disabled={[]} max={999999} min={1}/>
                 </fieldset>
                 <fieldset  className={style.fields} >
                 <div className={style.underlineDiv}>
