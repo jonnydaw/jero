@@ -95,7 +95,9 @@ const page = async ({params}: {params: Promise<{ booking_id : string, property_i
                     reviewScore : property.percentile,
                     profileInfo : property.profileCardInfo,
                     guide : property.guide,
-                    address : property.address
+                    address : property.address,
+                    maxGuests: property.maxGuests,
+                    minGuests: property.minGuests
                 }
             } userDeets={{
                 id: null,

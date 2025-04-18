@@ -212,8 +212,9 @@ public class BookingService implements IBookingService {
         // TODO Auto-generated method stub
         String userRequestId = JwtProvider.getIdFromJwtToken(token);
         Optional<BookingModel> bookingOpt = bookingRepo.findById(new ObjectId(bookingID));
+
         if(!bookingOpt.isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "booking does not exist");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BOOKING_NOT_FOUND");
         }
         BookingModel booking = bookingOpt.get();
         if(!userRequestId.equals(booking.getGuestId().toHexString())){
@@ -221,11 +222,11 @@ public class BookingService implements IBookingService {
         }
 
         if(!booking.isAccepted() || booking.isCancelled()){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "booking not accepted");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "booking not accepted");
         }
 
         Instant dayAfterBookingEnd = booking.getEndDate().plus(1, ChronoUnit.DAYS);
-        System.out.println(dayAfterBookingEnd.toString());
+        //System.out.println(dayAfterBookingEnd.toString());
         Instant now = Instant.now();
         if(dayAfterBookingEnd.isBefore(now)){
             throw new ResponseStatusException(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS, "booking in the past");
