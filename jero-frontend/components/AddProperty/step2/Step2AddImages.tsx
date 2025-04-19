@@ -8,6 +8,7 @@ import { Link } from "@/i18n/routing";
 import style from "./step2AddProperty.module.css"
 
 import bottomNavStyle from "../AddPropertyNavigation.module.css"
+import { useTranslations } from 'next-intl';
 
 
 
@@ -19,6 +20,7 @@ import bottomNavStyle from "../AddPropertyNavigation.module.css"
     setter: Dispatch<SetStateAction<string[]>> | null;
  }
 export default function Step2AddImages(props : Props) {
+    const t = useTranslations("Step2");
     const inputFileRef = useRef<HTMLInputElement>(null);
     const pathname = usePathname();
     const router = useRouter();
@@ -29,9 +31,10 @@ export default function Step2AddImages(props : Props) {
     }
 
     const handleOriginalSubmit = (e : any) => {
-        e.preventDefault()
+        e.preventDefault();
+        console.log("blobs " + blobs)
         const images : string[] = [];
-        if (blobs) {
+        if (blobs.length > 0) {
             blobs.forEach((blob, index) => {
             if (blob?.url) {
                 images.push(blob.url); 
@@ -41,7 +44,8 @@ export default function Step2AddImages(props : Props) {
             const locale = (pathname.split("/").at(1));
             router.push(`/${locale}/add-property/step3`);
         }else{
-            alert("No images have been uploaded");
+            console.log("hi")
+            alert(t('noImages'));
         }
     }
 
@@ -49,18 +53,18 @@ export default function Step2AddImages(props : Props) {
         e.preventDefault()
         if(props.getter && props.setter){
             const images : string[] = [...props.getter];
-            if (blobs) {
+            if (blobs.length > 0) {
                 blobs.forEach((blob, index) => {
                 if (blob?.url) {
                     images.push(blob.url); 
                 }   
                 });
-            props.setter(images);
-            console.log("arr " + props.getter)
-            console.log(images)
-            setBlobs([]);
+                props.setter(images);
+                console.log("arr " + props.getter)
+                console.log(images)
+                setBlobs([]);
             }else{
-                alert("No images have been uploaded");
+                alert(t('noImages'));
             }
     }
     }
@@ -80,7 +84,7 @@ export default function Step2AddImages(props : Props) {
 
     return (
         <div id={style.container}>
-        <h1>{props.isUpdate ? `Add new images`: `Step 2: Upload images of your property`}</h1>
+        <h1>{props.isUpdate ? t('titleUpdate'): t('titleOriginal')}</h1>
     
         <div id={style.uploadArea}>
         <form>
@@ -94,7 +98,7 @@ export default function Step2AddImages(props : Props) {
                     type="file" 
                     required
                     accept="image/png,image/jpeg" />
-                <label htmlFor="file" className={style.fileLabel}>Upload file</label>
+                <label htmlFor="file" className={style.fileLabel}>{t('upload')}</label>
             </div>
         </form>
         </div>
@@ -104,9 +108,9 @@ export default function Step2AddImages(props : Props) {
             {blobs.map((blob, index) => (
                 blob?.url && (
                 <div  className={style.imageSubArea} key={index}>
-                    <h3>Image {index + 1}</h3>
+                    <h3>{t("image")} {index + 1}</h3>
                     <img src={blob.url} alt="" />
-                    <button onClick={() => handleClick(blob)}>Remove image</button>
+                    <button className='basicButton' onClick={() => handleClick(blob)}>{t('remove')}</button>
                 </div>
     )
     ))}
@@ -118,11 +122,15 @@ export default function Step2AddImages(props : Props) {
 (        <nav id={bottomNavStyle.hi}>
 
         <form onSubmit={handleOriginalSubmit}>
-            <button className={style.button} >Save and next</button>
+            <button className={`${style.button} basicButton`} >{t('save')}</button>
         </form>
 
             <div id={bottomNavStyle.links}>
                 <Link href={"/add-property/step1"}>1</Link>
+                <Link href={"/add-property/step2"}>2</Link>
+                <Link href={"/add-property/step3"}>3</Link>
+                <Link href={"/add-property/step4"}>4</Link>
+                <Link href={"/add-property/step5"}>5</Link>
             </div>
         
 

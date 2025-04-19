@@ -5,6 +5,7 @@ import style from "./Step5.module.css"
 import AddPropertyBottomNav from "../AddPropertyBottomNav";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
+import { useTranslations } from "next-intl";
 
 interface Props {
     isUpdate: boolean 
@@ -22,6 +23,7 @@ type Overview = {
 }
 const Step5AddDescription = (props: Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const t = useTranslations('Step5');
     const [overview, setOverview] = useState<Overview>({
         propertyTitle : "",
         propertyDescription : "",
@@ -122,12 +124,12 @@ const Step5AddDescription = (props: Props) => {
 
     return (
         <div>
-            <h1>Description</h1>
+            <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1>
             <div id={style.textAreaContainer}>
-            <label htmlFor="propertyTitle"> Property Title
+            <label htmlFor="propertyTitle">{t('propertyTitle')}
                 <textarea
-                maxLength={30}
-                placeholder="Title of your choice. e.g. Modern, 2 bedroom apartment in a quiet neighbourhood. Perfect for weekend trips, or long stays."
+                maxLength={40}
+                placeholder={t('propertyPlaceholder')}
                 name="propertyTitle"
                 rows={3} 
                 id="propertyTitle" 
@@ -135,9 +137,9 @@ const Step5AddDescription = (props: Props) => {
                 onChange={handleChange} />
             </label>
 
-            <label htmlFor="propertyTitle"> Property Description
+            <label htmlFor="propertyTitle">{t('propertyDescription')}
                 <textarea
-                placeholder="A more detailed insight into the property, the area, nearby attractions etc."
+                placeholder={t('descriptionPlaceholder')}
                 name="propertyDescription" 
                 id="propertyDescription" 
                 rows={6}
@@ -147,9 +149,9 @@ const Step5AddDescription = (props: Props) => {
 
             
                  
-            <label htmlFor="propertyGuide"> Property Guide (we will only show this to users who have a confirmed booking)
+            <label htmlFor="propertyGuide">{t('guide')}
                 <textarea 
-                placeholder="For example, extra directions if the property is hard to find, where to put rubbish etc."
+                placeholder={t('guidePlaceholder')}
                 name="propertyGuide" 
                 id="propertyGuide" 
                 rows={6}
@@ -157,9 +159,9 @@ const Step5AddDescription = (props: Props) => {
                 onChange={handleChange} />
             </label>
 
-            <label htmlFor="propertyRules"> Property Rules
+            <label htmlFor="propertyRules">{t('rules')}
                 <textarea 
-                placeholder="For example, no parties, no guests not in the original booking etc."
+                placeholder={t('rulesPlaceholder')}
                 name="propertyRules" 
                 id="propertyRules" 
                 rows={6}
@@ -170,11 +172,11 @@ const Step5AddDescription = (props: Props) => {
         {
             props.isUpdate
             ?
-            <button onClick={handleUpdateSubmit} className="basicButton">Update</button>
+            <button onClick={handleUpdateSubmit} className="basicButton">{t('save')}</button>
             :
             <AddPropertyBottomNav
             handleSubmitFunction={handleOriginalSubmit} 
-            buttonText="Thank you for going through all the steps. Click here to add your property."
+            buttonText={t('save')}
             prevSteps={[1,2,3,4]} />
         }
 

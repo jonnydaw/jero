@@ -1,3 +1,4 @@
+// https://next-intl.dev/blog/next-intl-3-22
 import {getRequestConfig} from 'next-intl/server';
 import {routing} from './routing';
 

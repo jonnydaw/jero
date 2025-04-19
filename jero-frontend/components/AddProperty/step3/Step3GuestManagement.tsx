@@ -27,6 +27,7 @@ import { GuestManagement } from "@/types/types";
 import { propagateServerField } from "next/dist/server/lib/render-server";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
+import { useTranslations } from "next-intl";
 
 interface Props {
     isUpdate : boolean;
@@ -36,6 +37,7 @@ interface Props {
 
 const Step3GuestManagement = (props : Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const t = useTranslations("Step3")
 
     /*
     
@@ -181,7 +183,7 @@ const Step3GuestManagement = (props : Props) => {
         console.log("maxg " + formData.maxGuests)
         console.log("ming " + formData.minGuests)
         if (formData.maxGuests <= 0) {
-            messages.maxGuests = "Cannot be less than zero";
+            messages.maxGuests = t('notLessThan');
             flag = false;
         }
     
@@ -199,7 +201,7 @@ const Step3GuestManagement = (props : Props) => {
     const handleOriginalSubmit = (e :any) => {
         e.preventDefault(); 
         if(potentialBedProblem()){
-            if(!confirm("Bed count seems low. pls check")){
+            if(!confirm(t('bedWarning'))){
                 return;
             }
 
@@ -235,7 +237,7 @@ const Step3GuestManagement = (props : Props) => {
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault(); 
         if(potentialBedProblem()){
-            if(!confirm("Bed count seems low. pls check")){
+            if(!confirm(t('bedWarning'))){
                 return;
             }
 
@@ -263,14 +265,16 @@ const Step3GuestManagement = (props : Props) => {
 
     return (
         <div className={style.container}>
-        <h1 className={style.shiftLeft}>Pricing & Guest Management</h1>
+        <h1 className={style.shiftLeft}>{props.isUpdate ? t('titleUpdate') : t("titleNew") }</h1>
         <section className={style.section}>
-            <h2>Pricing</h2>
+            <h2>{t('pricing')}</h2>
             <div className={style.pricing}>
-            <label htmlFor="pricePerNight">Price per night
+            <label htmlFor="pricePerNight">{t('pricingPerNight')}
             <div>
             <span>£</span>
             <input
+            required
+            aria-required
                 id="pricePerNight"
                 type="number" 
                 min="0"
@@ -280,7 +284,7 @@ const Step3GuestManagement = (props : Props) => {
                 />
             </div>
             </label>
-            <label htmlFor="priceIncreasePerPerson">Price increase per person per night
+            <label htmlFor="priceIncreasePerPerson">{t('priceIncrease')}
                 <div>
             <span>£</span>
             <input
@@ -296,7 +300,7 @@ const Step3GuestManagement = (props : Props) => {
           
         </div>
         <div>
-            <h2>Earnings over time (assuming two people every visit)</h2>
+            <h2>{t('earnings')}</h2>
             <div id={style.earningsEst}>
             <strong>£{estimation}</strong>
             <input 
@@ -308,19 +312,20 @@ const Step3GuestManagement = (props : Props) => {
                 value={days}
                 onChange={handleSlide}
              />
-            <label htmlFor="days">Days: {days}</label>
+            <label htmlFor="days">{t('days')}: {days}</label>
             </div>
             </div>
         </section>
 
         <section className={style.section}>
-        <h2>Who can you accommodate</h2>
+        <h2>{t('who')}</h2>
         <div className={style.options}>
 
             <BigCheckbox 
+            
                 jsxnames={"acceptsChildren"}
                 val={formData.acceptsChildren}
-                displayName="Accept Children"
+                displayName={t('acceptChildren')}
                 imgPath="/child-svgrepo-com.svg"
                 alt="Child icon"
                 handler={handleCheckChange}
@@ -329,7 +334,7 @@ const Step3GuestManagement = (props : Props) => {
             <BigCheckbox 
                 jsxnames={"acceptsPets"}
                 val={formData.acceptsPets}
-                displayName="Accept pets"
+                displayName={t('acceptPets')}
                 imgPath="/pet-14-svgrepo-com.svg"
                 alt="Pet icon"
                 handler={handleCheckChange}
@@ -339,7 +344,7 @@ const Step3GuestManagement = (props : Props) => {
             <BigCheckbox 
                 jsxnames={"disabilityFriendly"}
                 val={formData.disabilityFriendly}
-                displayName="Disability Friendly"
+                displayName={t('disabilityFriendly')}
                 imgPath="/Accessibility_Icon_final.svg"
                 alt="Disabled icon"
                 handler={handleCheckChange}
@@ -348,23 +353,29 @@ const Step3GuestManagement = (props : Props) => {
         </section>
 
         <section className={style.section}>
-        <h2>How many can stay?</h2>
+        <h2>{t('howMany')}</h2>
             <div id={style.guestSection}>
             <div className={style.flat}>
-        <label htmlFor="minGuests">Minimum number of guests
+        <label htmlFor="minGuests">{t('minGuests')}
             <input
                 id="minGuests"
                 type="number" 
+                required
+                aria-required
                 min="0"
                 name="minGuests"
                 placeholder="Min Guests"
                 value={formData.minGuests}
                 onChange={handleChange}
                 />
+                <br/>
             </label>
-            <label htmlFor="maxGuests">Maximum number of guests 
+            
+            <label htmlFor="maxGuests">{t('maxGuests')}
             <input
                 id="maxGuests"
+                required
+                aria-required
                 type="number" 
                 min={0}
                 name="maxGuests"
@@ -372,13 +383,13 @@ const Step3GuestManagement = (props : Props) => {
                 value={formData.maxGuests}
                 onChange={handleChange}
                 />
-                {errors.maxGuests && errors.maxGuests}
+                {errors.maxGuests ? <p>{errors.maxGuests}</p> : <br/>}
             </label>
             </div>
 
             <div className={style.flat}>
 
-            <label htmlFor="numBedrooms">Number of Bedrooms
+            <label htmlFor="numBedrooms">{t('numBedrooms')}
             <input
                 id="numBedrooms"
                 type="number" 
@@ -388,10 +399,10 @@ const Step3GuestManagement = (props : Props) => {
                 value={formData.numBedrooms}
                 onChange={handleChange}
                 />
-                {errors.maxGuests && errors.maxGuests}
+                
             </label>
 
-            <label htmlFor="numBathrooms">Number of Bathrooms
+            <label htmlFor="numBathrooms">{t('numBathrooms')}
             <input
                 id="numBathrooms"
                 type="number" 
@@ -405,7 +416,7 @@ const Step3GuestManagement = (props : Props) => {
             </div>
 
             <div className={style.flat}>
-            <label htmlFor="doubleBeds">Double Beds
+            <label htmlFor="doubleBeds">{t('doubleBeds')}
             <input
                 id="doubleBeds"
                 type="number" 
@@ -417,7 +428,7 @@ const Step3GuestManagement = (props : Props) => {
                 />
             </label>
             
-            <label htmlFor="singleBeds">Single Beds
+            <label htmlFor="singleBeds">{t('singleBeds')}
             <input
                 id="singleBeds"
                 type="number" 
@@ -429,7 +440,7 @@ const Step3GuestManagement = (props : Props) => {
                 />
             </label>
             
-            <label htmlFor="hammocks">Hammocks
+            <label htmlFor="hammocks">{t('hammocks')}
             <input
                 id="hammocks"
                 type="number" 
@@ -442,7 +453,7 @@ const Step3GuestManagement = (props : Props) => {
 
             </label>
 
-            <label htmlFor="sofaBeds">sofa Beds
+            <label htmlFor="sofaBeds">{t('sofaBeds')}
             <input
                 id="sofaBeds"
                 type="number" 
@@ -459,12 +470,12 @@ const Step3GuestManagement = (props : Props) => {
             {
                 props.isUpdate
                 ?
-                    <button onClick={handleUpdateSubmit}>Save Changes</button>
+                    <button onClick={handleUpdateSubmit}>{t('update')}</button>
                 :
                 <AddPropertyBottomNav
                 handleSubmitFunction={handleOriginalSubmit} 
-                buttonText="Save and Continue to the next step."
-                prevSteps={[1,2]} />
+                buttonText={t('save')}
+                prevSteps={[1,2,3,4,5]} />
             }
             
         </div>

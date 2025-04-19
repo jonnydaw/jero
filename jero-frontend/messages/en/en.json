@@ -36,7 +36,138 @@
     "adult" : "Adults",
     "child" : "Children",
     "pet" : "Pets"
+  },
+
+  "Step1": {
+    "title": "Step One: Add your address",
+    "loadingMap": "A map is loading",
+    "notSupporting": "Sorry we are not supporting that location yet",
+    "placeholder": "Enter address",
+    "search": "Search",
+    "choose": "Please select your address",
+    "save": "Save and continue"
+  },
+
+  "Step2": {
+    "titleUpdate": "Update Photos",
+    "titleOriginal": "Step Two: Upload photos of your property",
+    "upload": "Upload Images",
+    "image": "Image",
+    "noImages": "No images have been uploaded",
+    "save": "Save and continue",
+    "remove": "Remove photo",
+    "saveNew": "Update"
+  },
+
+  "Step3": {
+    "titleUpdate": "Update prices and guests",
+    "titleNew": "Step Three: Pricing and Guests",
+    "pricing": "Pricing",
+    "pricingPerNight": "Price per night",
+    "priceIncrease": "Price increase per person per night",
+    "days": "Days",
+    "earnings": "Earnings over time (assuming two people every visit)",
+    "who": "Who can you accommodate",
+    "acceptChildren": "Accept Children",
+    "acceptPets": "Accept Pets",
+    "disabilityFriendly": "Disability Friendly",
+    "howMany": "How many can stay?",
+    "minGuests": "Minimum number of guests",
+    "maxGuests": "Maximum number of guests",
+    "numBedrooms": "Number of bedrooms",
+    "numBathrooms": "Number of bathrooms",
+    "doubleBeds": "Double beds",
+    "singleBeds": "Single bed",
+    "sofaBeds": "Sofa beds",
+    "hammocks": "Hammocks",
+    "save": "Save and continue",
+    "notLessThan": "Cannot be less than zero",
+    "bedWarning": "Number of beds seems low. Choose \"OK\" to continue"
+  },
+
+  "Step4": {
+     "originalTitle" : "Step Four: Amenities",
+    "updateTitle": "Update Amenities",
+    "hide": "Hide",
+    "show": "Show",
+    "healthAndSafety": "Health and Safety",
+    "entertainment": "Entertainment",
+    "transport": "Transport",
+    "laundry": "Laundry",
+    "climateControl": "Climate Control",
+    "water": "Water",
+    "beauty": "Beauty",
+
+
+
+
+    "fireAlarm": "Fire Alarm",
+    "carbonMonoxide": "Carbon Monxide Detector",
+    "fireExtinguisher": "Fire Extinguisher",
+    "firstAidKit": "First Aid Kit",
+    "kitchen": "Kitchen",
+    "dishwasher": "Dishwasjer",
+    "microwave": "Microwave",
+    "oven": "Oven",
+    "hob": "Hob",
+    "pots": "Pots and Pans",
+    "cutlery": "Cutlery",
+    "crockery": "Crockery",
+    "kettle": "Kettle",
+    "coffeMaker": "Coffee Maker",
+    "garage" : "Garage",
+    "offStreetParking" : "Off-street parking",
+    "onStreetParking" : "Street Parking",
+    "reliablePublicTransportNearby" : "Reliable Public Transport",
+    "washingMachine": "Washing Machine",
+    "tumbleDryer": "Tumble Dryer",
+    "iron" : "Iron",
+    "dryingRack" : "Drying Rack",
+    "airCon": "Air conditioning",
+    "fan" : "Fan",
+    "heating" : "Central Heating",
+    "woodBurningFire" : "Wood Burning Stove",
+    "drinkingWater" : "Drinking Water",
+    "bath" : "Bath",
+    "privateToilet" : "Private Toilet",
+    "jacuzzi" : "Jacuzzi",
+    "shower" : "Shower",
+    "bidet" : "Bidet",
+    "swimmingPool" : "Swimming Pool",
+    "hairDryer" : "Hair Dryer",
+    "hairStraightner" : "Hair Straightner",
+    "shampoo" : "Shampoo",
+    "conditioner" : "Conditioner",
+    "bodyWash" : "Body Wash",
+    "wifi" : "Wi-Fi",
+    "smartTv" : "Smart TV",
+    "gym" : "Gym",
+    "books" : "Books",
+    "boardGames" : "Board Games",
+    "localMuseums" : "Local Museums",
+    "localBars" : "Local Bars/ Pubs",
+    "localTheatres" : "Local Theatres",
+
+    "save":"Save and continue",
+    "update":"Update"
+  },
+
+  "Step5":{
+    "title": "Final Step: Description",
+    "updateTitle": "Update Description",
+    "propertyTitle": "Property Title (40 letters)",
+    "propertyPlaceholder": "Title of your choice. e.g. Modern, 2 bedroom apartment",
+    "propertyDescription": "Property Description",
+    "descriptionPlaceholder": "A more detailed insight into the property, the area, nearby attractions etc.",
+    "guide": "Property Guide (we will only show this to users who have a confirmed booking)",
+    "guidePlaceholder" : "For example, extra directions if the property is hard to find, where to put rubbish etc.",
+    "rules": "Property Rules",
+    "rulesPlaceholder": "For example, no parties",
+
+    "save":"Thank you for going through all the steps. Click here to add your property.",
+    "update":"Update"
   }
+
 
 
 }

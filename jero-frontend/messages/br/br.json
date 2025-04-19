@@ -37,7 +37,139 @@
       "adult" : "Adultos",
       "child" : "Crianças",
       "pet" : "Mascotas"
+    },
+
+    "Step1": {
+      "title" : "Passo Um: Adicione seu endereço.",
+      "loadingMap": "Um mapa está carregando",
+      "notSupporting": "Desculpe, não estamos ativos nessa zona",
+      "placeholder": "Endereço",
+      "search": "Pesquisa",
+      "choose": "Por favor, escolha seu endereço",
+      "save": "Guardar y vá para o próximo passo"
+    },
+
+    "Step2": {
+      "titleUpdate": "Actualizar fotos",
+      "titleOriginal": "Passo Dois: Adicione fotos de seu propiedade",
+      "upload": "Adicione Fotos",
+      "image": "Foto",
+      "noImages": "Nenhuma foto foi enviada",
+      "save": "Guardar y vá para o próximo passo",
+      "remove": "Tire a foto",
+      "saveNew": "Guardar"
+    },
+
+    "Step3": {
+      "titleUpdate": "Atualizar preços e hóspedes",
+      "titleNew": "Passo Três: Preços e hóspedes",
+      "pricing": "Preços",
+      "pricingPerNight": "Preço por noite",
+      "priceIncrease": "Aumento de preço por pessoa por noite",
+      "days": "Dias",
+      "earnings": "Ganhos ao longo do tempo (assumindo duas pessoas a cada visita)",
+      "who": "Quem você pode acomodar",
+      "acceptChildren": "Aceitar crianças",
+      "acceptPets": "Aceitar mascotas",
+      "disabilityFriendly": "Adequado para deficiências",
+      "howMany": "Quantas pessoas podem ficar?",
+      "minGuests": "Número mínimo de hóspedes",
+      "maxGuests": "Número maximo de hóspedes",
+      "numBedrooms": "Número de quartos",
+      "numBathrooms": "Número de banheiros",
+      "doubleBeds": "Camas de casal",
+      "singleBeds": "Camas individuais",
+      "sofaBeds": "Sofá-camas",
+      "hammocks": "Redes",
+      "update": "Atualizar",
+      "save": "Guardar y vá para o próximo passo",
+      "notLessThan": "Número não pode ser inferior a um",
+      "bedWarning": "O número de camas parece baixo. Escolha \"OK\" para continuar"
+    },
+
+    "Step4": {
+      "originalTitle": "Passo Quatro: Comodidades",
+      "updateTitle": "Atualizar Comodidades",
+      "hide": "Ocultar",
+      "show": "Mostar",
+      "healthAndSafety": "Saúde e Segurança",
+      "entertainment": "Entretenimento",
+      "transport": "Transporte",
+      "laundry": "Lavanderia",
+      "climateControl": "Controle Climático",
+      "water": "Água",
+      "beauty": "Beleza",
+
+
+      "fireAlarm": "Alarme de Incêndio",
+      "carbonMonoxide":  "Detector de Monóxido de Carbono",
+      "fireExtinguisher": "Extintor de Incêndio",
+      "firstAidKit": "Kit de Primeiros Socorros",
+      "kitchen": "Cozinha",
+      "dishwasher": "Lava-louças",
+      "microwave": "Microondas",
+      "oven": "Forno",
+      "hob": "Fogão",
+      "pots": "Panela",
+      "cutlery": "Talheres",
+      "crockery": "Louças",
+      "kettle": "Chaleira",
+      "coffeMaker": "Cafeteira",
+      "garage" : "Garagem",
+      "offStreetParking" : "Estacionamento (Privado)",
+      "onStreetParking" : "Estacionamento (Rua)",
+      "reliablePublicTransportNearby" : "Transporte Público Confiável",
+      "washingMachine": "Lavadora",
+      "tumbleDryer": "Secador",
+      "iron" : "Ferro de Passar",
+      "dryingRack" : "Rack de Secagem",
+      "airCon": "Ar-condicionado",
+      "fan" : "Ventilador",
+      "heating" : "Aquecimento",
+      "woodBurningFire" : "Estufa a Lenha",
+      "drinkingWater" : "Água Potável",
+      "bath" : "Banho",
+      "privateToilet" : "Banheiro (Privado)",
+      "jacuzzi" : "Jacuzzi",
+      "shower" : "Chuveiro",
+      "bidet" : "Bidê",
+      "swimmingPool" : "Piscina",
+      "hairDryer" : "Secador de Cabelo",
+      "hairStraightner" : "Prancha",
+      "shampoo" : "Xampu",
+      "conditioner" : "Condicionador",
+      "wifi" : "Wi-Fi",
+      "smartTv" : "Smart TV",
+      "gym" : "Ginásio",
+      "books" : "Livros",
+      "bodyWash" : "Sabão",
+      "boardGames" : "Jogos de Tabuleiro",
+      "localMuseums" : "Museus Locais",
+      "localBars" : "Bares Locais",
+      "localTheatres" : "Teatros Locais",
+
+      "save":"Guardar y vá para o próximo passo",
+      "update":"Atualizar"
+
+      
+    },
+
+    "Step5":{
+      "title": "Passo Final: Descrição",
+      "updateTitle": "Atualizar Descrição",
+      "propertyTitle": "Título da Propriedade (40 letras)",
+      "propertyPlaceholder": "Título de sua escolha. Por exemplo, moderno, apartamento de 2 quartos",
+      "propertyDescription": "Descrição da Propriedade",
+      "descriptionPlaceholder": "Uma descrição mais detalhada da propriedade, da área, atrações próximas, etc.",
+      "guide": "Guia da Propriedade (só mostraremos isso aos usuários que têm uma reserva confirmada)",
+      "guidePlaceholder" : "Por exemplo, direções extras se a propriedade é difícil de encontrar, onde colocar lixo etc.",
+      "rules": "Regras de propriedade",
+      "rulesPlaceholder": "Por exemplo, não são permitidas festas.",
+
+      "save":"Obrigado por passar por todos os passos. Clique aqui para adicionar sua propriedade.",
+      "update":"Atualizar"
     }
 
   }
+  
   

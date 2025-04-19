@@ -24,6 +24,7 @@ type Sections = {
 import { Amenities, Beauty, ClimateControl, Entertainment, HealthAndSafety, Kitchen, Laundry, Transport, Water } from "@/types/types";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
+import { useTranslations } from "next-intl";
 
 interface Props {
     isUpdate : boolean;
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const Step4Amenities = (props : Props) => {
+    const t = useTranslations('Step4');
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const router = useRouter();
     const pathname = usePathname();
@@ -181,10 +183,10 @@ const Step4Amenities = (props : Props) => {
     }
 
     const healthAndSafetyInfo = new Map<keyof HealthAndSafety, string[]>([
-        ["hasFireAlarm", ["Fire Alarm","/vercel.svg"]],
-        ["hasCarbonMonoxideDetector", ["Carbon Monoxide Detector","/vercel.svg"]],
-        ["hasFireExtinguisher", ["Fire extinguisher","/vercel.svg"]],
-        ["hasFirstAidKit", ["First Aid Kit","/vercel.svg"]]
+        ["hasFireAlarm", [t('fireAlarm'),"/vercel.svg"]],
+        ["hasCarbonMonoxideDetector", [t('carbonMonoxide'),"/vercel.svg"]],
+        ["hasFireExtinguisher", [t('fireExtinguisher'),"/vercel.svg"]],
+        ["hasFirstAidKit", [t('firstAidKit'),"/vercel.svg"]]
     ]);
 
     const [healthAndSafety, setHealthAndSafety] = useState<HealthAndSafety>({
@@ -196,16 +198,16 @@ const Step4Amenities = (props : Props) => {
 
 
     const kitchenInfo = new Map<keyof Kitchen, string[]>([
-        ["hasKitchen", ["Kitchen","/vercel.svg"]],
-        ["hasDishwasher", ["Dishwasher","/vercel.svg"]],
-        ["hasMicrowave", ["Microwave","/vercel.svg"]],
-        ["hasOven", ["Oven","/vercel.svg"]],
-        ["hasHob", ["Hob","/vercel.svg"]],
-        ["hasPotsAndPans", ["Pots and Pans","/vercel.svg"]],
-        ["hasCutlery", ["Cutlery","/vercel.svg"]],
-        ["hasCrockery", ["Crockery","/vercel.svg"]],
-        ["hasKettle", ["Kettle","/vercel.svg"]],
-        ["hasCoffeeMaker", ["Coffee Maker","/vercel.svg"]]
+        ["hasKitchen", [t('kitchen'),"/vercel.svg"]],
+        ["hasDishwasher", [t('dishwasher'),"/vercel.svg"]],
+        ["hasMicrowave", [t('microwave'),"/vercel.svg"]],
+        ["hasOven", [t('oven'),"/vercel.svg"]],
+        ["hasHob", [t('hob'),"/vercel.svg"]],
+        ["hasPotsAndPans", [t('pots'),"/vercel.svg"]],
+        ["hasCutlery", [t('cutlery'),"/vercel.svg"]],
+        ["hasCrockery", [t('crockery'),"/vercel.svg"]],
+        ["hasKettle", [t('kettle'),"/vercel.svg"]],
+        ["hasCoffeeMaker", [t('coffeMaker'),"/vercel.svg"]]
     ]);
 
 
@@ -224,10 +226,10 @@ const Step4Amenities = (props : Props) => {
 
 
     const transportInfo = new Map<keyof Transport, string[]>([
-        ["hasGarage", ["Garage","/vercel.svg"]],
-        ["hasOffStreetParking", ["Off Street Parking","/vercel.svg"]],
-        ["hasOnStreetParking", ["On Street Parking","/vercel.svg"]],
-        ["hasReliablePublicTransportNearby", ["Reliable Public Transport Nearby","/vercel.svg"]],
+        ["hasGarage", [t('garage'),"/vercel.svg"]],
+        ["hasOffStreetParking", [t('offStreetParking'),"/vercel.svg"]],
+        ["hasOnStreetParking", [t('onStreetParking'),"/vercel.svg"]],
+        ["hasReliablePublicTransportNearby", [t('reliablePublicTransportNearby'),"/vercel.svg"]],
     ]);
 
     const [transportFacilities, setTransportFacilities] = useState<Transport>({
@@ -239,10 +241,10 @@ const Step4Amenities = (props : Props) => {
 
 
     const laundryInfo = new Map<keyof Laundry, string[]>([
-        ["hasWashingMachine", ["Washing Machine","/vercel.svg"]],
-        ["hasTumbleDryer", ["Tumble Dryer","/vercel.svg"]],
-        ["hasIron", ["Iron","/vercel.svg"]],
-        ["hasDryingRack", ["Drying Rack","/vercel.svg"]],
+        ["hasWashingMachine", [t('washingMachine'),"/vercel.svg"]],
+        ["hasTumbleDryer", [t('tumbleDryer'),"/vercel.svg"]],
+        ["hasIron", [t('iron'),"/vercel.svg"]],
+        ["hasDryingRack", [t('dryingRack'),"/vercel.svg"]],
     ]);
 
     const [laundryFacilities, setLaundryFacilities] = useState<Laundry>({
@@ -253,10 +255,10 @@ const Step4Amenities = (props : Props) => {
     })
 
     const climateControlInfo = new Map<keyof ClimateControl, string[]>([
-        ["hasAirCon", ["Air Conditioning","/vercel.svg"]],
-        ["hasFan", ["Fan","/vercel.svg"]],
-        ["hasHeating", ["Heating","/vercel.svg"]],
-        ["hasWoodBurningFire", ["Wood Burning Fire","/vercel.svg"]],
+        ["hasAirCon", [t('airCon'),"/vercel.svg"]],
+        ["hasFan", [t('fan'),"/vercel.svg"]],
+        ["hasHeating", [t('heating'),"/vercel.svg"]],
+        ["hasWoodBurningFire", [t('woodBurningFire'),"/vercel.svg"]],
     ]);
 
     const [climateControlFacilities, setClimateControlFacilities] = useState<ClimateControl>({
@@ -267,13 +269,13 @@ const Step4Amenities = (props : Props) => {
     })
 
     const waterInfo = new Map<keyof Water, string[]>([
-        ["hasDrinkingWater", ["Drinking Water","/vercel.svg"]],
-        ["hasBath", ["Bath","/vercel.svg"]],
-        ["hasPrivateToilet", ["Private Toiler","/vercel.svg"]],
-        ["hasJacuzzi", ["Jacuzzi","/vercel.svg"]],
-        ["hasShower", ["Shower","/vercel.svg"]],
-        ["hasBidet", ["Bidet","/vercel.svg"]],
-        ["hasSwimmingPool", ["Swimming Pool","/vercel.svg"]],
+        ["hasDrinkingWater", [t('drinkingWater'),"/vercel.svg"]],
+        ["hasBath", [t('bath'),"/vercel.svg"]],
+        ["hasPrivateToilet", [t('privateToilet'),"/vercel.svg"]],
+        ["hasJacuzzi", [t('jacuzzi'),"/vercel.svg"]],
+        ["hasShower", [t('shower'),"/vercel.svg"]],
+        ["hasBidet", [t('bidet'),"/vercel.svg"]],
+        ["hasSwimmingPool", [t('swimmingPool'),"/vercel.svg"]],
     ]);
 
     const [waterFacilities, setWaterFacilities] = useState<Water>({
@@ -288,11 +290,11 @@ const Step4Amenities = (props : Props) => {
 
 
     const beautyInfo = new Map<keyof Beauty, string[]>([
-        ["hasHairDryer", ["Hair Dryer","/vercel.svg"]],
-        ["hasHairStraightner", ["Hair Straightner","/vercel.svg"]],
-        ["hasShampoo", ["Shampoo","/vercel.svg"]],
-        ["hasConditioner", ["Conditioner","/vercel.svg"]],
-        ["hasBodyWash", ["Body wash","/vercel.svg"]],
+        ["hasHairDryer", [t('hairDryer'),"/vercel.svg"]],
+        ["hasHairStraightner", [t('hairStraightner'),"/vercel.svg"]],
+        ["hasShampoo", [t('shampoo'),"/vercel.svg"]],
+        ["hasConditioner", [t('conditioner'),"/vercel.svg"]],
+        ["hasBodyWash", [t('bodyWash'),"/vercel.svg"]],
     ]);
 
     const [beautyFacilities, setBeautyFacilities] = useState<Beauty>({
@@ -304,14 +306,14 @@ const Step4Amenities = (props : Props) => {
     })
 
     const entertainmentInfo = new Map<keyof Entertainment, string[]>([
-        ["hasWifi", ["Wi-Fi","/vercel.svg"]],
-        ["hasSmartTv", ["Smart Tv Straightner","/vercel.svg"]],
-        ["hasGym", ["Gym","/vercel.svg"]],
-        ["hasBooks", ["Books","/vercel.svg"]],
-        ["hasBoardGames", ["Board Games","/vercel.svg"]],
-        ["hasLocalMuseums", ["Nearby Museums","/vercel.svg"]],
-        ["hasLocalBars", ["Neaby Bars","/vercel.svg"]],
-        ["hasLocalTheatres", ["Nearby Theatres","/vercel.svg"]],
+        ["hasWifi", [t('wifi'),"/vercel.svg"]],
+        ["hasSmartTv", [t('smartTv'),"/vercel.svg"]],
+        ["hasGym", [t('gym'),"/vercel.svg"]],
+        ["hasBooks", [t('books'),"/vercel.svg"]],
+        ["hasBoardGames", [t('boardGames'),"/vercel.svg"]],
+        ["hasLocalMuseums", [t('localMuseums'),"/vercel.svg"]],
+        ["hasLocalBars", [t('localBars'),"/vercel.svg"]],
+        ["hasLocalTheatres", [t('localTheatres'),"/vercel.svg"]],
     ]);
 
     const [entertainmentFacilities, setEntertainmentFacilities] = useState<Entertainment>({
@@ -367,14 +369,14 @@ const Step4Amenities = (props : Props) => {
     
     return(
         <div>
-            <h1>Amenities</h1>
+            <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('originalTitle')}</h1>
 
             <div className={style.options}>
 
             <div className={style.subsection}>
                     <div onClick={() => setSectionVisibility({ ...sectionVisibility, "healthAndSafety" : !sectionVisibility.healthAndSafety})} className={style.subsectionToggleArea}>
-                        <p>Health and Safety</p>
-                        <button id="healthAndSafety" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.healthAndSafety ? `Hide` : ` Show`}</></button>
+                        <p>{t('healthAndSafety')}</p>
+                        <button id="healthAndSafety" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.healthAndSafety ? t('hide') : t('show') }</></button>
                     </div>
                     {sectionVisibility.healthAndSafety &&
                 <div className={style.group}>
@@ -398,8 +400,8 @@ const Step4Amenities = (props : Props) => {
                 </div>
                 <div className={style.subsection}>
                  <div  onClick={() => setSectionVisibility({ ...sectionVisibility, "kitchen" : !sectionVisibility.kitchen})} className={style.subsectionToggleArea}>
-                    <p>Kitchen</p>
-                    <button id="kitchen" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.kitchen ? `Hide` : `Show`}</></button>
+                    <p>{t('kitchen')}</p>
+                    <button id="kitchen" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.kitchen ? t('hide') :t('show') }</></button>
                 </div>
 
                     {sectionVisibility.kitchen &&
@@ -426,8 +428,8 @@ const Step4Amenities = (props : Props) => {
 
                 <div className={style.subsection}>                 
                     <div onClick={() => setSectionVisibility({ ...sectionVisibility, "entertainment" : !sectionVisibility.entertainment})} className={style.subsectionToggleArea}>
-                    <p>Entertainment</p>
-                    <button id="entertainment" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.entertainment ? `Hide` : ` Show`}</></button>
+                    <p>{t('entertainment')}</p>
+                    <button id="entertainment" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.entertainment ? t('hide') : t('show') }</></button>
                 </div>
                 {sectionVisibility.entertainment &&
                     <div className={style.group}>
@@ -454,8 +456,8 @@ const Step4Amenities = (props : Props) => {
 
             <div className={style.subsection}>
                 <div onClick={() => setSectionVisibility({ ...sectionVisibility, "transport" : !sectionVisibility.transport})} className={style.subsectionToggleArea}>
-                    <p>Transport</p>
-                    <button id="transport" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.transport ? `Hide` : ` Show`}</></button>
+                    <p>{('transport')}</p>
+                    <button id="transport" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.transport ? t('hide') : t('show') }</></button>
                 </div>
                 {sectionVisibility.transport &&
                     <div className={style.group}>
@@ -482,8 +484,8 @@ const Step4Amenities = (props : Props) => {
 
             <div className={style.subsection}>
                 <div onClick={() => setSectionVisibility({ ...sectionVisibility, "laundry" : !sectionVisibility.laundry})} className={style.subsectionToggleArea}>
-                    <p>Laundry</p>
-                    <button id="laundry" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.laundry ? `Hide` : ` Show`}</></button>
+                    <p>{t('laundry')}</p>
+                    <button id="laundry" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.laundry ? t('hide') : t('show') }</></button>
                 </div>
                 {sectionVisibility.laundry &&
                     <div className={style.group}>
@@ -509,8 +511,8 @@ const Step4Amenities = (props : Props) => {
 
             <div className={style.subsection}>
             <div onClick={() => setSectionVisibility({ ...sectionVisibility, "climateControl" : !sectionVisibility.climateControl})}className={style.subsectionToggleArea}>
-                <p>Climate Control</p>
-                <button id="climateControl" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.climateControl ? `Hide` : ` Show`}</></button>
+                <p>{t('climateControl')}</p>
+                <button id="climateControl" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.climateControl ? t('hide') : t('show') }</></button>
                 </div>
                 {sectionVisibility.climateControl &&
                     <div className={style.group}>
@@ -536,8 +538,8 @@ const Step4Amenities = (props : Props) => {
 
             <div className={style.subsection}>
             <div onClick={() => setSectionVisibility({ ...sectionVisibility, "water" : !sectionVisibility.water})} className={style.subsectionToggleArea}>
-                <p>Water</p>
-                <button id="water" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.water ? `Hide` : `Show`}</></button>
+                <p>{t('water')}</p>
+                <button id="water" onClick={toggleVisibility} className={`${style.title} basicButton` }><>{sectionVisibility.water ? t('hide') :t('show') }</></button>
             </div>
                 {sectionVisibility.water &&
                     <div className={style.group}>
@@ -563,8 +565,8 @@ const Step4Amenities = (props : Props) => {
 
             <div className={style.subsection}>
             <div onClick={() => setSectionVisibility({ ...sectionVisibility, "beauty" : !sectionVisibility.beauty})} className={style.subsectionToggleArea}>
-                <p>Beauty</p>
-                <button id="beauty" onClick={toggleVisibility} className={`${`${style.title} basicButton` } basicButton` }><>{sectionVisibility.beauty ? `Hide` : `Show`}</></button>
+                <p>{t('beauty')}</p>
+                <button id="beauty" onClick={toggleVisibility} className={`${`${style.title} basicButton` } basicButton` }><>{sectionVisibility.beauty ? t('hide') :t('show') }</></button>
             </div>
                 {sectionVisibility.beauty &&
                     <div className={style.group}>
@@ -590,12 +592,12 @@ const Step4Amenities = (props : Props) => {
             {
                 props.isUpdate 
                     ?
-                <button onClick={handleUpdateSubmit} className="basicButton">Save</button>
+                <button onClick={handleUpdateSubmit} className="basicButton">{t('update')}</button>
                 :
                 <AddPropertyBottomNav
                 handleSubmitFunction={handleOriginalSubmit} 
-                buttonText="Save and Continue to the final step."
-                prevSteps={[1,2,3,5]} />
+                buttonText={t('save')}
+                prevSteps={[1,2,3,4,5]} />
             }
 
             </div>

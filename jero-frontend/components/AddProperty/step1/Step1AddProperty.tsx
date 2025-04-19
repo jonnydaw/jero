@@ -1,11 +1,16 @@
 'use client'
 
 import dynamic from 'next/dynamic';
-import { useMemo, useRef, useState } from 'react';
+import { FormEvent, useMemo, useRef, useState } from 'react';
 import style from "./Step1AddProperty.module.css"
 import next from 'next';
 import { useRouter, usePathname } from 'next/navigation';
 import { inDevEnvironment } from '@/base';
+import { useTranslations } from 'next-intl';
+import AddPropertyBottomNav from '../AddPropertyBottomNav';
+import { Link } from "@/i18n/routing";
+import bottomNavStyle from "../AddPropertyNavigation.module.css"
+
 
 interface LocationResults {
     locationName : string,
@@ -30,6 +35,8 @@ osmTypeToChar.set("polygon","P");
 
 
 const Step1AddProperty = () => {
+    const t = useTranslations('Step1');
+
     
     const [formData, setFormData] = useState<string>("");
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
@@ -54,7 +61,7 @@ const Step1AddProperty = () => {
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map/Map'),
         { 
-          loading: () => <p>A map is loading</p>,
+          loading: () => <p>{t('loadingMap')}</p>,
           ssr: false,
         }
       ), [chosen])
@@ -88,6 +95,8 @@ const Step1AddProperty = () => {
       }
 
       const handleSave = async (e : any) => {
+        const notSupporting = t('notSupporting');
+        console.log(t('notSupporting'))
         e.preventDefault();
         if(chosen){
 
@@ -105,7 +114,7 @@ const Step1AddProperty = () => {
                         const data  = await response.json()
                         console.log(data)
                         if(response.status !== 200){
-                            alert("Sorry we are not supporting that location yet.")
+                            alert(notSupporting)
                         }else{
                             const combo = {...chosen, "hierarchy":data}
                             localStorage.setItem("addressAndCoordinates", JSON.stringify(combo));
@@ -138,13 +147,13 @@ const Step1AddProperty = () => {
         <div id={style.container}>
                 <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom} isCircle={false}/>
                 <form id={style.formSearch} onSubmit={handleSubmit}>
-                    <input onChange={handleChange}type="text" placeholder='Enter property location' value={formData}/>
-                    <button>Search</button>
+                    <input onChange={handleChange}type="text" placeholder={t('placeholder')} value={formData}/>
+                    <button>{t('search')}</button>
                 </form>
             
            { results && 
             <> 
-                <h3>Please choose your address</h3>
+                <h3>{t('choose')}</h3>
                 <form  id={style.formSelect} onSubmit={handleSave}>
                 {results.map((item, index) => (
                     <div className={style.selectItem} key={index}>
@@ -159,11 +168,17 @@ const Step1AddProperty = () => {
 
                     </div>
                 ))}
-                <button>Save address and continue.</button>
+                <button>{t('save')}</button>
                 </form>
             </>    
              }
-
+            <div id={bottomNavStyle.links}>
+                <Link href={"/add-property/step1"}>1</Link>
+                <Link href={"/add-property/step2"}>2</Link>
+                <Link href={"/add-property/step3"}>3</Link>
+                <Link href={"/add-property/step4"}>4</Link>
+                <Link href={"/add-property/step5"}>5</Link>
+            </div>
         </div>
     )
 }
