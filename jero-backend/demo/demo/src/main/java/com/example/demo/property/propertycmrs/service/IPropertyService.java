@@ -26,7 +26,8 @@ public interface IPropertyService {
         int numAdults, 
         int numChildren, 
         int numPets,
-        Optional<String> sort);
+        Optional<String> sort,
+        List<PropertyModel> pms );
 
     public List<Map<String,String>> getPropertiesBySmart(
         Instant startDate, 

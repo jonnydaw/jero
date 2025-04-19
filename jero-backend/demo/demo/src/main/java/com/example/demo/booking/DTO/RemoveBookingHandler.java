@@ -1,6 +1,6 @@
 package com.example.demo.booking.DTO;
 
-import lombok.Data;
+//import lombok.Data;
 
 // @Data
 // public class RemoveBookingHandler {

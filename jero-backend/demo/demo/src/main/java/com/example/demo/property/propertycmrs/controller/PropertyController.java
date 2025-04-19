@@ -80,11 +80,13 @@ public class PropertyController {
         @RequestParam("numadults") @NotNull Integer numAdults,
         @RequestParam("numchildren") @NotNull Integer numChildren,
         @RequestParam("numpets") @NotNull Integer numPets,
-        @RequestParam("sort") Optional<String> sort                               
+        @RequestParam("sort") Optional<String> sort
+                                    
         ){ 
         Instant start = Instant.parse(startDate +"T00:00:00.000Z");
         Instant end = Instant.parse(endDate+"T00:00:00.000Z");
-        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults, numChildren, numPets ,sort);
+        List<PropertyModel> pms = new ArrayList<>();
+        List<Map<String,String>> res = propertyService.getPropertiesByLocation(location, start, end, numAdults, numChildren, numPets ,sort, pms);
         System.out.println("hit controller");
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);
@@ -171,9 +173,9 @@ public class PropertyController {
     }
 
     @PatchMapping("/update-property-images/{property_id}")
-    public ResponseEntity<?> updatePropertyImages(@CookieValue("JWT") String token, @RequestBody Map<String, List<String>> newImages, @PathVariable("property_id") String propertyId){
+    public ResponseEntity<?> updatePropertyImages(@CookieValue("JWT") String token, @RequestBody Map<String, List<String>> newImages, @PathVariable("property_id") String propertyId, PropertyModel propertyModel){
         System.out.println(newImages);
-        updatePropertyService.updatePropertyImages( token,  propertyId, newImages.get("updatedImages"));
+        updatePropertyService.updatePropertyImages( token,  propertyId, newImages.get("updatedImages"), propertyModel);
         return ResponseEntity.ok().body("Hi");
     }
 
@@ -185,9 +187,12 @@ public class PropertyController {
     }
 
     @PatchMapping("/update-guests-pricing/{property_id}")
-    public ResponseEntity<?> updateGuestsAndPricing(@CookieValue("JWT") String token, @RequestBody Map<String, Step3Data> newStep3, @PathVariable("property_id") String propertyId){
-        System.out.println();
-        updatePropertyService.updateStep3Data( token,  propertyId, newStep3.get("updateGuestManagement"));
+    public ResponseEntity<?> updateGuestsAndPricing(@CookieValue("JWT") String token, 
+        @RequestBody Map<String, Step3Data> newStep3, @PathVariable("property_id") String propertyId,
+        PropertyModel propertyModel
+        ){
+        //System.out.println();
+        updatePropertyService.updateStep3Data( token,  propertyId, newStep3.get("updateGuestManagement"), propertyModel);
         return ResponseEntity.ok().body("Hi");
     }
 
@@ -201,9 +206,9 @@ public class PropertyController {
 
     
     @PatchMapping("/update-amenities/{property_id}")
-    public ResponseEntity<?> updateAmenities(@CookieValue("JWT") String token, @RequestBody AmentiesHandler newAmenities, @PathVariable("property_id") String propertyId){
+    public ResponseEntity<?> updateAmenities(@CookieValue("JWT") String token, @RequestBody AmentiesHandler newAmenities, @PathVariable("property_id") String propertyId,  PropertyModel propertyModel){
         System.out.println();
-        updatePropertyService.updateAmenities(token,  propertyId, newAmenities);
+        updatePropertyService.updateAmenities(token,  propertyId, newAmenities, propertyModel);
         return ResponseEntity.ok().body("Hi");
     }
 
@@ -216,10 +221,10 @@ public class PropertyController {
     }
 
     @PatchMapping("/update-descriptions/{property_id}")
-    public ResponseEntity<?> updateDescriptions(@CookieValue("JWT") String token, @RequestBody Map<String, OverviewData> newDescriptions, @PathVariable("property_id") String propertyId){
+    public ResponseEntity<?> updateDescriptions(@CookieValue("JWT") String token, @RequestBody Map<String, OverviewData> newDescriptions, @PathVariable("property_id") String propertyId, PropertyModel propertyModel){
         System.out.println();
         // System.out.println("nd " + newDescriptions.toString());
-        updatePropertyService.updateDescriptions(token,  propertyId, newDescriptions.get("newDescriptions"));
+        updatePropertyService.updateDescriptions(token,  propertyId, newDescriptions.get("newDescriptions"), propertyModel);
         return ResponseEntity.ok().body("Hi");
     }
 

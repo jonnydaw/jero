@@ -106,7 +106,7 @@ public class PropertyService implements IPropertyService {
     }
 
     @Override
-    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets, Optional<String> sort) {
+    public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets, Optional<String> sort, List<PropertyModel> pms ) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
         //System.out.println("location " + location);
         if(location == null){
@@ -122,7 +122,7 @@ public class PropertyService implements IPropertyService {
                     if(location == null){
                         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
                     }
-                    return getPropertiesByLocation(locationWithAccent.getFirst(), startDate, endDate, numAdults, numChildren, numPets, sort);
+                    return getPropertiesByLocation(locationWithAccent.getFirst(), startDate, endDate, numAdults, numChildren, numPets, sort, pms);
                 }
             } else{
                 String longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = "";
@@ -135,7 +135,7 @@ public class PropertyService implements IPropertyService {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
                 }
                 System.out.println(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy);
-                return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets, sort);
+                return getPropertiesByLocation(longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy, startDate, endDate, numAdults, numChildren, numPets, sort, pms);
             }
         }
         // System.out.println("hit");
@@ -144,9 +144,9 @@ public class PropertyService implements IPropertyService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
         }
         String locationType = location.getLocationType();
-        List<PropertyModel> pms = new ArrayList<>();
-        pms = extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets, sort);
-
+        // pms = new ArrayList<>();
+        extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets, sort);
+      //  System.out.println(pms.get(0).toString());
         return getRes(pms,queriedLocation);
     }
 
@@ -587,7 +587,7 @@ public class PropertyService implements IPropertyService {
         }   
 
 
-    private List<PropertyModel> extracted2(LocationModel location, 
+    private void extracted2(LocationModel location, 
         String locationType, 
         List<PropertyModel> pms, 
         Instant startDate, 
@@ -597,9 +597,9 @@ public class PropertyService implements IPropertyService {
         int numPets,
         Optional<String> sort
     ) {
-            pms = propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0, sort);
-
-        return pms;
+            pms.addAll(propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0, sort));
+            //System.out.println(pms);
+        //return pms;
     }
 
     private String extracted(PropertyModel pm) {

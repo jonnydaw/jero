@@ -122,10 +122,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           name="start"
           id="start"
           required={true}
-          onInvalid={(e) =>
-            // https://stackoverflow.com/questions/52123151/change-required-input-message-in-react
-            e.currentTarget.setCustomValidity('CUSTOM MESSAGE')
-          }
+          
           
           value={formData.start}
           min={currentDate}

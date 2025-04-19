@@ -2,6 +2,7 @@ package com.example.demo.property.propertycmrs.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,8 +42,8 @@ public class UpdatePropertyService implements IUpdatePropertyService{
     }
 
     @Override
-    public void updatePropertyImages(String token, String propertyId, List<String> newImgs) {
-        PropertyModel property = getProperty(token, propertyId);
+    public void updatePropertyImages(String token, String propertyId, List<String> newImgs, PropertyModel property ) {
+        property = getProperty(token, propertyId);
 
         property.setImageUrls(newImgs);
         propertyRepo.save(property);
@@ -59,8 +60,8 @@ public class UpdatePropertyService implements IUpdatePropertyService{
     }
 
     @Override
-    public void updateStep3Data( String token, String propertyId, Step3Data newStep3){
-        PropertyModel property = getProperty(token, propertyId);
+    public void updateStep3Data( String token, String propertyId, Step3Data newStep3, PropertyModel property){
+        property = getProperty(token, propertyId);
 
         BeanUtils.copyProperties(newStep3, property);
         propertyRepo.save(property);
@@ -77,7 +78,7 @@ public class UpdatePropertyService implements IUpdatePropertyService{
     }
 
     @Override
-    public void updateAmenities(String token, String propertyId, AmentiesHandler newAmenities){
+    public void updateAmenities(String token, String propertyId, AmentiesHandler newAmenities, PropertyModel propertyModel){
         PropertyModel property = getProperty(token, propertyId);
 
         BeanUtils.copyProperties(newAmenities, property);
@@ -103,7 +104,7 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
 
     @Override
-    public void updateDescriptions(String token, String propertyId,  OverviewData res){
+    public void updateDescriptions(String token, String propertyId,  OverviewData res, PropertyModel propertyModel){
         PropertyModel property = getProperty(token, propertyId);
         property.setDescription(res.getPropertyDescription());
         System.out.println("desc " + res.getPropertyDescription());
@@ -140,9 +141,14 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
     private PropertyModel getProperty(String token, String propertyId) {
         String ownerId = JwtProvider.getIdFromJwtToken(token);
-        PropertyModel property = propertyRepo.findById(new ObjectId(propertyId)).get();
+        Optional<PropertyModel> optionalProperty = propertyRepo.findById(new ObjectId(propertyId));
+        if(optionalProperty.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+        }
+
+        PropertyModel property = optionalProperty.get();
         if(!property.getOwnerId().equals(new ObjectId(ownerId))){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NO");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "NOT_THE_OWNER");
         }
         return property;
     }

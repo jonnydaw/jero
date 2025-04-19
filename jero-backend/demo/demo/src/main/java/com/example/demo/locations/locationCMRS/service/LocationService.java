@@ -68,7 +68,7 @@ public class LocationService implements ILocationService {
             }
         }
         System.out.println("hit location overview service");
-        System.out.println(location.getOverview().get("en"));
+        System.out.println(location.getOverview().get(locale));
         int temp = location.getTemperature().get(month - 1);
         Map<String,Object> res = location.getOverview().get("en");
         res.put("temp", temp);
