@@ -253,6 +253,130 @@
     "confirm": "Actualizar",
     "delete": "Borrar Cuenta",
     "noName": "Nombre"
+  },
+
+  "Bookings": {
+    "past": "Pasado",
+    "present": "Acutal",
+    "future": "Futuro",
+    "pendingConfirmation": "Confimación Pendiendo",
+    "notAccepted": "No Aceptada",
+    "cancelled": "Cancelado",
+    "accepted": "Aceptado",
+    "hostedBy": "Su Anfitrión:",
+    "bookedBy": "Reservado Por:",
+    "adults" : "Adultos",
+    "children": "Niños",
+    "pets": "Mascotas"
+  },
+
+  "Options": {
+    "cancelQuestion": "¿Estás seguro de que quieres cancelar",
+    "cancelMessage": "Cancelado",
+    "notCanceled": "No Cancelado",
+    "view": "Ver",
+    "leaveReview": "Dejar una reseña",
+    "cancelText": "Cancelar" ,
+    "acceptedMessage": "Aceptado",
+    "acceptText": "Aceptar",
+    "viewProfile": "Ver Perfil",
+    "close": "Cerrar"
+  },
+
+  "Property": {
+    "noTitle": "No título",
+    "showMap": "Mostar Mapa",
+    "showImages": "Mostrar Fotos",
+    "image": "Foto",
+    "of": "de",
+    "overview": "General",
+    "bedrooms": "Dormitorios",
+    "bathrooms": "Baños",
+    "doubleBeds":"Camas matrimonios",
+    "singleBeds":"Camas individuales",
+    "sofaBeds":"sofá camas",
+    "hammocks":"Hamacas",
+    "childFriendly": "Acepta niños",
+    "petFriendly": "Acepta mascotas",
+    "disabilityFriendly":"Adaptado para discapacidades",
+    "not": "No",
+    "hide": "Ocultar",
+    "show": "Mostar",
+    "host":"Anfitrión",
+    "noReviews": "No tiene reseñas",
+    "amenities": "Instalaciones"
+  },
+
+  "Amenities": {
+    "originalTitle" : "Paso Cuatro: Instalaciones",
+    "updateTitle": "Actualizar Instalaciones",
+    "hide": "Ocultar",
+    "show": "Mostar",
+    "healthAndSafety": "Sanidad y Seguridad",
+    "entertainment": "Entretenimiento",
+    "transport": "Transporte",
+    "laundry": "Lavandería",
+    "climateControl": "Control del Clima",
+    "water": "Agua",
+    "beauty": "Belleza",
+
+
+    "hasFireAlarm": "Alarma de incendios",
+    "hasCarbonMonoxideDetector":  "Detector de Monóxido de Carbono",
+    "hasFireExtinguisher": "Extinguidores",
+    "hasFirstAidKit": "Kit de Primeros Auxilios",
+
+    "hasKitchen": "Cocina",
+    "hasDishwasher": "Lavavajillas",
+    "hasMicrowave": "Microondas",
+    "hasOven": "Horno",
+    "hasHob": "Estufa",
+    "hasPotsAndPans": "Ollas y Sartenes",
+    "hasCutlery": "Cubiertos",
+    "hasCrockery": "Vajilla",
+    "hasKettle": "Hervidor",
+    "hasCoffeeMaker": "Cafetera",
+
+    "hasGarage" : "garaje",
+    "hasReliablePublicTransportNearby" : "Aparcamiento (Privado)",
+    "hasOffStreetParking" : "Aparcamiento (Calle)",
+    "hasOnStreetParking" : "Transporte Publico Fiable",
+
+    "hasWashingMachine": "Lavadora",
+    "hasTumbleDryer": "Secadora",
+    "hasIron" : "Plancha",
+    "hasDryingRack" : "Tendederor",
+    
+    "hasAirCon": "Aire Acondicionado",
+    "hasFan" : "Ventilador",
+    "hasHeating" : "Calefacción",
+    "hasWoodBurningFire" : "Estufa de Leña",
+    
+    "hasDrinkingWater" : "Agua potable",
+    "hasBath" : "Baño",
+    "hasPrivateToilet" : "Servicio Privado",
+    "hasJacuzzi" : "Jacuzzi",
+    "hasShower" : "Ducha",
+    "hasBidet" : "Bidé",
+    "hasSwimmingPool" : "Piscina",
+    
+    "hasHairDryer" : "Secador de Pelo",
+    "hasHairStraightner" : "Plancha de Pelo",
+    "hasShampoo" : "Champú",
+    "hasConditioner" : "Acondicionador",
+    "hasBodyWash" : "Jabón",
+    
+    "hasWifi" : "Wi-Fi",
+    "hasSmartTv" : "Smart TV",
+    "hasGym" : "Gimnasio",
+    "hasBooks" : "Libros",
+    "hasBoardGames" : "Juegos de Mesa",
+    "hasLocalMuseums" : "Museos Locales",
+    "hasLocalBars" : "Cantinas Locales",
+    "hasLocalTheatres" : "Teatros Locales",
+
+    "save":"Guardar y ve al próximo paso",
+    "update":"Actualizar"
   }
 
 

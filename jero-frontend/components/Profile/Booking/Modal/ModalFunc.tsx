@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import ProfileCard from '../../ManageProfile/ProfileCard';
+import { useTranslations } from 'next-intl';
 
 const customStyles = {
   content: {
@@ -43,6 +44,8 @@ function ModalFunc(props : Props) {
     setIsOpen(false);
   }
 
+  const t = useTranslations('Options');
+
   return (
     <div>
       <button className={`basicButton`}onClick={openModal}>View Profile</button>
@@ -58,7 +61,7 @@ function ModalFunc(props : Props) {
       <div style={{width : "100%", display : 'flex', flexDirection : "column", justifyContent : "center", alignItems : "center", alignSelf : "center"
 }}>
         <ProfileCard firstName={props.firstName} lastName={props.lastName} introduction={props.intro} imgLink={props.profileImg}/>
-        <button className='basicButton' onClick={closeModal}>close</button>
+        <button className='basicButton' onClick={closeModal}>{t('close')}</button>
         </div>
       </Modal>
     </div>

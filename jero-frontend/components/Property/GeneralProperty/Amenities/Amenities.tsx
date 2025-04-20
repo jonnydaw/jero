@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react"
 import style from "./amenties.module.css"
+import { useTranslations } from "next-intl"
 
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
 
 
 const Amenities = (props : Props) => {
+    const t = useTranslations('Amenities');
+
     const truthies : string[] = [];
     const falsies : string[] = [];
     const [expanded, setExpanded] = useState<boolean>(false);
@@ -34,12 +37,12 @@ const Amenities = (props : Props) => {
       
                 <ul id={style.hasnt}>
                 {falsies.map((i) => (
-                    <li key={i}>{i}</li>
+                    <li key={i}>{t(i)}</li>
                 ))}
             </ul>
             <ul id={style.has}>
                 {truthies.map((i) => (
-                    <li key={i}>{i}</li>
+                    <li key={i}>{t(i)}</li>
                 ))}
             </ul>
         

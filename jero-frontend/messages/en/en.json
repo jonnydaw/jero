@@ -252,7 +252,131 @@
     "updatePhoto": "Update Profile Photo",
     "confirm": "Update",
     "delete": "Delete Account"
-  }
+  },
+
+  "Bookings": {
+    "past": "Past",
+    "present": "Present",
+    "future": "Future",
+    "pendingConfirmation": "Pending confimation",
+    "notAccepted": "Not Accepted",
+    "cancelled": "Cancelled",
+    "accepted": "Accepted",
+    "hostedBy": "Hosted By:",
+    "bookedBy": "Booked By:",
+    "adults" : "Adults",
+    "children": "Children",
+    "pets": "Pets"
+  },
+
+  "Options": {
+    "cancelQuestion": "Are you sure you want to cancel?",
+    "cancelMessage": "Cancelled",
+    "view": "View",
+    "leaveReview": "Leave a review",
+    "cancelText": "Cancel" ,
+    "acceptedMessage": "Accepted",
+    "acceptText": "Accept",
+    "viewProfile": "View Profile",
+    "close": "Close"
+
+  },
+  "Property": {
+    "noTitle": "No title",
+    "showMap": "Show Map",
+    "showImages": "Show Photos",
+    "image": "Image",
+    "overview": "Overview",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "doubleBeds":"Double beds",
+    "singleBeds":"Single beds",
+    "sofaBeds":"Sofa beds",
+    "hammocks":"Hammocks",
+    "childFriendly": "Child Friendly",
+    "petFriendly": "Pet Friendly",
+    "disabilityFriendly":"Disability Friendly",
+    "not": "Not",
+    "hide": "Hide",
+    "show": "Show",
+    "host":"Host",
+    "noReviews": "No reviews yet",
+    "amenities": "Amenities"
+  },
+
+  "Amenities": {
+    "originalTitle" : "Step Four: Amenities",
+   "updateTitle": "Update Amenities",
+   "hide": "Hide",
+   "show": "Show",
+   "healthAndSafety": "Health and Safety",
+   "entertainment": "Entertainment",
+   "transport": "Transport",
+   "laundry": "Laundry",
+   "climateControl": "Climate Control",
+   "water": "Water",
+   "beauty": "Beauty",
+
+
+
+
+   "hasFireAlarm": "Fire Alarm",
+   "hasCarbonMonoxideDetector": "Carbon Monxide Detector",
+   "hasFireExtinguisher": "Fire Extinguisher",
+   "hasFirstAidKit": "First Aid Kit",
+
+   "hasKitchen": "Kitchen",
+   "hasDishwasher": "Dishwasjer",
+   "hasMicrowave": "Microwave",
+   "hasOven": "Oven",
+   "hasHob": "Hob",
+   "hasPotsAndPans": "Pots and Pans",
+   "hasCutlery": "Cutlery",
+   "hasCrockery": "Crockery",
+   "hasKettle": "Kettle",
+   "hasCoffeeMaker": "Coffee Maker",
+
+   "hasGarage" : "Garage",
+   "hasOffStreetParking" : "Off-street parking",
+   "hasOnStreetParking" : "Street Parking",
+   "hasReliablePublicTransportNearby" : "Reliable Public Transport",
+   
+   "hasWashingMachine": "Washing Machine",
+   "hasTumbleDryer": "Tumble Dryer",
+   "hasIron" : "Iron",
+   "hasDryingRack" : "Drying Rack",
+
+   "hasAirCon": "Air conditioning",
+   "hasFan" : "Fan",
+   "hasHeating" : "Central Heating",
+   "hasWoodBurningFire" : "Wood Burning Stove",
+   
+   "hasDrinkingWater" : "Drinking Water",
+   "hasBath" : "Bath",
+   "hasPrivateToilet" : "Private Toilet",
+   "hasJacuzzi" : "Jacuzzi",
+   "hasShower" : "Shower",
+   "hasBidet" : "Bidet",
+   "hasSwimmingPool" : "Swimming Pool",
+   
+   "hasHairDryer" : "Hair Dryer",
+   "hasHairStraightner" : "Hair Straightner",
+   "hasShampoo" : "Shampoo",
+   "hasConditioner" : "Conditioner",
+   "hasBodyWash" : "Body Wash",
+
+   "hasWifi" : "Wi-Fi",
+   "hasSmartTv" : "Smart TV",
+   "hasGym" : "Gym",
+   "hasBooks" : "Books",
+   "hasBoardGames" : "Board Games",
+   "hasLocalMuseums" : "Local Museums",
+   "hasLocalBars" : "Local Bars/ Pubs",
+   "hasLocalTheatres" : "Local Theatres",
+
+   "save":"Save and continue",
+   "update":"Update"
+ }
 
 
 

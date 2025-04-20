@@ -13,6 +13,7 @@ import MobileBubbles from "../GeneralProperty/MobileBubbles/MobileBubbles";
 import dynamic from "next/dynamic";
 import Reviews from "../GeneralProperty/Reviews/Review";
 import ProfileCard from "@/components/Profile/ManageProfile/ProfileCard";
+import { useTranslations } from "next-intl";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 type UserDeets = {
     id : string | null;
@@ -38,8 +39,8 @@ type Expanded = {
 }
 
 const GeneralProperty = (props : Props) => {
-
-    console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
+    const t = useTranslations('Property');
+    //console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
     const sp = useSearchParams();
     const adultCountSp = Number(sp.get("numadults"))
     //const adultCountSp = props.userDeets.numAdults
@@ -137,7 +138,7 @@ const GeneralProperty = (props : Props) => {
     return(
         <>
                <section id={style.info}>
-            <h1>{props.propertyAttributes.title || "No title provided"}</h1>
+            <h1>{props.propertyAttributes.title || t('noTitle')}</h1>
             
 
             {/* {
@@ -159,7 +160,7 @@ const GeneralProperty = (props : Props) => {
                     height={props.isMobile ? 243.2 :533}
                     alt="Picture of the property"
                   />
-                  <figcaption>Image {currentImageIdx + 1} of {props.propertyAttributes.images.length}</figcaption>
+                  <figcaption>{t('image')} {currentImageIdx + 1} {t('of')} {props.propertyAttributes.images.length}</figcaption>
                   </figure>
                   <button onClick={handleIncrement}>&rarr;</button>
                 </div>
@@ -171,13 +172,13 @@ const GeneralProperty = (props : Props) => {
               }
           
               <div id={stylePC.imageToggleArea}>
-              <button style={{margin : "0.5em", fontSize : "large"}} className="basicButton" onClick={() => setShowImage(!showImage)}>{showImage ? `Show Map` : `Show Images` }</button>
+              <button style={{margin : "0.5em", fontSize : "large"}} className="basicButton" onClick={() => setShowImage(!showImage)}>{showImage ? t('showMap') : t('showImages') }</button>
               </div>
 
             <div id={style.overview}>
                 <div className={`${style.toggleTitle} ${!expanded.overviewExpand ? mobileStyle.closed : mobileStyle.open}`}>
-                    <h2>Overview</h2>
-                    <button  className="basicButton"  id='overviewExpand' onClick={handleToggleSection}> {expanded.overviewExpand ? `Collapse`: `Expand`}</button>
+                    <h2>{t('overview')}</h2>
+                    <button  className="basicButton"  id='overviewExpand' onClick={handleToggleSection}> {expanded.overviewExpand ? t('hide'): t('show')}</button>
                 </div>
                 {
                     expanded.overviewExpand
@@ -191,7 +192,7 @@ const GeneralProperty = (props : Props) => {
                         </p>
                         </div>
                         <div id={stylePC.profileCard}>
-                    <h3>Hosted by</h3>
+                    <h3>{t('host')}</h3>
                 <ProfileCard 
                     firstName={props.propertyAttributes.profileInfo.fname} 
                     lastName={props.propertyAttributes.profileInfo.lname} 
@@ -205,8 +206,8 @@ const GeneralProperty = (props : Props) => {
             </div>
         <div id={style.amentiesArea}>
             <div className={`${style.toggleTitle} ${!expanded.amenitiesExpand ? mobileStyle.closed : mobileStyle.open}`}>
-            <h2>Amenities</h2>
-            <button id={'amenitiesExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.amenitiesExpand ? `Collapse`: `Expand`}</button>
+            <h2>{t('amenities')}</h2>
+            <button id={'amenitiesExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.amenitiesExpand ? t('hide'): t('show')}</button>
             </div>
             
             {
@@ -231,13 +232,13 @@ const GeneralProperty = (props : Props) => {
 {                props.propertyAttributes.reviews === null 
                 ?
                 <h2>
-                No reviews yet 
+                {t('noReviews')}
                 </h2>
                 :
 
                 <h2>Reviews</h2>}
             
-            <button disabled={props.propertyAttributes.reviews === null} id={'reviewsExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.reviewsExpand ? `Collapse`: `Expand`}</button>
+            <button disabled={props.propertyAttributes.reviews === null} id={'reviewsExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.reviewsExpand ? t('hide'): t('show')}</button>
 
             </div>
             

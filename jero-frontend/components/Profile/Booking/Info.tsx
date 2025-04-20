@@ -1,6 +1,7 @@
 import { BookingProperty } from "@/types/types";
 import style from "./booking.module.css"
 import BookingCard from "./BookingCard"
+import { useTranslations } from "use-intl";
 interface Props {
     bookings : Map<String, BookingProperty[]>;
     isCustomer : boolean;
@@ -8,9 +9,11 @@ interface Props {
     timeframe : string;
 }
 const Info = (props : Props) => {
+    const t = useTranslations('Bookings');
+
     return(
         <section id={style.timeframe}>
-        {!props.isMobile && <h2>{props.timeframe}</h2>}
+        {!props.isMobile && <h2>{t(props.timeframe)}</h2>}
         { 
         props.bookings.get(props.timeframe)!.length > 0
          && 
