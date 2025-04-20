@@ -103,7 +103,8 @@
     "hammocks": "Hammocks",
     "save": "Save and continue",
     "notLessThan": "Cannot be less than zero",
-    "bedWarning": "Number of beds seems low. Choose \"OK\" to continue"
+    "bedWarning": "Number of beds seems low. Choose \"OK\" to continue",
+    "update": "Update"
   },
 
   "Step4": {
@@ -286,6 +287,7 @@
     "showMap": "Show Map",
     "showImages": "Show Photos",
     "image": "Image",
+    "of": "of",
     "overview": "Overview",
     "bedrooms": "Bedrooms",
     "bathrooms": "Bathrooms",
@@ -301,7 +303,18 @@
     "show": "Show",
     "host":"Host",
     "noReviews": "No reviews yet",
-    "amenities": "Amenities"
+    "amenities": "Amenities",
+  "healthAndSafety": "Health and Safety",
+   "entertainment": "Entertainment",
+   "transport": "Transport",
+   "laundry": "Laundry",
+   "climateControl": "Climate Control",
+   "water": "Water",
+   "beauty": "Beauty",
+   "kitchen": "Kitchen",
+   "reviews": "Reviews",
+    "perNight": "per night",
+    "total": "total"
   },
 
   "Amenities": {
@@ -376,9 +389,101 @@
 
    "save":"Save and continue",
    "update":"Update"
- }
+ },
 
+  "Book":{
+    "price": "Price",
+    "baseRate": "Base Rate",
+    "additionalCosts": "Additional Guest Costs",
+    "total": "Total",
+    "book": "Book",
+    "youMust": "You must be a registered customer to book"
+  },
 
+  "MobileBook":{
+    "close": "Close",
+    "book": "Book"
+  },
+
+  "Pay": {
+    "confirm": "Confirm and Book",
+    "total": "Total",
+    "adults": "Adults",
+    "children": "Children",
+    "pets": "Pets",
+    "cardName": "Cardholder Name",
+    "cardNumber": "Card Number",
+    "expiry": "Expiry Date",
+    "back": "Go Back"
+},
+
+  "SearchResults":{
+    "showing": "Search Results For"
+  },
+
+  "Overview":{
+    "funFact": "Fun Fact",
+    "attractions":"Attractions",
+    "back": "Back",
+    "next": "Next"
+  },
+
+  "Filters":{
+    "sortBy": "Sort by Price",
+    "desc": "Descending",
+    "asc": "Ascending",
+    "reset": "Reset"
+  },
+
+  "PropertyCard": {
+    "noTitle":"No title",
+    "pricePerNight":"Price per night",
+    "total": "total",
+    "extra": "Extra guest cost per night",
+    "ratedHigher": "Rated higher than",
+    "noReviews":"No tiene reseñas"
+  },
+
+  "NavBarMobile":{
+    "search": "Search",
+    "smartSearch":"Smart Search"
+  },
+
+  "ProfileDropdown": {
+    "authentication": "Authentication",
+    "languages": "Languages",
+    "profile":"Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Signup",
+    "manageProfile": "Manage Profile",
+    "manageProperties": "Manage Properties",
+    "bookings": "Bookings",
+    "privacy": "Privacy"
+  },
+
+  "PropertyCardOwner":{
+    "perNight": "per night",
+    "delete": "Delete",
+    "update": "Update"
+  },
+
+  "PropertyUpdateModal":{
+    "add": "Add a new property",
+    "what": "What would you like to update?",
+    "update": "Update",
+    "images": "Images",
+    "guestsAndPricing": "Guests and Pricing",
+    "amenities": "Amenties",
+    "descriptions": "Descriptions",
+    "close": "Close"
+  },
+
+  "UpdatePropertyImages":{
+    "currentImages": "Current Images",
+    "delete": "Delete",
+    "confirm": "Confirm Changes"
+  }
 
 }
 

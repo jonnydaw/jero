@@ -20,6 +20,7 @@ import { json } from "stream/consumers";
 import Reviews from "../GeneralProperty/Reviews/Review";
 import ProfileCard from "@/components/Profile/ManageProfile/ProfileCard";
 import GeneralProperty from "../GeneralProperty/GeneralProperty";
+import { useTranslations } from "next-intl";
 //import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 type UserDeets = {
@@ -46,6 +47,7 @@ type Expanded = {
 
 const PropertyCustomer = (props : Props) => {
     // console.log("reviews: " + JSON.stringify(props.propertyAttributes.reviews))
+    const t = useTranslations('Property');
     const sp = useSearchParams();
     const adultCountSp = Number(sp.get("numadults"))
     let childCountSp = Number(sp.get("numchildren"))
@@ -100,8 +102,8 @@ const PropertyCustomer = (props : Props) => {
                 {
                 props.isMobile &&
                 <strong style={{display : "flex", justifyContent : "center", fontSize : "large", margin :"0.5em", color : "green"}}>
-                    💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} per night 
-                    - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} total 💸
+                    💸 £{props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))} {t('perNight')} 
+                    - £{Number(props.propertyAttributes.pricePerNight + (Number(props.propertyAttributes.priceIncreasePerPerson) * (guestCounts.adultCount + guestCounts.childCount -1))) * bookingLength} {t('total')} 💸
                 </strong>
               }
             <GeneralProperty propertyAttributes={props.propertyAttributes} userDeets={props.userDeets} isMobile={props.isMobile} isCircle={true}/>

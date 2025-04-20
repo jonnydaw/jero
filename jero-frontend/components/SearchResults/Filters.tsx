@@ -1,11 +1,13 @@
 'use client'
+import { useTranslations } from "next-intl";
 import style from "./filter.module.css"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { styleText } from "util";
 const Filters = () => {
-    const router = useRouter()
+    const router = useRouter();
     const searchParams = useSearchParams();
-    const pathname = usePathname()
+    const pathname = usePathname();
+    const t = useTranslations('Filters');
 
     const updateSp = (e : any) => {
         const params = new URLSearchParams(searchParams);
@@ -36,18 +38,19 @@ const Filters = () => {
     return (
         <div id={style.container}>
             <div id={style.otherfilter}>
-                <h4>Sort by</h4>
+                <h4>{t('sortBy')}</h4>
             <button 
                 name="DESC"
                 className="basicButton"
                 onClick={updateSp}
-                >DESC</button>
+                >
+                    {t('desc')}</button>
             
             <button 
                 className="basicButton"
                 name="ASC"
                 onClick={updateSp}>
-                    ASC
+                    {t('asc')}
             </button>
             </div>
             <div id={style.rightFilter}>
@@ -55,7 +58,7 @@ const Filters = () => {
                 className="basicButton"
                 name="none"
                 onClick={updateSp}>
-                    RESET
+                    {t('reset')}
             </button>
             </div>
             

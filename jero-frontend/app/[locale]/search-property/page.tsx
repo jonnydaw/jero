@@ -2,7 +2,7 @@ import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import SearchResults from "@/components/SearchResults/SearchResults";
 // https://stackoverflow.com/questions/65436443/how-to-access-locale-in-custom-app-on-server-side-in-next-js
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { cookies, headers } from "next/headers"
 import { getSelectorsByUserAgent } from "react-device-detect"
 
@@ -21,7 +21,7 @@ const Page = async ({searchParams} : any) =>{
   )
 
     const base = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-
+    const t = await getTranslations("SearchResults");
     
     // https://stackoverflow.com/questions/64251462/how-do-i-return-array-of-keys-that-have-only-empty-values-in-the-objects
     let emptyKeys = Object.keys(sp).filter(key => sp[key] === '');;
@@ -86,13 +86,13 @@ const Page = async ({searchParams} : any) =>{
           console.error(error);
       }
 
-    console.log("overview " + overviewData);
+    //console.log("overview " + overviewData);
 
 
 
     return (
         <div style={{paddingTop : "1vh"}}>
-            <h1 style={{paddingLeft : "1em"}}>Showing Search Results For {sp.location}</h1>
+            <h1 style={{paddingLeft : "1em"}}>{t('showing')} {sp.location}</h1>
             <SearchResults propertyAttributes={dataProperties} locationOverview={overviewData} isMobile={isMobile} />
         </div>
     )

@@ -3,6 +3,7 @@ import { PropertyAttribute } from "@/types/types";
 import style from "./propertcard.module.css"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEventHandler, MouseEventHandler } from "react";
+import { useTranslations } from "next-intl";
 interface Props {
     propertyAttribute : PropertyAttribute;
 }
@@ -24,7 +25,9 @@ const PropertyCard = (props : Props) => {
     if(startDate && endDate){
         bookingLength = ((new Date(endDate || "").getTime() - new Date(startDate || "").getTime()) / 86_400_000);
     }
-    //const 
+
+    const t = useTranslations('PropertyCard');
+
 
 
     const handleClick = () =>{
@@ -57,12 +60,12 @@ const PropertyCard = (props : Props) => {
             onClick={handleClick}
             onKeyDown={handleEnter}
             >
-                <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : "No title" }</h3>
+                <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : t('noTitle') }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
-                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night  {bookingLength && `- £ ${Number(props.propertyAttribute.pricePerNight) * bookingLength} total`}</strong>
-                <em style={{marginBottom : "0.5em"}}>Extra guest cost per night £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
+                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night  {bookingLength && `• £ ${Number(props.propertyAttribute.pricePerNight) * bookingLength} ${t('total')}`}</strong>
+                <em style={{marginBottom : "0.5em"}}>{t('extra')} • £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
                 <p style={{margin : "0em"}}>{props.propertyAttribute.displayLocation}</p>
-                <p>{props.propertyAttribute.percentile > 0 ? `Rated higher than ${~~props.propertyAttribute.percentile}%` : "No reviews yet" }</p>
+                <p>{props.propertyAttribute.percentile > 0 ? `${t('ratedHigher')} ${~~props.propertyAttribute.percentile}%` : t('noReviews') }</p>
         </div>
     )
 }

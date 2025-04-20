@@ -47,24 +47,12 @@ const Login = () => {
             alert(t('notAllowed'))
         }
     }
-    // const myRefresh = async (e:any) => {
-    //     e.preventDefault();
-    //     try {
-    //         const response = await axios.get('http://localhost:8080/auth/refresh', {
-    //             withCredentials: true
-    //         }
-    //         );
-    //         console.log(response.data);
-    //     } catch (error : any) {
-    //         console.log(formData)
-    //         console.log('Login failed:', error.response ? error.response.data : error.message);
-    //     }
-    // }
+
 
     return (
         <div id={style.container}   >
             {/* <button onClick={myRefresh}></button> */}
-        <div>
+        <div id={style.formContainer}>
         <form onSubmit={handleSubmit} id={style.form}>
             <label htmlFor="email">{t('email')}</label>
             <input

@@ -137,7 +137,7 @@ export default function Step2AddImages(props : Props) {
         </nav>)
         : (
             <form onSubmit={handleUpdateSubmit}>
-            <button  className={`basicButton`} >Add New</button>
+            <button style={{marginTop: "0.5em"}} className={`basicButton`} >{t('saveNew')}</button>
         </form>
         )
         }

@@ -80,6 +80,7 @@
       "save": "Guardar y vá para o próximo passo",
       "remove": "Tire a foto",
       "saveNew": "Guardar"
+
     },
 
     "Step3": {
@@ -309,7 +310,19 @@
     "show": "Mostar",
     "host": "O Anfitrião",
     "noReviews": "Não tem resenhas",
-    "amenities": "Comodidades"
+    "amenities": "Comodidades",
+    "healthAndSafety": "Saúde e Segurança",
+    "entertainment": "Entretenimento",
+    "transport": "Transporte",
+    "laundry": "Lavanderia",
+    "climateControl": "Controle Climático",
+    "water": "Água",
+    "beauty": "Beleza",
+    "kitchen":"Cozinha",
+    "reviews": "Resenhas",
+    "perNight": "por noite",
+    "total": "total"
+
   },
 
   "Amenities": {
@@ -383,11 +396,111 @@
     "hasLocalTheatres" : "Teatros Locais",
 
     "save":"Guardar y vá para o próximo passo",
-    "update":"Atualizar"
+    "update":"Atualizar"    
+  },
 
-    
-  }
+  "Book":{
+    "price": "Preço",
+    "baseRate": "Preço Base",
+    "additionalCosts": "Custos Adicionais de Hóspede",
+    "total": "Total",
+    "book": "Reservar",
+    "youMust": "Você deve ser um cliente registrado para reservar"
+  },
 
-  }
+  "MobileBook":{
+    "close": "Fechar",
+    "book":"Reservar"
+  },
+
   
+
+  "Pay": {
+    "confirm": "Confirmar e Reservar",
+    "total": "Total",
+    "adults": "Adultos",
+    "children": "Crianças",
+    "pets": "Mascotas",
+    "cardName": "Nome do Titular",
+    "cardNumber": "Número do Cartão",
+    "expiry": "Data de Expiração",
+    "back": "Volte"
+},
+
+"Reviews": {
+  "by": "por",
+  "hide": "Ocultar",
+  "show": "Mostar"
+},
+
+  "SearchResults":{
+    "showing": "Resultados de pesquisa para"
+  },
+
+  "Overview":{
+    "funFact": "Fato Engraçado",
+    "attractions":"Atrações",
+    "back": "Voltar",
+    "next": "Próximo"
+  },
+
+  "Filters":{
+    "sortBy": "Ordenar por preço",
+    "desc": "Descendo",
+    "asc": "Ascensão",
+    "reset": "Apagar"
+  },
+
+  "PropertyCard": {
+    "noTitle":"Sem título",
+    "pricePerNight":"Preço por noite",
+    "total": "total",
+    "extra": "Aumento de preço por pessoas extra por noite",
+    "ratedHigher": "Avaliado mais alto que",
+    "noReviews": "Não tem resenhas"
+  },
+
+
+  "NavBarMobile":{
+    "search": "Pesquisa",
+    "smartSearch":"Pesquisa Inteligente"
+  },
+
+  "ProfileDropdown": {
+    "authentication": "Autenticação",
+    "languages": "línguas",
+    "profile":"Perfil",
+    "logout": "Sair",
+    "login": "Aceder",
+    "signup": "Inscrição",
+    "manageProfile": "Atualizar Perfil",
+    "manageProperties": "Atualizar Propiedades",
+    "bookings": "Reservas",
+    "privacy": "Privacidade"
+  },
+
+  "PropertyCardOwner":{
+    "perNight": "por noite",
+    "delete": "Deletar",
+    "update": "Atualizar"
+  },
+
+  "PropertyUpdateModal":{
+    "add": "Adicionar uma nova propriedade",
+    "what": "O quê você quer atualizar?",
+    "update": "Atualizar Propiedade",
+    "images": "Fotos",
+    "guestsAndPricing": "Hóspedes e Preços",
+    "amenities": "Comodidades",
+    "descriptions": "Descriçãoes",
+    "close": "Cerrar"
+  },
+
+  "UpdatePropertyImages":{
+    "currentImages": "Fotos actuais",
+    "delete": "Deletar",
+    "confirm": "Confirmar Alterações"
+  }
+
+}
   

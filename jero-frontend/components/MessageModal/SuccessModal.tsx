@@ -3,7 +3,8 @@ import { Link } from '@/i18n/routing';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import updateStyle from "./updateModalStyle.module.css"
+// import updateStyle from "./updateModalStyle.module.css"
+import updateStyle from "../Profile/ManageProperties/ModalUpdate/updateModalStyle.module.css"
 import { useTranslations } from 'next-intl';
 
 const customStyles = {
@@ -26,8 +27,8 @@ const customStyles = {
 interface Props {
   propertyId: string;
 }
-function ModalUpdate(props : Props) {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+function SuccessModal() {
+  const [modalIsOpen, setIsOpen] = React.useState(true);
   const t = useTranslations('PropertyUpdateModal');
 
   function openModal() {
@@ -45,7 +46,6 @@ function ModalUpdate(props : Props) {
 
   return (
     <div>
-      <button className={`basicButton`}onClick={openModal}>{t('update')}</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -55,13 +55,8 @@ function ModalUpdate(props : Props) {
         contentLabel="Example Modal"
       >        
       <div id={updateStyle.container}>
-        <h1>{t('what')}</h1>
-        <div id={updateStyle.links}>
-        <Link  href={`/profile/update-property/images/${props.propertyId}`}>{t('images')}</Link>
-        <Link  href={`/profile/update-property/guests-and-pricing/${props.propertyId}`}>{t('guestsAndPricing')}</Link>
-        <Link  href={`/profile/update-property/amenities/${props.propertyId}`}>{t('amenities')}</Link>
-        <Link  href={`/profile/update-property/descriptions/${props.propertyId}`}>{t('descriptions')}</Link>
-        </div>
+        <h1>{"Success"}</h1>
+
 
         <button className='basicButton' style={{marginTop : "1em"}} onClick={closeModal}>{t('close')}</button>
         </div>
@@ -70,4 +65,4 @@ function ModalUpdate(props : Props) {
   );
 }
 
-export default ModalUpdate;
+export default SuccessModal;

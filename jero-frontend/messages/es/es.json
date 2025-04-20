@@ -304,7 +304,18 @@
     "show": "Mostar",
     "host":"Anfitrión",
     "noReviews": "No tiene reseñas",
-    "amenities": "Instalaciones"
+    "amenities": "Instalaciones",
+    "healthAndSafety": "Sanidad y Seguridad",
+    "entertainment": "Entretenimiento",
+    "transport": "Transporte",
+    "laundry": "Lavandería",
+    "climateControl": "Control del Clima",
+    "water": "Agua",
+    "beauty": "Belleza",
+    "kitchen":"Cocina",
+    "reviews": "Reseñas",
+    "perNight": "por noche",
+    "total": "total"
   },
 
   "Amenities": {
@@ -377,6 +388,106 @@
 
     "save":"Guardar y ve al próximo paso",
     "update":"Actualizar"
+  },
+
+  "Book":{
+    "price": "Precio",
+    "baseRate": "Precio Base",
+    "additionalCosts": "Costos adicionales de huéspedes",
+    "total": "Total",
+    "book": "Reservar",
+    "youMust": "Debes ser un cliente registrado para reservar"
+  },
+
+  "MobileBook":{
+    "close": "Cierra",
+    "book":"Reservar"
+  },
+
+  "Pay": {
+    "confirm": "Confirma y Reservar",
+    "total": "Total",
+    "adults": "Adultos",
+    "children": "Niños",
+    "pets": "Mascotas",
+    "cardName": "Nombre del Titular",
+    "cardNumber": "Número de Tarjeta",
+    "expiry": "Fecha de Expiración",
+    "back": "Regresa"
+  },
+
+  "Reviews": {
+    "by": "por",
+    "hide": "Ocultar",
+    "show": "Mostar"
+  },
+
+  "SearchResults":{
+    "showing": "Resultados de la búsqueda por"
+  },
+
+  "Overview":{
+    "funFact": "Hecho Divertido",
+    "attractions":"Atracciones",
+    "back": "Volver",
+    "next": "Proximo"
+  },
+
+  "Filters":{
+    "sortBy": "Ordenar por precio",
+    "desc": "Descendiendo",
+    "asc": "Ascendente",
+    "reset": "Borrar"
+  },
+
+  "PropertyCard": {
+    "noTitle":"Sin título",
+    "pricePerNight":"Precio por noche",
+    "total": "total",
+    "extra": "Aumento en precio por persona cada noche",
+    "ratedHigher": "Mejor calificado que",
+    "noReviews":"No tiene reseñas"
+  },
+
+  "NavBarMobile":{
+    "search": "Buscar",
+    "smartSearch":"Búsqueda Inteligente"
+  },
+
+  "ProfileDropdown": {
+    "authentication": "Autenticación",
+    "languages": "Idiomas",
+    "profile":"",
+    "logout": "Cerrar Sesión",
+    "login": "Acceder",
+    "signup": "Registrarse",
+    "manageProfile": "Actualizar Perfil",
+    "manageProperties": "Actualizar Propiedades",
+    "bookings": "Reservas",
+    "privacy": "Privacidad"
+  },
+
+  "PropertyCardOwner":{
+    "perNight": "por noche",
+    "delete": "Borrar",
+    "update": "Actualizar"
+  },
+
+  "PropertyUpdateModal":{
+    "add": "Añadir una nueva propiedad",
+    "what": "Qué quieres actualizar?",
+    "update": "Actualizar Propiedad",
+    "images": "Fotos",
+    "guestsAndPricing": "Precios y Huespedes",
+    "amenities": "Instalaciones",
+    "descriptions": "Descripción",
+    "close": "Cerrar"
+  },
+
+  "UpdatePropertyImages":{
+    "currentImages": "Fotos Actuales",
+    "delete": "Borrar",
+    "confirm": "Confirmar Cambios"
   }
 
 

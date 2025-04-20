@@ -214,14 +214,14 @@ const GeneralProperty = (props : Props) => {
                 expanded.amenitiesExpand
                     &&
                 <div>
-                    <Amenities object={props.propertyAttributes.beauty} amenityName={"🪞 beauty"}  />
-                    <Amenities object={props.propertyAttributes.climateControl} amenityName={"🪭 climate control"}  />
-                    <Amenities object={props.propertyAttributes.entertainment} amenityName={"📺 entertainment"}  />
-                    <Amenities object={props.propertyAttributes.healthAndSafety} amenityName={"🩹 healthAndSafety"}  />
-                    <Amenities object={props.propertyAttributes.kitchen} amenityName={"🍲 kitchen"}  />
-                    <Amenities object={props.propertyAttributes.laundry} amenityName={"🫧 laundry"}  />
-                    <Amenities object={props.propertyAttributes.transport} amenityName={"🚗 transport"}  />
-                    <Amenities object={props.propertyAttributes.water} amenityName={"🚿 water"}  />
+                    <Amenities object={props.propertyAttributes.beauty} amenityName={`🪞 ${t('beauty')}`}  />
+                    <Amenities object={props.propertyAttributes.climateControl} amenityName={`🪭 ${t('climateControl')}`}  />
+                    <Amenities object={props.propertyAttributes.entertainment} amenityName={`📺 ${t('entertainment')}`}  />
+                    <Amenities object={props.propertyAttributes.healthAndSafety} amenityName={`🩹 ${t('healthAndSafety')}`}  />
+                    <Amenities object={props.propertyAttributes.kitchen} amenityName={`🍲 ${t('kitchen')}`}  />
+                    <Amenities object={props.propertyAttributes.laundry} amenityName={`🫧 ${t('laundry')}`}  />
+                    <Amenities object={props.propertyAttributes.transport} amenityName={`🚗 ${t('transport')}`}  />
+                    <Amenities object={props.propertyAttributes.water} amenityName={`🚿 ${t('water')}`}  />
                 </div>
             }
         </div>
@@ -236,7 +236,7 @@ const GeneralProperty = (props : Props) => {
                 </h2>
                 :
 
-                <h2>Reviews</h2>}
+                <h2>{t('reviews')}</h2>}
             
             <button disabled={props.propertyAttributes.reviews === null} id={'reviewsExpand'} className="basicButton" onClick={handleToggleSection}>{expanded.reviewsExpand ? t('hide'): t('show')}</button>
 

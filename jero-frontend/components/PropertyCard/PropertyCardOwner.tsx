@@ -5,11 +5,14 @@ import { Link } from "@/i18n/routing";
 import ModalUpdate from "@/components/Profile/ManageProperties/ModalUpdate/ModalUpdate"
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
+import { useTranslations } from "next-intl";
 interface Props {
     propertyAttribute : PropertyAttribute;
 }
 const PropertyCardOwner = (props : Props) => {
-        const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const t = useTranslations('PropertyCard');
+    const t2 = useTranslations("PropertyCardOwner")
 
      const handleDelete = async (e : any) => {
             e.preventDefault();
@@ -30,14 +33,14 @@ const PropertyCardOwner = (props : Props) => {
         <div 
             className={style.card}>
 
-                <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : "No title" }</h3>
+                <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : t('noTitle') }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
-                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night</strong>
-                <em style={{marginBottom : "0.5em"}}>Extra guest cost per night £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
+                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} {t2('perNight')}</strong>
+                <em style={{marginBottom : "0.5em"}}>{t('extra')} £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
                 <p style={{margin : "0em"}}>{props.propertyAttribute.displayLocation}</p>
-                <p>{props.propertyAttribute.percentile > 0 ? `Rated higher than ${~~props.propertyAttribute.percentile}%` : "No reviews yet" }</p>
+                <p>{props.propertyAttribute.percentile > 0 ? `${t('ratedHigher')} ${~~props.propertyAttribute.percentile}%` : t('noReviews') }</p>
                 <div style={{display : "flex", justifyContent : "center", alignItems: "center"}}>
-                <button onClick={handleDelete} className="basicButton" style={{backgroundColor : "#FF746C", marginRight: "0.5em"}}>Delete</button>
+                <button onClick={handleDelete} className="basicButton" style={{backgroundColor : "#FF746C", marginRight: "0.5em"}}>{t2('delete')}</button>
                 {/* <button style={{marginLeft: "0.5em"}} className="basicButton">Update</button> */}
                 <ModalUpdate propertyId={props.propertyAttribute.id}/>
 

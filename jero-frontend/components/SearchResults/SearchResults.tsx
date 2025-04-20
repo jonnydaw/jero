@@ -8,6 +8,7 @@ import Filters from "./Filters";
 import SearchMap from "../Map/SearchMap";
 import SearchResultsMap from "./SearchResultsMap";
 import Overview from "./Overview/Overview";
+import { useTranslations } from "next-intl";
 
 
 
@@ -26,8 +27,9 @@ import Overview from "./Overview/Overview";
   }
 
 const SearchResults = (props : Props) => {
-  console.log(props.locationOverview.attractions)
+  //console.log(props.locationOverview.attractions)
 
+    const t = useTranslations('')
 
           
     return (
@@ -38,48 +40,6 @@ const SearchResults = (props : Props) => {
 
             <Overview locationOverview={props.locationOverview}/>
             
-            {/* <div className={style.overviewSubsection}>
-              <h3>Fun Fact</h3>
-              <p>{props.locationOverview.overview}</p>
-            </div>
-
-            <div className={style.overviewSubsection}>
-              <h3>Average Temperature (at time of travel)</h3>
-              <p>{props.locationOverview.temp} &deg;C</p>
-            </div>
-
-            <div className={style.overviewSubsection}>
-              <h3>Attractions</h3>
-              <ul id={style.uList}>
-              {props.locationOverview.attractions.map((i: any, index : number) => (
-                <li key={index}>{i}</li> 
-               ))}
-              </ul>
-            </div>
-
-            <div className={style.overviewSubsection}>
-              <h3>Crime Level</h3>
-              <p>{props.locationOverview.crime}</p>
-            </div>
-
-            <div className={style.overviewSubsection}>
-              <h3>Traditional Dishes</h3>
-              <ul>
-              {props.locationOverview.dishes.map((i: any, index : number) => (
-                <li key={index}>{i}</li> 
-               ))}
-              </ul>
-            </div>
-
-            <div className={style.overviewSubsection}>
-              <h3>Costs</h3>
-              <ul>
-              {props.locationOverview.cost.map((i: any, index : number) => (
-                <li key={index}>{i}</li> 
-               ))}
-              </ul>
-            </div> */}
-
           </section>
           <section id={style.filters}>
             <Filters/>

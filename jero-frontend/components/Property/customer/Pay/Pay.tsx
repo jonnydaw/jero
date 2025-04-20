@@ -6,6 +6,7 @@ import styleMobile from "./payMobile.module.css"
 import { GuestCounts } from "@/app/types/types";
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
+import { useTranslations } from "next-intl";
 
 interface Props {
     propertyId : string;
@@ -22,6 +23,8 @@ const Pay = (props : Props) => {
     // if(!props.open){
     //     return null;
     // }
+    const t= useTranslations('Pay');
+
     const style = props.isMobile ? styleMobile : stylePC;
     console.log("id2 " + JSON.stringify(props.propertyId))
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
@@ -50,28 +53,28 @@ const Pay = (props : Props) => {
     return (
         <section id={style.pay}>
 
-            <h1>Confirm and Book</h1>
-            <p>Total: £{props.price}</p>
+            <h1>{t('confirm')}</h1>
+            <p>{t('total')}: £{props.price}</p>
             <p>{props.startDate.toDateString()} - {props.endDate.toDateString()} </p>
-            <p>Adults: {props.guests.adultCount}</p>
-            { props.guests.childCount > 0 && <p>Children: {props.guests.childCount}</p>}
-            { props.guests.petCount > 0 && <p>Pets: {props.guests.petCount}</p>}
+            <p>{t('adults')}: {props.guests.adultCount}</p>
+            { props.guests.childCount > 0 && <p>{t('children')}: {props.guests.childCount}</p>}
+            { props.guests.petCount > 0 && <p>{t('pets')}: {props.guests.petCount}</p>}
             
             <form onSubmit={handleSubmit}>
-                <label htmlFor="cardHolderName">cardHolderName</label>
+                <label htmlFor="cardHolderName">{t('cardName')}</label>
                 <input type="text" name="cardHolderName" id="cardHolderName" />
 
-                <label htmlFor="cardNumber">cardNumber</label>
+                <label htmlFor="cardNumber">{t('cardNumber')}</label>
                 <input type="text" name="cardNumber" id="cardNumber" />
 
-                <label htmlFor="expiry">expiry</label>
+                <label htmlFor="expiry">{t('expiry')}</label>
                 <input type="date" name="expiry" id="expiry" />
                 
                 <label htmlFor="cvv">cvv</label>
                 <input type="text" name="cvv" id="cvv" />
                 <div>
-                <button className="basicButton" onClick={() => props.setOpenPay(false)}>Go Back</button>
-                <button className="basicButton">Confirm and Book</button>
+                <button className="basicButton" onClick={() => props.setOpenPay(false)}>{t('back')}</button>
+                <button className="basicButton">{t('confirm')}</button>
                 </div>
 
             </form>

@@ -26,8 +26,8 @@ const customStyles = {
 interface Props {
   propertyId: string;
 }
-function ModalUpdate(props : Props) {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+function ErrorModal(props : Props) {
+  const [modalIsOpen, setIsOpen] = React.useState(true);
   const t = useTranslations('PropertyUpdateModal');
 
   function openModal() {
@@ -55,13 +55,8 @@ function ModalUpdate(props : Props) {
         contentLabel="Example Modal"
       >        
       <div id={updateStyle.container}>
-        <h1>{t('what')}</h1>
-        <div id={updateStyle.links}>
-        <Link  href={`/profile/update-property/images/${props.propertyId}`}>{t('images')}</Link>
-        <Link  href={`/profile/update-property/guests-and-pricing/${props.propertyId}`}>{t('guestsAndPricing')}</Link>
-        <Link  href={`/profile/update-property/amenities/${props.propertyId}`}>{t('amenities')}</Link>
-        <Link  href={`/profile/update-property/descriptions/${props.propertyId}`}>{t('descriptions')}</Link>
-        </div>
+        <h1>{"Fail"}</h1>
+
 
         <button className='basicButton' style={{marginTop : "1em"}} onClick={closeModal}>{t('close')}</button>
         </div>
@@ -70,4 +65,4 @@ function ModalUpdate(props : Props) {
   );
 }
 
-export default ModalUpdate;
+export default ErrorModal;

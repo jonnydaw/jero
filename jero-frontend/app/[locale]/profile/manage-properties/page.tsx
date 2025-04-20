@@ -1,6 +1,7 @@
 import { inDevEnvironment } from "@/base";
 import ManageProperties from "@/components/Profile/ManageProperties/ManageProperties";
 import { Link } from "@/i18n/routing";
+import { getTranslations } from "next-intl/server";
 import { cookies, headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect"
 
@@ -12,7 +13,7 @@ const page = async () => {
     const {isMobile} = getSelectorsByUserAgent(
         (await headers()).get("user-agent") ?? ""
     )
-
+    const t = await getTranslations('PropertyUpdateModal');
     let dataProperties;
     ;
     try{
@@ -38,12 +39,12 @@ const page = async () => {
             )
           }
 
-    console.log("mange " + JSON.stringify(dataProperties))
+    //console.log("mange " + JSON.stringify(dataProperties))
     
     return (
         <div>
-            <div style={{display : "flex",  alignItems : "center", justifyContent: "center", "margin" : "1em", fontSize:"x-large"}}>
-              <Link  href={`/add-property/step1`}>Add a new property</Link>
+            <div style={{display : "flex",  textAlign: "center", "margin" : "1em", fontSize:"x-large"}}>
+              <Link  href={`/add-property/step1`}>{t('add')}</Link>
               </div>
             <ManageProperties propertyAttributes={dataProperties} isMobile={isMobile}/>
         </div>

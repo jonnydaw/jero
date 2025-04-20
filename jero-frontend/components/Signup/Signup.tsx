@@ -271,7 +271,7 @@ const Signup = () => {
 
     return (
         <div id={style.container}>
-        <div>
+        <div id={style.formContainer}>
         <form noValidate onSubmit={handleSubmit} id={style.form}>
             <h2 style={{fontSize: "larger"}}>{t('fillOut')}</h2>
 

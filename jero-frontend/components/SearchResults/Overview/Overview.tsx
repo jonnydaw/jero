@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import style from "./Overview.module.css"
+import { useTranslations } from "next-intl";
 
 interface Props {
     locationOverview : any
@@ -10,7 +11,8 @@ interface Props {
 const Overview = (props : Props) => {
 
     const [currentTile, setCurrentTile] = useState<number>(0);
-    
+    const t = useTranslations('Overview');
+
     const handleIncrement = (e: any) => {
         e.preventDefault();
         if(currentTile === 5){
@@ -37,12 +39,12 @@ const Overview = (props : Props) => {
                 &&
                 <div id={style.subcontainer}>
                 <div className={style.overviewSubsection}>
-                            <h3>Fun Fact</h3>
+                            <h3>{t('funFact')}</h3>
                             <p>{props.locationOverview.overview}</p>
                             </div>
 
                     <div className={style.overviewSubsection}>
-                    <h3>Attractions</h3>
+                    <h3>{t('attractions')}</h3>
                     <ul id={style.uList}>
                     {props.locationOverview.attractions.map((i: any, index : number) => (
                         <li key={index}>{i}</li> 
@@ -73,8 +75,8 @@ const Overview = (props : Props) => {
             }
             <br />
             <div id={style.buttonArea}>
-                <button className="basicButton" onClick={handleDecrement}>back</button>
-                <button className="basicButton" onClick={handleIncrement}>next</button>
+                <button className="basicButton" onClick={handleDecrement}>{t('back')}</button>
+                <button className="basicButton" onClick={handleIncrement}>{t('next')}</button>
             </div>
         </div>
     )

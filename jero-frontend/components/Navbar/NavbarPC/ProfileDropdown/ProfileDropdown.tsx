@@ -10,6 +10,7 @@ import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import LogoutFakeLink from "./LogoutFakeLink";
 import { internationalKeys } from "./helper";
+import { useTranslations } from "next-intl";
 
 interface Props {
   isLoggedIn : boolean;
@@ -31,25 +32,20 @@ const ProfileDropdown = (props : Props) => {
 
   const style = props.isMobile ? styleMobile : stylePC; 
 
-  //   const parseJWT = (jwtValue : string) => {
-  //     return (JSON.parse(atob(jwtValue.split('.')[1])))
-  //   };
+
     
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const t = useTranslations('ProfileDropdown');
 
     const handleClick = (e : any, value : any) => {
       e.preventDefault();
-      console.log(value)
+      //console.log(value)
       // if(value === "Spanish"){
         // https://stackoverflow.com/questions/47717424/regex-to-remove-first-part-of-pathname
         const reged = pathname.replace(/^\/[\w\d]+\//, `${value}/`);
         console.log(pathname.split("/"))
-       // console.log(reged)
-        //const newPathName = "es/" + pathname.split("/").slice(1).join("/");
-        // console.log(`${reged}?${searchParams.toString()}`)
-        // console.log(searchParams)
        if(searchParams.size !== 0){
-        console.log("sps")
+        //console.log("sps")
         router.push(`/${reged}?${searchParams.toString()}`)
        } else if(pathname.split("/").length === 2){
         console.log(reged)
@@ -68,31 +64,31 @@ const ProfileDropdown = (props : Props) => {
 
 
       if(!props.isLoggedIn){
-        authMap.set("login","Login");
-        authMap.set("signup", "Sign up");
+        authMap.set("login",t('login'));
+        authMap.set("signup", t('signup'));
       }else {
         if(props.isCustomer){
-          profileMap.set("profile/manage-profile", "Manage Profile");
-          profileMap.set("profile/bookings/","Bookings");
-          profileMap.set("analytic-privacy","Privacy");
+          profileMap.set("profile/manage-profile", t('manageProfile'));
+          profileMap.set("profile/bookings/",t('bookings'));
+          profileMap.set("analytic-privacy",t('privacy'));
         }else{
-          profileMap.set("profile/manage-profile", "Manage Profile");
-          profileMap.set("profile/manage-properties","Manage Properties");
-          profileMap.set("profile/bookings","Bookings");
-          profileMap.set("profile/privacy","Privacy");
+          profileMap.set("profile/manage-profile",  t('manageProfile'));
+          profileMap.set("profile/manage-properties", t('manageProperties'));
+          profileMap.set("profile/bookings", t('bookings'));
+          profileMap.set("profile/privacy", t('privacy'));
         }
       }
 
-      const arr : string[] = internationalKeys;
+      // const arr : string[] = internationalKeys;
 
-      arr.map((i) => {
-        console.log(i)
-        internationalMap.set(i,i);
-      })
+      // arr.map((i) => {
+      //   console.log(i)
+      //   internationalMap.set(i,i);
+      // })
       //const expiry : number = parseJWT(jwtValue).exp;
       const authItems = Object.fromEntries(authMap);
       const manageCommonItems = Object.fromEntries(profileMap);
-      const internationItems = Object.fromEntries(internationalMap);
+      const internationItems = {"en": "English", "es": "Español", "br": "Português"};
 
 
     return (
@@ -107,7 +103,7 @@ const ProfileDropdown = (props : Props) => {
 
       <div className={style.dropdownContent}>
         <div key="auth" className={style.authDropdown}>
-          <h3>Authentication</h3>
+          <h3>{t('authentication')}</h3>
           {( Object.keys(authItems).length > 0) ? 
                     Object.entries(authItems).map(([key, value]) => (
                   
@@ -127,7 +123,7 @@ const ProfileDropdown = (props : Props) => {
       <div className={style.authDropdown}>
         
             
-                    <h3>Profile</h3>
+                    <h3>{t('profile')}</h3>
                 
                    { Object.entries(manageCommonItems).map(([key, value]) => (
                       <Link  key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
@@ -139,12 +135,12 @@ const ProfileDropdown = (props : Props) => {
       </div>)
       }
       <div className={style.authDropdown} >
-        <h3>Languages</h3>
+        <h3>{t('languages')}</h3>
           {
             Object.entries(internationItems).map(([key,value]) => (
               // <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
-              <button tabIndex={0} key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,value)}>
-              {key}
+              <button tabIndex={0} key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,key)}>
+              {value}
           </button>
             ))
           }

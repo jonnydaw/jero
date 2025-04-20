@@ -9,9 +9,10 @@
 }
 
 #searchButtonsArea{
+  display: flex;
+  flex-direction: column;
     align-items: center;
     justify-items: center;
-    position: absolute;
     margin: auto;
 }
 
@@ -59,7 +60,7 @@ button 85*/
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  margin: 0 0.5em;
+  margin: 0.5em 0.5em;
 }
 
 #smartSearchButton:before {

@@ -8,6 +8,7 @@ import mobileStyle from "./mobileGeneralBooking.module.css"
 import "react-datepicker/dist/react-datepicker.css";
 import Pay from "../Pay/Pay";
 import { DateTime } from "luxon";
+import { useTranslations } from "next-intl";
 
 interface Props {
     baseCost : number;
@@ -29,13 +30,13 @@ interface Props {
 }
 
 const GeneralBook = (props : Props) => {
-
+    const t = useTranslations('Book')
     const style = props.isMobile ? mobileStyle : pcStyle;
     const [openPay, setOpenPay] = useState<boolean>(false);
     const disabled: string[] = []
-    console.log("can book: " + props.allowedToBook)
-    console.log("startdate " + props.getStartDate);
-    console.log("enddate " + props.getEndDate)
+    // console.log("can book: " + props.allowedToBook)
+    // console.log("startdate " + props.getStartDate);
+    // console.log("enddate " + props.getEndDate)
     if(!props.acceptsChildren){
         props.guestCounts.childCount = 0;
         disabled.push("childCount")
@@ -69,11 +70,11 @@ const GeneralBook = (props : Props) => {
         :
         <form>
         <div>
-        <h4>Price</h4>
-        <p>Base rate - £{props.baseCost}</p>
-        <p>Additional guest costs - £{props.extraCost}
+        <h4>{t('price')}</h4>
+        <p>{t('baseRate')} • £{props.baseCost}</p>
+        <p>{t('additionalCosts')} • £{props.extraCost}
         </p>
-        <strong>Total - £{props.baseCost + props.extraCost}</strong>
+        <strong>{t('total')} • £{props.baseCost + props.extraCost}</strong>
         </div>
 
         <div id={style.dates}>
@@ -110,7 +111,7 @@ const GeneralBook = (props : Props) => {
             max={props.max}
             min={props.min}/>
             
-            <div onClick={() => setOpenPay(true)}><button  disabled={!props.allowedToBook}className={`basicButton`}>{props.allowedToBook ? `Book` : "You must be a registered customer to book"}</button></div>
+            <div tabIndex={0} onClick={() => setOpenPay(true)}><button  disabled={!props.allowedToBook}className={`basicButton`}>{props.allowedToBook ? t('book') : t('youMust')}</button></div>
         </form>
 }
     </section>

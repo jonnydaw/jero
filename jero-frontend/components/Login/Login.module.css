@@ -7,7 +7,6 @@
 
 #form{
     padding: 1.5em;
-    box-shadow: inset;
     font-size: large;
     display: flex;
     flex-direction: column; 
@@ -79,4 +78,19 @@
     margin: none;
     background-color: inherit;
     color: red;
+}
+
+@media only screen and (max-width: 960px) {
+    #formContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+        flex-direction: column;
+    
+    }
+    #form{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+    }
 }
