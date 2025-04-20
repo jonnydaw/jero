@@ -107,13 +107,13 @@ const Signup = () => {
         }
         
         if(formData.firstName.trim().length === 0){
-            errors.firstName = "first name should not be empty"
+            errors.firstName = t('emptyFirstName')
 
         }
 
         if(formData.lastName.trim().length === 0){
             // https://stackoverflow.com/questions/60444100/how-to-update-multiple-state-at-once-using-react-hook-react-js
-            errors.lastName = "last name should not be empty" 
+            errors.lastName = t('emptyLastName') 
 
         }
 
@@ -121,27 +121,27 @@ const Signup = () => {
         const confirmEmailErrors: string[] = []
 
         if(formData.email.trim().length === 0){
-            emailErrors.push("email cannot be empty");
+            emailErrors.push(t('emptyEmail'));
 
         }
 
         if(!isValidEmail(formData.email)){
-            emailErrors.push("invalid email");
+            emailErrors.push(t('invalidEmail'));
 
         }
 
         if(formData.confirmEmail.trim().length === 0){
-            confirmEmailErrors.push("confirm email cannot be empty");
+            confirmEmailErrors.push(t('emptyConfirmEmail'));
 
         }
 
         if(!isValidEmail(formData.confirmEmail)){
-            confirmEmailErrors.push("confirm email is not valid");
+            confirmEmailErrors.push(t('invalidConfirmEmail'));
         }
 
         if(formData.email !== formData.confirmEmail){
-            confirmEmailErrors.push("emails do not match");
-            emailErrors.push("emails do not match");
+            confirmEmailErrors.push(t('emailMismatch'));
+            emailErrors.push(t('emailMismatch'));
         }
 
 
@@ -159,28 +159,28 @@ const Signup = () => {
         const passwordErrors: string[] = []
         const confirmPasswordErrors : string[] = []
         if(formData.password.trim().length === 0){
-            passwordErrors.push("password cannot be empty");
+            passwordErrors.push(t('emptyPassword'));
 
         }
 
         if(!isValidPassword(formData.password)){
-            passwordErrors.push("password is not valid");
+            passwordErrors.push(t('invalidPassword'));
 
         }
 
         if(formData.confirmPassword.trim().length === 0){
-            confirmPasswordErrors.push("confirm password cannot be empty");
+            confirmPasswordErrors.push(t('emptyConfirmPassword'));
 
         }
 
         if(!isValidPassword(formData.confirmPassword)){
-            confirmPasswordErrors.push("confirm password is not valid");
+            confirmPasswordErrors.push(t('invalidConfirmPassword'));
 
         }
 
         if(formData.confirmPassword !== formData.password){
-            confirmPasswordErrors.push("passwords do not match");
-            passwordErrors.push("passwords do not match");
+            confirmPasswordErrors.push(t('passwordMismatch'));
+            passwordErrors.push(t('passwordMismatch'));
         }
 
         if(passwordErrors.length > 0){
@@ -193,19 +193,19 @@ const Signup = () => {
         }
 
         if(formData.roles.trim().length === 0){
-            errors.roles = "Please select an option from below"
+            errors.roles = t('emptyRoles')
         }
 
         const dateErrors: string[] = [];
         if(formData.dob.trim().length === 0 ){
-            dateErrors.push("Please enter a date of birth")
+            dateErrors.push(t('emptyDob'))
         }
 
         if(formData.dob.trim().length > 0){
             console.log("hitdob")
             const dt = DateTime.fromISO(formData.dob).diff(DateTime.fromISO(eighteenYearsAgo)).milliseconds
             if(dt > 0){
-                dateErrors.push("you must be 18 or over to register")
+                dateErrors.push(t('tooYoung'))
             }
         }
 
@@ -261,7 +261,8 @@ const Signup = () => {
             console.log(response.data);
         } catch (error : any) {
             console.log(formData)
-            console.log('Signup failed:', error.response ? error.response.data : error.message);
+            const msg = error.response ? error.response.data : error.message;
+            alert('Signup failed: '+ JSON.stringify(msg.message));
     }}
     else{
         
@@ -272,12 +273,12 @@ const Signup = () => {
         <div id={style.container}>
         <div>
         <form noValidate onSubmit={handleSubmit} id={style.form}>
-            <h2 style={{fontSize: "larger"}}>Please fill out all fields below.</h2>
+            <h2 style={{fontSize: "larger"}}>{t('fillOut')}</h2>
 
 
             <div className={style.inputArea}>
             <div className={style.labelAndError}>
-                <label htmlFor="firstName">firstName</label>
+                <label htmlFor="firstName">{t('firstName')}</label>
                 {formErrors.firstName ? <span className={style.errorMessage}> {formErrors.firstName }</span> : <br/>}
             </div>
 
@@ -297,7 +298,7 @@ const Signup = () => {
 
             <div className={style.inputArea}>
             <div className={style.labelAndError}>
-                <label htmlFor="lastName">firstName</label>
+                <label htmlFor="lastName">{t('lastName')}</label>
                 {formErrors.lastName ? <span className={style.errorMessage}> {formErrors.lastName }</span> : <br/>}
             </div>
             <input
@@ -315,7 +316,7 @@ const Signup = () => {
             <div className={style.inputArea}>
                 
             <div className={style.labelAndError}>
-                <label htmlFor="dob">firstName</label>
+                <label htmlFor="dob">{t('dob')}</label>
                 {formErrors.dob ? <span className={style.errorMessage}> {formErrors.dob }</span> : <br/>}
             </div>
                 <input
@@ -333,7 +334,7 @@ const Signup = () => {
 
             <div className={style.inputArea}>
             <div className={style.labelAndError}>
-                <label htmlFor="email">firstName</label>
+                <label htmlFor="email">{t('email')}</label>
                 {formErrors.email ? <span className={style.errorMessage}> {formErrors.email }</span> : <br/>}
             </div>
             <input
@@ -350,7 +351,7 @@ const Signup = () => {
             
             <div className={style.inputArea}>
             <div className={style.labelAndError}>
-                <label htmlFor="confirmEmail">confirm email</label>
+                <label htmlFor="confirmEmail">{t('confirmEmail')}</label>
                 {formErrors.confirmEmail ? <span className={style.errorMessage}> {formErrors.confirmEmail }</span> : <br/>}
             </div>
                 <input
@@ -369,7 +370,7 @@ const Signup = () => {
             <div className={style.inputArea}>
                 
             <div className={style.labelAndError}>
-                <label htmlFor="password">password</label>
+                <label htmlFor="password">{t('password')}</label>
                 {formErrors.password ? <span className={style.errorMessage}> {formErrors.password }</span> : <br/>}
             </div>
             <input
@@ -388,7 +389,7 @@ const Signup = () => {
             <div className={style.inputArea}>
             
             <div className={style.labelAndError}>
-                <label htmlFor="confirmPassword">confirmpassword</label>
+                <label htmlFor="confirmPassword">{t('confirmPassword')}</label>
                 {formErrors.confirmPassword ? <span className={style.errorMessage}> {formErrors.confirmPassword }</span> : <br/>}
             </div>
                 <input
@@ -407,7 +408,7 @@ const Signup = () => {
             <div className={style.inputArea}>
             
             <div className={style.labelAndError}>
-                <label htmlFor={style.roles}>Roles</label>
+                <label htmlFor={style.roles}>{t('userTypes.placeholder')}</label>
                 {formErrors.roles ? <span className={style.errorMessage}> {formErrors.roles }</span> : <br/>}
             </div>
             <select name="roles"
@@ -426,11 +427,11 @@ const Signup = () => {
             </div>
 
             <button className="basicButton" id={style.button} type="submit">
-                Signup
+            {t('signup')}
             </button>
         </form>
      
-            <h3 id={style.message}>Already have an account? <Link href="/login">Sign in</Link></h3>
+            <h3 id={style.message}>{t('already')} <Link href="/login">{t('login')}</Link></h3>
         </div>
         </div>
     );

@@ -1,0 +1,82 @@
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+
+}
+
+#form{
+    padding: 1.5em;
+    box-shadow: inset;
+    font-size: large;
+    display: flex;
+    flex-direction: column; 
+
+}
+
+
+/* #form input, #form button[type=submit], #form select{
+    background-color: #000;
+    display: block;
+    margin: 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    color:white
+} */
+
+
+#form > input{
+    padding: 0.5em;
+    display: block;
+    margin: 1em;
+    border-radius: 0.5em;
+    max-width: 90%;
+    min-width: 90%;
+}
+
+.labelAndError{
+    display: flex;
+    max-width: 90%;
+    min-width: 90%;
+}
+.errorMessage{
+    color: red;
+    margin-left: auto ;
+    max-width: 50%;
+}
+
+#form *:active, #form *:focus{
+    transform: scale(1.01);
+}
+
+
+#button{
+    display:flex;
+    justify-self: center;
+    align-self: center;
+}
+
+#roles{
+    background-color: transparent;
+}
+
+#button[type=submit]:hover, #roles:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+#message{
+    text-align: center;
+}
+
+.inputArea{
+    padding: 0.75em;
+
+}
+
+.error{
+    padding: none;
+    margin: none;
+    background-color: inherit;
+    color: red;
+}

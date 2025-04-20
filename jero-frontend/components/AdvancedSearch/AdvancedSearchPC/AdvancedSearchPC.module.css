@@ -22,7 +22,6 @@
     border-bottom: solid 0.01em black;
     margin-bottom: 1em;
     padding: 0;
-    line-height: 0;
     display: flex;
     flex-direction: column;
   }
@@ -102,11 +101,14 @@
   .selectItem{
     min-width: 95%;
     display: flex;
-    min-height: 3ch;
     align-items: center;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;    
     padding: 1em;
     margin: 0.5em !important;
+}
+
+.selectItem > label{
+  display: block;
 }
 
 .dateArea{

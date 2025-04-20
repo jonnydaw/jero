@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Cards } from "./Cards";
 import { internationalKeys } from "../Navbar/NavbarPC/ProfileDropdown/helper";
+import { useTranslations } from "next-intl";
 
 interface Props {
     firstName: string;
@@ -12,6 +13,7 @@ interface Props {
 
 export const Profile = (props : Props) => {
     let arr : string[] = props.profileKeys;
+    const t = useTranslations('Profile');
     // arr.push(...internationalKeys);
     
     // const router = useRouter()
@@ -27,16 +29,13 @@ export const Profile = (props : Props) => {
     return (
         <div id={style.mainContainer}>
             <h1>
-                {props.firstName === undefined ? `Loading`: `Hello, ${props.firstName}`}
+                {props.firstName === undefined ? `Loading`: `${t('hi')}, ${props.firstName}`}
             </h1>
-            <h3>Fun stat</h3>
             <div id={style.anotherStupidContainer}>
-            <div id={style.cardContainer}>
+            <div id={style.cardContainer}>  
                 
             {arr.map((item,idx) => (
-                // translations used in future;
-                <Cards key={idx} cardName={item} cardContent={item} cardOnwardLink={item} />            
-
+                <Cards key={idx} ti={idx} cardName={t(item)} cardContent={t(item)} cardOnwardLink={item} />            
             ))
             }
                 

@@ -5,6 +5,7 @@ import ProfileCard from "./ProfileCard";
 import { UpdateFields } from "@/types/types";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
+import { useTranslations } from "next-intl";
 /*
 update name
 update last name
@@ -17,7 +18,8 @@ delete account
 
 const ManageProfile = (props : UpdateFields) => {
 
-        const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
+    const t = useTranslations('ManageProfile');
+    const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     
 
 
@@ -88,7 +90,7 @@ const ManageProfile = (props : UpdateFields) => {
                     onSubmit={handleSubmit}
                     name="firstName"
                     >
-                        <label htmlFor="firstName"> Update First Name
+                        <label htmlFor="firstName">{t('updateFirstName')}
                         </label>
                         <input 
                             type="text" 
@@ -97,7 +99,7 @@ const ManageProfile = (props : UpdateFields) => {
                             value={updateFields.firstName}
                             onChange={handleChange}
                         />
-                        <button className="basicButton">Confirm Change</button>
+                        <button className="basicButton">{t('confirm')}</button>
                     </form>
                 </section>
 
@@ -106,7 +108,7 @@ const ManageProfile = (props : UpdateFields) => {
                             onSubmit={handleSubmit}
                             name="lastName"
                                         >
-                        <label htmlFor="lastName"> Update Last Name
+                        <label htmlFor="lastName"> {t('updateLastName')}
                         </label>
                         <input 
                             type="text" 
@@ -116,7 +118,7 @@ const ManageProfile = (props : UpdateFields) => {
                             onChange={handleChange}
                             />
 
-                        <button className="basicButton">Confirm Change</button>
+                        <button className="basicButton">{t('confirm')}</button>
                     </form>
                 </section>
                 
@@ -126,7 +128,7 @@ const ManageProfile = (props : UpdateFields) => {
                 <form 
                                     onSubmit={handleSubmit}
                                     name="introduction">
-                        <label htmlFor="introduction"> Update Introduction
+                        <label htmlFor="introduction"> {t('updateIntro')}
                         </label>
                         <input 
                             type="text" 
@@ -137,14 +139,15 @@ const ManageProfile = (props : UpdateFields) => {
 
                             />
 
-                        <button className="basicButton">Confirm Change</button>
+                        <button className="basicButton">{t('confirm')}</button>
                     </form>
                 </section>
                 
                 <section className={style.updateSection}>
-                    <form                     onSubmit={handleSubmit}
+                    <form                     
+                    onSubmit={handleSubmit}
                     name="imgLink">
-                        <label htmlFor="imgLink"> Update Profile Photo
+                        <label htmlFor="imgLink">{t('updatePhoto')}
                         </label>
                         <input 
                             type="img" 
@@ -154,12 +157,12 @@ const ManageProfile = (props : UpdateFields) => {
                             onChange={handleChange}
     
                         />
-                        <button className="basicButton">Confirm Change</button>
+                        <button className="basicButton">{t('confirm')}</button>
                     </form>
                 </section>
                                                                                                                                                                 
                 
-                <button onClick={handleDelete} className="basicButton" id={style.delete}>Delete Account</button>
+                <button onClick={handleDelete} className="basicButton" id={style.delete}>{t('delete')}</button>
 
             </div>
         </div>

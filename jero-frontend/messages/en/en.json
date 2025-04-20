@@ -17,6 +17,8 @@
   },
 
   "Signup" : {
+    "welcome": "Welcome",
+    "fillOut": "Please fill out all the fields below",
     "firstName" : "First Name",
     "lastName" : "Last Name",
     "dob": "Date of Birth",
@@ -29,7 +31,26 @@
       "tourist" : "Tourist",
       "host" : "Host",
       "both" : "Tourist & Host"
-    }
+    },
+    "signup": "Signup",
+    "already": "Already have an account?",
+    "login":"Login",
+    "emptyFirstName" : "First name is empty",
+    "emptyLastName": "Last Name is Empty",
+    "emptyEmail": "e-mail is empty",
+    "invalidEmail": "Empty e-mail",
+    "emptyConfirmEmail": "Confirm e-mail is empty",
+    "invalidConfirmEmail": "Confirm e-mail is empty",
+    "emailMismatch": "e-mails do not match",
+    "emptyPassword": "Password is empty",
+    "invalidPassword": "Invalid Password",
+    "emptyConfirmPassword": "Confirm password is empty",
+    "invalidConfirmPassword": "Confirm Password is invalid",
+    "passwordMismatch": "Password do not match",
+    "emptyRoles": "Please choose a role",
+    "emptyDob": "Date of birth is empty",
+    "tooYoung": "Too young"
+
   },
 
   "DropdownCount" : {
@@ -166,6 +187,71 @@
 
     "save":"Thank you for going through all the steps. Click here to add your property.",
     "update":"Update"
+  },
+
+  "SmartSearch": {
+    "when": "When",
+    "who": "Who",
+    "weather" : "Weather When You Travel",
+    "attractions": "Attractions",
+    "locationType": "Holiday Type",
+    "tourismLevels": "Tourism Levels",
+    "gettingAround": "Getting Around",
+    "search": "Search",
+    "start": "Start Date",
+    "end": "End Date",
+    "museums": "Museums",
+    "nightlife": "Nightlife",
+    "architecture": "Architecture",
+    "biodiversity": "Biodiversity",
+    "cuisine": "Cuisinse",
+    "historical": "Historical",
+    "any": "Any",
+    "beach":"Beach",
+    "city": "City",
+    "skiing": "Skiing",
+    "village": "Village",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "car friendly": "Car Friendly",
+    "disabled friendly": "Disable Friendly",
+    "walkable": "Walkable",
+    "bicycle friendly": "Bicycle Friendly",
+    "good public transport": "Good Public Transport"
+  },
+  
+  "Login": {
+    "welcomeBack": "Welcome Back",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": "Don't have an account?",
+    "signup": "Signup",
+    "notAllowed": "Incorrect Credentials"
+  },
+
+  "Otp": {
+    "prompt": "Please enter the 5 digit code we sent from \"jerocommunication\". This code will expire after 15 minutes.",
+    "resend": "Didn't receive an email? Click here to resend",
+    "send": ""
+  },
+
+  "Profile": {
+    "hi": "Hello",
+    "manage-profile": "Update Profile",
+    "bookings": "Bookings",
+    "privacy": "Privacy"
+  },
+
+  "ManageProfile": {
+    "yourInto": "Your Introduction",
+    "updateFirstName": "Update First Name",
+    "updateLastName": "Update Last Name",
+    "updateIntro": "Update Introduction",
+    "updatePhoto": "Update Profile Photo",
+    "confirm": "Update",
+    "delete": "Delete Account"
   }
 
 

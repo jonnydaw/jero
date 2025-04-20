@@ -18,6 +18,8 @@
     },
   
     "Signup" : {
+        "welcome": "Bem-vindo",
+        "fillOut": "Por favor, complete todos os campos abaixo",
         "firstName" : "Nome",
         "lastName" : "Sobrenome",
         "dob": "Data de Nascimento",
@@ -26,11 +28,31 @@
         "password" : "Senha",
         "confirmPassword" : "Confirmar senha",
         "userTypes" : {
-          "placeholder" : "Tipo de usuario",
-          "tourist" : "Turista",
-          "host" : "Anfitrião",
-          "both" : "Turista & Anfitrião"
-        }
+        "placeholder" : "Tipo de usuario",
+        "tourist" : "Turista",
+        "host" : "Anfitrião",
+        "both" : "Turista & Anfitrião"
+        },
+        "signup":"Inscrição",
+        "already": "Já tem uma conta?",
+        "login":"Aceder",
+        "emptyFirstName" : "O primeiro nome está vazio",
+        "emptyLastName": "O sobrenome nome está vazio",
+        "emptyEmail": "e-mail está vazio",
+        "invalidEmail": "e-mail não está válido",
+        "emptyConfirmEmail": "Confirmar e-mail está vazio",
+        "invalidConfirmEmail": "Confirmar e-mail não está válido",
+        "emailMismatch": "e-mail não combinam",
+        "emptyPassword": "Senha está vazio",
+        "invalidPassword": "Senha não está válida",
+        "emptyConfirmPassword": "Confirmar senha está vazio",
+        "invalidConfirmPassword": "Confirmar senha não está válida",
+        "passwordMismatch": "As senhas não combinam",
+        "emptyRoles": "Por favor escolha uma opção",
+        "emptyDob": "Data de Nascimento está vazio ",
+        "tooYoung": "Muito jovem"
+    
+
     },
 
     "DropdownCount" : {
@@ -168,7 +190,74 @@
 
       "save":"Obrigado por passar por todos os passos. Clique aqui para adicionar sua propriedade.",
       "update":"Atualizar"
-    }
+    },
+
+  "SmartSearch": {
+    "when": "Quando",
+    "who": "Quem",
+    "weather" : "Tempo Quando Você Viajar",
+    "attractions": "Atrações",
+    "locationType": "Tipo de Férias",
+    "tourismLevels": "Níveis de Turismo",
+    "gettingAround": "Transporte",
+    "search": "Pesquisar",
+    "start": "Check-in",
+    "end": "Check-out",
+    "museums": "Museos",
+    "nightlife": "Vida Noturna",
+    "architecture": "Arquitetura",
+    "biodiversity": "Biodiversidade",
+    "cuisine": "Boa Comida",
+    "historical": "Histórico",
+    "any": "Qualquer",
+    "beach":"Praia",
+    "city": "Cidade",
+    "skiing": "Esquiar" ,
+    "village": "Aldeia",
+    "low": "Baixo",
+    "medium": "Médio",
+    "high": "Alto",
+    "car friendly": "Boa Infraestrutura Vial",
+    "disabled friendly": "Acessível para Pessoas com Deficiência",
+    "walkable": "Caminhável",
+    "bicycle friendly": "Boa Infraestrutura de Bicicletas",
+    "good public transport": "Bom Transporte Público"
+  },
+  
+  "Login": {
+    "welcomeBack": "Bem-vindo de volta",
+    "login": "Aceder",
+    "email":"E-mail",
+    "password":"Senha",
+    "noAccount": "Você não tem uma conta",
+    "signup": "Inscrição",
+    "notAllowed": "Credenciais Incorretas"
+  },
+
+  "Otp": {
+    "prompt": "Por favor, digite o código de 5 dígitos que enviamos de \"jerocommunication\".Este código expirará após 15 minutos.",
+    "resend": "Não recebeu um e-mail? Clique aqui para reenviar",
+    "send": "Confirmar"
+  },
+
+  "Profile": {
+    "hi": "Olá",
+    "manage-profile": "Atualizar Perfil",
+    "bookings": "Reservas",
+    "privacy": "Privacidade"
+  },
+
+  "ManageProfile": {
+    "yourInto": "O Seu Introdução",
+    "updateFirstName": "Atualizar Nome",
+    "updateLastName": "Atualizar Sobrenome",
+    "updateIntro": "Atualizar Introdução",
+    "updatePhoto": "Atualizar Foto de Perfil",
+    "confirm": "Atualizar",
+    "delete": "Apagar Conta",
+    "noName": "Nome"
+
+  }
 
   }
   

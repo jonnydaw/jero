@@ -7,6 +7,7 @@ import { GuestCounts } from '@/app/types/types'
 import MultiRangeSlider from "multi-range-slider-react";
 import { SiBitly } from 'react-icons/si'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 type Attractions = {
     museums : boolean;
@@ -38,6 +39,7 @@ interface FormData {
 
 export const AdvancedSearchPC = () => {
     const currentDate = new Date().toISOString().split('T')[0];
+    const t = useTranslations('SmartSearch');
 
     const [minEndDate, setMinEndDate] = useState<string>("");
     const router = useRouter();
@@ -166,14 +168,16 @@ const [maxValue, set_maxValue] = useState(26);
                 </fieldset>
             <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>When</h3>
+                <h3>{t('when')}</h3>
                 </div>
                 
                 <div className={`${style.inputContainer} ${style.dateArea}`}>
                 
                 <div className={style.dateInput}>
-                <label htmlFor="startDate">Start Date</label>
+                <label htmlFor="startDate">{t('start')}</label>
                 <input 
+                    required
+                    aria-required
                     id="startDate" 
                     type="date" 
                     name="start" 
@@ -184,8 +188,10 @@ const [maxValue, set_maxValue] = useState(26);
                 </div>
                 
                 <div className={style.dateInput}>
-                <label htmlFor="endDate">End Date</label>
+                <label htmlFor="endDate">{t('end')}</label>
                 <input 
+                    required
+                    aria-required
                     id="endDate" 
                     type="date" 
                     name="end" 
@@ -199,13 +205,13 @@ const [maxValue, set_maxValue] = useState(26);
                 </fieldset>
                 <fieldset className={style.fields} >
                 <div className={style.underlineDiv}>
-                <h3>Who</h3>
+                <h3>{t('who')}</h3>
                 </div>
                 <GuestToggler count={chosenCount} setCount={setChosenCount} disabled={[]} max={999999} min={1}/>
                 </fieldset>
                 <fieldset  className={style.fields} >
                 <div className={style.underlineDiv}>
-                 <h3>Weather at time of travel</h3>
+                 <h3>{t('weather')} (°C)</h3>
                  <MultiRangeSlider
                  id={style.rangeSlider}
                     style={{border : "none", boxShadow : "none"}}
@@ -222,7 +228,7 @@ const [maxValue, set_maxValue] = useState(26);
                     }}/>
                 </div>
                 <div className={style.underlineDiv}>
-                 <h3>Attractions</h3>
+                 <h3>{t('attractions')}</h3>
                  <div className={style.items}>
                     
                     {
@@ -235,7 +241,7 @@ const [maxValue, set_maxValue] = useState(26);
                                     name="attractions"
                                     value={item}
                             />
-                                <label htmlFor={item}>{item}</label>
+                                <label htmlFor={item}>{t(item)}</label>
         
                             </div>
                         ))
@@ -244,7 +250,7 @@ const [maxValue, set_maxValue] = useState(26);
                     </div>
                 </div>
                 <div className={style.underlineDiv}>
-                 <h3>Location type</h3>
+                 <h3>{t('locationType')}</h3>
                     <div className={style.items}>
                     
                     {
@@ -258,7 +264,7 @@ const [maxValue, set_maxValue] = useState(26);
                                     value={item}
                                     checked={formData.holidayType == item}
                             />
-                                <label htmlFor={item}>{item}</label>
+                                <label htmlFor={item}>{t(item)}</label>
         
                             </div>
                         ))
@@ -267,7 +273,7 @@ const [maxValue, set_maxValue] = useState(26);
                     </div>
                 </div>
                 <div className={style.underlineDiv}>
-                 <h3>Tourism Levels</h3>
+                 <h3>{t('tourismLevels')}</h3>
                  <div className={style.items}>
                     
                     {
@@ -281,7 +287,7 @@ const [maxValue, set_maxValue] = useState(26);
                                     value={item}
                                     checked={formData.tourismLevels === item}
                             />
-                                <label htmlFor={item}>{item}</label>
+                                <label htmlFor={item}>{t(item)}</label>
         
                             </div>
                         ))
@@ -289,7 +295,7 @@ const [maxValue, set_maxValue] = useState(26);
                 </div>
                 </div>
                 <div className={style.underlineDiv}>
-                    <h3>Getting around</h3>        
+                    <h3>{t('gettingAround')}</h3>        
                     <div className={style.items}>
                     
                     {
@@ -302,7 +308,7 @@ const [maxValue, set_maxValue] = useState(26);
                                     name="gettingAround"
                                     value={item}
                             />
-                                <label htmlFor={item}>{item}</label>
+                                <label htmlFor={item}>{t(item)}</label>
         
                             </div>
                         ))
@@ -310,7 +316,7 @@ const [maxValue, set_maxValue] = useState(26);
                 </div>        
                 </div>
                 </fieldset>
-                <button  style={{display : "flex", justifySelf:"center"}}className='basicButton'>Search</button>
+                <button  style={{display : "flex", justifySelf:"center"}}className='basicButton'>{t('search')}</button>
                 </form>
             </div>
         </div>
