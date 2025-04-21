@@ -3,7 +3,7 @@ import { Link } from '@/i18n/routing';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import updateStyle from "./updateModalStyle.module.css"
+import updateStyle from "../Profile/ManageProperties/ModalUpdate/updateModalStyle.module.css"
 import { useTranslations } from 'next-intl';
 
 const customStyles = {
