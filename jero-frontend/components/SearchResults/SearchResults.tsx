@@ -9,6 +9,7 @@ import SearchMap from "../Map/SearchMap";
 import SearchResultsMap from "./SearchResultsMap";
 import Overview from "./Overview/Overview";
 import { useTranslations } from "next-intl";
+import { isMobile } from "react-device-detect";
 
 
 
@@ -36,7 +37,7 @@ const SearchResults = (props : Props) => {
         <div id ={!props.isMobile ? style.container : mobileStyle.container}>
            <div id={!props.isMobile ? style.searchResultsArea : mobileStyle.searchResultsArea}>
 
-          <section id={!props.isMobile ? style.locationOverview : mobileStyle.locationOverview}>
+          <section id={style.locationOverview }>
 
             <Overview locationOverview={props.locationOverview}/>
             
@@ -46,9 +47,12 @@ const SearchResults = (props : Props) => {
           </section>
         <Properties propertyAttributes={props.propertyAttributes} locationOverview={props.locationOverview} isMobile={props.isMobile} />
         </div>
-              <div id={style.map}>
+              {
+                !isMobile &&
+                <div id={style.map}>
               <SearchResultsMap propertyAttributes={props.propertyAttributes} />
               </div>
+              }
 
         </div>
     )
