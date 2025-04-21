@@ -83,6 +83,9 @@ const Step5AddDescription = (props: Props) => {
         const transportData = JSON.parse(localStorage.getItem("transport")|| "");
         const waterData = JSON.parse(localStorage.getItem("water")|| "");
 
+        if(addressData === ""){
+
+        }
 
 
         try {
@@ -118,7 +121,7 @@ const Step5AddDescription = (props: Props) => {
                console.log(response.status);
                alert("Property added");
         } catch (error) {
-            
+            console.log(error)
         }
     }
 
