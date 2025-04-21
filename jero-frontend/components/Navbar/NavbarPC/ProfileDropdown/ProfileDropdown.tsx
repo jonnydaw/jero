@@ -96,7 +96,7 @@ const ProfileDropdown = (props : Props) => {
           {
             !props.isMobile 
               &&
-            <Link className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/${locale}/profile`}>
+            <Link className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/profile`}>
             {<CgProfile size = '1.5em' />}
             </Link>
           }
@@ -107,7 +107,7 @@ const ProfileDropdown = (props : Props) => {
           {( Object.keys(authItems).length > 0) ? 
                     Object.entries(authItems).map(([key, value]) => (
                   
-                      <Link key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+                      <Link key={key} className={style.links} href={`/${key}`}>{value}</Link>
                     ))
                   
                     :
@@ -126,7 +126,7 @@ const ProfileDropdown = (props : Props) => {
                     <h3>{t('profile')}</h3>
                 
                    { Object.entries(manageCommonItems).map(([key, value]) => (
-                      <Link  key={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+                      <Link  key={key} className={style.links} href={`/${key}`}>{value}</Link>
                     ))}
                   
                   
@@ -138,7 +138,7 @@ const ProfileDropdown = (props : Props) => {
         <h3>{t('languages')}</h3>
           {
             Object.entries(internationItems).map(([key,value]) => (
-              // <Link key ={key} className={style.links} href={`/${locale}/${key}`}>{value}</Link>
+              // <Link key ={key} className={style.links} href={`/${key}`}>{value}</Link>
               <button tabIndex={0} key={key} id={style.fakeLink} className={style.links} onClick={(e) => handleClick(e,key)}>
               {value}
           </button>
