@@ -50,9 +50,7 @@ const Step5AddDescription = (props: Props) => {
     }
 
 
-    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
-    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault();
         console.log("ov" + JSON.stringify(overview))
@@ -64,11 +62,9 @@ const Step5AddDescription = (props: Props) => {
                     { withCredentials: true}
                 );
                 console.log(response.status);
-                
+                alert("Success")
         } catch (error :any) {
-            const message = error.response ? error.response.data : error.message
-            setErrorMessage( message)
-            setShowErrorModal(true)
+            alert("Connection error")
         }
     }
 
@@ -165,18 +161,14 @@ const Step5AddDescription = (props: Props) => {
                console.log(response.status);
                alert("Property added");
         } catch (error : any) {
-            const message = error.response ? error.response.data : error.message
-            console.log(message)
-            setErrorMessage( message)
-            setShowErrorModal(true)
+          
         }
     }
     }
 
     return (
         <div>
-            {showErrorModal && <ErrorModal key={errorMessage} error={errorMessage}/>}
-            {/* <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1> */}
+            <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1>
             <div id={style.textAreaContainer}>
             <label htmlFor="propertyTitle">{t('propertyTitle')}
                 <textarea

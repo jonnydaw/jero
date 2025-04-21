@@ -1,10 +1,10 @@
-import Link from "next/link"
 import style from "./NavbarPC.module.css"
 import { CiShoppingBasket } from "react-icons/ci";
 import { CgProfile } from "react-icons/cg";
 import { IoHomeOutline } from "react-icons/io5";
 import Search from "../../Search/Search";
 import ProfileDropdown from "./ProfileDropdown/ProfileDropdown";
+import { Link } from "@/i18n/routing";
 // import GroupedButtons from "./GroupedButtons/GroupedButtons";
 
 // https://stackoverflow.com/questions/33949469/using-css-modules-how-do-i-define-more-than-one-style-name
