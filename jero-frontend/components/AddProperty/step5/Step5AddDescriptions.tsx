@@ -6,6 +6,7 @@ import AddPropertyBottomNav from "../AddPropertyBottomNav";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import { useTranslations } from "next-intl";
+import ErrorModal from "@/components/MessageModal/ErrorModal";
 
 interface Props {
     isUpdate: boolean 
@@ -48,9 +49,14 @@ const Step5AddDescription = (props: Props) => {
                 
     }
 
+
+    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault();
         console.log("ov" + JSON.stringify(overview))
+
          try {
             const response = await axios.patch(`${baseApi}/property/update-descriptions/${props.propertyId}`, {
                 newDescriptions : overview
@@ -59,8 +65,10 @@ const Step5AddDescription = (props: Props) => {
                 );
                 console.log(response.status);
                 
-        } catch (error) {
-                    
+        } catch (error :any) {
+            const message = error.response ? error.response.data : error.message
+            setErrorMessage( message)
+            setShowErrorModal(true)
         }
     }
     
@@ -120,13 +128,16 @@ const Step5AddDescription = (props: Props) => {
                localStorage.removeItem("water")
                console.log(response.status);
                alert("Property added");
-        } catch (error) {
-            console.log(error)
+        } catch (error : any) {
+            const message = error.response ? error.response.data : error.message
+            setErrorMessage( message)
+            setShowErrorModal(true)
         }
     }
 
     return (
         <div>
+            {showErrorModal && <ErrorModal error={errorMessage}/>}
             <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1>
             <div id={style.textAreaContainer}>
             <label htmlFor="propertyTitle">{t('propertyTitle')}
@@ -188,4 +199,4 @@ const Step5AddDescription = (props: Props) => {
     )
 }
 
-export default Step5AddDescription
+export default Step5AddDescription;

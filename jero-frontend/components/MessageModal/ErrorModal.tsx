@@ -24,7 +24,7 @@ const customStyles = {
 // // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 // Modal.setAppElement('#yourAppElement');
 interface Props {
-  propertyId: string;
+  error: string;
 }
 function ErrorModal(props : Props) {
   const [modalIsOpen, setIsOpen] = React.useState(true);
@@ -45,7 +45,6 @@ function ErrorModal(props : Props) {
 
   return (
     <div>
-      <button className={`basicButton`}onClick={openModal}>{t('update')}</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -55,7 +54,7 @@ function ErrorModal(props : Props) {
         contentLabel="Example Modal"
       >        
       <div id={updateStyle.container}>
-        <h1>{"Fail"}</h1>
+        <h1>Error {props.error}</h1>
 
 
         <button className='basicButton' style={{marginTop : "1em"}} onClick={closeModal}>{t('close')}</button>
