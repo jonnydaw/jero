@@ -63,7 +63,7 @@
 
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1800px) {
 #dates {
     min-width: 99vw;
     display: flex;
