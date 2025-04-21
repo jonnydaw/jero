@@ -8,6 +8,7 @@
     align-self: flex-start;
     min-width: 33vw;
     padding-top: 5%;
+    max-height: 75vh;
 }
 
 
