@@ -8,7 +8,6 @@
     align-self: flex-start;
     min-width: 33vw;
     padding-top: 5%;
-    max-height: 75vh;
 }
 
 
@@ -65,7 +64,6 @@
 
 @media only screen and (max-width: 1800px) {
 #dates {
-    min-width: 99vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
