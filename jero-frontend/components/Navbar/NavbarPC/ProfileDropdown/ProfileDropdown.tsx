@@ -1,5 +1,5 @@
 'use client'
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import stylePC from "./profiledropdown.module.css"
 import styleMobile from "./mobileProfileDropdown.module.css"
 import buttonStyle from "../NavbarPC.module.css"
