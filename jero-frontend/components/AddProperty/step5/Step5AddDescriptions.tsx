@@ -71,29 +71,65 @@ const Step5AddDescription = (props: Props) => {
             setShowErrorModal(true)
         }
     }
+
+    // const parseOrError = (key: string) => {
+
+    // }
     
     const handleOriginalSubmit = async (e : any) => {
         e.preventDefault();
         // done in case the user leaves still
+        console.log("hi")
+
         localStorage.setItem("overview",JSON.stringify(overview));
 
-        const addressData = JSON.parse(localStorage.getItem("addressAndCoordinates") || "");
-        const beautyData = JSON.parse(localStorage.getItem("beauty") || "");
-        const climateData = JSON.parse(localStorage.getItem("climateControl")|| "");
-        const entertainmentData = JSON.parse(localStorage.getItem("entertainment")|| "");
-        const healthAndSafetyData = JSON.parse(localStorage.getItem("healthAndSafety")|| "");
-        const imagesData = JSON.parse(localStorage.getItem("images")|| "");
-        const kitchenData = JSON.parse(localStorage.getItem("kitchen")|| "");
-        const laundryData = JSON.parse(localStorage.getItem("laundry")|| "");
-        const overviewData = JSON.parse(localStorage.getItem("overview")|| "");
-        console.log(overviewData);
-        const step3Data = JSON.parse(localStorage.getItem("step3")|| "");
-        const transportData = JSON.parse(localStorage.getItem("transport")|| "");
-        const waterData = JSON.parse(localStorage.getItem("water")|| "");
+        const addressData = JSON.parse(localStorage.getItem("addressAndCoordinates") || "{}");
+        console.log("hi")
 
-        if(addressData === ""){
+        const beautyData = JSON.parse(localStorage.getItem("beauty") || "{}");
+        const climateData = JSON.parse(localStorage.getItem("climateControl")|| "{}");
+        const entertainmentData = JSON.parse(localStorage.getItem("entertainment")|| "{}");
+        const healthAndSafetyData = JSON.parse(localStorage.getItem("healthAndSafety")|| "{}");
+        const imagesData = JSON.parse(localStorage.getItem("images")|| "{}");
+        const kitchenData = JSON.parse(localStorage.getItem("kitchen")|| "{}");
+        const laundryData = JSON.parse(localStorage.getItem("laundry")|| "{}");
+        const overviewData = JSON.parse(localStorage.getItem("overview")|| "{}");
+        
+        const step3Data = JSON.parse(localStorage.getItem("step3")|| "{}");
+        const transportData = JSON.parse(localStorage.getItem("transport")|| "{}");
+        const waterData = JSON.parse(localStorage.getItem("water")|| "{}");
+
+        const errors: string[] = [];
+        if(Object.keys(addressData).length === 0){
+            errors.push("Step 1 is incomplete")
 
         }
+
+        if(Object.keys(imagesData).length === 0){
+            errors.push("Step 2 is incomplete")
+
+        }
+
+        if(Object.keys(step3Data).length === 0){
+            errors.push("Step 3 is incomplete")
+
+        }
+
+        if(Object.keys(beautyData).length === 0 || Object.keys(climateData).length === 0 || 
+            Object.keys(entertainmentData).length === 0 || Object.keys(healthAndSafetyData).length === 0 ||
+            Object.keys(kitchenData).length === 0 || Object.keys(laundryData).length === 0 ||
+            Object.keys(waterData).length === 0 || Object.keys(transportData).length === 0){
+            errors.push("Step 4  is incomplete")
+        }
+
+      
+
+        
+   
+        if(errors.length > 0){
+           alert(errors.join(", "))
+        }
+        else{
 
 
         try {
@@ -130,15 +166,17 @@ const Step5AddDescription = (props: Props) => {
                alert("Property added");
         } catch (error : any) {
             const message = error.response ? error.response.data : error.message
+            console.log(message)
             setErrorMessage( message)
             setShowErrorModal(true)
         }
     }
+    }
 
     return (
         <div>
-            {showErrorModal && <ErrorModal error={errorMessage}/>}
-            <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1>
+            {showErrorModal && <ErrorModal key={errorMessage} error={errorMessage}/>}
+            {/* <h1 style={{textAlign: 'center'}}>{props.isUpdate ? t('updateTitle') : t('title')}</h1> */}
             <div id={style.textAreaContainer}>
             <label htmlFor="propertyTitle">{t('propertyTitle')}
                 <textarea

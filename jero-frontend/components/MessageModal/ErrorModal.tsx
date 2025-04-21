@@ -54,7 +54,8 @@ function ErrorModal(props : Props) {
         contentLabel="Example Modal"
       >        
       <div id={updateStyle.container}>
-        <h1>Error {props.error}</h1>
+        <h1>Error </h1>
+        <p>{props.error}</p>
 
 
         <button className='basicButton' style={{marginTop : "1em"}} onClick={closeModal}>{t('close')}</button>
