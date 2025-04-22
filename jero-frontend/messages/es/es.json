@@ -423,7 +423,8 @@
   },
 
   "SearchResults":{
-    "showing": "Resultados de la búsqueda por"
+    "showing": "Resultados de la búsqueda por",
+    "noneFound": "No encontramos ninguna propiedad"
   },
 
   "Overview":{

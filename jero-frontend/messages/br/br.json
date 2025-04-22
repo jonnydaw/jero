@@ -434,7 +434,8 @@
 },
 
   "SearchResults":{
-    "showing": "Resultados de pesquisa para"
+    "showing": "Resultados de pesquisa para",
+    "noneFound": "Não encontramos nenhuma propriedade"
   },
 
   "Overview":{

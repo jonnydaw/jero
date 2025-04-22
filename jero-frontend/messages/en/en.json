@@ -418,7 +418,8 @@
 },
 
   "SearchResults":{
-    "showing": "Search Results For"
+    "showing": "Search Results For",
+    "noneFound": "No properties found"
   },
 
   "Overview":{

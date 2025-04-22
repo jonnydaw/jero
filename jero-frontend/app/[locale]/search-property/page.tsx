@@ -61,10 +61,12 @@ const Page = async ({searchParams} : any) =>{
         }
     }
     
-    if(!dataProperties){
+    // console.log(dataProperties)
+    if(dataProperties.length === 0){
+      // console.log("hit")
       return(
         <div>
-          <h1>No properties found</h1>
+          <h1>{t('noneFound')}</h1>
         </div>
       )
     }
