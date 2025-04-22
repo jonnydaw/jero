@@ -114,3 +114,10 @@ button 85*/
   top: 0;
   border-radius: 10px;
 }
+
+@media (prefers-reduced-motion) {
+  #smartSearchButton:before {
+    background: none;
+
+  }
+}

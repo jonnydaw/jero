@@ -70,7 +70,7 @@ const NavbarMobile = (props: Props) => {
 
 
         
-        <button onClick={handleSmartSearchOnClick} id={style.smartSearchButton}>{t('smartSearch')}</button>
+        <button onClick={handleSmartSearchOnClick} id={style.smartSearchButton} aria-label="Peform a smart search.">{t('smartSearch')}</button>
 
         <button onClick={handleSearchOnClick} className={style.searchButtons} aria-label={openSearch ? "close search" : "open search"}>
           {t('search')}

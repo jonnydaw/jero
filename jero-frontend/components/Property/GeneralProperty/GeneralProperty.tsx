@@ -152,7 +152,7 @@ const GeneralProperty = (props : Props) => {
                 showImage
                 ?
                 <div id={stylePC.imageArea}>
-                <button onClick={handleDecrement}> &larr;</button>
+                <button aria-label="go to previous image" onClick={handleDecrement}> &larr;</button>
                 <figure>
                 <Image
                     src={props.propertyAttributes.images.at(currentImageIdx) || "/vercel.svg"}
@@ -162,7 +162,7 @@ const GeneralProperty = (props : Props) => {
                   />
                   <figcaption>{t('image')} {currentImageIdx + 1} {t('of')} {props.propertyAttributes.images.length}</figcaption>
                   </figure>
-                  <button onClick={handleIncrement}>&rarr;</button>
+                  <button aria-label="go to next image" onClick={handleIncrement}>&rarr;</button>
                 </div>
                 :
                 <div>

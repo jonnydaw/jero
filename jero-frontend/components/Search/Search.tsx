@@ -77,15 +77,7 @@ const Search : React.FC<Props> =  (props : Props) => {
       router.push(`/${locale}/search-property?${params.toString()}`);
     };
 
-    // try {
-    //   console.log("ttry")
-    //   const response = await axios.get("http://localhost:8080/property/search-properties", {
-    //     params : {location : formData.where}
-    //   });
-    //   console.log(response.data)
-    // } catch (error) {
-    //     console.error(error)
-    // }
+
   };
 
 

@@ -40,6 +40,8 @@ const SearchResults = (props : Props) => {
           <section id={style.locationOverview }>
 
             <Overview locationOverview={props.locationOverview}/>
+           
+
             
           </section>
           <section id={style.filters}>
@@ -48,7 +50,7 @@ const SearchResults = (props : Props) => {
         <Properties propertyAttributes={props.propertyAttributes} locationOverview={props.locationOverview} isMobile={props.isMobile} />
         </div>
               {
-                !isMobile &&
+                !props.isMobile &&
                 <div id={style.map}>
               <SearchResultsMap propertyAttributes={props.propertyAttributes} />
               </div>

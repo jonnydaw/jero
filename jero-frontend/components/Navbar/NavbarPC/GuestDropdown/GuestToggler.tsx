@@ -54,6 +54,7 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) =
           <span className={style.textArea}>{jsonToText.get(key)}</span>
           <div className={style.buttonArea}>
             <button
+            aria-label={`decrease ${jsonToText.get(key)} count`}
               type='button'
               className={style.toggleButton}
               onClick={(e) => decrement(e, key)}>
@@ -61,6 +62,7 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) =
             </button>
             <span  key = {key}> {value} </span>
             <button
+            aria-label={`increase ${jsonToText.get(key)} count`}
               type='button'
               className={style.toggleButton}
               onClick={(e) => increment(e, key)}>
