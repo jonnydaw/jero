@@ -43,7 +43,7 @@ const page = async () => {
     
     return (
         <div>
-            <div style={{display : "flex",  textAlign: "center", "margin" : "1em", fontSize:"x-large"}}>
+            <div style={{textAlign: "center", "margin" : "1em", fontSize:"x-large"}}>
               <Link  href={`/add-property/step1`}>{t('add')}</Link>
               </div>
             <ManageProperties propertyAttributes={dataProperties} isMobile={isMobile}/>
