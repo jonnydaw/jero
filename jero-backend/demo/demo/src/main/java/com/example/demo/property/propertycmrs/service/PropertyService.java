@@ -357,12 +357,19 @@ public class PropertyService implements IPropertyService {
 
         }
 
+
         PropertyModel pm = optionalPm.get();
+
+        if(pm.getId().equals(new ObjectId("67f6ae5881ebbd6dc69897e1"))){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPERTY_NOT_FOUND");
+
+        }
+
         
         List<ReviewsType> reviews = new ArrayList<>();
 
         Map<String,List<ReviewsType>> propertyReviews = pm.getReviews();
-        System.out.println("full reviews: "  +  propertyReviews.toString());
+       // System.out.println("full reviews: "  +  propertyReviews.toString());
         
         for(List<ReviewsType> propertyReview : propertyReviews.values()){
             reviews.addAll(propertyReview);

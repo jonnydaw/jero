@@ -182,37 +182,37 @@ public class UserAuthService implements IUserAuthService {
             return authResponse;
         }
 
-        @Override
-        public String buildCookie(String value, String cookieName, int age ){
-            // if local do secure false, comment out domain, sameSite Lax.
-            // if deploing secure true domain("".jero.travel") same site none
-            ResponseCookie cookie = ResponseCookie.from(cookieName, value)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(age) 
-                .sameSite("none")
-                //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
-                .domain(".jero.travel")
-                .build();
-                return cookie.toString();
-        }
-
         // @Override
         // public String buildCookie(String value, String cookieName, int age ){
         //     // if local do secure false, comment out domain, sameSite Lax.
         //     // if deploing secure true domain("".jero.travel") same site none
         //     ResponseCookie cookie = ResponseCookie.from(cookieName, value)
         //         .httpOnly(true)
-        //         .secure(false)
+        //         .secure(true)
         //         .path("/")
         //         .maxAge(age) 
-        //         .sameSite("Lax")
+        //         .sameSite("none")
         //         //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
-        //         //.domain(".jero.travel")
+        //         .domain(".jero.travel")
         //         .build();
         //         return cookie.toString();
         // }
+
+        @Override
+        public String buildCookie(String value, String cookieName, int age ){
+            // if local do secure false, comment out domain, sameSite Lax.
+            // if deploing secure true domain("".jero.travel") same site none
+            ResponseCookie cookie = ResponseCookie.from(cookieName, value)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(age) 
+                .sameSite("Lax")
+                //https://stackoverflow.com/questions/58191969/how-to-fix-set-samesite-cookie-to-none-warning 
+                //.domain(".jero.travel")
+                .build();
+                return cookie.toString();
+        }
         
 // https://www.geeksforgeeks.org/spring-security-login-page-with-react/
         @Override

@@ -24,12 +24,9 @@ import BigCheckbox from "../BigCheckbox";
 import { Link } from "@/i18n/routing";
 import AddPropertyBottomNav from "../AddPropertyBottomNav";
 import { GuestManagement } from "@/types/types";
-import { propagateServerField } from "next/dist/server/lib/render-server";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import { useTranslations } from "next-intl";
-import SuccessModal from "@/components/MessageModal/SuccessModal";
-import { divIcon } from "leaflet";
 
 interface Props {
     isUpdate : boolean;
@@ -236,9 +233,7 @@ const Step3GuestManagement = (props : Props) => {
         router.push(`/${locale}/add-property/step4`);
     }
 
-    const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
-    const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+
     const handleUpdateSubmit = async (e: any) => {
         e.preventDefault(); 
         if(potentialBedProblem()){
@@ -262,17 +257,17 @@ const Step3GuestManagement = (props : Props) => {
                    { withCredentials: true}
                );
                console.log(response.status);
-              setShowSuccessModal(true);
+              alert("Updated");
                
               
         } catch (error) {
-            
+            alert("Property could not be updated")
+
         }
     }
 
     return (
         <div className={style.container}>
-        {showSuccessModal && <SuccessModal/>}
         <h1 className={style.shiftLeft}>{props.isUpdate ? t('titleUpdate') : t("titleNew") }</h1>
         <section className={style.section}>
             <h2>{t('pricing')}</h2>

@@ -156,10 +156,11 @@ const Step4Amenities = (props : Props) => {
                },
                    { withCredentials: true}
                );
-               console.log(response.status);
+               alert("Updated")
                
         } catch (error) {
-            
+            alert("Property could not be updated")
+
         }
     }
 

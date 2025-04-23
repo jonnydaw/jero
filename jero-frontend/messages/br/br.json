@@ -502,6 +502,15 @@
     "currentImages": "Fotos actuais",
     "delete": "Deletar",
     "confirm": "Confirmar Alterações"
+  },
+
+  "Errors":{
+    "cannotDisplay" : "Desculpe, não podemos exibir estes dados no momento",
+    "acceptFailed": "Desculpe você não pode aceptar esta reserva",
+    "PROPERTY_NOT_FOUND": "Não achamos a propriedade",
+    "cancelFailed": "Não podíamos cancelar esta reserva",
+    "bookingFailed": "Você não pode reservar"
+
   }
 
 }

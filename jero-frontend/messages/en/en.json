@@ -485,6 +485,19 @@
     "currentImages": "Current Images",
     "delete": "Delete",
     "confirm": "Confirm Changes"
+  },
+
+  "Errors":{
+    "cannotDisplay" : "Sorry we cannot display this data at the moment",
+    "acceptFailed": "Sorry you cannot accept this booking",
+    "PROPERTY_NOT_FOUND": "We could not find the property",
+    "cancelFailed": "We could not cancel this booking",
+    "bookingFailed": "You cannot book this property"
+
+
+
+
+
   }
 
 }

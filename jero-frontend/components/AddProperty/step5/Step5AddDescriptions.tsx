@@ -62,9 +62,9 @@ const Step5AddDescription = (props: Props) => {
                     { withCredentials: true}
                 );
                 console.log(response.status);
-                alert("Success")
+                alert("Updated")
         } catch (error :any) {
-            alert("Connection error")
+            alert("Property could not be updated")
         }
     }
 
@@ -160,6 +160,7 @@ const Step5AddDescription = (props: Props) => {
                localStorage.removeItem("water")
                console.log(response.status);
                alert("Property added");
+               
         } catch (error : any) {
           
         }
@@ -216,7 +217,7 @@ const Step5AddDescription = (props: Props) => {
         {
             props.isUpdate
             ?
-            <button onClick={handleUpdateSubmit} className="basicButton">{t('save')}</button>
+            <button onClick={handleUpdateSubmit} className="basicButton">{t('update')}</button>
             :
             <AddPropertyBottomNav
             handleSubmitFunction={handleOriginalSubmit} 

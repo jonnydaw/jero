@@ -81,8 +81,8 @@ const Overview = (props : Props) => {
                 &&
                 <div id={style.subcontainer}>
             <div className={style.overviewSubsection}>
-              <h3>Crime Levels (at time of travel)</h3>
-              <p>{props.locationOverview.crime} &deg;C</p>
+              <h3>Crime Levels</h3>
+              <p>{props.locationOverview.crime}</p>
             </div>
 
             <div className={style.overviewSubsection}>

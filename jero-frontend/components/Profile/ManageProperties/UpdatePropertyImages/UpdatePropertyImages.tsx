@@ -39,11 +39,11 @@ const UpdatePropertyImages = (props : Props) => {
                    { withCredentials: true}
                );
                //console.log(response.status);
-               alert("uploaded")
+               alert("Updated")
 
                
         } catch (error) {
-            
+            alert("Property could not be updated")
         }
 
     }

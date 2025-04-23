@@ -21,7 +21,8 @@ interface Props {
 }
 
 const Options = (props : Props) => {
-    const t = useTranslations('Options')
+    const t = useTranslations('Options');
+    const t2 = useTranslations('Errors');
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     const router = useRouter();
     const pathname = usePathname();
@@ -46,8 +47,7 @@ const Options = (props : Props) => {
             console.log(response.data);
         } catch (error : any) {
             console.log(error.response.data.message)
-            alert(`Cancel failed:  ${error.response.data.message}`)
-            //console.log('Login failed:', error.response ? error.response.data : error.message);
+            alert(`${t2('cancelFailed')}:  ${error.response.data.message}`)
         }
     }else alert(t('notCanceled'))
     }
@@ -115,9 +115,7 @@ const Options = (props : Props) => {
                     // location.reload();
                     console.log(response.data);
                 } catch (error : any) {
-                    console.log(error.response.data.message)
-                    alert(`Login failed:  ${error.response.data.message}`)
-                    //console.log('Login failed:', error.response ? error.response.data : error.message);
+                    alert(`${t2('acceptFailed')}:  ${error.response.data.message}`)
                 }
             }
             return(

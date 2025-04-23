@@ -60,10 +60,14 @@ const Review = (props : Props) => {
                },
                    { withCredentials: true}
                );
-               console.log(response.status);
+               alert("Review Added")
 
-        }catch (error){
-            console.error(error);
+        }catch (error :any){
+            if(error.status === 409){
+                alert("Already Reviewed")
+            }else if(error.status === 404){
+                alert("Property deleted")
+            }
         }
     }
 

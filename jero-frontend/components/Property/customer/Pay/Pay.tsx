@@ -24,6 +24,7 @@ const Pay = (props : Props) => {
     //     return null;
     // }
     const t= useTranslations('Pay');
+    const t2 = useTranslations('Errors')
 
     const style = props.isMobile ? styleMobile : stylePC;
     console.log("id2 " + JSON.stringify(props.propertyId))
@@ -43,8 +44,8 @@ const Pay = (props : Props) => {
                    { withCredentials: true}
                );
                console.log(response.status);
-        } catch (error) {
-            
+        } catch (error : any) {
+            alert(t2('bookingFailed') + " " + error.response.data.message)
         }
 
     }
