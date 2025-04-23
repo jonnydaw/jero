@@ -9,8 +9,12 @@
     padding: 1.5em;
     box-shadow: inset;
     font-size: large;
+
 }
 
+#formContainer{
+    max-width: 33vw;
+}
 
 /* #form input, #form button[type=submit], #form select{
     background-color: #000;
@@ -81,7 +85,5 @@
     #formContainer{
         max-width: 100%;
     }
-    #form{
-
-    }
+    
 }

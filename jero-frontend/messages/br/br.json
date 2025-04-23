@@ -50,7 +50,8 @@
         "passwordMismatch": "As senhas não combinam",
         "emptyRoles": "Por favor escolha uma opção",
         "emptyDob": "Data de Nascimento está vazio ",
-        "tooYoung": "Muito jovem"
+        "tooYoung": "Muito jovem",
+        "please": "Crie uma senha com pelo menos 8 caracteres, uma letra especial e um número"
     
 
     },

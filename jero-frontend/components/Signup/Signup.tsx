@@ -273,7 +273,7 @@ const Signup = () => {
         <div id={style.container}>
         <div id={style.formContainer}>
         <form noValidate onSubmit={handleSubmit} id={style.form}>
-            <h2 style={{fontSize: "larger"}}>{t('fillOut')}</h2>
+            <h2 id="instruction" style={{fontSize: "larger", textAlign: "center"}}>{t('fillOut')}</h2>
 
 
             <div className={style.inputArea}>
@@ -285,6 +285,7 @@ const Signup = () => {
             <input
                 required
                 aria-required="true"
+                aria-describedby="instruction"
                 aria-invalid={formErrors.firstName ? true : false}
                 type="text"
                 id="firstName"
@@ -304,6 +305,7 @@ const Signup = () => {
             <input
                 required
                 aria-required="true"
+                aria-describedby="instruction"
                 type="text"
                 id="lastName"
                 name="lastName"
@@ -322,6 +324,7 @@ const Signup = () => {
                 <input
                     required
                     aria-required="true"
+                    aria-describedby="instruction"
                     type="date"
                     id="dob"
                     name="dob"
@@ -340,6 +343,7 @@ const Signup = () => {
             <input
                 required
                 aria-required="true"
+                aria-describedby="instruction"
                 type="email"
                 id="email"
                 name="email"
@@ -353,10 +357,12 @@ const Signup = () => {
             <div className={style.labelAndError}>
                 <label htmlFor="confirmEmail">{t('confirmEmail')}</label>
                 {formErrors.confirmEmail ? <span className={style.errorMessage}> {formErrors.confirmEmail }</span> : <br/>}
+
             </div>
                 <input
                     required
                     aria-required="true"
+                    aria-describedby="instruction"
                     type="email"
                     id="confirmEmail"
                     name="confirmEmail"
@@ -366,16 +372,18 @@ const Signup = () => {
                 />
             </div>
 
+            <p id="passwordMessage" style={{margin: "0em"}}>{t('please')}</p>
 
             <div className={style.inputArea}>
-                
             <div className={style.labelAndError}>
                 <label htmlFor="password">{t('password')}</label>
                 {formErrors.password ? <span className={style.errorMessage}> {formErrors.password }</span> : <br/>}
             </div>
+
             <input
                 aria-required="true"
                 required
+                aria-describedby="instruction passwordMessage"
                 type="password"
                 id="password"
                 minLength={8}
@@ -395,6 +403,7 @@ const Signup = () => {
                 <input
                     required
                     aria-required="true"
+                    aria-describedby="instruction passwordMessage"
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
@@ -414,6 +423,7 @@ const Signup = () => {
             <select name="roles"
                 required
                 aria-required="true"
+                aria-describedby="instruction"
                 id={style.roles}
                 value={formData.roles}
                 onChange={handleChange}
