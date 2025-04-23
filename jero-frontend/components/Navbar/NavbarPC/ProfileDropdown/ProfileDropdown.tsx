@@ -70,7 +70,7 @@ const ProfileDropdown = (props : Props) => {
         if(props.isCustomer){
           profileMap.set("profile/manage-profile", t('manageProfile'));
           profileMap.set("profile/bookings/",t('bookings'));
-          profileMap.set("analytic-privacy",t('privacy'));
+          profileMap.set("profile/privacy",t('privacy'));
         }else{
           profileMap.set("profile/manage-profile",  t('manageProfile'));
           profileMap.set("profile/manage-properties", t('manageProperties'));
