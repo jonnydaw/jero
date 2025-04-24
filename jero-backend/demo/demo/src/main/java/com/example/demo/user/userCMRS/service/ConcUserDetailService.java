@@ -25,7 +25,7 @@ import java.util.ArrayList;
 	
 	 @Override
 	 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { 
-		 UserModel user = userRepository.findByEmail(username); 
+		UserModel user = userRepository.findByEmail(username); 
 		 System.out.println(user); 
 		 if(user==null) {
 			StringBuilder sb = new StringBuilder();

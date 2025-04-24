@@ -31,7 +31,7 @@ public class ApplicationConfig {
 // https://stackoverflow.com/questions/74609057/how-to-fix-spring-authorizerequests-is-deprecated
 // https://stackoverflow.com/questions/74683225/updating-to-spring-security-6-0-replacing-removed-and-deprecated-functionality
 	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ 
 		http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) 
 		.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -84,8 +84,8 @@ public class ApplicationConfig {
 		return http.build(); 
 	} 
 
-	private CorsConfigurationSource corsConfigurationSource() { 
-		return new CorsConfigurationSource() { 
+	private CorsConfigurationSource corsConfigurationSource(){ 
+		return new CorsConfigurationSource(){ 
 			@Override
 			public CorsConfiguration getCorsConfiguration(HttpServletRequest request) { 
 				CorsConfiguration ccfg = new CorsConfiguration(); 
