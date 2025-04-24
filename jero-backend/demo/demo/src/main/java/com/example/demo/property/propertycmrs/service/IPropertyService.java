@@ -12,6 +12,7 @@ import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
+import com.example.demo.property.propertycmrs.DTO.LatLonHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 
@@ -28,6 +29,8 @@ public interface IPropertyService {
         int numPets,
         Optional<String> sort,
         List<PropertyModel> pms );
+    
+    public List<LatLonHandler> getLatLons(List<ObjectId> propertyIds);
 
     public List<Map<String,String>> getPropertiesBySmart(
         Instant startDate, 

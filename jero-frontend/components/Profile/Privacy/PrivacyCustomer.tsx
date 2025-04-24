@@ -4,6 +4,7 @@ import { useState } from "react";
 import style from "./privacy.module.css"
 import { inDevEnvironment } from "@/base";
 import axios from "axios";
+import { useTranslations } from "next-intl";
 
 interface FormData {
     showNameOnReviews : boolean;
@@ -13,6 +14,7 @@ interface FormData {
 
 
 const PrivacyCustomer = (props : FormData) => {
+    const t = useTranslations('Privacy')
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
 
     const [formData, setFormData] = useState<FormData>(
@@ -86,7 +88,7 @@ const PrivacyCustomer = (props : FormData) => {
 
                 <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Booking Privacy</h3>
+                <h3>{t('postBookingProfilePrivacy')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -149,8 +151,9 @@ const PrivacyCustomer = (props : FormData) => {
         
                 </div>
                 </fieldset>
-
+                <div  style={{display: "flex", justifySelf: "center", alignItems: "center"}}>
                 <button className="basicButton">Submit</button>
+                </div>
             </form>
             </div>
         </div>

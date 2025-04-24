@@ -246,7 +246,15 @@
     "hi": "Olá",
     "manage-profile": "Atualizar Perfil",
     "bookings": "Reservas",
-    "privacy": "Privacidade"
+    "privacy": "Privacidade",
+    "manage-properties": "Atualizar Propiedades"
+
+  },
+
+  "Privacy": {
+    "preBookingProfilePrivacy": "Perfil privacidade antes da reservas",
+    "postBookingProfilePrivacy": "Perfil privacidade antes da reservas",
+    "bookingAnalysis": "Análise"
   },
 
   "ManageProfile": {

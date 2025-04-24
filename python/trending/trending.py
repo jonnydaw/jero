@@ -59,18 +59,18 @@ valid_booking_res = booking_col.find(valid_booking_query, property_id_project)
 print(valid_booking_res)
 
 # https://stackoverflow.com/questions/67755157/how-to-get-a-date-a-week-from-now-on-in-python
-week_ago = datetime.now().astimezone() - timedelta(days=7)
-def in_past_week(id):
-  return True
+month_ago = datetime.now().astimezone() - timedelta(days=30)
+def in_past_month(id):
+  ##return True
   # https://pymongo.readthedocs.io/en/stable/api/bson/objectid.html
   #print(id)
   created_at = id.generation_time
 #   print(week_ago)
 #   print(created_at)
-  print(created_at >= week_ago)
-  return (created_at >= week_ago)
+  print(created_at >= month_ago)
+  return (created_at >= month_ago)
 
-valid_property_ids = [x["propertyId"] for x in valid_booking_res if in_past_week(x["_id"])]  
+valid_property_ids = [x["propertyId"] for x in valid_booking_res if in_past_month(x["_id"])]  
 print(valid_property_ids)
 
 id_to_freq = Counter(valid_property_ids)
@@ -80,7 +80,7 @@ print(len(id_to_freq))
 print("**************")
 # print(id_to_freq)
 # https://stackoverflow.com/questions/48606406/find-most-frequent-value-in-python-dictionary-value-with-maximum-count
-if(len(id_to_freq) > 4):
+if(len(id_to_freq) >= 1):
   top_props = [x for x,_ in id_to_freq.most_common(2)]
   bottom_props = [x for x,_ in id_to_freq.most_common()[::-1][ : 2]]
   print(top_props)

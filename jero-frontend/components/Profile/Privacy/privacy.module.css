@@ -46,3 +46,13 @@
 .selectItem > label{
   margin-left: 1em;
 }
+
+@media only screen and (max-width: 960px) {
+  .items{
+    flex-direction: column;
+  }
+
+  .selectItem{
+    width: 95%;
+  }
+}

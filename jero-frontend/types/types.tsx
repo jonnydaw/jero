@@ -122,6 +122,11 @@ export type  ProfileCardInfo = {
         img : string;
 }
 
+export type LatLons = {
+    lat: number;
+    lon: number
+}
+
 export interface PropertyAttributeFull {    
     id : string;
     ownerId : string;

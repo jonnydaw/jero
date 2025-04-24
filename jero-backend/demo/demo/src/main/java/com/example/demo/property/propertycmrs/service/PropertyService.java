@@ -30,6 +30,7 @@ import com.example.demo.locations.locationCMRS.repository.LocationRepository;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
+import com.example.demo.property.propertycmrs.DTO.LatLonHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.model.ReviewsType;
@@ -148,6 +149,33 @@ public class PropertyService implements IPropertyService {
         extracted2(location, locationType, pms, startDate, endDate, numAdults, numChildren, numPets, sort);
       //  System.out.println(pms.get(0).toString());
         return getRes(pms,queriedLocation);
+    }
+
+    @Override
+    public List<LatLonHandler> getLatLons(List<ObjectId> propertyIds){
+        List<LatLonHandler> res = new ArrayList<>();
+        for(int i = 0; i < propertyIds.size(); i++){
+            ObjectId currentId = propertyIds.get(i);
+            if(currentId.equals(new ObjectId("67f6ae5881ebbd6dc69897e1"))){
+                continue;
+            }
+
+            Optional<PropertyModel> optionalProperty = propertyRepo.findById(currentId);
+            if(optionalProperty.isEmpty()){
+                continue;
+
+            }
+            PropertyModel currentProperty = optionalProperty.get();
+
+            LatLonHandler currentLatLon = new LatLonHandler();
+            double latitude = (((double)((int)(currentProperty.getLatitude() *1000.0)))/1000.0);
+            double longitude = (((double)((int)(currentProperty.getLongitude()*1000.0)))/1000.0);   
+            currentLatLon.setLat(latitude);
+            currentLatLon.setLon(longitude);
+            res.add(currentLatLon);
+        }
+
+        return res;
     }
 
 

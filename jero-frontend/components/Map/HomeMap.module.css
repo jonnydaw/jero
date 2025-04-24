@@ -1,0 +1,22 @@
+#container{
+    position: sticky;
+    top: 14vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30vw;
+}
+
+#mapContainer{
+    position: sticky;
+    top: 0;
+    height: 50vh;
+    width: 70vw;
+}
+
+@media screen and (max-width: 992px) {
+    #mapContainer{
+        height: 33vh;
+        width: 80vw;
+    }
+  }

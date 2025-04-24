@@ -243,7 +243,15 @@
     "hi": "Hello",
     "manage-profile": "Update Profile",
     "bookings": "Bookings",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "manage-properties": "Manage Properties"
+
+  },
+
+  "Privacy": {
+    "preBookingProfilePrivacy": "Pre-booking profile privacy",
+    "postBookingProfilePrivacy": "Post-booking profile privacy",
+    "bookingAnalysis": "Booking analysis"
   },
 
   "ManageProfile": {

@@ -1,12 +1,15 @@
 .card{
-    width: 30%;
-    color: white;
-    height: 15em;
-    background-color: pink;
-    margin: 2em 1em;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 1em;
+    padding: 1em;
+    max-height: 20vh;
+    background-color: white;
+    border: 0.01em solid lightgray;
     border-radius: 1em;
-    border: solid black 0.01em;
-    padding: 0.5em;
+    box-shadow: 0 0.1em 0.3em rgba(0,0,0,0.5);
+    min-width: 30vw;
 }
 
 .card:hover{
@@ -17,4 +20,11 @@
 .card:focus{
     transform: scale(1.01);
 
+}
+
+@media only screen and (max-width: 960px) {
+    .card{
+        min-width: 90vw;
+
+    }
 }

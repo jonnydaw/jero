@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBookedHandler;
+import com.example.demo.property.propertycmrs.DTO.LatLonHandler;
 import com.example.demo.property.propertycmrs.DTO.ReviewHandler;
 import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
 import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
@@ -91,6 +93,17 @@ public class PropertyController {
         System.out.println(res.toString());
         return ResponseEntity.ok().body(res);
     }
+
+
+    @GetMapping("/get-lat-lons")
+    public ResponseEntity<?> getLatLons(@RequestParam("bookings") @NotEmpty List<ObjectId> bookings){
+        System.out.println("hit");
+        System.out.println(bookings.toString());
+        List<LatLonHandler> res = propertyService.getLatLons(bookings);
+        return ResponseEntity.ok().body(res);
+
+    }
+
 
     @GetMapping("/smart-search-properties")
     public ResponseEntity<?> getPropertiesFromSmart(@RequestParam("startdate") Optional<String> startDate, 

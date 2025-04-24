@@ -243,7 +243,14 @@
     "hi": "Hola",
     "manage-profile": "Actualizar Perfil",
     "bookings": "Reservas",
-    "privacy": "Privacidad"
+    "privacy": "Privacidad",
+    "manage-properties": "Actualizar Propiedades"
+  },
+
+  "Privacy": {
+    "preBookingProfilePrivacy": "Perfil privacidad antes de una reserva",
+    "postBookingProfilePrivacy": "Perfil privacidad desupues de una reserva",
+    "bookingAnalysis": "Análisis"
   },
 
   "ManageProfile": {
@@ -460,7 +467,7 @@
   "ProfileDropdown": {
     "authentication": "Autenticación",
     "languages": "Idiomas",
-    "profile":"",
+    "profile":"Perfil",
     "logout": "Cerrar Sesión",
     "login": "Acceder",
     "signup": "Registrarse",
