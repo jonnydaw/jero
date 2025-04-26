@@ -62,12 +62,13 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
         criteria.add(dateCriterion);
 
         DBObject loc1 = new BasicDBObject("townId", location);
+        DBObject loc1_5 = new BasicDBObject("neighbourhood", location);
         DBObject loc2 = new BasicDBObject("cityDistrictId", location);
         DBObject loc3 = new BasicDBObject("cityId", location);
         DBObject loc4 = new BasicDBObject("countyId", location);
         DBObject loc5 = new BasicDBObject("stateId", location);
         DBObject loc6 = new BasicDBObject("countryId", location);
-        Criteria locationCriterion = where("$or").is(Arrays.asList(loc1, loc2,loc3,loc4,loc5,loc6));
+        Criteria locationCriterion = where("$or").is(Arrays.asList(loc1, loc1_5 ,loc2,loc3,loc4,loc5,loc6));
         criteria.add(locationCriterion);
 
         DBObject minGuests = BasicDBObjectBuilder.start().push("minGuests").

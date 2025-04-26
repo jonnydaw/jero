@@ -36,6 +36,7 @@ public class PropertyModel {
     private ObjectId ownerId;
 
     private String townId;
+    private String neighbourhood;
     private String cityDistrictId;
     private String cityId;
     private String countyId;

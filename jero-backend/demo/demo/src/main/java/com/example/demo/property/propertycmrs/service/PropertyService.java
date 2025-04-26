@@ -61,6 +61,7 @@ public class PropertyService implements IPropertyService {
         //System.out.println("hi:" + hierarchy.get("city_district"));
         //System.out.println(hierarchy.get("town"));
         pm.setTownId((hierarchy.get("town")));
+        pm.setNeighbourhood(hierarchy.get("neighbourhood"));
         pm.setCityDistrictId((hierarchy.get("city_district")));
         pm.setCityId((hierarchy.get("city")));
         pm.setCountyId((hierarchy.get("county")));
@@ -109,7 +110,7 @@ public class PropertyService implements IPropertyService {
     @Override
     public List<Map<String,String>> getPropertiesByLocation(String queriedLocation, Instant startDate, Instant endDate, int numAdults, int numChildren, int numPets, Optional<String> sort, List<PropertyModel> pms ) {
         LocationModel location  = locationRepository.findLocationById(queriedLocation);
-        //System.out.println("location " + location);
+        System.out.println("location " + location);
         if(location == null){
            
             List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
@@ -633,7 +634,7 @@ public class PropertyService implements IPropertyService {
         Optional<String> sort
     ) {
             pms.addAll(propertyRepo.basicFilter(location.getId(), startDate, endDate, (numAdults + numChildren), numChildren > 0, numPets > 0, sort));
-            //System.out.println(pms);
+            System.out.println("pms " + pms);
         //return pms;
     }
 

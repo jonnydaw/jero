@@ -71,6 +71,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
         Map<String,String> map = new HashMap<>();
         String[] locationOptions = new String[]{
             "town", 
+            "neighbourhood",
             "city_district",
             "city", 
             "county", 

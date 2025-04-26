@@ -293,6 +293,8 @@
   },
   "Property": {
     "noTitle": "No title",
+    "description": "Description",
+    "rules": "Rules",
     "showMap": "Show Map",
     "showImages": "Show Photos",
     "image": "Image",

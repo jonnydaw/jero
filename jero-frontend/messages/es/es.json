@@ -295,6 +295,8 @@
   "Property": {
     "noTitle": "No título",
     "showMap": "Mostar Mapa",
+    "description": "Descripción",
+    "rules": "Reglas",
     "showImages": "Mostrar Fotos",
     "image": "Foto",
     "of": "de",
