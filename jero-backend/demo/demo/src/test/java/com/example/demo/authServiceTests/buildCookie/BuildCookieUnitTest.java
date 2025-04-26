@@ -1,39 +1,17 @@
 package com.example.demo.authServiceTests.buildCookie;
 
-
-
-
-import java.io.StringBufferInputStream;
 import java.text.SimpleDateFormat;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.example.demo.response.AuthResponse;
-import com.example.demo.user.DTO.UserLoginHandler;
-
-import com.example.demo.user.userCMRS.service.ConcUserDetailService;
-import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import com.example.demo.user.userCMRS.service.authentication.UserAuthService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)

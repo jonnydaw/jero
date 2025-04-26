@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.example.demo.user.DTO.UpdateHostPrivacyHandler;
 import com.example.demo.user.DTO.UpdatePrivacyHandler;
-import com.example.demo.user.userCMRS.model.UserModel;
 
 public interface IUserUpdateService {
 

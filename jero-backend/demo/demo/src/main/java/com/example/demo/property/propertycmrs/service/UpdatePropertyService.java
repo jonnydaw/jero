@@ -10,21 +10,18 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.demo.SecurityConfig.jwt.JwtProvider;
 import com.example.demo.booking.bookingCMRS.model.BookingModel;
 import com.example.demo.booking.bookingCMRS.repo.BookingRepo;
-import com.example.demo.booking.bookingCMRS.service.BookingService;
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.property.propertycmrs.DTO.types.AmentiesHandler;
 import com.example.demo.property.propertycmrs.DTO.types.OverviewData;
 import com.example.demo.property.propertycmrs.DTO.types.Step3Data;
 import com.example.demo.property.propertycmrs.model.PropertyModel;
 import com.example.demo.property.propertycmrs.repository.PropertyRepo;
-import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 
 
 @Service

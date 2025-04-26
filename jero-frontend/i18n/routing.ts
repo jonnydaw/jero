@@ -1,3 +1,5 @@
+// https://next-intl.dev/blog/next-intl-3-22
+// https://next-intl.dev/docs/routing
 import {defineRouting} from 'next-intl/routing';
 import {createNavigation} from 'next-intl/navigation';
 

@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication;
 import com.example.demo.user.DTO.UserLoginHandler;
 import com.example.demo.user.DTO.UserSignupHandler;
 import com.example.demo.user.userCMRS.model.RefreshModel;
-import com.example.demo.user.userCMRS.model.UserModel;
 
 public interface IRefreshTokenService {
 

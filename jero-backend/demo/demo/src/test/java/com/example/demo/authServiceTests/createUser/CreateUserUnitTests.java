@@ -5,13 +5,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -19,8 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
@@ -31,7 +25,6 @@ import com.example.demo.user.enumeration.user.UserStatus;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
 import com.example.demo.user.userCMRS.service.ConcUserDetailService;
-import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 import com.example.demo.user.userCMRS.service.authentication.UserAuthService;
 import com.example.demo.validator.signup.AbstractSignupValidator;
 import com.example.demo.validator.signup.EmailMatchValidator;

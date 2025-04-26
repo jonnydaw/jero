@@ -1,5 +1,8 @@
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
+// https://next-intl.dev/docs/usage/configuration
+// https://github.com/amannn/next-intl/issues/545
+// https://phrase.com/blog/posts/next-js-app-router-localization-next-intl/
 // import {notFound} from 'next/navigation';
 // import {routing} from '@/i18n/routing';
 import Navbar from "@/components/Navbar/Navbar";

@@ -1,7 +1,6 @@
 package com.example.demo.property.propertycmrs.model;
 
 import java.time.Instant;
-import java.util.Date;
 
 import lombok.Data;
 import lombok.Getter;

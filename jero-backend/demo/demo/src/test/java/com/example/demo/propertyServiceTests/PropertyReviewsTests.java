@@ -196,7 +196,7 @@ public class PropertyReviewsTests {
 
         pm.setAvgReviewScore(0);
         pm.setPercentile(-1);
-        
+        pm.setId(new ObjectId("67b85d62e8ddf130ce699241"));
         ReviewModel rm = new ReviewModel();
         rm.setScores(new ArrayList<>());
 
@@ -215,7 +215,6 @@ public class PropertyReviewsTests {
             assertNotEquals(oldReviews, pm.getReviews());
             
          }
-
     }
 
     @Test

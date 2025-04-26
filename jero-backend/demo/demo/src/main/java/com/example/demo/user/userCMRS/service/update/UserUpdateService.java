@@ -1,6 +1,5 @@
 package com.example.demo.user.userCMRS.service.update;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +21,6 @@ import com.example.demo.user.DTO.UpdateHostPrivacyHandler;
 import com.example.demo.user.DTO.UpdatePrivacyHandler;
 import com.example.demo.user.userCMRS.model.UserModel;
 import com.example.demo.user.userCMRS.repository.UserRepository;
-import com.example.demo.user.userCMRS.service.authentication.IUserAuthService;
 
 @Service
 public class UserUpdateService  implements IUserUpdateService{

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.booking.DTO.PropertyBooking;
 import com.example.demo.booking.bookingCMRS.service.IBookingService;
 import com.example.demo.property.propertycmrs.DTO.CreatePropertyHandler;
 import com.example.demo.property.propertycmrs.DTO.GetPropertyBasicHandler;
