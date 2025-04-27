@@ -1,9 +1,8 @@
-// testcafe chrome userJourneyTesting/english/search/searchTest.js
+// testcafe chrome userJourneyTesting/english/searchAndBook/searchTest.js
 
 // https://stackoverflow.com/questions/73225773/how-to-do-an-action-if-the-url-contains-testcafe
 import {Selector, ClientFunction} from 'testcafe'
 
-const guestHoverAreaText = Selector(".Dropdown_dropdown__tMINW span");
 const whereInput = Selector('#where');
 const startDate = Selector('#start');
 const endDate = Selector("#end");

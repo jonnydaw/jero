@@ -64,7 +64,7 @@ const extraGuestsCosts = ((guestTotal-1) * Number(props.propertyAttribute.extraG
             >
                 <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : t('noTitle') }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />
-                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night  {bookingLength && `• £ ${basePrice + extraGuestsCosts} ${t('total')}`}</strong>
+                <strong style={{marginTop : "0.5em"}}>£{Number(props.propertyAttribute.pricePerNight)} per night  {bookingLength && `• £${basePrice + extraGuestsCosts} ${t('total')}`}</strong>
                 <em style={{marginBottom : "0.5em"}}>{t('extra')} • £{Number(props.propertyAttribute.extraGuestPriceIncrease)}</em>
                 <p style={{margin : "0em"}}>{props.propertyAttribute.displayLocation}</p>
                 <p>{props.propertyAttribute.percentile > 0 ? `${t('ratedHigher')} ${~~props.propertyAttribute.percentile}%` : t('noReviews') }</p>

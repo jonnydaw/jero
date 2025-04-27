@@ -76,7 +76,6 @@ const GeneralBook = (props : Props) => {
         </p>
         <strong>{t('total')} • £{props.baseCost + props.extraCost}</strong>
         </div>
-
         <div id={style.dates}>
        
         <DatePicker
@@ -102,6 +101,7 @@ const GeneralBook = (props : Props) => {
             calendarClassName={style.customCalendar} 
             />
         </div>
+        <p style={{fontSize: "small", textAlign: "center"}}>{t('minimum')} {props.min} | {t('maximum')} {props.max}</p>
         <GuestToggler count={{
                 adultCount: props.guestCounts.adultCount,
                 childCount: props.guestCounts.childCount,

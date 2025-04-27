@@ -14,7 +14,7 @@ const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.t
 //helpers start
 
 const protectedPages : string[] = ["profile", "booked"];
-const protectedFromNonHost : string[] = ["add-property"];
+const protectedFromNonHost : string[] = ["manage-properties","add-property"];
 const authIngressPages : string[] = ["login","signup"];
 
 
@@ -34,15 +34,14 @@ function isTokenExpired(jwtValue : string) {
 
 export default async function middleware(request: NextRequest) {
     let response = handleI18nRouting(request);
-
-    const [, locale, page, ..._] = request.nextUrl.pathname.split('/');
+    const [, locale, page, nestedPage,..._] = request.nextUrl.pathname.split('/');
     
     if (authIngressPages.includes(page)) {
         console.log(await blockAuthIngress(response, locale))
         return await blockAuthIngress(response, locale);
     }
 
-    if(protectedFromNonHost.includes(page)){
+    if(protectedFromNonHost.includes(page) || protectedFromNonHost.includes(nestedPage)){
         console.log("hit protected from non host")
         return await blockFromNonHost(response, locale);
     }
@@ -80,7 +79,7 @@ const blockFromNonHost = async (response : NextResponse, locale :string) => {
     if((jwtValue && rtValue) && parseJWT(jwtValue).role === "host"){
         return response;
     }
-
+    console.log("hit blockFromNonHost")
     return NextResponse.redirect(`${baseInternal}/${locale}`);
 }
 

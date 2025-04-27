@@ -23,8 +23,11 @@ const Pay = (props : Props) => {
     // if(!props.open){
     //     return null;
     // }
-    const t= useTranslations('Pay');
+    const t = useTranslations('Pay');
     const t2 = useTranslations('Errors')
+
+    const success = t('success');
+    console.log(success)
 
     const style = props.isMobile ? styleMobile : stylePC;
     console.log("id2 " + JSON.stringify(props.propertyId))
@@ -43,7 +46,7 @@ const Pay = (props : Props) => {
                },
                    { withCredentials: true}
                );
-               console.log(response.status);
+               alert(success)
         } catch (error : any) {
             alert(t2('bookingFailed') + " " + error.response.data.message)
         }

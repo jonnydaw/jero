@@ -12,7 +12,6 @@ type Props = {
 }
 
 
-
 const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) => {
   
   const increment = (e: React.MouseEvent,key : string) => {
@@ -54,8 +53,9 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) =
           <span className={style.textArea}>{jsonToText.get(key)}</span>
           <div className={style.buttonArea}>
             <button
-            aria-label={`decrease ${jsonToText.get(key)} count`}
+              aria-label={`decrease ${jsonToText.get(key)} count`}
               type='button'
+              disabled={Object.values(count).reduce((a,b) => a+b,0) <= min}
               className={style.toggleButton}
               onClick={(e) => decrement(e, key)}>
               &#8722;
@@ -64,6 +64,7 @@ const GuestToggler : React.FC<Props> = ({count, setCount, disabled, min, max}) =
             <button
             aria-label={`increase ${jsonToText.get(key)} count`}
               type='button'
+              disabled={Object.values(count).reduce((a,b) => a+b,0) >= max}
               className={style.toggleButton}
               onClick={(e) => increment(e, key)}>
               &#43;

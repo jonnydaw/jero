@@ -408,7 +408,9 @@
     "additionalCosts": "Additional Guest Costs",
     "total": "Total",
     "book": "Book",
-    "youMust": "You must be a registered customer to book"
+    "youMust": "You must be a registered customer to book",
+    "minimum": "Minimum Guest Count:",
+    "maximum": "Maximum Guest Count:"
   },
 
   "MobileBook":{
@@ -425,7 +427,9 @@
     "cardName": "Cardholder Name",
     "cardNumber": "Card Number",
     "expiry": "Expiry Date",
-    "back": "Go Back"
+    "back": "Go Back",
+    "success": "Booking request sent. The status of your booking can be seen on your bookings page"
+
 },
 
   "SearchResults":{

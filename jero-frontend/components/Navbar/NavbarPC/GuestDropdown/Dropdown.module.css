@@ -72,6 +72,16 @@ div .toggles:not(:last-child){
   color: white;
 }
 
+.toggleButton:disabled{
+background-color: lightgray;
+}
+
+.toggleButton:disabled:hover{
+  cursor:not-allowed;
+}
+
+
+
 .toggleButton:focus-visible{
   background-color: rgb(55, 52, 230)
 }

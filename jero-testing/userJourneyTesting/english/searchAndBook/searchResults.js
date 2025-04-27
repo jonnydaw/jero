@@ -1,4 +1,4 @@
-// testcafe chrome userJourneyTesting/english/search/searchResults.js
+// testcafe chrome userJourneyTesting/english/searchAndBook/searchResults.js
 
 import {Selector, ClientFunction} from 'testcafe'
 
@@ -11,6 +11,7 @@ const nextButton = Selector('#Overview_buttonArea__2IcaN button').withText('Next
 
 const overviewContainerTitleZero = Selector('#Overview_container__KR_P_ h3').nth(0);
 const overviewContainerTitleOne = Selector('#Overview_container__KR_P_ h3').nth(1);
+const propertyCardLocation = Selector('.searchresults_propertyArea___jEsj > div > p');
 
 const propertySection = Selector('.searchresults_propertyArea___jEsj');
 
@@ -128,3 +129,17 @@ test('Verify Ascending and Descending work as intended', async t => {
         }
 })
 
+test('Verify Property Contains London at some point', async t => {
+    await t
+        .maximizeWindow()
+        .wait(1000)
+
+        .click(startDate)
+        .typeText(startDate, "2025-12-23")
+        .click(endDate)
+        .typeText(endDate,"2025-12-25" )
+        .typeText(whereInput, "london")
+
+        .click(searchButton)
+        .expect(propertyCardLocation.textContent).contains("London");
+});

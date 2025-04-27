@@ -407,7 +407,9 @@
     "additionalCosts": "Costos adicionales de huéspedes",
     "total": "Total",
     "book": "Reservar",
-    "youMust": "Debes ser un cliente registrado para reservar"
+    "youMust": "Debes ser un cliente registrado para reservar",
+    "minimum": "Cantidad Mínima de Huéspedes",
+    "maximum": "Cantidad Máximo de Huéspedes"
   },
 
   "MobileBook":{
@@ -424,7 +426,9 @@
     "cardName": "Nombre del Titular",
     "cardNumber": "Número de Tarjeta",
     "expiry": "Fecha de Expiración",
-    "back": "Regresa"
+    "back": "Regresa",
+    "success": "Solicitud de reserva enviada. Se puede ver el estado en su página de reservas"
+
   },
 
   "Reviews": {
