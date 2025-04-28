@@ -131,8 +131,9 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
     if(cookie){
         response.cookies.set("JWT", cookie, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            domain: ".jero.travel",
+            sameSite: "none",
             maxAge: 1800,
             path: "/",
         });
