@@ -147,7 +147,7 @@ const Step1AddProperty = () => {
         <div id={style.container}>
                 <Map position={[chosen?.lat || 0, chosen?.lon || 0]} zoom={zoom} isCircle={false}/>
                 <form id={style.formSearch} onSubmit={handleSubmit}>
-                    <input onChange={handleChange}type="text" placeholder={t('placeholder')} value={formData}/>
+                    <input aria-label='enter the address of your property' onChange={handleChange}type="text" placeholder={t('placeholder')} value={formData}/>
                     <button>{t('search')}</button>
                 </form>
             

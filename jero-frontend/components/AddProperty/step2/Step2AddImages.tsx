@@ -98,7 +98,7 @@ export default function Step2AddImages(props : Props) {
                     type="file" 
                     required
                     accept="image/png,image/jpeg" />
-                <label htmlFor="file" className={style.fileLabel}>{t('upload')}</label>
+                <label tabIndex={0} htmlFor="file" className={style.fileLabel}>{t('upload')}</label>
             </div>
         </form>
         </div>
