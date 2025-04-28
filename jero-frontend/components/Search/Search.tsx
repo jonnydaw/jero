@@ -139,7 +139,7 @@ const Search : React.FC<Props> =  (props : Props) => {
         setCount={setCount}
       />
 
-      <button type="submit" className={props.isMobileSearch ? styleMobile.button : style.button}>
+      <button aria-label="search for properties" type="submit" className={props.isMobileSearch ? styleMobile.button : style.button}>
           <CiSearch />
       </button>
       </form>

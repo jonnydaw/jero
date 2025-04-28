@@ -97,7 +97,11 @@ public class UserAuthController {
 		String id = JwtProvider.getIdFromJwtToken(JWT);
 		refreshTokenService.checkRefreshToken(id, refresh, rm);
 		userAuthService.deleteUserPrecursor(JWT);
-		return ResponseEntity.ok().body("Account deleted");
+		String jwtCookie = userAuthService.buildCookie("","JWT", 0);
+		String rtCookie = userAuthService.buildCookie("","RT", 0);
+		return ResponseEntity.ok()
+		.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
+		.body("Account deleted");
 	}
 
 	@PostMapping("/verify_otp")
