@@ -60,12 +60,14 @@
     }
     
     .fileLabel:focus  {
-      outline: 2px solid transparent;
-      outline-offset: 2px;
+      transform: 1.03;
+      border: solid black 0.01em;
+  
     }
     
     .fileLabel:focus-visible{
       box-shadow: none;
+      transform: 1.03;
     }
     
     .fileLabel:active{

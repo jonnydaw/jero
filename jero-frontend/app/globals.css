@@ -13,7 +13,7 @@ body {
 * {
   box-sizing: border-box;
 }
-
+/* // https://getcssscan.com/css-buttons-examples */
 .basicButton{
   align-self: center;    
     background-color: #FAF9F6;
