@@ -134,7 +134,7 @@ const refreshAccess = async (response : NextResponse, locale: string, page : str
             secure: true,
             domain: ".jero.travel",
             sameSite: "none",
-            maxAge: 1800,
+            maxAge: 86_400,
             path: "/",
         });
     }
