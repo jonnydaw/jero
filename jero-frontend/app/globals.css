@@ -38,6 +38,7 @@ body {
   
   .basicButton:focus  {
     transform: 1.03;
+    border: solid black 0.01em;
 
   }
   
