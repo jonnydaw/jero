@@ -251,7 +251,17 @@
   "Privacy": {
     "preBookingProfilePrivacy": "Pre-booking profile privacy",
     "postBookingProfilePrivacy": "Post-booking profile privacy",
-    "bookingAnalysis": "Booking analysis"
+    "bookingAnalysis": "Booking analysis",
+    "reviewPrivacy": "Review Privacy",
+    "doNotshowProfileOnPropertyPage": "Do Not Show My Profile On Property Page",
+    "showProfileOnPropertyPage": "Do Not Show My Profile On Property Page",
+    "doNotshowProfileAfterBooking": "Do Not Show My Profile After a Booking",
+    "showProfileAfterBooking": "Show My Profile After a Booking",
+    "doNotallowAnalysisOnBookings": "Do Not Allow Analysis On My Bookings",
+    "allowAnalysisOnBookings": "Allow Analysis On My Bookings",
+    "showNameOnReviews": "Show My Name On Reviews",
+    "doNotshowNameOnReviews": "Do Not Show My Name On Reviews",
+    "save": "Save"
   },
 
   "ManageProfile": {

@@ -56,7 +56,7 @@ const PrivacyCustomer = (props : FormData) => {
             <form onSubmit={handleSubmit}>
             <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Review Privacy</h3>
+                <h3>{t('reviewPrivacy')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -68,7 +68,7 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.showNameOnReviews}
                             />
-                                <label htmlFor={"doNotshowNameOnReviews"}>{"Dont show name on reviews"}</label>
+                                <label htmlFor={"doNotshowNameOnReviews"}>{t('doNotshowNameOnReviews')}</label>
                                 </div>
                                 <div className={style.selectItem}>
                             <input 
@@ -79,7 +79,7 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.showNameOnReviews}
                             />
-                            <label htmlFor={"showNameOnReviews"}>{"showNameOnReviews"}</label>
+                            <label htmlFor={"showNameOnReviews"}>{t('showNameOnReviews')}</label>
                             </div>
                             
         
@@ -100,7 +100,7 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.showProfileAfterBooking}
                             />
-                                <label htmlFor={"doNotshowProfileAfterBooking"}>{"Dont show profile after booking"}</label>
+                                <label htmlFor={"doNotshowProfileAfterBooking"}>{t('doNotshowProfileAfterBooking')}</label>
                                 </div>
 
                                 <div className={style.selectItem}>
@@ -112,7 +112,7 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.showProfileAfterBooking}
                             />
-                            <label htmlFor={"showProfileAfterBooking"}>{"showProfileAfterBooking"}</label>
+                            <label htmlFor={"showProfileAfterBooking"}>{t('showProfileAfterBooking')}</label>
                             </div>
                             
         
@@ -121,7 +121,7 @@ const PrivacyCustomer = (props : FormData) => {
                
                 <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Booking Analysis</h3>
+                <h3>{t('bookingAnalysis')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -133,7 +133,7 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.allowAnalysisOnBookings}
                             />
-                                <label htmlFor={"doNotshowProfileAfterBooking"}>{"Dont allow booking analysis"}</label>
+                                <label htmlFor={"doNotallowAnalysisOnBookings"}>{t('doNotallowAnalysisOnBookings')}</label>
                                 </div>
 
                                 <div className={style.selectItem}>
@@ -145,14 +145,14 @@ const PrivacyCustomer = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.allowAnalysisOnBookings}
                             />
-                            <label htmlFor={"allowAnalysisOnBookings"}>{"allowAnalysisOnBookings"}</label>
+                            <label htmlFor={"allowAnalysisOnBookings"}>{t('allowAnalysisOnBookings')}</label>
                             </div>
                             
         
                 </div>
                 </fieldset>
                 <div  style={{display: "flex", justifySelf: "center", alignItems: "center"}}>
-                <button className="basicButton">Submit</button>
+                <button className="basicButton">{t('save')}</button>
                 </div>
             </form>
             </div>

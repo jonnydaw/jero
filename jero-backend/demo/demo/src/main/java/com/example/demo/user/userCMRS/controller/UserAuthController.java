@@ -109,6 +109,7 @@ public class UserAuthController {
 		authResponse = userAuthService.buildAuthResponse(newToken, "OTP verified",authResponse);
 		String jwtCookie = userAuthService.buildCookie(newToken,"JWT", 3600);
 		return ResponseEntity.ok()
+		//https://stackoverflow.com/questions/24642508/spring-inserting-cookies-in-a-rest-call-response
 			.header(HttpHeaders.SET_COOKIE, jwtCookie)
 			.body(authResponse);
 	}
@@ -130,11 +131,11 @@ public class UserAuthController {
 		UserModel um = userRepository.findByEmail(user.getUsername());
 		String token = userAuthService.provideJWTCookie(authentication, um.getId().toHexString()); 
 		authResponse = userAuthService.buildAuthResponse(token, "Login success", authResponse);
-		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600);
+		String jwtCookie = userAuthService.buildCookie(token, "JWT", 3600*24);
 		
 		String rt = refreshTokenService.createRefreshToken();
 		refreshTokenService.saveRefreshToken(user, rt, rm);
-		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
+		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600*24);
 		//refreshTokenService.saveRefreshToken(user, token);
 
 		return ResponseEntity.ok()
@@ -155,8 +156,9 @@ public class UserAuthController {
 		String token = userAuthService.provideJWTCookie(auth, id);
 		authResponse = userAuthService.buildAuthResponse(token, "Refresh success", authResponse); 
 		String jwtCookie = userAuthService.buildCookie(token,"JWT", 3600);
+		String rtCookie = userAuthService.buildCookie(rt, "RT", 3600);
 		return ResponseEntity.ok()
-			.header(HttpHeaders.SET_COOKIE, jwtCookie)
+			.header(HttpHeaders.SET_COOKIE, jwtCookie, HttpHeaders.SET_COOKIE, rtCookie)
 			.body(authResponse);
 	} 
 

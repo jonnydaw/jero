@@ -4,6 +4,7 @@ import { useState } from "react";
 import style from "./privacy.module.css"
 import { inDevEnvironment } from "@/base";
 import axios from "axios";
+import { useTranslations } from "next-intl";
 
 interface FormData {
     showProfileOnPropertyPage : boolean;
@@ -14,7 +15,7 @@ interface FormData {
 
 const PrivacyHost = (props : FormData) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
-
+    const t = useTranslations('Privacy');
     const [formData, setFormData] = useState<FormData>(
         {
         showProfileOnPropertyPage: props.showProfileOnPropertyPage,
@@ -54,7 +55,7 @@ const PrivacyHost = (props : FormData) => {
             <form onSubmit={handleSubmit}>
             <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Property Privacy</h3>
+                <h3>{t('preBookingProfilePrivacy')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -66,7 +67,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.showProfileOnPropertyPage}
                             />
-                                <label htmlFor={"doNotshowProfileOnPropertyPage"}>{"doNotshowProfileOnPropertyPage"}</label>
+                                <label htmlFor={"doNotshowProfileOnPropertyPage"}>{t('doNotshowProfileOnPropertyPage')}</label>
                                 </div>
                                 <div className={style.selectItem}>
                             <input 
@@ -77,7 +78,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.showProfileOnPropertyPage}
                             />
-                            <label htmlFor={"showProfileOnPropertyPage"}>{"showProfileOnPropertyPage"}</label>
+                            <label htmlFor={"showProfileOnPropertyPage"}>{t('showProfileOnPropertyPage')}</label>
                             </div>
                             
         
@@ -86,7 +87,7 @@ const PrivacyHost = (props : FormData) => {
 
                 <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Booking Privacy</h3>
+                <h3>{t('postBookingProfilePrivacy')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -98,7 +99,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.showProfileAfterBooking}
                             />
-                                <label htmlFor={"doNotshowProfileAfterBooking"}>{"Dont show profile after booking"}</label>
+                                <label htmlFor={"doNotshowProfileAfterBooking"}>{t('doNotshowProfileAfterBooking')}</label>
                                 </div>
 
                                 <div className={style.selectItem}>
@@ -110,7 +111,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.showProfileAfterBooking}
                             />
-                            <label htmlFor={"showProfileAfterBooking"}>{"showProfileAfterBooking"}</label>
+                            <label htmlFor={"showProfileAfterBooking"}>{t('showProfileAfterBooking')}</label>
                             </div>
                             
         
@@ -119,7 +120,7 @@ const PrivacyHost = (props : FormData) => {
                
                 <fieldset className={style.fields}>
                 <div className={style.underlineDiv}>
-                <h3>Booking Analysis</h3>
+                <h3>{t('bookingAnalysis')}</h3>
                 </div>
                     <div className={style.items}>
                         <div className={style.selectItem}>
@@ -131,7 +132,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"false"}
                                     checked={!formData.allowAnalysisOnBookings}
                             />
-                                <label htmlFor={"doNotshowProfileAfterBooking"}>{"Dont allow booking analysis"}</label>
+                                <label htmlFor={"doNotallowAnalysisOnBookings"}>{t('doNotallowAnalysisOnBookings')}</label>
                                 </div>
 
                                 <div className={style.selectItem}>
@@ -143,7 +144,7 @@ const PrivacyHost = (props : FormData) => {
                                     value={"true"}
                                     checked={formData.allowAnalysisOnBookings}
                             />
-                            <label htmlFor={"allowAnalysisOnBookings"}>{"allowAnalysisOnBookings"}</label>
+                            <label htmlFor={"allowAnalysisOnBookings"}>{t('allowAnalysisOnBookings')}</label>
                             </div>
                             
         

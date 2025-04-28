@@ -250,7 +250,18 @@
   "Privacy": {
     "preBookingProfilePrivacy": "Perfil privacidad antes de una reserva",
     "postBookingProfilePrivacy": "Perfil privacidad desupues de una reserva",
-    "bookingAnalysis": "Análisis"
+    "bookingAnalysis": "Análisis",
+    "reviewPrivacy": "Privacidad de Reseñas",
+    "doNotshowProfileOnPropertyPage": "Ocultar perfil en la página de mis propiedades",
+    "showProfileOnPropertyPage": "Mostrar perfil en la página de propiedad",
+    "doNotshowProfileAfterBooking": "Ocultar perfil después de una reserva",
+    "showProfileAfterBooking": "Mostar perfil después de una reserva",
+    "doNotallowAnalysisOnBookings": "No doy permiso para que mis reservas puedan ser analizadas",
+    "allowAnalysisOnBookings": "Doy permiso para que mis reservas puedan ser analizadas",
+    "showNameOnReviews": "Mostrar mi nombre en mis reseñas",
+    "doNotshowNameOnReviews": "Ocultar mi nombre en mis reservas",
+    "save": "Guardar"
+
   },
 
   "ManageProfile": {
