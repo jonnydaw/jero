@@ -47,7 +47,7 @@ const ManageProfile = (props : UpdateFields) => {
 
     const handleDelete = async (e : any) => {
         e.preventDefault();
-        if(!confirm("delete")){
+        if(!confirm(t('youSure'))){
             return;
         }
         try {
@@ -55,7 +55,7 @@ const ManageProfile = (props : UpdateFields) => {
                 { withCredentials: true}
             );
             console.log("hi" + response.data);
-            alert("account deleted")
+            alert(t('accountDeleted'))
         } catch (error : any) {
             console.log(error)
             //onsole.log('Login failed:', error.response ? error.response.data : error.message);

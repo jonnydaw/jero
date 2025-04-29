@@ -272,7 +272,9 @@
     "updatePhoto": "Actualizar Foto de Perfil",
     "confirm": "Actualizar",
     "delete": "Borrar Cuenta",
-    "noName": "Nombre"
+    "noName": "Nombre",
+    "youSure": "Estás seguro de que quieres borrar su perfil",
+    "accountDeleted": "Perfil borrado"
   },
 
   "Bookings": {

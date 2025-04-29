@@ -279,7 +279,9 @@
     "updatePhoto": "Atualizar Foto de Perfil",
     "confirm": "Atualizar",
     "delete": "Apagar Conta",
-    "noName": "Nome"
+    "noName": "Nome",
+    "youSure": "Você tem certeza de que quer apagar o seu perfil",
+    "accountDeleted": "Conta Apagada"
 
   },
 

@@ -271,7 +271,10 @@
     "updateIntro": "Update Introduction",
     "updatePhoto": "Update Profile Photo",
     "confirm": "Update",
-    "delete": "Delete Account"
+    "delete": "Delete Account",
+    "noName": "Name",
+    "youSure": "Are you sure you want to delete your profile",
+    "accountDeleted": "Account deleted"
   },
 
   "Bookings": {
