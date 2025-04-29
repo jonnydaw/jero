@@ -4,14 +4,15 @@ import style from "./GenericSearchMobile.module.css"
 import Search from "@/components/Search/Search"
 import AdvancedSearchMobile from "@/components/AdvancedSearch/AdvanceSearchMobile/AdvancedSearchMobile"
 import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 interface Props {
     setOpen : Dispatch<SetStateAction<boolean>>
     //searchComponent : React.FC;
     isAdvanced : boolean
 }
 
-export const DropdownSearch = async (props : Props) => {
-    const t = await getTranslations('SearchBar')
+export const DropdownSearch = (props : Props) => {
+    const t =  useTranslations('SearchBar')
     const handleClose = (e : any) => {
         props.setOpen(false);
     }
