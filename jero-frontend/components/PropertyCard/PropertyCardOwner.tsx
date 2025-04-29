@@ -16,7 +16,7 @@ const PropertyCardOwner = (props : Props) => {
 
      const handleDelete = async (e : any) => {
             e.preventDefault();
-            if(!confirm(t('youSure'))){
+            if(!confirm(t2('youSure'))){
                 return;
             }
             try {
@@ -24,7 +24,7 @@ const PropertyCardOwner = (props : Props) => {
                     { withCredentials: true}
                 );
                 console.log("hi" + response.data);
-                alert(t('deleted'))
+                alert(t2('propertyDeleted'))
                 location.reload();
 
             } catch (error : any) {
