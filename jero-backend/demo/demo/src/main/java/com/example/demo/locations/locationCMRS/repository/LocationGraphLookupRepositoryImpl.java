@@ -1,20 +1,10 @@
 package com.example.demo.locations.locationCMRS.repository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.GraphLookupOperation;
-import org.springframework.data.mongodb.core.aggregation.MatchOperation;
-
-import org.springframework.data.mongodb.core.query.Criteria;
-
 import com.example.demo.locations.locationCMRS.model.LocationModel;
-import com.sun.jdi.Location;
 
 
 
@@ -35,10 +25,7 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
         if(location == null){
             return newVersion;
         }
-        // String id = location.getId();
-        // String parent = location.getParent();
-        // String locationType = location.getLocationType();
-        //System.out.println(location.getId());
+
         int count = 0;
         while(location != null && location.getParent() != null){
             newVersion.put(location.getLocationType(), location.getId());
@@ -53,9 +40,6 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
             newVersion.put(location.getLocationType(), location.getId());
         }
 
-        //System.out.println("newVersion " + newVersion.toString());
-
-       // Map<String,String> map = new HashMap<>();
         String[] locationOptions = new String[]{
             "town", 
             "neighbourhood",
@@ -71,14 +55,6 @@ public class LocationGraphLookupRepositoryImpl implements LocationGraphLookupRep
             }
         }
 
-        // map.put(results.getFirst().getLocationType(), results.getFirst().getId());
-        // for(LocationModel he : subList){
-        //     map.put(he.getLocationType(), he.getId());
-
-        // }
-        // System.out.println("****************");
-        // System.out.println("results" + );
-        //System.out.println("old version " + map.toString());
         return newVersion;
     }
     

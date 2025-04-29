@@ -91,14 +91,12 @@ public class SearchTests {
         List<PropertyModel> pms = new ArrayList<>();
         when(locationRepository.findLocationById(location)).thenReturn(null);
         when(locationRepository.findFallbacks(location)).thenReturn(null);
-        when(locationRepository.ignoreAccents(location)).thenReturn(null);
          Throwable exception = assertThrows(ResponseStatusException.class, 
         () -> propertyService.getPropertiesByLocation(location, start, end, 1, 1, 1 ,sort, pms));
         assertEquals("404 NOT_FOUND \"LOCATION_NOT_FOUND\"", exception.getMessage());
 
         // https://stackoverflow.com/questions/9841623/mockito-how-to-verify-method-was-called-on-an-object-created-within-a-method
         verify(locationRepository, times(1)).findFallbacks(location);
-        verify(locationRepository, times(1)).ignoreAccents(location);
     }
 
     @Test

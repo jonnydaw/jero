@@ -114,18 +114,9 @@ public class PropertyService implements IPropertyService {
         if(location == null){
            
             List<String> fallbacks =(locationRepository.findFallbacks(queriedLocation));
-            // System.out.println(fallbacks.toString());
+            //System.out.println("fallbacks " + fallbacks.toString());
             if(fallbacks == null || fallbacks.size() == 0){
-                System.out.println("hello");
-                List<String> locationWithAccent = locationRepository.ignoreAccents(queriedLocation);
-                if(locationWithAccent != null && locationWithAccent.size() > 0){
-                    location = locationRepository.findLocationById(locationWithAccent.getFirst());
-                    System.out.println(location);
-                    if(location == null){
-                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");
-                    }
-                    return getPropertiesByLocation(locationWithAccent.getFirst(), startDate, endDate, numAdults, numChildren, numPets, sort, pms);
-                }
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "LOCATION_NOT_FOUND");   
             } else{
                 String longestAndPotentiallyMostLikelyToBeHigherUpInTheHierarchy = "";
                 for(String fallback : fallbacks){
