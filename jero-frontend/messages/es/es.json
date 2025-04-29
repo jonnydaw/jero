@@ -290,6 +290,13 @@
     "pets": "Mascotas"
   },
 
+  "ReviewsPage": {
+    "rating": "Estrelals",
+    "reviewTitle": "Título",
+    "reviewDescriptions": "Descripción",
+    "submit": "Enviar"
+  },
+
   "Options": {
     "cancelQuestion": "¿Estás seguro de que quieres cancelar",
     "cancelMessage": "Cancelado",

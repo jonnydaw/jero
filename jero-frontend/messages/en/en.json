@@ -289,6 +289,13 @@
     "pets": "Pets"
   },
 
+  "ReviewsPage": {
+    "rating": "Stars",
+    "reviewTitle": "Review Title",
+    "reviewDescriptions": "Description",
+    "submit": "Submit"
+  },
+
   "Options": {
     "cancelQuestion": "Are you sure you want to cancel?",
     "cancelMessage": "Cancelled",

@@ -312,6 +312,13 @@
 
   },
 
+  "ReviewsPage": {
+    "rating": "Estrelas",
+    "reviewTitle": "Título",
+    "reviewDescriptions": "Descrição",
+    "submit": "Enviar"
+  },
+
   "Property": {
     "noTitle": "",
     "showMap": "Mostrar Mapa",

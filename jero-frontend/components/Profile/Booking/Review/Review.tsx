@@ -6,6 +6,7 @@ import { GoStarFill } from "react-icons/go";
 import axios from "axios";
 import { inDevEnvironment } from "@/base";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface Props {
     propertyId : string;
@@ -22,6 +23,7 @@ const Review = (props : Props) => {
     const baseApi = inDevEnvironment ? "http://localhost:8080" : "https://api.jero.travel";
     // const pathname = usePathname();
     // const id = (pathname.split("/").at(-1));
+    const t = useTranslations('ReviewsPage')
     const [review, setReview] = useState<Review>({
         score : 5,
         title : "",
@@ -73,72 +75,164 @@ const Review = (props : Props) => {
 
     return (
         <div id={style.container}>
+        <h1>{t('rating')}</h1>
             <div id={style.stars}>
 
-            <span onClick={(e) => clickStar(e, 0)}> 
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 0);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 0)}
+                aria-label="1 out of 10"
+                > 
                 {starRating[0] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
            
-            <span onClick={(e) => clickStar(e, 1)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 1);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 1)}
+                aria-label="2 out of 10"
+                >
                 {starRating[1] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
            
-            <span onClick={(e) => clickStar(e, 2)}>
+            <span 
+                tabIndex={0} 
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 2);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 2)}
+                aria-label="3 out of 10"
+                >
                 {starRating[2] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
             
-            <span onClick={(e) => clickStar(e, 3)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 3);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 3)}
+                aria-label="4 out of 10"
+                >
                 {starRating[3] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
             
-            <span onClick={(e) => clickStar(e, 4)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 4);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 4)}
+                aria-label="5 out of 10"
+                >
                 {starRating[4] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
             
-            <span onClick={(e) => clickStar(e, 5)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 5);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 5)}
+                aria-label="6 out of 10"
+                >
                 {starRating[5] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
             
-            <span onClick={(e) => clickStar(e, 6)}>
+            <span 
+                tabIndex={0} 
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 6);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 6)}
+                aria-label="7 out of 10"
+                >
                 {starRating[6] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
             
-            <span onClick={(e) => clickStar(e, 7)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 7);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 7)}
+                aria-label="8 out of 10"
+                >
                 {starRating[7] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
 
-            <span onClick={(e) => clickStar(e, 8)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 8);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 8)}
+                aria-label="9 out of 10"
+                >
                 {starRating[8] ? <GoStarFill fill="gold"/> : <GoStarFill/>}</span>
             
-            <span onClick={(e) => clickStar(e, 9)}>
+            <span 
+                tabIndex={0}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      clickStar(e, 9);
+                    }
+                }}
+                onClick={(e) => clickStar(e, 9)}
+                aria-label="10 out of 10"
+                >
                 {starRating[9] ? <GoStarFill fill="gold"/> : <GoStarFill/>}
             </span>
-
             </div>
             
 
         <div id={style.textAreaContainer}>
-            <label htmlFor="propertyTitle"> Review Title
+            <label htmlFor="propertyTitle">{t('reviewTitle')}
                 <textarea
-                placeholder="Title of your choice. e.g. Modern, 2 bedroom apartment in a quiet neighbourhood. Perfect for weekend trips, or long stays."
                 name="title"
                 rows={3} 
                 id="title" 
+                required
+                aria-required
                 value={review.title}
                 onChange={handleChange} />
             </label>
             
-            <label htmlFor="propertyTitle"> Review Description
+            <label htmlFor="propertyTitle">{t('reviewDescriptions')}
                 <textarea
-                placeholder="A more detailed insight into your stay."
                 name="body" 
                 id="body" 
                 rows={6}
+                required
+                aria-required
                 value={review.body}
                 onChange={handleChange} />
             </label>
 
-            <button onClick={handleSubmit}className="basicButton">Submit</button>
+            <button onClick={handleSubmit}className="basicButton">{t('submit')}</button>
             </div>
         </div>
     )
