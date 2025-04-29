@@ -61,6 +61,7 @@ const extraGuestsCosts = ((guestTotal-1) * Number(props.propertyAttribute.extraG
             className={style.card}
             onClick={handleClick}
             onKeyDown={handleEnter}
+            role="link"
             >
                 <h3>{props.propertyAttribute.title.length > 0 ? props.propertyAttribute.title : t('noTitle') }</h3>
                 <img src={props.propertyAttribute.mainImage} alt="Main Property Image" />

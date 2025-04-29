@@ -168,7 +168,7 @@ const Step1AddProperty = () => {
 
                     </div>
                 ))}
-                <button>{t('save')}</button>
+                <button className='basicButton'>{t('save')}</button>
                 </form>
             </>    
              }

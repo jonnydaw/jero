@@ -100,6 +100,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           type="text"
           name="where"
+          aria-label='where do you want to go'
           id="where"
           required={true}
           // https://stackoverflow.com/questions/69633526/oninvalid-attribute-not-rendering-in-react-js
@@ -112,6 +113,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           className={props.isMobileSearch ? styleMobile.inputs : style.inputs}
           type="date"
           name="start"
+          aria-label='start date'
           id="start"
           required={true}
           
@@ -126,6 +128,7 @@ const Search : React.FC<Props> =  (props : Props) => {
           type="date"
           name="end"
           id="end"
+          aria-label='end date'
           required={true}
 
           value={formData.end}

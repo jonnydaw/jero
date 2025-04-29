@@ -1,6 +1,9 @@
 {
     "HomePage" : {
-    "about": "Saber mais"
+      "ourLocations":"Nossos destinos",
+    "youBeen": "Onde você visitou",
+    "earnings": "Ganhos Totais",
+    "guests": "Hóspedes Totais"
   },
   
     "SearchBar": {
@@ -14,7 +17,9 @@
       },
       "where": "Onde você vai",
       "when" : "Quando?",
-      "guests" : "Hóspedes"
+      "guests" : "Hóspedes",
+      "close": "Fechar"
+
     },
   
     "Signup" : {

@@ -1,6 +1,9 @@
 {
   "HomePage": {
-    "about": "Go to the about page"
+    "ourLocations":"Nuestros destinos",
+    "youBeen": "Qué lugares has conocido",
+    "earnings": "Ganancias",
+    "guests": "Huespedes"
   },
   "SearchBar": {
     "smartSearch": "Not sure where you want to go to? Try our smart search feature",
@@ -13,7 +16,8 @@
               },
     "where": "Where to?",
     "when" : "When?",
-    "guests" : "Guests"
+    "guests" : "Guests",
+    "close": "Close"
   },
 
   "Signup" : {

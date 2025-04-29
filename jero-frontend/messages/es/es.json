@@ -1,6 +1,9 @@
 {
   "HomePage" : {
-  "about": "aprende mas"
+  "ourLocations":"",
+  "youBeen": "",
+  "earnings": "",
+  "guests": ""
 },
 
   "SearchBar": {
@@ -14,7 +17,9 @@
     },
     "where": "a donde vas",
     "when" : "Cuando?",
-    "guests" : "Huespedes"
+    "guests" : "Huespedes",
+    "close": "Cierra"
+
   },
 
   "Signup" : {

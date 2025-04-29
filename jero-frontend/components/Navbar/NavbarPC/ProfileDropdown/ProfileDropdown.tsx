@@ -96,7 +96,7 @@ const ProfileDropdown = (props : Props) => {
           {
             !props.isMobile 
               &&
-            <Link className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/profile`}>
+            <Link aria-haspopup="menu" aria-label="go to profile" className={`${buttonStyle.links} ${buttonStyle.button}`} href={`/profile`}>
             {<CgProfile size = '1.5em' />}
             </Link>
           }
