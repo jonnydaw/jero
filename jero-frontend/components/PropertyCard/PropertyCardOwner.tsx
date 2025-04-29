@@ -16,12 +16,15 @@ const PropertyCardOwner = (props : Props) => {
 
      const handleDelete = async (e : any) => {
             e.preventDefault();
+            if(!confirm(t('youSure'))){
+                return;
+            }
             try {
                 const response = await axios.delete(`${baseApi}/property/delete-property/${props.propertyAttribute.id}`,
                     { withCredentials: true}
                 );
                 console.log("hi" + response.data);
-                alert("property deleted")
+                alert(t('deleted'))
                 location.reload();
 
             } catch (error : any) {

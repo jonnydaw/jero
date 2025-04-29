@@ -506,7 +506,9 @@
   "PropertyCardOwner":{
     "perNight": "por noche",
     "delete": "Borrar",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "youSure": "Estás seguro de que quieres borrar esta propiedad",
+    "propertyDeleted": "propiedad borrada"
   },
 
   "PropertyUpdateModal":{

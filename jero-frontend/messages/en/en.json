@@ -501,7 +501,9 @@
   "PropertyCardOwner":{
     "perNight": "per night",
     "delete": "Delete",
-    "update": "Update"
+    "update": "Update",
+    "youSure": "Are you sure you want to delete this property",
+    "propertyDeleted": "Property deleted"
   },
 
   "PropertyUpdateModal":{

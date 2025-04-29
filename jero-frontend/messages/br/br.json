@@ -520,7 +520,9 @@
   "PropertyCardOwner":{
     "perNight": "por noite",
     "delete": "Deletar",
-    "update": "Atualizar"
+    "update": "Atualizar",
+    "youSure": "Você tem certeza de que quer apagar esta propiedade",
+    "propertyDeleted": "Propiedade Apagada"
   },
 
   "PropertyUpdateModal":{
