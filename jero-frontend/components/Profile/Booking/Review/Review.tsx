@@ -80,6 +80,7 @@ const Review = (props : Props) => {
 
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 0);
@@ -93,6 +94,7 @@ const Review = (props : Props) => {
            
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 1);
@@ -106,6 +108,7 @@ const Review = (props : Props) => {
            
             <span 
                 tabIndex={0} 
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 2);
@@ -119,6 +122,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 3);
@@ -132,6 +136,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 4);
@@ -145,6 +150,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 5);
@@ -158,6 +164,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0} 
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 6);
@@ -171,6 +178,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 7);
@@ -184,6 +192,7 @@ const Review = (props : Props) => {
 
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 8);
@@ -196,6 +205,7 @@ const Review = (props : Props) => {
             
             <span 
                 tabIndex={0}
+                role='button'
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       clickStar(e, 9);
