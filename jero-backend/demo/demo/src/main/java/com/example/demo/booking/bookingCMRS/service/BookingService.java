@@ -254,6 +254,14 @@ public class BookingService implements IBookingService {
         }
 
     }
+    @Override
+    public void deletedPropertyBooking(String jwt, List<BookingModel> bookings ){
+        for(BookingModel booking : bookings){
+            booking.setPropertyId(new ObjectId("67f6ae5881ebbd6dc69897e1"));
+        }
+        bookingRepo.saveAll(bookings);
+    }
+
 
 
     

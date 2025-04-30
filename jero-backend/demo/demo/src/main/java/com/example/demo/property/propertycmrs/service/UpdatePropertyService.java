@@ -128,8 +128,8 @@ public class UpdatePropertyService implements IUpdatePropertyService{
 
         List<BookingModel> combinedBookings = Stream.concat(bookings.get("past").stream(), bookings.get("future").stream())
         .collect(Collectors.toList());
-
-        bookingService.handleDeletedUserBooking(token, combinedBookings);
+      //  System.out.println("hit here urgent");
+        bookingService.deletedPropertyBooking(token, combinedBookings);
         propertyService.handlePropertiesDeletion(property);
           
 

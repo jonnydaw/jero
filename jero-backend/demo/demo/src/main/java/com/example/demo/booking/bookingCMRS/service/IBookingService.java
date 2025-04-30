@@ -19,4 +19,6 @@ public interface IBookingService {
     public void verifyUser(String token, String bookingID);
 
     public void handleDeletedUserBooking(String jwt, List<BookingModel> bookings );
+
+    public void deletedPropertyBooking(String jwt, List<BookingModel> bookings );
 }

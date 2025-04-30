@@ -21,6 +21,7 @@ public interface LocationRepository extends MongoRepository<LocationModel, Strin
 	// https://www.mongodb.com/docs/atlas/atlas-search/tutorial/run-query/
 	// https://www.mongodb.com/docs/manual/reference/operator/query/text/
 	// https://www.mongodb.com/docs/manual/tutorial/text-search-in-aggregation/
+	// https://stackoverflow.com/questions/10610131/checking-if-a-field-contains-a-string
 	@Aggregation(pipeline = { 
 		"{'$match': {'$text': {'$search': ?0}}}",
 		"{'$project': { '_id': 1 } }",
@@ -28,13 +29,4 @@ public interface LocationRepository extends MongoRepository<LocationModel, Strin
 
 	})
     public List<String> findFallbacks(String undeterminedLocation);
-
-
-	// @Aggregation(pipeline = {
-	// 	"{ '$match': {'$text' : {'$search' : ?0, '$diacriticSensitive' : false}} }",
-	// 	"{'$project': { '_id': 1 } }",
-	// 	"{ '$limit' : 1 }"
-	// })
-	// public List<String> ignoreAccents(String undeterminedLocation);
-
 } 
