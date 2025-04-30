@@ -147,6 +147,7 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
             Criteria holidayTypeDbCriterion = where("$and").is(Arrays.asList(holidayTypeDb));
             locCriteria.add(holidayTypeDbCriterion);
         }
+        
         System.out.println(tourismLevels);
         if(tourismLevels != null && !tourismLevels.equals("any") ){
             DBObject tourismLevelsDb = new BasicDBObject("tourismLevels", tourismLevels);
