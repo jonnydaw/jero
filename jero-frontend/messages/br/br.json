@@ -224,11 +224,11 @@
     "low": "Baixo",
     "medium": "Médio",
     "high": "Alto",
-    "car friendly": "Boa Infraestrutura Vial",
-    "disabled friendly": "Acessível para Pessoas com Deficiência",
+    "carFriendly": "Boa Infraestrutura Vial",
+    "disabledFriendly": "Acessível para Pessoas com Deficiência",
     "walkable": "Caminhável",
-    "bicycle friendly": "Boa Infraestrutura de Bicicletas",
-    "good public transport": "Bom Transporte Público"
+    "bicycleFriendly": "Boa Infraestrutura de Bicicletas",
+    "goodPublicTransport": "Bom Transporte Público"
   },
   
   "Login": {

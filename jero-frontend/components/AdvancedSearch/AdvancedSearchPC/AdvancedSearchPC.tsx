@@ -86,11 +86,11 @@ export const AdvancedSearchPC = () => {
     ];
 
     const gettingAroundOptions : string[] = [
-        "car friendly",
-        "disabled friendly",
+        "carFriendly",
+        "disabledFriendly",
         "walkable",
-        "bicycle friendly",
-        "good public transport"
+        "bicycleFriendly",
+        "goodPublicTransport"
     ]
 
     const handleChange = (e: any) => {

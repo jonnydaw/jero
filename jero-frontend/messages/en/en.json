@@ -220,11 +220,11 @@
     "low": "Low",
     "medium": "Medium",
     "high": "High",
-    "car friendly": "Car Friendly",
-    "disabled friendly": "Disable Friendly",
+    "carFriendly": "Car Friendly",
+    "disabledFriendly": "Disable Friendly",
     "walkable": "Walkable",
-    "bicycle friendly": "Bicycle Friendly",
-    "good public transport": "Good Public Transport"
+    "bicycleFriendly": "Bicycle Friendly",
+    "goodPublicTransport": "Good Public Transport"
   },
   
   "Login": {
