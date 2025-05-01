@@ -177,6 +177,8 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
 
         DBObject loc1 = BasicDBObjectBuilder.start().push("townId").
         add("$in",locationIds).get();
+        DBObject loc1_5 = BasicDBObjectBuilder.start().push("neighbourhood").
+        add("$in",locationIds).get();
         DBObject loc2 = BasicDBObjectBuilder.start().push("cityDistrictId").
         add("$in",locationIds).get();
         DBObject loc3 = BasicDBObjectBuilder.start().push("cityId").
@@ -196,7 +198,7 @@ public class PropertyTemplateRepositoryImpl implements PropertyTemplateRepositor
         // DBObject loc4 = new BasicDBObject("countyId", location);
         // DBObject loc5 = new BasicDBObject("stateId", location);
         // DBObject loc6 = new BasicDBObject("countryId", location);
-        Criteria locationCriterion = where("$or").is(Arrays.asList(loc1, loc2,loc3,loc4,loc5,loc6));
+        Criteria locationCriterion = where("$or").is(Arrays.asList(loc1,loc1_5, loc2,loc3,loc4,loc5,loc6));
         criteria.add(locationCriterion);
 
 

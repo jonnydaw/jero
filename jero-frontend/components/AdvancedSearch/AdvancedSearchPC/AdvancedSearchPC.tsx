@@ -115,6 +115,7 @@ const [maxValue, set_maxValue] = useState(26);
             e.preventDefault();
             console.log("ga " + JSON.stringify(formData.attractions))
             console.log("ga " + JSON.stringify(formData.gettingAround))
+            console.log("ga " + JSON.stringify(formData.holidayType))
             localStorage.setItem("start",String(formData.start))
             localStorage.setItem("end", formData.end);
             const params = new URLSearchParams();
