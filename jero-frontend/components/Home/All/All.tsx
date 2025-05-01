@@ -1,8 +1,13 @@
 import { getTranslations } from "next-intl/server"
 import style from "./all.module.css"
 
-const locations = {"london": ["/london.jpeg", "image of london"], 
-    "madrid": ["/madrid.jpeg", "image of madrid"], "cali": ["/cali.jpg", "image of cali"]}
+const locations = {
+    "Cali": ["/cali.jpg", "image of cali"],
+    "London": ["/london.jpeg", "image of london"], 
+    "Luanda": ["/luanda.jpg", "image of luanda"],
+    "Madrid": ["/madrid.jpeg", "image of madrid"], 
+    "Rio de Janeiro": ["/rio.jpg", "image of rio"]
+}
 
 const All = async () => {
     const t = await getTranslations('HomePage')
