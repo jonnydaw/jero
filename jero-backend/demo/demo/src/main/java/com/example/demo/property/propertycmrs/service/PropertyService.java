@@ -194,6 +194,7 @@ public class PropertyService implements IPropertyService {
         //List<String> gettingAroundClean = new ArrayList<>(); 
         getSplit1(attractions, attractionsClean);
         getSplit1(gettingAround, gettingAroundClean);
+        System.out.println(gettingAround);
         //System.out.println("attractions clean " + attractionsClean.toString());
         Set<PropertyModel> properties = propertyRepo.smartFilter(
             startDate, endDate, numAdults, numChildren, 

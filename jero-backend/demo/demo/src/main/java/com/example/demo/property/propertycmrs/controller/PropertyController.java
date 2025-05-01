@@ -125,6 +125,7 @@ public class PropertyController {
         //Instant end = Instant.parse(("2025-12-25")+"T00:00:00.000Z");
 
         System.out.println(attractions.get());
+        System.out.println("ga " + gettingAround.get());
         List<Map<String,String>> res = propertyService.getPropertiesBySmart(
             start, 
             end, 

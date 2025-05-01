@@ -113,7 +113,8 @@ const [maxValue, set_maxValue] = useState(26);
 
     const handleSubmit = (e : any) => {
             e.preventDefault();
-            console.log(formData)
+            console.log("ga " + JSON.stringify(formData.attractions))
+            console.log("ga " + JSON.stringify(formData.gettingAround))
             localStorage.setItem("start",String(formData.start))
             localStorage.setItem("end", formData.end);
             const params = new URLSearchParams();
@@ -158,6 +159,12 @@ const [maxValue, set_maxValue] = useState(26);
         setFormData(({ ...formData, attractions : selectedAttractions }));
       }, 
       [selectedAttractions]
+    );
+
+    useEffect(() => {
+        setFormData(({ ...formData, gettingAround : selectedGettingArounds }));
+      }, 
+      [selectedGettingArounds]
     );
 
     return(
